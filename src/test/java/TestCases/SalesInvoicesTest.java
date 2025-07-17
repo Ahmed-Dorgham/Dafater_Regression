@@ -1,0 +1,41 @@
+package TestCases;
+
+import Pages.*;
+import org.testng.annotations.Test;
+
+public class SalesInvoicesTest extends BaseTest {
+    LoginPage loginPageObj;
+    HomePage homePageObj;
+    SalesInvoicesListPage salesInvoicesListPageObj;
+    SalesOrdersListPage salesOrdersListPageObj;
+    SalesOrdersPage salesOrdersPageObj;
+    SalesInvoicesPage salesInvoicesPageObj;
+    DataMigrationToolPage dataMigrationToolPageObj;
+    private final String vmUrl = "temp-wi28927.dafater.biz";
+    private final String duesDate = "15-07-2026";
+    private final String secretKey = "kX7NY9yMSag3";
+    private final String invalidSecretKey = "kX7NY9yMSag4";
+    private final String successfulConnectionMsg = "Connected Successfully";
+    private final String failureConnectionMsg = "Cannot Connect";
+
+    @Test(priority = 1, enabled = false)
+    public void createNewSalesInvoiceAndSubmit() throws InterruptedException {
+        homePageObj = new HomePage(driver);
+        salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
+        salesInvoicesPageObj = salesInvoicesListPageObj.clickOnNewSalesInvoiceBtn();
+        salesInvoicesPageObj.enterValidDataIntoSalesInvoicePage(duesDate);
+//        Assert.assertTrue(dataMigrationToolPageObj.checkVmConnectionMsg().getText().contains(successfulConnectionMsg));
+
+    }
+
+    @Test(priority = 2)
+    public void createNewSalesInvoiceFromSalesOrdrs() throws InterruptedException {
+        homePageObj = new HomePage(driver);
+        salesOrdersListPageObj = homePageObj.openSalesOrdersListPage();
+        salesOrdersPageObj = salesOrdersListPageObj.clickOnNewSalesOrdersBtn();
+        salesOrdersPageObj.enterValidDataIntoSalesOrderPage(duesDate);
+
+//        Assert.assertTrue(dataMigrationToolPageObj.checkVmConnectionMsg().getText().contains(successfulConnectionMsg));
+
+    }
+}
