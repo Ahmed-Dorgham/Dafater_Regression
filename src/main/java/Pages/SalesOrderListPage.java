@@ -5,11 +5,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class SalesOrdersListPage extends MainPage {
+public class SalesOrderListPage extends MainPage {
     private String dataMigrationTitle = "data migration";
     // private WebDriver driver ;
 
-    public SalesOrdersListPage(WebDriver driver) {
+    public SalesOrderListPage(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -21,14 +21,16 @@ public class SalesOrdersListPage extends MainPage {
 
     private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
 
-    public SalesOrdersPage clickOnNewSalesOrdersBtn() {
+    public SalesOrderPage clickOnNewSalesOrdersBtn() {
         System.out.println("click on new sales order btn ");
-        waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
         getWebElement(newBtn).click();
+//        clickByJs(getWebElement(newBtn));
+//        clickByActions(newBtn);
 
 //        waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
         // System.out.println(getWebElement(connectionMsg).getText());
-        return new SalesOrdersPage(driver);
+        return new SalesOrderPage(driver);
     }
 
     public WebElement checkVmConnectionMsg() {

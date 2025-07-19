@@ -7,9 +7,10 @@ public class SalesInvoicesTest extends BaseTest {
     LoginPage loginPageObj;
     HomePage homePageObj;
     SalesInvoicesListPage salesInvoicesListPageObj;
-    SalesOrdersListPage salesOrdersListPageObj;
-    SalesOrdersPage salesOrdersPageObj;
+    SalesOrderListPage salesOrdersListPageObj;
+    SalesOrderPage salesOrdersPageObj;
     SalesInvoicesPage salesInvoicesPageObj;
+    CreditNotePage creditNotePageObj;
     DataMigrationToolPage dataMigrationToolPageObj;
     private final String vmUrl = "temp-wi28927.dafater.biz";
     private final String duesDate = "15-07-2026";
@@ -18,7 +19,7 @@ public class SalesInvoicesTest extends BaseTest {
     private final String successfulConnectionMsg = "Connected Successfully";
     private final String failureConnectionMsg = "Cannot Connect";
 
-    @Test(priority = 1, enabled = false)
+    @Test(priority = 1, enabled = true)
     public void createNewSalesInvoiceAndSubmit() throws InterruptedException {
         homePageObj = new HomePage(driver);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
@@ -28,14 +29,30 @@ public class SalesInvoicesTest extends BaseTest {
 
     }
 
-    @Test(priority = 2)
-    public void createNewSalesInvoiceFromSalesOrdrs() throws InterruptedException {
-        homePageObj = new HomePage(driver);
+    @Test(priority = 2, enabled = true)
+    public void createNewSalesInvoiceFromSalesOrder() throws InterruptedException {
+     ///   homePageObj = new HomePage(driver);
         salesOrdersListPageObj = homePageObj.openSalesOrdersListPage();
         salesOrdersPageObj = salesOrdersListPageObj.clickOnNewSalesOrdersBtn();
         salesOrdersPageObj.enterValidDataIntoSalesOrderPage(duesDate);
+        salesInvoicesPageObj = salesOrdersPageObj.createNewSalesInvoiceFromSalesOrder();
+        salesInvoicesPageObj.saveAndSubmitSalesInvoiceFromSalesOrder();
+
 
 //        Assert.assertTrue(dataMigrationToolPageObj.checkVmConnectionMsg().getText().contains(successfulConnectionMsg));
 
     }
+
+    @Test(priority = 3, enabled = true)
+    public void createCreditNoteFromSalesInvoice() throws InterruptedException {
+        ///homePageObj = new HomePage(driver);
+        salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
+        salesInvoicesPageObj = salesInvoicesListPageObj.clickOnNewSalesInvoiceBtn();
+        salesInvoicesPageObj.enterValidDataIntoSalesInvoicePage(duesDate);
+        creditNotePageObj = salesInvoicesPageObj.createCreditNoteFromSalesInvoice();
+        creditNotePageObj.saveAndSubmitCreditNoteFromSalesInvoice();
+//        Assert.assertTrue(dataMigrationToolPageObj.checkVmConnectionMsg().getText().contains(successfulConnectionMsg));
+
+    }
+
 }

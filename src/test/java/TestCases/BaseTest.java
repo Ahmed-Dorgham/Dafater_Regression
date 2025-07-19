@@ -7,10 +7,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 
 import java.io.IOException;
 
@@ -23,7 +22,7 @@ public class BaseTest extends MainPage {
     private String websiteLink;
     private String homePageLink;
 
-    @BeforeSuite
+    @BeforeClass
     public void setup_driver() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--incognito");
@@ -46,7 +45,7 @@ public class BaseTest extends MainPage {
 
     }
 
-    @BeforeSuite(dependsOnMethods = "setup_driver")
+    @BeforeClass(dependsOnMethods = "setup_driver")
     public void launch_website() throws IOException {
         mainPageObj = new MainPage();
         websiteLink = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "websiteLink");
@@ -54,20 +53,22 @@ public class BaseTest extends MainPage {
         driver.navigate().to(websiteLink);
     }
 
-    @BeforeClass
+    @BeforeClass(dependsOnMethods = "launch_website")
     public void loginWithValidData() {
 
         loginPageObj = new LoginPage(driver);
         homePageObj = loginPageObj.loginWithValidData(userName, password);
     }
 
-//    @AfterMethod
-//    public void tearDownTestCase() {
-//        driver.navigate().to(homePageLink);
-//    }
-//
-//    @AfterSuite
-//    public void closeSuite() {
-//        driver.quit();
-//    }
+    @AfterMethod
+    public void tearDownTestCase() {
+
+        driver.navigate().to(homePageLink);
+       // WebDriverManager.chromedriver().clearDriverCache().setup();
+    }
+
+    @AfterClass
+    public void closeSuite() {
+        driver.quit();
+    }
 }

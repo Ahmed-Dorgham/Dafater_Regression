@@ -18,27 +18,38 @@ import java.util.Properties;
 public class MainPage extends GeneralConstants {
     public static WebDriver driver;
     public WebDriverWait wait;
-    JavascriptExecutor js;
-    Actions action ;
-    public void waitUntilElementVisibility (By by,int duration)
-    {
+//    JavascriptExecutor js;
+   public Actions actions;
+   public JavascriptExecutor js;
+    public void waitUntilElementVisibility(By by, int duration) {
         wait = new WebDriverWait(driver, Duration.ofSeconds(duration));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
-    public void waitUntilElementToBeClickable (By by,int duration)
-    {
+    public void waitUntilElementToBePresent(By by, int duration) {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(duration));
+        wait.until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
+    public void waitUntilElementToBeClickable(By by, int duration) {
         wait = new WebDriverWait(driver, Duration.ofSeconds(duration));
         wait.until(ExpectedConditions.elementToBeClickable(by));
     }
+
     public WebElement getWebElement(By by) {
-       // System.out.println(driver.findElement(by).getText() + " >>>> element is displayed");
+        // System.out.println(driver.findElement(by).getText() + " >>>> element is displayed");
         return driver.findElement(by);
     }
+
     public void clickByActions(By by) {
-        action = new Actions(driver);
-        action.click(getWebElement(by)).build().perform();
+        actions = new Actions(driver);
+        actions.click(getWebElement(by)).build().perform();
 
     }
+    public void clickByJs(WebElement element) {
+        js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", element);
+    }
+
     public String readDataFromPropertiesFile(String filePath, String Key) throws IOException {
         File file = new File(filePath);
         FileInputStream inputStream = new FileInputStream(file);
@@ -46,11 +57,10 @@ public class MainPage extends GeneralConstants {
         prop.load(inputStream);
         return prop.getProperty(Key);
     }
-    public void scrollDown ()
-    {
-        System.out.println("scroll down ");
-         js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0, 300);");
-        System.out.println("scroll down ");
+
+    public void scrollToSpeceficElement(By by) {
+        actions = new Actions(driver);
+        actions.moveToElement(getWebElement(by)).perform();
+        waitUntilElementVisibility(by,GeneralConstants.minTimeOut);
     }
 }

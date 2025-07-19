@@ -23,9 +23,10 @@ public class SalesInvoicesListPage extends MainPage {
 
     public SalesInvoicesPage clickOnNewSalesInvoiceBtn() {
         System.out.println("click on new sales invoice btn ");
-        waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
         getWebElement(newBtn).click();
-
+//        clickByJs(getWebElement(newBtn));
+//
 //        waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
         // System.out.println(getWebElement(connectionMsg).getText());
         return new SalesInvoicesPage(driver);

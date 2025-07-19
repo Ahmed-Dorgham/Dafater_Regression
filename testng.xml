@@ -4,8 +4,9 @@
     <test verbose="2" preserve-order="true"
           name="Data Migration Test">
         <classes>
-<!--            <class name="TestCases.DataMigrationTest"></class>-->
+            <!--            <class name="TestCases.DataMigrationTest"></class>-->
             <class name="TestCases.SalesInvoicesTest"></class>
+                        <class name="TestCases.PurchaseInvoicesTest"></class>
 
         </classes>
     </test>

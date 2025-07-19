@@ -5,7 +5,7 @@ public  class GeneralConstants {
     /************************************************* Constants ************************************************/
 
     public final static int globalTimeOut = 10;
-    public final static int minTimeOut = 50;
+    public final static int minTimeOut = 90;
    public final static int randomNum = (int)(Math.random() * 10000);
     public final static int registerSheetColumnsNum = 14;
 

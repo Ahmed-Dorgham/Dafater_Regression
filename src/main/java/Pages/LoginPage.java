@@ -17,7 +17,7 @@ public class LoginPage extends MainPage {
     private By loginBtn = By.id("login_btn");
 
     public HomePage loginWithValidData(String userName, String password) {
-        waitUntilElementVisibility( userNameField, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(userNameField, GeneralConstants.minTimeOut);
         getWebElement(userNameField).click();
         getWebElement( userNameField).sendKeys(userName);
         getWebElement( passwordField).sendKeys(password);
