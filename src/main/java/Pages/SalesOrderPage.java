@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 public class SalesOrderPage extends MainPage {
     private String dataMigrationTitle = "data migration";
     // private WebDriver driver ;
+    private String homePageLink;
 
     public SalesOrderPage(WebDriver driver) {
         this.driver = driver;
@@ -29,7 +30,15 @@ public class SalesOrderPage extends MainPage {
     private By salesInvoiceChoice = By.xpath("//*[contains(text(),'فاتورة المبيعات') and @class = 'dropdown-item']");
     private By saveAndSubmitBtn = By.xpath("//*[contains(@class,'btn btn-inverse btn-sm save-submit-action toolbar-btn')]");
     private By yesBtn = By.xpath("(//*[contains(@class,'btn btn-primary btn-sm btn-modal-primary')])");
-
+    private By salesOrderStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap orange')])");
+    private By salesOrderCompletedStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap green')])");
+    private By salesOrdersOpt = By.xpath("(//*[contains(@id,'sidebar-selling-sales-orders')]/span)[1]");
+    private By viewBtn = By.xpath("(//button[contains(text(),'واجهة')])[2]");
+    //*[contains(text(),'أوامر البيع')]
+    private By salesOrderNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Sales Order')])[1]");
+    private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
+    private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
+    private By salesInvoicesTab = By.id("module-anchor-Selling");
     public void enterValidDataIntoSalesOrderPage(String dueDate) throws InterruptedException {
         waitUntilElementToBePresent(newSalesOrderTitle, GeneralConstants.minTimeOut);
         System.out.println("select  customer ");
@@ -64,10 +73,37 @@ public class SalesOrderPage extends MainPage {
         getWebElement(yesBtn).click();
 
     }
+    public String getSalesOrderStatusBeforeCreatingRelatedSalesInvoice() {
+//        System.out.println("Verify the status of sales invoice  ");
+        waitUntilElementToBePresent(createBtn,GeneralConstants.minTimeOut);
+        System.out.println("status of sales order before creating related sales invoices " +getWebElement(salesOrderStatus).getText());
+        return getWebElement(salesOrderStatus).getText();
 
+    }
+
+    public String getSalesOrderStatusAfterCreatingRelatedSalesInvoice() throws InterruptedException {
+
+
+        waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
+//        getWebElement(salesInvoicesTab).click();
+        System.out.println("click on sales orders option");
+        waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
+//        Thread.sleep(9000);
+        getWebElement(salesOrdersOpt).click();
+        clickByActions(salesOrdersOpt);
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        driver.navigate().refresh();
+        System.out.println("open last created sales order ");
+        getWebElement(salesOrderNameAtViewList).click();
+        waitUntilElementToBePresent(createBtn,GeneralConstants.minTimeOut);
+        System.out.println("status of sales order after creating related sales invoices " +getWebElement(salesOrderCompletedStatus).getText());
+        return getWebElement(salesOrderCompletedStatus).getText();
+
+    }
     public SalesInvoicesPage createNewSalesInvoiceFromSalesOrder() {
         System.out.println("click on create btn");
-        waitUntilElementVisibility(createBtn, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
        getWebElement(createBtn).click();
         System.out.println("click on sales invoice");
         waitUntilElementVisibility(salesInvoiceChoice, GeneralConstants.minTimeOut);

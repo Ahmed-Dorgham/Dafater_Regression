@@ -5,11 +5,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class SalesOrderListPage extends MainPage {
+public class PurchaseOrderListPage extends MainPage {
     private String dataMigrationTitle = "data migration";
     // private WebDriver driver ;
 
-    public SalesOrderListPage(WebDriver driver) {
+    public PurchaseOrderListPage(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -18,21 +18,18 @@ public class SalesOrderListPage extends MainPage {
     private By statusMsg = By.className("msgprint");
     private By editIcon = By.className("icon-xs");
     private By salesInvoiceListTitle = By.xpath("(//*[contains(@title,'فاتورة المبيعات')]");
-    private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
-    private By newBtn = By.xpath("(//button[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')])");
+
+    private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
-    public SalesOrderPage clickOnNewSalesOrdersBtn() {
-        System.out.println("click on new sales order btn ");
+    public PurchaseOrderPage clickOnNewPurchaseOrdersBtn() {
+        System.out.println("click on new purchase order btn ");
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
-        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
         getWebElement(newBtn).click();
-//        clickByJs(getWebElement(newBtn));
-//        clickByActions(newBtn);
 
 //        waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
         // System.out.println(getWebElement(connectionMsg).getText());
-        return new SalesOrderPage(driver);
+        return new PurchaseOrderPage(driver);
     }
 
     public WebElement checkVmConnectionMsg() {

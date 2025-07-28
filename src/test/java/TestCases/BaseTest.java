@@ -64,7 +64,9 @@ public class BaseTest extends MainPage {
     public void tearDownTestCase() {
 
         driver.navigate().to(homePageLink);
-       // WebDriverManager.chromedriver().clearDriverCache().setup();
+        driver.manage().deleteAllCookies();
+
+        WebDriverManager.chromedriver().clearDriverCache().setup();
     }
 
     @AfterClass

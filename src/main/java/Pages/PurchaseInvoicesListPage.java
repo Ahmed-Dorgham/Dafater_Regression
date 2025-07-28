@@ -3,12 +3,13 @@ package Pages;
 import GeneralConstants.GeneralConstants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
-public class SalesInvoicesListPage extends MainPage {
+public class PurchaseInvoicesListPage extends MainPage {
     private String dataMigrationTitle = "data migration";
     // private WebDriver driver ;
 
-    public SalesInvoicesListPage(WebDriver driver) {
+    public PurchaseInvoicesListPage(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -17,39 +18,56 @@ public class SalesInvoicesListPage extends MainPage {
     private By statusMsg = By.className("msgprint");
     private By editIcon = By.className("icon-xs");
     private By salesInvoiceListTitle = By.xpath("(//*[contains(@title,'فاتورة المبيعات')]");
-    private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
-    private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
+
     private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
+    private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
+    private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
-    private By invoiceNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Sales Invoice')])[1]");
+    private By invoiceNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Purchase Invoice')])[1]");
+
     public SalesInvoicesPage clickOnNewSalesInvoiceBtn() {
         System.out.println("click on new sales invoice btn ");
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
-
         getWebElement(newBtn).click();
 
+//        waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
+        // System.out.println(getWebElement(connectionMsg).getText());
         return new SalesInvoicesPage(driver);
+    }
+    public PurchaseInvoicesPage clickOnNewPurchaseInvoiceBtn() {
+        System.out.println("click on new purchase invoice btn ");
+        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(newBtn, GeneralConstants.minTimeOut);
+//        getWebElement(newBtn).click();
+        clickByActions(newBtn);
+
+//        waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
+        // System.out.println(getWebElement(connectionMsg).getText());
+        return new PurchaseInvoicesPage(driver);
     }
     public String getInvoiceNameAtViewList(String expected) {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
         System.out.println("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("title") + " and expected text is " + expected);
         return getWebElement(invoiceNameAtViewList).getText();
     }
-    public String getListAccountBeforeCreatingNewSalesInvoices() {
+    public WebElement checkVmConnectionMsg() {
 
-        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
-        return getWebElement(listCount).getText();
+        waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
+        System.out.println(getWebElement(statusMsg).getText());
+        return getWebElement(statusMsg);
     }
-
     public String getListAccountAfterCreatingNewSalesInvoices() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
+        System.out.println("number of purchase invoices at list view After creating new purchase invoices " + getWebElement(listCount).getText());
+        return getWebElement(listCount).getText();
+    }
+    public String getListAccountBeforeCreatingNewPurchaseInvoices() {
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        System.out.println("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 //    public void enterValidDataIntoMainData (String vmUrl , String apiKey , String secretKey)

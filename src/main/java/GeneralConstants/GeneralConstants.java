@@ -6,6 +6,8 @@ public  class GeneralConstants {
 
     public final static int globalTimeOut = 10;
     public final static int minTimeOut = 90;
+    public final static int freezeTimeOut = 30;
+    public final static int tryTimeOut = 5;
    public final static int randomNum = (int)(Math.random() * 10000);
     public final static int registerSheetColumnsNum = 14;
 
@@ -22,5 +24,6 @@ public final static String password = "3L9buyTrss5";
     /************************************************* Variables  ************************************************/
 
 
-
+    public final static String SUCCESS = "SUCCESS";
+    public final static String FAILED = "FAILED";
 }

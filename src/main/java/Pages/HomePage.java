@@ -12,14 +12,16 @@ public class HomePage extends MainPage {
     private By searchIcon = By.className("fa-search");
     private By searchField = By.className("search__input");
     private By dataMigrationToolOpt = By.xpath("//*[contains(@href,'data-migration-from-dafater4-tool')]");
-    private By salesInvoicesOpt = By.xpath("//*[contains(@id,'sidebar-selling-invoice')]");
+    private By salesInvoicesOpt = By.xpath("(//*[contains(@id,'sidebar-selling-invoice')]/span)[1]");
     private By purchaseInvoicesOpt = By.xpath("//*[contains(@id,'sidebar-purchases-invoice')]");
-    private By salesOrdersOpt = By.xpath("//*[contains(@id,'sidebar-selling-sales-orders')]");
+    private By salesOrdersOpt = By.xpath("(//*[contains(@id,'sidebar-selling-sales-orders')]/span)[1]");
     private By purchaseOrdersOpt = By.xpath("//*[contains(@id,'sidebar-purchases-purchase-orders')]");
     private By salesInvoicesTab = By.id("module-anchor-Selling");
     private By purchaseInvoicesTab = By.id("module-icon-purchases");
+    By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     public DataMigrationToolPage searchAboutDataMigrationTool()
     {
+        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
         waitUntilElementVisibility(searchIcon, GeneralConstants.minTimeOut);
         getWebElement(searchIcon).click();
 
@@ -56,7 +58,7 @@ public class HomePage extends MainPage {
     { System.out.println("click on sales invoice tab ");
         waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
         getWebElement(salesInvoicesTab).click();
-        System.out.println("click on sales invoice option");
+        System.out.println("click on sales orders option");
         waitUntilElementToBeClickable(salesOrdersOpt, GeneralConstants.minTimeOut);
         getWebElement(salesOrdersOpt).click();
         return new SalesOrderListPage(driver);

@@ -4,7 +4,7 @@ import Pages.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class SalesInvoicesTest extends BaseTest {
+public class PosViewTest extends BaseTest {
     LoginPage loginPageObj;
     HomePage homePageObj;
     SalesInvoicesListPage salesInvoicesListPageObj;
@@ -12,6 +12,7 @@ public class SalesInvoicesTest extends BaseTest {
     SalesOrderPage salesOrdersPageObj;
     SalesInvoicesPage salesInvoicesPageObj;
     CreditNotePage creditNotePageObj;
+    PosViewPage posViewPageObj;
     DataMigrationToolPage dataMigrationToolPageObj;
     private final String vmUrl = "temp-wi28927.dafater.biz";
     private final String duesDate = "15-07-2026";
@@ -23,31 +24,33 @@ public class SalesInvoicesTest extends BaseTest {
     private final String invoiceName = "ACC-SINV";
 
     @Test(priority = 1, enabled = true)
-    public void TC01_createNewSalesInvoiceAndSubmit() throws InterruptedException {
+    public void TC01_createNewSalesInvoiceUsingPosView() throws InterruptedException {
         homePageObj = new HomePage(driver);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
-        String numberOfSalesInvoicesBeforeCreatingNewOne = salesInvoicesListPageObj.getListAccountBeforeCreatingNewSalesInvoices();
+
         salesInvoicesPageObj = salesInvoicesListPageObj.clickOnNewSalesInvoiceBtn();
-        salesInvoicesPageObj.enterValidDataIntoSalesInvoicePage(duesDate);
+        posViewPageObj = salesInvoicesPageObj.openPosView();
 
-        Assert.assertTrue(salesInvoicesPageObj.getInvoiceStatus(submittedStatus).contains(submittedStatus));
-//        System.out.println("verify that the current created sales invoice wil appear at list view with same name  ");
-        String salesInvoiceName = salesInvoicesPageObj.getInvoiceName(invoiceName);
-        Assert.assertTrue(salesInvoiceName.contains(invoiceName));
+        posViewPageObj.createNewSalesInvoiceFromPosView();
+        String salesInvoiceName = posViewPageObj.getInvoiceName(invoiceName);
+        Assert.assertTrue(posViewPageObj.getInvoiceName(invoiceName).contains(invoiceName));
+        salesInvoicesListPageObj = posViewPageObj.backToSystem();
+        System.out.println("Verify the name of current created sales invoice from pos view  is existed at sales invoice list view ");
+        Assert.assertTrue(salesInvoicesListPageObj.getInvoiceNameAtViewList(salesInvoiceName).contains(salesInvoiceName));
 
-
-        System.out.println("Verify the name of current created sales invoice is existed at sales invoice list view ");
-        Assert.assertTrue(salesInvoicesPageObj.getInvoiceNameAtViewList(salesInvoiceName).contains(salesInvoiceName));
-
-
-        String numberOfSalesInvoicesAfterCreatingNewOne = salesInvoicesListPageObj.getListAccountAfterCreatingNewSalesInvoices();
-        System.out.println("verify that number of sales invoices at list view will increase by one after creating new sales invoice ");
-        Assert.assertFalse(numberOfSalesInvoicesBeforeCreatingNewOne.contains(numberOfSalesInvoicesAfterCreatingNewOne));
-        System.out.println(" number of sales invoices at list view before creating new one is " + numberOfSalesInvoicesBeforeCreatingNewOne+" and after creating new one is  "+ numberOfSalesInvoicesAfterCreatingNewOne+" and this is correct ");
+        Assert.assertTrue(salesInvoicesPageObj.getPosInvoiceStatus(submittedStatus).contains(submittedStatus));
+//        String salesInvoiceName = salesInvoicesPageObj.getInvoiceName(invoiceName);
+//        Assert.assertTrue(salesInvoiceName.contains(invoiceName));
+//
+//        Assert.assertTrue(salesInvoicesPageObj.getInvoiceNameAtViewList(salesInvoiceName).contains(salesInvoiceName));
+//        String numberOfSalesInvoicesAfterCreatingNewOne = salesInvoicesListPageObj.getListAccountAfterCreatingNewSalesInvoices();
+//        System.out.println("verify that number of sales invoices at list view will increase by one after creating new sales invoice ");
+//        Assert.assertFalse(numberOfSalesInvoicesBeforeCreatingNewOne.contains(numberOfSalesInvoicesAfterCreatingNewOne));
+//        System.out.println(" number of sales invoices at list view before creating new one is " + numberOfSalesInvoicesBeforeCreatingNewOne+" and after creating new one is  "+ numberOfSalesInvoicesAfterCreatingNewOne+" and this is correct ");
 
     }
 
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2, enabled = false)
     public void TC02_createNewSalesInvoiceFromSalesOrder() throws InterruptedException {
 //         homePageObj = new HomePage(driver);
         salesOrdersListPageObj = homePageObj.openSalesOrdersListPage();
@@ -58,20 +61,18 @@ public class SalesInvoicesTest extends BaseTest {
         salesInvoicesPageObj.saveAndSubmitSalesInvoiceFromSalesOrder();
 
         String salesOrderStatusAfterCreatingRelatedSalesInvoice = salesOrdersPageObj.getSalesOrderStatusAfterCreatingRelatedSalesInvoice();
-        System.out.println("verify the status of sales order will change after creating sales invoice from this  sales order ");
+
         Assert.assertFalse(salesOrderStatusBeforeCreatingRelatedSalesInvoice.contains(salesOrderStatusAfterCreatingRelatedSalesInvoice));
-        System.out.println(" status of sales order  before creating related sales invoice is " + salesOrderStatusBeforeCreatingRelatedSalesInvoice+" and after creating related one is  "+ salesOrderStatusAfterCreatingRelatedSalesInvoice+" and this is correct ");
+        System.out.println(" status of sales order  before creating related sales invoice is " + salesOrderStatusBeforeCreatingRelatedSalesInvoice + " and after creating related one is  " + salesOrderStatusAfterCreatingRelatedSalesInvoice + " and this is correct ");
 
     }
 
-    @Test(priority = 3, enabled = true)
+    @Test(priority = 3, enabled = false)
     public void TC03_createCreditNoteFromSalesInvoice() throws InterruptedException {
 //        homePageObj = new HomePage(driver);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
         salesInvoicesPageObj = salesInvoicesListPageObj.clickOnNewSalesInvoiceBtn();
         salesInvoicesPageObj.enterValidDataIntoSalesInvoicePage(duesDate);
-
-
         String salesInvoiceName = salesInvoicesPageObj.getInvoiceNameForCreditNote(invoiceName);
         creditNotePageObj = salesInvoicesPageObj.createCreditNoteFromSalesInvoice();
         creditNotePageObj.saveAndSubmitCreditNoteFromSalesInvoice();

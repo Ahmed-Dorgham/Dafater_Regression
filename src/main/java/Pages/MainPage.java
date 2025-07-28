@@ -29,6 +29,11 @@ public class MainPage extends GeneralConstants {
         wait = new WebDriverWait(driver, Duration.ofSeconds(duration));
         wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
+    public void waitUntilElementNotToBeVisible(By by, int duration) {
+
+        wait = new WebDriverWait(driver, Duration.ofSeconds(duration));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+    }
 
     public void waitUntilElementToBeClickable(By by, int duration) {
         wait = new WebDriverWait(driver, Duration.ofSeconds(duration));
@@ -39,7 +44,19 @@ public class MainPage extends GeneralConstants {
         // System.out.println(driver.findElement(by).getText() + " >>>> element is displayed");
         return driver.findElement(by);
     }
+    public String tryToGetWebElement(By by) {
+        // System.out.println(driver.findElement(by).getText() + " >>>> element is displayed");
+        try {
+            waitUntilElementToBePresent(by,GeneralConstants.tryTimeOut);
+            return GeneralConstants.SUCCESS ;
+        }
+        catch (Exception e)
 
+        {
+            return GeneralConstants.FAILED;
+        }
+
+    }
     public void clickByActions(By by) {
         actions = new Actions(driver);
         actions.click(getWebElement(by)).build().perform();
@@ -49,7 +66,18 @@ public class MainPage extends GeneralConstants {
         js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", element);
     }
+    public void waitUntilOverlayDisappear(By by, int duration) {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(duration));
+        try
+        {
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+        }
+        catch (Exception e)
+        {
 
+        }
+
+    }
     public String readDataFromPropertiesFile(String filePath, String Key) throws IOException {
         File file = new File(filePath);
         FileInputStream inputStream = new FileInputStream(file);
@@ -62,5 +90,15 @@ public class MainPage extends GeneralConstants {
         actions = new Actions(driver);
         actions.moveToElement(getWebElement(by)).perform();
         waitUntilElementVisibility(by,GeneralConstants.minTimeOut);
+    }
+    public String verifyTextContains (By by ,String expected)
+    {
+        if (getWebElement(by).getText().contains(expected))
+        {
+            System.out.println("actual text is " + getWebElement(by).getText() + "and expected test is " + expected );
+            return GeneralConstants.SUCCESS;
+        }
+        else
+            return GeneralConstants.FAILED;
     }
 }

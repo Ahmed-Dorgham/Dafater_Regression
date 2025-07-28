@@ -27,6 +27,11 @@
             <artifactId>selenium-java</artifactId>
             <version>4.17.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-devtools-v137</artifactId> <!-- Use v137 if v138 not yet released -->
+            <version>4.19.1</version> <!-- Match your Selenium version -->
+        </dependency>
         <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>

@@ -15,9 +15,10 @@ public class LoginPage extends MainPage {
     private By userNameField = By.xpath("//input[@id='login_email']");
     private By passwordField = By.id("login_password");
     private By loginBtn = By.id("login_btn");
-
+    By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     public HomePage loginWithValidData(String userName, String password) {
-        waitUntilElementVisibility(userNameField, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(userNameField, GeneralConstants.minTimeOut);
         getWebElement(userNameField).click();
         getWebElement( userNameField).sendKeys(userName);
         getWebElement( passwordField).sendKeys(password);
