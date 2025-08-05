@@ -21,7 +21,11 @@ public class SalesInvoicesListPage extends MainPage {
     private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
     private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
+    By numberOfDraftInvoices = By.xpath("//h3[contains(text(),'مسودة')]/following-sibling::div");
     private By invoiceNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Sales Invoice')])[1]");
+    private By invoiceStatusAtListView = By.xpath("(((((//*[contains(@class,'level list-row-head font-weight-bold')])/following-sibling::div)[2])/div/div/div)[3])/span/span");
+    private By invoiceTotalAmountValueAtListView = By.xpath("(((((//*[contains(@class,'level list-row-head font-weight-bold')])/following-sibling::div)[2])/div/div/div))[6]/span/a/div/span");
+    private By totalInvoicesAmountAtViewList = By.xpath("//h3[contains(text(),'اجمالي الفواتير')]/following-sibling::div");
     public SalesInvoicesPage clickOnNewSalesInvoiceBtn() {
         System.out.println("click on new sales invoice btn ");
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
@@ -45,7 +49,18 @@ public class SalesInvoicesListPage extends MainPage {
         System.out.println("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
+    public String getNumberOfDraftInvoicesBeforeCreatingNewSalesInvoices() {
 
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        System.out.println("number of draft sales invoices at list view before creating new sales invoices " + getWebElement(numberOfDraftInvoices).getText());
+        return getWebElement(numberOfDraftInvoices).getText();
+    }
+    public String getNumberOfDraftInvoicesAfterCreatingNewDraftSalesInvoices() {
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        System.out.println("number of draft sales invoices at list view after creating new sales invoices " + getWebElement(numberOfDraftInvoices).getText());
+        return getWebElement(numberOfDraftInvoices).getText();
+    }
     public String getListAccountAfterCreatingNewSalesInvoices() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);

@@ -50,44 +50,53 @@ public class PosViewPage extends MainPage {
     private By posViewBtn = By.xpath("(//button[contains(text(),'واجهة نقاط البيع')])[1]");
     private By isPosCheckBox = By.id("is_pos");
     private By backToSystemBtn = By.xpath("//*[contains(@class,'btn-back')]/span");
+    private By increaseQuantityIcon = By.xpath("//*[contains(@class,'qty-increase')]");
+    private By QuantityField = By.xpath("//*[contains(@class,'qty-input')]");
+    private By QuantityFieldAtFooter = By.xpath("(//*[contains(@class,'item-qty-total-container')]//div)[2]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
+    By applyDiscountBtn = By.xpath("//*[contains(@class,'add-discount-wrapper')]");
+    By discountField = By.xpath("(//*[contains(@class,'add-discount-wrapper')]//input)[1]");
+    By totalAmountBeforeDiscountField = By.xpath("//*[contains(@class,'total-before-discount-container')]//span");
+    By totalAmountBeforeDiscountLabel = By.xpath("(//*[contains(@class,'total-before-discount-container')]/div)[1]");
+    By netAmountAfterDiscountField = By.xpath("//*[contains(@class,'net-total-container')]//span");
+
     public void createNewSalesInvoiceFromPosView() throws InterruptedException {
         waitUntilElementToBePresent(backToSystemBtn, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
-//        System.out.println("select  item  ");
-//        getWebElement(customerFieldSalesInvoice).click();
-////        clickByJs(getWebElement(customerFieldSalesInvoice));
-//        waitUntilElementVisibility(customersListSalesInvoice, GeneralConstants.minTimeOut);
-//        waitUntilElementToBeClickable(customerOptSalesInvoice, GeneralConstants.minTimeOut);
-//        getWebElement(customerOptSalesInvoice).click();
-//        System.out.println("enter dues date  ");
-//        waitUntilElementVisibility(dueDateField, GeneralConstants.minTimeOut);
-//        getWebElement(dueDateField).sendKeys(dueDate);
-//        System.out.println("Scroll down to item field ");
-//        scrollToSpeceficElement(totalAmountLabel);
-//        //   Thread.sleep(6000);
+
         System.out.println(" select item  ");
-
-//        clickByActions(itemCodeInputField);
-//        waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
-
-//        Thread.sleep(6000);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(itemCodeInputField).sendKeys("item 1");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
-//        clickByActions(itemOpt);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(itemOpt).click();
-//        clickByActions(itemOpt);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-//        getWebElement(itemOpt).click();
-        if (tryToGetWebElement(noItemsLabel) == GeneralConstants.SUCCESS)
-        {
+        if (tryToGetWebElement(noItemsLabel) == GeneralConstants.SUCCESS) {
             System.out.println("***************************");
+            waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
             getWebElement(itemOpt).click();
         }
+        waitUntilOverlayDisappear(overlay, GeneralConstants.minTimeOut);
         waitUntilElementNotToBeVisible(noItemsLabel, GeneralConstants.minTimeOut);
+        scrollToSpeceficElement(payBtn);
+        System.out.println(" click on pay btn  ");
+        getWebElement(payBtn).click();
+        System.out.println("click on complete order btn ");
+        waitUntilElementToBeClickable(completeOrder, GeneralConstants.minTimeOut);
+        scrollToSpeceficElement(completeOrder);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        getWebElement(completeOrder).click();
+        System.out.println("click on yes btn ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(yesBtn, GeneralConstants.minTimeOut);
+        getWebElement(yesBtn).click();
+        waitUntilElementToBePresent(newOrderBtn, GeneralConstants.minTimeOut);
+
+    }
+
+    public void completePaymentProcess() throws InterruptedException {
+
         scrollToSpeceficElement(payBtn);
         System.out.println(" click on pay btn  ");
         getWebElement(payBtn).click();
@@ -140,6 +149,58 @@ public class PosViewPage extends MainPage {
         return new CreditNotePage(driver);
     }
 
+    public void applyDiscountForOneItem(double discountValue) {
+
+        waitUntilElementToBePresent(backToSystemBtn, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
+
+        System.out.println(" select item  ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        getWebElement(itemCodeInputField).sendKeys("item 1");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        getWebElement(itemOpt).click();
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        if (tryToGetWebElement(noItemsLabel) == GeneralConstants.SUCCESS) {
+            System.out.println("***************************");
+            waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+            getWebElement(itemOpt).click();
+        }
+        waitUntilOverlayDisappear(overlay, GeneralConstants.minTimeOut);
+        waitUntilElementNotToBeVisible(noItemsLabel, GeneralConstants.minTimeOut);
+        scrollToSpeceficElement(payBtn);
+
+        System.out.println("click on apply discount btn ");
+        getWebElement(applyDiscountBtn).click();
+        waitUntilElementToBePresent(discountField, GeneralConstants.minTimeOut);
+        System.out.println("enter discount value  ");
+        getWebElement(discountField).sendKeys(String.valueOf(discountValue));
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        getWebElement(totalAmountLabel).click();
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+
+    }
+
+    public double getTotalAmountBeforeApplyingDiscount() {
+        waitUntilElementToBePresent(totalAmountBeforeDiscountLabel, GeneralConstants.minTimeOut);
+        double totalAmountBeforeDiscount = Double.parseDouble(getWebElement(totalAmountBeforeDiscountField).getText());
+
+        return totalAmountBeforeDiscount;
+    }
+public void increaseQuantity ()
+{
+    System.out.println("click on increase quantity icon ");
+    getWebElement(increaseQuantityIcon).click();
+    waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+}
+    public double getTotalAmountAfterApplyingDiscount() {
+
+        double netAmountAfterDiscount = Double.parseDouble(getWebElement(netAmountAfterDiscountField).getText());
+
+        return netAmountAfterDiscount;
+    }
+
     public String getInvoiceStatus(String expected) {
         System.out.println("Verify the status of sales invoice  ");
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
@@ -160,15 +221,18 @@ public class PosViewPage extends MainPage {
         System.out.println("actual text is  " + getWebElement(invoiceNameForCreditNote).getAttribute("title") + "  and expected text is  " + expected);
         return getWebElement(invoiceNameForCreditNote).getText();
     }
-public SalesInvoicesListPage backToSystem ()
-{
-    System.out.println("click on back to system btn  ");
-    waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-    scrollToSpeceficElement(backToSystemBtn);
-    waitUntilElementToBePresent(backToSystemBtn,GeneralConstants.minTimeOut);
-    getWebElement(backToSystemBtn).click();
-return new SalesInvoicesListPage(driver);
-}
+
+    public SalesInvoicesListPage backToSystem() {
+        System.out.println("click on back to system btn  ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        scrollToSpeceficElement(backToSystemBtn);
+
+        waitUntilElementToBePresent(backToSystemBtn, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        getWebElement(backToSystemBtn).click();
+        return new SalesInvoicesListPage(driver);
+    }
+
     public String getInvoiceNameAtViewList(String expected) {
         System.out.println("Verify the name of current created sales invoice is existed at sales invoice list view ");
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);

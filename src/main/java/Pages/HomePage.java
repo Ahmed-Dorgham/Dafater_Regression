@@ -13,11 +13,15 @@ public class HomePage extends MainPage {
     private By searchField = By.className("search__input");
     private By dataMigrationToolOpt = By.xpath("//*[contains(@href,'data-migration-from-dafater4-tool')]");
     private By salesInvoicesOpt = By.xpath("(//*[contains(@id,'sidebar-selling-invoice')]/span)[1]");
+    private By wareHousesOpt = By.xpath("(//*[contains(@id,'sidebar-stock-warehouse')]/span)[1]");
     private By purchaseInvoicesOpt = By.xpath("//*[contains(@id,'sidebar-purchases-invoice')]");
     private By salesOrdersOpt = By.xpath("(//*[contains(@id,'sidebar-selling-sales-orders')]/span)[1]");
+    private By sellingPriceListsOpt = By.xpath("(//*[contains(@id,'sidebar-selling-price-lists')]/span)[1]");
     private By purchaseOrdersOpt = By.xpath("//*[contains(@id,'sidebar-purchases-purchase-orders')]");
+    private By itemOpt = By.xpath("(//*[contains(@id,'sidebar-stock-item')]/span)[1]");
     private By salesInvoicesTab = By.id("module-anchor-Selling");
     private By purchaseInvoicesTab = By.id("module-icon-purchases");
+    private By wareHouseTab = By.id("module-anchor-Stock");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     public DataMigrationToolPage searchAboutDataMigrationTool()
     {
@@ -36,12 +40,46 @@ public class HomePage extends MainPage {
         System.out.println("click on sales invoice tab ");
         waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
         getWebElement(salesInvoicesTab).click();
+       if (tryToGetWebElement(salesInvoicesOpt)==GeneralConstants.FAILED)
+       {
+           System.out.println("************************************");
+           getWebElement(salesInvoicesTab).click();
+       }
         System.out.println("click on sales invoice option ");
         waitUntilElementToBeClickable(salesInvoicesOpt, GeneralConstants.minTimeOut);
         getWebElement(salesInvoicesOpt).click();
         return new SalesInvoicesListPage(driver);
     }
-
+    public ItemListPage openItemListPage()
+    {
+        System.out.println("click on wareHouse tab ");
+        waitUntilElementToBeClickable(wareHouseTab, GeneralConstants.minTimeOut);
+        getWebElement(wareHouseTab).click();
+        if (tryToGetWebElement(salesInvoicesOpt)==GeneralConstants.FAILED)
+        {
+            System.out.println("************************************");
+            getWebElement(wareHouseTab).click();
+        }
+        System.out.println("click on item option ");
+        waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
+        getWebElement(itemOpt).click();
+        return new ItemListPage(driver);
+    }
+    public WareHouseListPage openWareHouseListPage()
+    {
+        System.out.println("click on wareHouse tab ");
+        waitUntilElementToBeClickable(wareHouseTab, GeneralConstants.minTimeOut);
+        getWebElement(wareHouseTab).click();
+        if (tryToGetWebElement(wareHousesOpt)==GeneralConstants.FAILED)
+        {
+            System.out.println("************************************");
+            getWebElement(wareHouseTab).click();
+        }
+        System.out.println("click on warehouse option ");
+        waitUntilElementToBeClickable(wareHousesOpt, GeneralConstants.minTimeOut);
+        getWebElement(wareHousesOpt).click();
+        return new WareHouseListPage(driver);
+    }
     public PurchaseInvoicesListPage openPurchaseInvoicesListPage()
     {
         System.out.println("click on purchase tab ");

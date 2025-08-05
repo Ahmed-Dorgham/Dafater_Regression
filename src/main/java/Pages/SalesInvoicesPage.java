@@ -1,7 +1,6 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -29,10 +28,13 @@ public class SalesInvoicesPage extends MainPage {
     private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
     private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
     private By saveAndSubmitBtn = By.xpath("//*[contains(@class,'btn btn-inverse btn-sm save-submit-action toolbar-btn')]");
+    private By saveBtn = By.xpath("//*[contains(@data-action_name,'Save')]");
     private By saveAndSubmitBtnFromSalesOrder = By.xpath("(//*[contains(@class,'btn btn-inverse btn-sm save-submit-action toolbar-btn')])[2]");
     private By yesBtn = By.xpath("(//*[contains(@class,'btn btn-primary btn-sm btn-modal-primary')])");
-    private By invoiceStatus = By.xpath("(//*[contains(@class,'label label-success')])");
-    private By invoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By submittedStatus = By.xpath("(//*[contains(@class,'label label-success')])");
+    private By draftStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap red')])/span");
+    private By invoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
+    private By DraftInvoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By invoiceNameForCreditNote = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[1]");
     private By invoiceNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Sales Invoice')])[1]");
     private By yesBtn_SO = By.xpath("(//*[contains(@class,'btn btn-primary btn-sm btn-modal-primary')])[2]");
@@ -47,12 +49,11 @@ public class SalesInvoicesPage extends MainPage {
     private By posViewBtn = By.xpath("(//button[contains(text(),'واجهة نقاط البيع')])[1]");
     private By isPosCheckBox = By.id("is_pos");
 
-    public void enterValidDataIntoSalesInvoicePage(String dueDate) throws InterruptedException {
+    public void enterValidDataIntoSalesInvoicePageAndSumbit(String dueDate) throws InterruptedException {
         waitUntilElementToBePresent(newSalesInvoiceTitle, GeneralConstants.minTimeOut);
         System.out.println("select  customer ");
         getWebElement(customerFieldSalesInvoice).click();
-        if (tryToGetWebElement(customersListSalesInvoice) == GeneralConstants.FAILED)
-        {
+        if (tryToGetWebElement(customersListSalesInvoice) == GeneralConstants.FAILED) {
             getWebElement(customerFieldSalesInvoice).click();
         }
 //        clickByJs(getWebElement(customerFieldSalesInvoice));
@@ -78,21 +79,59 @@ public class SalesInvoicesPage extends MainPage {
         System.out.println("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
 
-        System.out.println(" save and submit btn sales invoice ");
+        System.out.println(" save and submit sales invoice ");
         getWebElement(saveAndSubmitBtn).click();
         System.out.println("click on yes btn ");
         waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
         getWebElement(yesBtn).click();
-        waitUntilElementToBePresent(viewBtn,GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
 
     }
+
+    public void enterValidDataIntoSalesInvoicePageAndSave(String dueDate) throws InterruptedException {
+        waitUntilElementToBePresent(newSalesInvoiceTitle, GeneralConstants.minTimeOut);
+        System.out.println("select  customer ");
+        getWebElement(customerFieldSalesInvoice).click();
+        if (tryToGetWebElement(customersListSalesInvoice) == GeneralConstants.FAILED) {
+            getWebElement(customerFieldSalesInvoice).click();
+        }
+//        clickByJs(getWebElement(customerFieldSalesInvoice));
+        waitUntilElementToBePresent(customersListSalesInvoice, GeneralConstants.minTimeOut);
+        waitUntilElementToBeClickable(customerOptSalesInvoice, GeneralConstants.minTimeOut);
+        getWebElement(customerOptSalesInvoice).click();
+        System.out.println("enter dues date  ");
+        waitUntilElementVisibility(dueDateField, GeneralConstants.minTimeOut);
+        getWebElement(dueDateField).sendKeys(dueDate);
+        System.out.println("Scroll down to item field ");
+        scrollToSpeceficElement(totalAmountLabel);
+        //   Thread.sleep(6000);
+        System.out.println(" select item  ");
+        clickByActions(itemCodeField);
+        waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
+        getWebElement(itemCodeInputField).sendKeys("item");
+        waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
+        clickByActions(itemOpt);
+
+        System.out.println("unselect update stock opt");
+        getWebElement(updateStockBtn).click();
+
+        System.out.println("scroll up to save btn ");
+        scrollToSpeceficElement(saveBtn);
+
+        System.out.println(" save sales invoice ");
+        getWebElement(saveBtn).click();
+
+        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+
+    }
+
     public PosViewPage openPosView() throws InterruptedException {
         System.out.println("click on is pos view btn");
         waitUntilElementToBePresent(posViewBtn, GeneralConstants.minTimeOut);
         getWebElement(posViewBtn).click();
         System.out.println("click on accept btn ");
 //        Thread.sleep(9000);
-        waitUntilElementNotToBeVisible(posViewBtn,GeneralConstants.minTimeOut);
+        waitUntilElementNotToBeVisible(posViewBtn, GeneralConstants.minTimeOut);
 //        Alert alert = driver.switchTo().alert();
 //        alert.accept();
 //        System.out.println("choose POS profile ");
@@ -100,6 +139,7 @@ public class SalesInvoicesPage extends MainPage {
 //        getWebElement(posProfileUInputField).click();
         return new PosViewPage(driver);
     }
+
     public void saveAndSubmitSalesInvoiceFromSalesOrder() throws InterruptedException {
 
         waitUntilElementVisibility(saveAndSubmitBtnFromSalesOrder, GeneralConstants.minTimeOut);
@@ -108,7 +148,7 @@ public class SalesInvoicesPage extends MainPage {
         System.out.println("click on yes btn ");
         waitUntilElementToBeClickable(yesBtn_SO, GeneralConstants.minTimeOut);
         getWebElement(yesBtn_SO).click();
-        waitUntilElementToBePresent(createBtn,GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
     }
 
     public CreditNotePage createCreditNoteFromSalesInvoice() {
@@ -123,34 +163,49 @@ public class SalesInvoicesPage extends MainPage {
 
     public String getInvoiceStatus(String expected) {
         System.out.println("Verify the status of sales invoice  ");
-        waitUntilElementToBePresent(createBtn,GeneralConstants.minTimeOut);
-        System.out.println("actual text is " + getWebElement(invoiceStatus).getText() + " and expected test is " + expected);
-        return getWebElement(invoiceStatus).getText();
+        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+        if (tryToGetWebElement(submittedStatus) == GeneralConstants.SUCCESS) {
+            System.out.println("actual text is " + getWebElement(submittedStatus).getText() + " and expected test is " + expected);
+            return getWebElement(submittedStatus).getText();
+        } else if (tryToGetWebElement(draftStatus) == GeneralConstants.SUCCESS) {
+            System.out.println("actual text is " + getWebElement(draftStatus).getText() + " and expected test is " + expected);
+            return getWebElement(draftStatus).getText();
+        }
+        else
+            return "unexpected status";
     }
 
     public String getPosInvoiceStatus(String expected) {
         System.out.println("open sales invoice which created using pos view ");
         getWebElement(invoiceNameAtViewList).click();
-        waitUntilElementToBePresent(createBtn,GeneralConstants.minTimeOut);
-        System.out.println("actual text is " + getWebElement(invoiceStatus).getText() + " and expected test is " + expected);
-        return getWebElement(invoiceStatus).getText();
+        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+        System.out.println("actual text is " + getWebElement(submittedStatus).getText() + " and expected test is " + expected);
+        return getWebElement(submittedStatus).getText();
     }
+
     public String getInvoiceName(String expected) {
         System.out.println("Verify the name of sales invoice  ");
-        waitUntilElementToBePresent(viewBtn,GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
         System.out.println("actual text is  " + getWebElement(invoiceName).getAttribute("title") + "  and expected text is  " + expected);
         return getWebElement(invoiceName).getText();
     }
+    public String getDraftInvoiceName(String expected) {
+        System.out.println("Verify the name of sales invoice  ");
+        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+        System.out.println("actual text is  " + getWebElement(DraftInvoiceName).getAttribute("title") + "  and expected text is  " + expected);
+        return getWebElement(DraftInvoiceName).getText();
+    }
+
+
     public String getInvoiceNameForCreditNote(String expected) {
 //        System.out.println("Verify the name of sales invoice  ");
-        waitUntilElementToBePresent(viewBtn,GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
         System.out.println("actual text is  " + getWebElement(invoiceNameForCreditNote).getAttribute("title") + "  and expected text is  " + expected);
         return getWebElement(invoiceNameForCreditNote).getText();
     }
 
-    public PurchaseInvoicesListPage goToPurchaseListView ()
-    {
-        waitUntilElementToBePresent(createBtn,GeneralConstants.minTimeOut);
+    public PurchaseInvoicesListPage goToPurchaseListView() {
+        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
         System.out.println("navigate to sales invoices list  ");
         getWebElement(salesInvoicesOpt).click();
         driver.navigate().refresh();
@@ -159,7 +214,7 @@ public class SalesInvoicesPage extends MainPage {
 
 
     public String getInvoiceNameAtViewList(String expected) {
-        waitUntilElementToBePresent(createBtn,GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
         System.out.println("navigate to sales invoices list  ");
         getWebElement(salesInvoicesOpt).click();
         driver.navigate().refresh();

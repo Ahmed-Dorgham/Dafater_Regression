@@ -20,15 +20,48 @@ public class SalesInvoicesTest extends BaseTest {
     private final String successfulConnectionMsg = "Connected Successfully";
     private final String failureConnectionMsg = "Cannot Connect";
     private final String submittedStatus = "معتمد";
+    private final String draftStatus = "مسودة";
     private final String invoiceName = "ACC-SINV";
-
     @Test(priority = 1, enabled = true)
-    public void TC01_createNewSalesInvoiceAndSubmit() throws InterruptedException {
+    public void TC01_createNewSalesInvoiceAndSaveOnly() throws InterruptedException {
+        homePageObj = new HomePage(driver);
+        salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
+        String numberOfDraftInvoicesBeforeCreatingNewOne = salesInvoicesListPageObj.getNumberOfDraftInvoicesBeforeCreatingNewSalesInvoices();
+        String numberOfSalesInvoicesBeforeCreatingNewOne = salesInvoicesListPageObj.getListAccountBeforeCreatingNewSalesInvoices();
+
+
+        salesInvoicesPageObj = salesInvoicesListPageObj.clickOnNewSalesInvoiceBtn();
+        salesInvoicesPageObj.enterValidDataIntoSalesInvoicePageAndSave(duesDate);
+        Assert.assertTrue(salesInvoicesPageObj.getInvoiceStatus(draftStatus).contains(draftStatus));
+
+        String salesInvoiceName = salesInvoicesPageObj.getDraftInvoiceName(invoiceName);
+        Assert.assertTrue(salesInvoiceName.contains(invoiceName));
+        System.out.println("Verify the name of current created sales invoice is existed at sales invoice list view ");
+        Assert.assertTrue(salesInvoicesPageObj.getInvoiceNameAtViewList(salesInvoiceName).contains(salesInvoiceName));
+
+        String numberOfSalesInvoicesAfterCreatingNewOne = salesInvoicesListPageObj.getListAccountAfterCreatingNewSalesInvoices();
+        System.out.println("verify that number of sales invoices at list view will increase by one after creating new sales invoice ");
+        Assert.assertFalse(numberOfSalesInvoicesBeforeCreatingNewOne.contains(numberOfSalesInvoicesAfterCreatingNewOne));
+        System.out.println(" number of sales invoices at list view before creating new one is " + numberOfSalesInvoicesBeforeCreatingNewOne+" and after creating new one is  "+ numberOfSalesInvoicesAfterCreatingNewOne+" and this is correct ");
+
+
+
+
+
+        String numberOfDraftInvoicesAfterCreatingNewOne = salesInvoicesListPageObj.getNumberOfDraftInvoicesAfterCreatingNewDraftSalesInvoices();
+        System.out.println("verify that number of draft sales invoices at list view will increase by one after creating new draft sales invoice ");
+        Assert.assertFalse(numberOfDraftInvoicesBeforeCreatingNewOne.contains(numberOfDraftInvoicesAfterCreatingNewOne));
+        System.out.println(" number of draft sales invoices at list view before creating new one is " + numberOfDraftInvoicesBeforeCreatingNewOne+" and after creating new one is  "+ numberOfDraftInvoicesAfterCreatingNewOne+" and this is correct ");
+
+    }
+
+    @Test(priority = 2, enabled = true)
+    public void TC02_createNewSalesInvoiceAndSubmit() throws InterruptedException {
         homePageObj = new HomePage(driver);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
         String numberOfSalesInvoicesBeforeCreatingNewOne = salesInvoicesListPageObj.getListAccountBeforeCreatingNewSalesInvoices();
         salesInvoicesPageObj = salesInvoicesListPageObj.clickOnNewSalesInvoiceBtn();
-        salesInvoicesPageObj.enterValidDataIntoSalesInvoicePage(duesDate);
+        salesInvoicesPageObj.enterValidDataIntoSalesInvoicePageAndSumbit(duesDate);
 
         Assert.assertTrue(salesInvoicesPageObj.getInvoiceStatus(submittedStatus).contains(submittedStatus));
 //        System.out.println("verify that the current created sales invoice wil appear at list view with same name  ");
@@ -45,10 +78,12 @@ public class SalesInvoicesTest extends BaseTest {
         Assert.assertFalse(numberOfSalesInvoicesBeforeCreatingNewOne.contains(numberOfSalesInvoicesAfterCreatingNewOne));
         System.out.println(" number of sales invoices at list view before creating new one is " + numberOfSalesInvoicesBeforeCreatingNewOne+" and after creating new one is  "+ numberOfSalesInvoicesAfterCreatingNewOne+" and this is correct ");
 
+
+
     }
 
-    @Test(priority = 2, enabled = true)
-    public void TC02_createNewSalesInvoiceFromSalesOrder() throws InterruptedException {
+    @Test(priority = 3, enabled = false)
+    public void TC03_createNewSalesInvoiceFromSalesOrder() throws InterruptedException {
 //         homePageObj = new HomePage(driver);
         salesOrdersListPageObj = homePageObj.openSalesOrdersListPage();
         salesOrdersPageObj = salesOrdersListPageObj.clickOnNewSalesOrdersBtn();
@@ -64,12 +99,12 @@ public class SalesInvoicesTest extends BaseTest {
 
     }
 
-    @Test(priority = 3, enabled = true)
-    public void TC03_createCreditNoteFromSalesInvoice() throws InterruptedException {
+    @Test(priority = 4, enabled = false)
+    public void TC04_createCreditNoteFromSalesInvoice() throws InterruptedException {
 //        homePageObj = new HomePage(driver);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
         salesInvoicesPageObj = salesInvoicesListPageObj.clickOnNewSalesInvoiceBtn();
-        salesInvoicesPageObj.enterValidDataIntoSalesInvoicePage(duesDate);
+        salesInvoicesPageObj.enterValidDataIntoSalesInvoicePageAndSumbit(duesDate);
 
 
         String salesInvoiceName = salesInvoicesPageObj.getInvoiceNameForCreditNote(invoiceName);

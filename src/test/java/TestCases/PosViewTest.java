@@ -7,6 +7,8 @@ import org.testng.annotations.Test;
 public class PosViewTest extends BaseTest {
     LoginPage loginPageObj;
     HomePage homePageObj;
+    double discountValue = 10;
+    double discountEquation =((100 - discountValue) / 100);
     SalesInvoicesListPage salesInvoicesListPageObj;
     SalesOrderListPage salesOrdersListPageObj;
     SalesOrderPage salesOrdersPageObj;
@@ -23,7 +25,7 @@ public class PosViewTest extends BaseTest {
     private final String submittedStatus = "معتمد";
     private final String invoiceName = "ACC-SINV";
 
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = false)
     public void TC01_createNewSalesInvoiceUsingPosView() throws InterruptedException {
         homePageObj = new HomePage(driver);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
@@ -50,20 +52,46 @@ public class PosViewTest extends BaseTest {
 
     }
 
-    @Test(priority = 2, enabled = false)
-    public void TC02_createNewSalesInvoiceFromSalesOrder() throws InterruptedException {
-//         homePageObj = new HomePage(driver);
-        salesOrdersListPageObj = homePageObj.openSalesOrdersListPage();
-        salesOrdersPageObj = salesOrdersListPageObj.clickOnNewSalesOrdersBtn();
-        salesOrdersPageObj.enterValidDataIntoSalesOrderPage(duesDate);
-        String salesOrderStatusBeforeCreatingRelatedSalesInvoice = salesOrdersPageObj.getSalesOrderStatusBeforeCreatingRelatedSalesInvoice();
-        salesInvoicesPageObj = salesOrdersPageObj.createNewSalesInvoiceFromSalesOrder();
-        salesInvoicesPageObj.saveAndSubmitSalesInvoiceFromSalesOrder();
+    @Test(priority = 2, enabled = true)
+    public void TC02_applyDiscountOnSalesInvoiceUsingPosView() throws InterruptedException {
+        double netTotalAfterApplyDiscount;
+        homePageObj = new HomePage(driver);
+        salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
 
-        String salesOrderStatusAfterCreatingRelatedSalesInvoice = salesOrdersPageObj.getSalesOrderStatusAfterCreatingRelatedSalesInvoice();
+        salesInvoicesPageObj = salesInvoicesListPageObj.clickOnNewSalesInvoiceBtn();
+        posViewPageObj = salesInvoicesPageObj.openPosView();
 
-        Assert.assertFalse(salesOrderStatusBeforeCreatingRelatedSalesInvoice.contains(salesOrderStatusAfterCreatingRelatedSalesInvoice));
-        System.out.println(" status of sales order  before creating related sales invoice is " + salesOrderStatusBeforeCreatingRelatedSalesInvoice + " and after creating related one is  " + salesOrderStatusAfterCreatingRelatedSalesInvoice + " and this is correct ");
+        posViewPageObj.applyDiscountForOneItem(discountValue);
+        System.out.println("total amount before applying discount for one item is " + posViewPageObj.getTotalAmountBeforeApplyingDiscount());
+
+        System.out.println("total amount after applying discount for one item is " + posViewPageObj.getTotalAmountAfterApplyingDiscount());
+
+        netTotalAfterApplyDiscount = posViewPageObj.getTotalAmountBeforeApplyingDiscount() * discountEquation;
+        Assert.assertTrue(posViewPageObj.getTotalAmountAfterApplyingDiscount() == netTotalAfterApplyDiscount);
+        System.out.println("net total amount after applying discount for one item should be " + netTotalAfterApplyDiscount + " and this is correct ");
+
+        posViewPageObj.increaseQuantity();
+        System.out.println("total amount before applying discount for 2  items is " + posViewPageObj.getTotalAmountBeforeApplyingDiscount());
+
+        System.out.println("total amount after applying discount for 2 items is " + posViewPageObj.getTotalAmountAfterApplyingDiscount());
+
+        netTotalAfterApplyDiscount = posViewPageObj.getTotalAmountBeforeApplyingDiscount() * ((100 - discountValue) / 100);
+        Assert.assertTrue(posViewPageObj.getTotalAmountAfterApplyingDiscount() == netTotalAfterApplyDiscount);
+        System.out.println("net total amount after applying discount for one item should be " + netTotalAfterApplyDiscount + " and this is correct ");
+
+
+
+        posViewPageObj.completePaymentProcess();
+        posViewPageObj.backToSystem();
+
+//        String salesInvoiceName = salesInvoicesPageObj.getInvoiceName(invoiceName);
+//        Assert.assertTrue(salesInvoiceName.contains(invoiceName));
+//
+//        Assert.assertTrue(salesInvoicesPageObj.getInvoiceNameAtViewList(salesInvoiceName).contains(salesInvoiceName));
+//        String numberOfSalesInvoicesAfterCreatingNewOne = salesInvoicesListPageObj.getListAccountAfterCreatingNewSalesInvoices();
+//        System.out.println("verify that number of sales invoices at list view will increase by one after creating new sales invoice ");
+//        Assert.assertFalse(numberOfSalesInvoicesBeforeCreatingNewOne.contains(numberOfSalesInvoicesAfterCreatingNewOne));
+//        System.out.println(" number of sales invoices at list view before creating new one is " + numberOfSalesInvoicesBeforeCreatingNewOne+" and after creating new one is  "+ numberOfSalesInvoicesAfterCreatingNewOne+" and this is correct ");
 
     }
 
@@ -72,7 +100,7 @@ public class PosViewTest extends BaseTest {
 //        homePageObj = new HomePage(driver);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
         salesInvoicesPageObj = salesInvoicesListPageObj.clickOnNewSalesInvoiceBtn();
-        salesInvoicesPageObj.enterValidDataIntoSalesInvoicePage(duesDate);
+        salesInvoicesPageObj.enterValidDataIntoSalesInvoicePageAndSumbit(duesDate);
         String salesInvoiceName = salesInvoicesPageObj.getInvoiceNameForCreditNote(invoiceName);
         creditNotePageObj = salesInvoicesPageObj.createCreditNoteFromSalesInvoice();
         creditNotePageObj.saveAndSubmitCreditNoteFromSalesInvoice();

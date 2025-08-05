@@ -20,8 +20,9 @@ public class DataMigrationToolPage extends MainPage {
     private By vmUrlInputField = By.xpath("(//*[contains(@class,'input-with-feedback form-control')])[1]");
     private By apiKeyInputField = By.xpath("(//*[contains(@class,'input-with-feedback form-control')])[2]");
     private By secretKeyInputField = By.xpath("(//*[contains(@class,'input-with-feedback form-control')])[3]");
-
+    By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     public void clickOnCheckVmConnectionBtn() {
+        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
         waitUntilElementVisibility(checkVmConnectionBtn, GeneralConstants.minTimeOut);
         getWebElement(checkVmConnectionBtn).click();
 

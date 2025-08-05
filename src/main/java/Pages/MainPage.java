@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
+import java.util.Random;
 
 public class MainPage extends GeneralConstants {
     public static WebDriver driver;
@@ -21,6 +22,10 @@ public class MainPage extends GeneralConstants {
 //    JavascriptExecutor js;
    public Actions actions;
    public JavascriptExecutor js;
+//    Random random = new Random();
+//    public int randomNumber = random.nextInt(1000000000);
+
+    public String itemPrice = "100";
     public void waitUntilElementVisibility(By by, int duration) {
         wait = new WebDriverWait(driver, Duration.ofSeconds(duration));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
@@ -76,6 +81,15 @@ public class MainPage extends GeneralConstants {
         {
 
         }
+
+    }
+    public void waitUntilElementNotContainText (By by ,String value )
+    {
+
+            while (getWebElement(by).getText().contains(value))
+            {
+              System.out.println("******************     ***********************");
+            }
 
     }
     public String readDataFromPropertiesFile(String filePath, String Key) throws IOException {
