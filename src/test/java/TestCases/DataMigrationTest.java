@@ -16,24 +16,38 @@ public class DataMigrationTest extends BaseTest {
     private final String invalidSecretKey = "kX7NY9yMSag4";
     private final String successfulConnectionMsg = "Connected Successfully";
     private final String failureConnectionMsg = "Cannot Connect";
+    private final String syncingMsg = "Enqueued Sync Data Method in Background";
 
     @Test(priority = 1)
     public void TC01_checkSuccessVmConnection() {
-homePageObj = new HomePage(driver);
+        homePageObj = new HomePage(driver);
         dataMigrationToolPageObj = homePageObj.searchAboutDataMigrationTool();
-        dataMigrationToolPageObj.enterValidDataIntoMainData(vmUrl,clientKey,secretKey);
+        dataMigrationToolPageObj.enterValidDataIntoMainData(vmUrl, clientKey, secretKey);
         dataMigrationToolPageObj.clickOnCheckVmConnectionBtn();
-        Assert.assertTrue(dataMigrationToolPageObj.checkVmConnectionMsg().getText().contains(successfulConnectionMsg));
+        Assert.assertTrue(dataMigrationToolPageObj.checkStatusMsg().getText().contains(successfulConnectionMsg));
 
     }
-    @Test (priority = 2)
+
+    @Test(priority = 2)
     public void TC02_checkFailureVmConnection() {
         homePageObj = new HomePage(driver);
 
         dataMigrationToolPageObj = homePageObj.searchAboutDataMigrationTool();
-        dataMigrationToolPageObj.enterValidDataIntoMainData(vmUrl,clientKey,invalidSecretKey);
+        dataMigrationToolPageObj.enterValidDataIntoMainData(vmUrl, clientKey, invalidSecretKey);
         dataMigrationToolPageObj.clickOnCheckVmConnectionBtn();
-        Assert.assertTrue(dataMigrationToolPageObj.checkVmConnectionMsg().getText().contains(failureConnectionMsg));
+        Assert.assertTrue(dataMigrationToolPageObj.checkStatusMsg().getText().contains(failureConnectionMsg));
+
+    }
+
+    @Test(priority = 3)
+    public void TC03_syncDocTypesData() {
+        homePageObj = new HomePage(driver);
+
+        dataMigrationToolPageObj = homePageObj.searchAboutDataMigrationTool();
+        dataMigrationToolPageObj.enterValidDataIntoMainData(vmUrl, clientKey, invalidSecretKey);
+        dataMigrationToolPageObj.selectAllDocTypes();
+        dataMigrationToolPageObj.clickOnSyncDocTypesDataBtn();
+        Assert.assertTrue(dataMigrationToolPageObj.checkStatusMsg().getText().contains(syncingMsg));
 
     }
 }

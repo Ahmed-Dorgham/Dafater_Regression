@@ -1,6 +1,7 @@
 package TestCases;
 
 import Pages.*;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -17,6 +18,7 @@ public class ComparingCustomersTest extends BaseTest {
     CustomersListPage customersListPageObj;
     ItemListPage itemListPageObj;
     @Test(priority = 1, enabled = true)
+//    @Parameters({"Scope"})
     public void TC01_comparingCustomersDataAtListView() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -50,6 +52,5 @@ public class ComparingCustomersTest extends BaseTest {
         softAssert.assertAll();
 
     }
-
 
 }
