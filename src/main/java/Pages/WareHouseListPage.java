@@ -18,7 +18,10 @@ public class WareHouseListPage extends MainPage {
     private By editIcon = By.className("icon-xs");
     private By salesInvoiceListTitle = By.xpath("(//*[contains(@title,'فاتورة المبيعات')]");
     private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
-    private By wareHouseLabel = By.xpath("(//h3[contains(text(),'المستودع')])");
+    private By totalWareHouses = By.xpath("(//*[contains(@class,'total-rows')])" +
+            "| (//*[contains(@class,'list-count')])");
+    private By wareHouseLabel = By.xpath("(//h3[contains(text(),'المستودع')])" +
+            "| (//h5[contains(text(),'قائمة مستودع')])");
     private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
     private By closeFilterIcon = By.xpath("(//*[contains(@class,'filter-icon')])[2]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
@@ -54,14 +57,20 @@ public class WareHouseListPage extends MainPage {
         return getWebElement(wareHouseNameAtViewList).getText();
     }
 
-    public String getListAccountBeforeCreatingNewWareHouse() {
+    public String getNumberOfAllWareHousesBeforeSyncing() {
 
         waitUntilElementToBePresent(wareHouseLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of warehouse at list view before creating new ware house " + getWebElement(listCount).getText());
-        return getWebElement(listCount).getText();
+        System.out.println("number of warehouse at list view before Syncing " + getWebElement(totalWareHouses).getText());
+        return getWebElement(totalWareHouses).getText();
     }
+    public String getNumberOfAllWareHousesAfterSyncing() {
 
-    //
+        waitUntilElementToBePresent(wareHouseLabel, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilElementNotHaveSpecificText(listCount,"تحديث",GeneralConstants.minTimeOut);
+        System.out.println("number of warehouse at list view after Syncing " + getWebElement(totalWareHouses).getText());
+        return getWebElement(totalWareHouses).getText();
+    }
     public String getNumberOfAllWareHouseBeforeCreatingNewWareHouse() {
 
         waitUntilElementToBePresent(wareHouseLabel, GeneralConstants.minTimeOut);

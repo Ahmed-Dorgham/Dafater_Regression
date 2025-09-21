@@ -18,14 +18,17 @@ public class SalesInvoicesListPage extends MainPage {
     private By editIcon = By.className("icon-xs");
     private By salesInvoiceListTitle = By.xpath("(//*[contains(@title,'فاتورة المبيعات')]");
     private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
-    private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
+    private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])" +
+            "| (//div[contains(text(),'مسودة')])");
     private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
-    By numberOfDraftInvoices = By.xpath("//h3[contains(text(),'مسودة')]/following-sibling::div");
+    By numberOfDraftInvoices = By.xpath("//h3[contains(text(),'مسودة')]/following-sibling::div" +
+            "| //*[contains(@class,'general-lv-drafts ')]");
     private By invoiceNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Sales Invoice')])[1]");
     private By invoiceStatusAtListView = By.xpath("(((((//*[contains(@class,'level list-row-head font-weight-bold')])/following-sibling::div)[2])/div/div/div)[3])/span/span");
     private By invoiceTotalAmountValueAtListView = By.xpath("(((((//*[contains(@class,'level list-row-head font-weight-bold')])/following-sibling::div)[2])/div/div/div))[6]/span/a/div/span");
-    private By totalInvoicesAmountAtViewList = By.xpath("//h3[contains(text(),'اجمالي الفواتير')]/following-sibling::div");
+    private By totalAmountOfSalesInvoicesAtViewList = By.xpath("//h3[contains(text(),'اجمالي الفواتير')]/following-sibling::div" +
+            "|//*[@class='sales-invoice-lv-total-invoices ']");
     public SalesInvoicesPage clickOnNewSalesInvoiceBtn() {
         System.out.println("click on new sales invoice btn ");
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
@@ -49,11 +52,40 @@ public class SalesInvoicesListPage extends MainPage {
         System.out.println("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
-    public String getNumberOfDraftInvoicesBeforeCreatingNewSalesInvoices() {
+
+    public String getListAccountBeforeSyncing() {
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        System.out.println("number of sales invoices at list view before syncing " + getWebElement(listCount).getText());
+        return getWebElement(listCount).getText();
+    }
+
+    public String getNumberOfAllItemsBeforeSyncing() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         System.out.println("number of draft sales invoices at list view before creating new sales invoices " + getWebElement(numberOfDraftInvoices).getText());
         return getWebElement(numberOfDraftInvoices).getText();
+    }
+    public String getNumberOfDraftInvoicesBeforeSyncing() throws InterruptedException {
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        System.out.println("number of draft sales invoices at list view before syncing " + getWebElement(numberOfDraftInvoices).getText());
+        return getWebElement(numberOfDraftInvoices).getText();
+    }
+    public String getTotalAmountOfSalesInvoicesBeforeSyncing() throws InterruptedException {
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        System.out.println("total amount of sales invoices at list view before syncing " + getWebElement(totalAmountOfSalesInvoicesAtViewList).getText());
+        return getWebElement(totalAmountOfSalesInvoicesAtViewList).getText();
+    }
+    public String getTotalAmountOfSalesInvoicesAfterSyncing() throws InterruptedException {
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        System.out.println("total amount of sales invoices at list view after syncing " + getWebElement(totalAmountOfSalesInvoicesAtViewList).getText());
+        return getWebElement(totalAmountOfSalesInvoicesAtViewList).getText();
     }
     public String getNumberOfDraftInvoicesAfterCreatingNewDraftSalesInvoices() {
 
@@ -61,12 +93,22 @@ public class SalesInvoicesListPage extends MainPage {
         System.out.println("number of draft sales invoices at list view after creating new sales invoices " + getWebElement(numberOfDraftInvoices).getText());
         return getWebElement(numberOfDraftInvoices).getText();
     }
+
+    public String getNumberOfDraftInvoicesAfterSyncing() {
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        System.out.println("number of draft sales invoices at list view after syncing " + getWebElement(numberOfDraftInvoices).getText());
+        return getWebElement(numberOfDraftInvoices).getText();
+    }
+
     public String getListAccountAfterCreatingNewSalesInvoices() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         System.out.println("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
+
+
 //    public void enterValidDataIntoMainData (String vmUrl , String apiKey , String secretKey)
 //    {
 //        waitUntilElementVisibility(vmUrlInputField,GeneralConstants.minTimeOut);

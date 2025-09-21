@@ -1,26 +1,28 @@
 package TestCases;
 
+import GeneralConstants.GeneralConstants;
 import Pages.HomePage;
 import Pages.LoginPage;
 import Pages.MainPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.*;
 
 import java.io.IOException;
 
 public class BaseTest extends MainPage {
 
-    //  public static WebDriver driver;
+      public static WebDriver driver;
     MainPage mainPageObj;
     LoginPage loginPageObj;
     HomePage homePageObj;
-    private String websiteLink;
-    private String homePageLink;
+    public String websiteLink_4;
+    public String homePageLink_4;
+    public String websiteLink_5;
+    public String homePageLink_5;
 
     @BeforeClass
     public void setup_driver() {
@@ -32,45 +34,72 @@ public class BaseTest extends MainPage {
         options.addArguments("--disable-javascript");
         options.addArguments("--disable-ads");
         //options.addArguments("--headless");
-
         options.addArguments("---disable-extensions");
-
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability(ChromeOptions.CAPABILITY, options);
         options.merge(caps);
-
         WebDriverManager.chromedriver().clearDriverCache().setup();
-
         driver = new ChromeDriver(options);
 
     }
 
     @BeforeClass(dependsOnMethods = "setup_driver")
-    public void launch_website() throws IOException {
+    @Parameters({"Scope"})
+    public void launch_website(String Scope) throws IOException {
         mainPageObj = new MainPage();
-        websiteLink = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "websiteLink");
-        homePageLink = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink");
-        driver.navigate().to(websiteLink);
+        websiteLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "websiteLink_4");
+        homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
+        websiteLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "websiteLink_5");
+        homePageLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_5");
+        if (Scope.equals("Regression")) {
+            driver.navigate().to(websiteLink_5);
+        } else if (Scope.equals("Comparing")) {
+            driver.navigate().to(websiteLink_4);
+        }
     }
 
-    @BeforeClass(dependsOnMethods = "launch_website")
-    public void loginWithValidData() {
-
+    @BeforeMethod()
+    @Parameters({"Scope"})
+    public void loginWithValidData(String Scope) throws InterruptedException {
         loginPageObj = new LoginPage(driver);
-        homePageObj = loginPageObj.loginWithValidData(userName, password);
+        if (Scope.equals("Regression")) {
+            homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
+            WebDriverManager.chromedriver().clearDriverCache().setup();
+            waitUntilElementToBePresent(homePageObj.salesInvoicesTab, GeneralConstants.minTimeOut);
+
+        } else if (Scope.equals("Comparing")) {
+            homePageObj = loginPageObj.loginWithValidData(userName_4, password_4);
+            WebDriverManager.chromedriver().clearDriverCache().setup();
+            waitUntilElementToBePresent(homePageObj.salesInvoicesTab, GeneralConstants.minTimeOut);
+            if (tryToGetWebElement(homePageObj.closeIcon) == GeneralConstants.SUCCESS) {
+                homePageObj.closeWelcomeMsg();
+            }
+        } else {
+            System.out.println(" there is an error happen");
+        }
     }
 
     @AfterMethod
-    public void tearDownTestCase() {
-
-        driver.navigate().to(homePageLink);
+    @Parameters({"Scope"})
+    public void tearDownTestCase(String Scope) throws InterruptedException {
+        driver.navigate().to(homePageLink_5);
         driver.manage().deleteAllCookies();
-
         WebDriverManager.chromedriver().clearDriverCache().setup();
+        homePageObj.logOutFromDafater_5();
+        if (Scope.equals("Regression")) {
+            driver.navigate().to(websiteLink_5);
+        } else if (Scope.equals("Comparing")) {
+            driver.navigate().to(websiteLink_4);
+        }
     }
 
     @AfterClass
-    public void closeSuite() {
-        driver.quit();
+    public void tearDown() {
+        System.out.println("Running tearDown...");
+        if (driver != null) {
+            driver.quit();
+            System.out.println("Driver quit executed");
+        }
     }
+
 }

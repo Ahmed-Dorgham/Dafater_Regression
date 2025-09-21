@@ -90,6 +90,7 @@ public class ItemPricePage extends MainPage {
 //        waitUntilElementToBePresent(newItemPriceTitle, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemCodeField, GeneralConstants.minTimeOut);
         getWebElement(itemCodeField).click();
+        System.out.println("enter item code ");
         getWebElement(itemCodeField).sendKeys(itemCode);
         getWebElement(newItemPriceTitle).click();
         //getWebElement(uomField).sendKeys(uom);
@@ -97,8 +98,10 @@ public class ItemPricePage extends MainPage {
         getWebElement(itemPriceField).click();
         getWebElement(itemPriceField).clear();
         getWebElement(itemPriceField).clear();
+        System.out.println("enter item price ");
         getWebElement(itemPriceField).sendKeys(price);
         scrollToSpeceficElement(saveBtn);
+        System.out.println("click on save btn");
         getWebElement(saveBtn).click();
     }
 

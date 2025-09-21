@@ -22,7 +22,8 @@ public class ItemPage extends MainPage {
     private By itemPriceField = By.xpath("(//*[contains(@data-fieldtype,'Currency')])[3]");
     private By itemCodeInputField = By.xpath("(//*[contains(@id,'item_code')])");
     private By itemGroupsList = By.xpath("(//*[contains(@data-target,'Item Group')and @placeholder=' ']/following-sibling::ul)");
-    private By itemGroupOpt = By.xpath("((//*[contains(@data-target,'Item Group')and @placeholder=' ']/following-sibling::ul/li))[1]");
+    private By itemGroupOpt = By.xpath("((//*[contains(@data-target,'Item Group')and @placeholder=' ']/following-sibling::ul/li))[1]" +
+            "| ((//*[contains(@data-target,'Item Group')and @placeholder=' ']/following-sibling::ul/div/p))[1]");
     //    private By itemOpt = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)/li)[1]");
     private By dueDateField = By.xpath("//*[contains(@id,'due_date')]");
     private By salesTab = By.xpath("//*[contains(@id,'item-sales_details-tab')]");
@@ -39,6 +40,7 @@ public class ItemPage extends MainPage {
     private By submittedStatus = By.xpath("(//*[contains(@class,'label label-success')])");
     private By draftStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap red')])/span");
     private By itemName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By itemName_3 = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
     private By ItemCode = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
     private By DraftInvoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By invoiceNameForCreditNote = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[1]");
@@ -56,6 +58,7 @@ public class ItemPage extends MainPage {
     private By isPosCheckBox = By.id("is_pos");
     private By itemOpt = By.xpath("(//*[contains(@id,'sidebar-stock-item')]/span)[1]");
     private By closeFilterIcon = By.xpath("(//*[contains(@class,'filter-icon')])[2]");
+    By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
 
     public void enterValidDataIntoSalesInvoicePageAndSumbit(String dueDate) throws InterruptedException {
 //        waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
@@ -148,11 +151,13 @@ public class ItemPage extends MainPage {
         getWebElement(salesTab).click();
         getWebElement(salesTab).click();
         System.out.println("unselect is sales item checkbox ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(isSalesItemCheckBox, GeneralConstants.minTimeOut);
         getWebElement(isSalesItemCheckBox).click();
-
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         System.out.println("click on save btn ");
         getWebElement(saveBtn).click();
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
     }
 
@@ -236,8 +241,18 @@ public class ItemPage extends MainPage {
     public String getItemName(String expected) {
         System.out.println("Verify the name of item  ");
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(itemName,GeneralConstants.minTimeOut);
         System.out.println("actual text is  " + getWebElement(itemName).getText() + "  and expected text is  " + expected);
         return getWebElement(itemName).getText();
+    }
+    public String getItemName_3(String expected) {
+        System.out.println("Verify the name of item  ");
+        waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(itemName_3,GeneralConstants.minTimeOut);
+        System.out.println("actual text is  " + getWebElement(itemName_3).getText() + "  and expected text is  " + expected);
+        return getWebElement(itemName_3).getText();
     }
     public String getItemCode(String expected) {
         System.out.println("Verify the name of item  ");

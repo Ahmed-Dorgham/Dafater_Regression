@@ -12,17 +12,32 @@ public class LoginPage extends MainPage {
         this.driver = driver;
     }
 
-    private By userNameField = By.xpath("//input[@id='login_email']");
-    private By passwordField = By.id("login_password");
+    private By userNameField = By.xpath("//input[@id='login_email'] | //input[@id='login_id']");
+    private By passwordField = By.xpath("//input[@id='login_password'] | //input[@id='pass']");
     private By loginBtn = By.id("login_btn");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
+
     public HomePage loginWithValidData(String userName, String password) {
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementToBePresent(userNameField, GeneralConstants.minTimeOut);
-        getWebElement(userNameField).click();
-        getWebElement( userNameField).sendKeys(userName);
-        getWebElement( passwordField).sendKeys(password);
-        getWebElement(loginBtn).click();
+        if (tryToGetWebElement(userNameField)==GeneralConstants.SUCCESS)
+        {
+            waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+            waitUntilElementToBePresent(userNameField, GeneralConstants.minTimeOut);
+//        getWebElement(userNameField).click();
+            clickByActions(userNameField);
+            getWebElement(userNameField).sendKeys(userName);
+            getWebElement(passwordField).sendKeys(password);
+            getWebElement(loginBtn).click();
+        }
+
         return new HomePage(driver);
+    }
+
+    public void switchToDafater_5(String loginPageLink_5) throws InterruptedException {
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(userNameField, GeneralConstants.minTimeOut);
+        driver.get(loginPageLink_5);
+
+
+        System.out.println("switch to Dafater 5 ");
     }
 }

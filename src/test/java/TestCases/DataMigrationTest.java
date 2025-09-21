@@ -18,7 +18,7 @@ public class DataMigrationTest extends BaseTest {
     private final String failureConnectionMsg = "Cannot Connect";
 
     @Test(priority = 1)
-    public void checkSuccessVmConnection() {
+    public void TC01_checkSuccessVmConnection() {
 homePageObj = new HomePage(driver);
         dataMigrationToolPageObj = homePageObj.searchAboutDataMigrationTool();
         dataMigrationToolPageObj.enterValidDataIntoMainData(vmUrl,clientKey,secretKey);
@@ -27,7 +27,7 @@ homePageObj = new HomePage(driver);
 
     }
     @Test (priority = 2)
-    public void checkFailureVmConnection() {
+    public void TC02_checkFailureVmConnection() {
         homePageObj = new HomePage(driver);
 
         dataMigrationToolPageObj = homePageObj.searchAboutDataMigrationTool();

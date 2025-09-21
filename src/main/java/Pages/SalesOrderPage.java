@@ -24,13 +24,14 @@ public class SalesOrderPage extends MainPage {
     private By totalAmountLabel = By.xpath("(//*[contains(text(),'الكمية الإجمالية')])");
     private By itemCodeInputField = By.xpath("(//*[contains(@id,'item_code')])");
     private By customersListSalesOrder = By.xpath("(//*[contains(@data-target,'Customer')and @placeholder=' ']/following-sibling::ul)");
-    private By customerOptSalesOrder = By.xpath("((//*[contains(@data-target,'Customer')and @placeholder=' ']/following-sibling::ul)/li)[1]");
-    private By itemOpt = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)/li)[1]");
+    private By customerOptSalesOrder = By.xpath("((//*[contains(@data-target,'Customer')and @placeholder=' ']/following-sibling::ul)/li)[1]" +
+            "| ((//*[contains(@data-target,'Customer')and @placeholder=' ']/following-sibling::ul)/div/p/strong)[1]");
+    private By itemOpt = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)/div/p/strong)[1]");
     private By createBtn = By.xpath("//*[contains(@class,'btn toolbar-btn btn-primary')]");
     private By salesInvoiceChoice = By.xpath("//*[contains(text(),'فاتورة المبيعات') and @class = 'dropdown-item']");
     private By saveAndSubmitBtn = By.xpath("//*[contains(@class,'btn btn-inverse btn-sm save-submit-action toolbar-btn')]");
     private By yesBtn = By.xpath("(//*[contains(@class,'btn btn-primary btn-sm btn-modal-primary')])");
-    private By salesOrderStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap orange')])");
+    private By salesOrderStatus = By.xpath("(//*[@class='indicator-pill no-indicator-dot whitespace-nowrap orange'])");
     private By salesOrderCompletedStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap green')])");
     private By salesOrdersOpt = By.xpath("(//*[contains(@id,'sidebar-selling-sales-orders')]/span)[1]");
     private By viewBtn = By.xpath("(//button[contains(text(),'واجهة')])[2]");
@@ -39,6 +40,8 @@ public class SalesOrderPage extends MainPage {
     private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
     private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
     private By salesInvoicesTab = By.id("module-anchor-Selling");
+    private  By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)//div//p[@title='item 1']/strong)");
+
     public void enterValidDataIntoSalesOrderPage(String dueDate) throws InterruptedException {
         waitUntilElementToBePresent(newSalesOrderTitle, GeneralConstants.minTimeOut);
         System.out.println("select  customer ");
@@ -46,23 +49,19 @@ public class SalesOrderPage extends MainPage {
         waitUntilElementVisibility(customersListSalesOrder, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(customerOptSalesOrder, GeneralConstants.minTimeOut);
         getWebElement(customerOptSalesOrder).click();
-//        System.out.println("enter dues date  ");
-//        waitUntilElementVisibility(dueDateField, GeneralConstants.minTimeOut);
-//        getWebElement(dueDateField).sendKeys(dueDate);
         System.out.println("Scroll down to item field ");
         scrollToSpeceficElement(totalAmountLabel);
-       //Thread.sleep(6000);
-        System.out.println(" select item  ");
-//        clickByJs(getWebElement(itemCodeField));
-        getWebElement(itemCodeField).click();
-         waitUntilElementToBePresent(itemCodeInputField,GeneralConstants.minTimeOut);
-        getWebElement(itemCodeInputField).sendKeys("item");
-        waitUntilElementToBePresent(itemOpt,GeneralConstants.minTimeOut);
-        getWebElement(itemOpt).click();
-//        clickByJs(getWebElement(itemOpt));
-//        System.out.println("unselect update stock opt");
-//        getWebElement(updateStockBtn).click();
-       // Thread.sleep(6000);
+        clickByActions(itemCodeField);
+        waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
+        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).clear();
+        waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
+        getWebElement(itemCodeInputField).sendKeys("item 1");
+//        getWebElement(itemCodeInputField).sendKeys("item 1");
+        waitUntilElementToBePresent(selectedItem, GeneralConstants.minTimeOut);
+//        Thread.sleep(threadTimeOut);
+        clickByActions(selectedItem);
+
         System.out.println("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
         System.out.println(" save and submit sales order ");
@@ -95,6 +94,7 @@ public class SalesOrderPage extends MainPage {
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         driver.navigate().refresh();
         System.out.println("open last created sales order ");
+        waitUntilElementToBePresent(salesOrderNameAtViewList,GeneralConstants.minTimeOut);
         getWebElement(salesOrderNameAtViewList).click();
         waitUntilElementToBePresent(createBtn,GeneralConstants.minTimeOut);
         System.out.println("status of sales order after creating related sales invoices " +getWebElement(salesOrderCompletedStatus).getText());
