@@ -130,6 +130,7 @@ public class GeneralLedgerReportPage extends MainPage {
         Thread.sleep(threadTimeOut);
         scrollToSpeceficElement(footer);
         getListOfWebElements(accounts);
+
         for (i = 0; i < getListOfWebElements(accounts).size(); i++) {
             if (getListOfWebElements(accounts).get(i).getAttribute("title").contains(defaultDebitAccount)) {
                 System.out.println(" default debit account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));

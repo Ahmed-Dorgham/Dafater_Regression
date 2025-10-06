@@ -49,7 +49,7 @@ public class PaymentEntryListPage extends MainPage {
 
         waitUntilElementToBePresent(paymentEntryLabel, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementNotContainText(numberOfAllPaymentEntry,"تحديث");
+        waitUntilElementNotHaveSpecificText(numberOfAllPaymentEntry,"تحديث");
         System.out.println("number of all payment entry at list view after syncing " + getWebElement(numberOfAllPaymentEntry).getText());
         return getWebElement(numberOfAllPaymentEntry).getText();
     }

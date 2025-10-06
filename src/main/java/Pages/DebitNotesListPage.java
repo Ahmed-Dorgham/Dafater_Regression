@@ -87,7 +87,7 @@ public class DebitNotesListPage extends MainPage {
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
         //   Thread.sleep(threadTimeOut);
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementNotHaveSpecificText(numberOfAllDebitNotesField,"تحديث",GeneralConstants.freezeTimeOut);
+        waitUntilElementNotHaveSpecificText(numberOfAllDebitNotesField,"تحديث");
         System.out.println("number of all debit notes at list view after Syncing " + getWebElement(numberOfAllDebitNotesField).getText());
         return getWebElement(numberOfAllDebitNotesField).getText();
     }

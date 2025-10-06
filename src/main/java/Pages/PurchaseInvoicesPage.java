@@ -55,6 +55,54 @@ public class PurchaseInvoicesPage extends MainPage {
     private By totalAmountValue = By.xpath("//div[@data-fieldname='total']/div/div/div/div[2]/div/span");
     private By generalLedgerChoice = By.xpath("(//a[contains(text(),'موازنة دفتر الأستاذ')])");
     private By closeIcon = By.xpath("(//*[contains(@class,'btn btn-modal-close btn-link')])[2]");
+    private By invoiceIssueDateField = By.xpath("//*[contains(text(),' تاريخ ادخال الفاتورة')]/../following-sibling::div" +
+            "|//label[contains(@for,'posting_date')]/following-sibling::div " +
+            "| //*[contains(@for,'posting_date')]/following-sibling::div ");
+    private By successStatusField = By.xpath("//*[contains(@class,'status-bar pull-left')]/span" +
+            "|//*[contains(@class,'ellipsis title-text')]/following-sibling::div//span[contains(@class,'label label-success')]");
+    private By supplierNameField = By.xpath("//*[contains(text(),'اسم المورد')]/../following-sibling::div/a" +
+            "|//*[contains(text(),'المورد')]//following-sibling::div/a");
+
+    private By netTotalField = By.xpath("(//*[contains(@title,'net_total_import')]//span)[3]" +
+            "| (//*[@data-fieldname='total']//span[@dir='rtl'])[1]");
+    private By grandTotalField = By.xpath("(//*[@data-fieldname='grand_total']//span)[1]" +
+            "| (//*[contains(@title,'grand_total_import')]//span)[3]");
+    public String getPurchaseInvoiceStatus() {
+        String draftStatus = "مسودة";
+        waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+        if (tryToGetWebElement(successStatusField) == GeneralConstants.SUCCESS) {
+//            System.out.println(" status of sales invoice  " + getWebElement(successStatusField).getText());
+            return getWebElement(successStatusField).getText();
+        } else {
+//            System.out.println(" status of sales invoice  is " + draftStatus);
+            return draftStatus;
+        }
+    }
+
+    public String getPurchaseInvoiceIssueDate() {
+        waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("issue date of sales invoice  " + getWebElement(invoiceIssueDateField).getText());
+        return getWebElement(invoiceIssueDateField).getText();
+    }
+    public String getSupplierNameAtSalesInvoice() throws InterruptedException {
+        waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(supplierNameField,GeneralConstants.minTimeOut);
+
+        System.out.println("supplier name at purchase invoice  " + getWebElement(supplierNameField).getText());
+        return getWebElement(supplierNameField).getText();
+    }
+
+    public String getNetTotalValueAtPurchaseInvoice() {
+        waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("net total value of purchase invoice  " + getWebElement(netTotalField).getText());
+        return getWebElement(netTotalField).getText();
+    }
+
+    public String getGrandTotalValueAtPurchaseInvoice() {
+        waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("grand total value of  purchase invoice  " + getWebElement(grandTotalField).getText());
+        return getWebElement(grandTotalField).getText();
+    }
 
     public void enterValidDataIntoPurchaseInvoicePage() throws InterruptedException {
 

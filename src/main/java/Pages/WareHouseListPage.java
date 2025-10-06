@@ -67,14 +67,14 @@ public class WareHouseListPage extends MainPage {
 
         waitUntilElementToBePresent(wareHouseLabel, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementNotHaveSpecificText(listCount,"تحديث",GeneralConstants.minTimeOut);
+        waitUntilElementNotHaveSpecificText(listCount,"تحديث");
         System.out.println("number of warehouse at list view after Syncing " + getWebElement(totalWareHouses).getText());
         return getWebElement(totalWareHouses).getText();
     }
     public String getNumberOfAllWareHouseBeforeCreatingNewWareHouse() {
 
         waitUntilElementToBePresent(wareHouseLabel, GeneralConstants.minTimeOut);
-        waitUntilElementNotContainText(listCount, "تحديث");
+        waitUntilElementNotHaveSpecificText(listCount, "تحديث");
         System.out.println("number of all warehouses at list view before creating new warehouse " + getWebElement(listCount).getText());
 
         return getWebElement(listCount).getText();

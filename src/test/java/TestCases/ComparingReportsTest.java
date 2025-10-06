@@ -1,6 +1,7 @@
 package TestCases;
 
 import Pages.*;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -21,12 +22,16 @@ public class ComparingReportsTest extends BaseTest {
     SalesInvoicesPage salesInvoicesPageObj;
     ItemPage itemPageObj;
     ItemListPage itemListPageObj;
+    ProfitAndLossReportPage profitAndLossReportPageObj;
     ReportsListPage reportsListPageObj;
     GeneralLedgerReportPage generalLedgerReportPageObj;
     CustomersAgingReportPage customersAgingReportPageObj;
     TaxDeclarationReportPage taxDeclarationReportPageObj;
     StockBalanceReportPage stockBalanceReportPageObj;
     TrialBalanceReportPage trialBalanceReportPageObj;
+    FinancialStatementsReportPage financialStatementsReportPageObj;
+    BalanceSheetReportPage balanceSheetReportPageObj;
+
     SellingPriceListsPage sellingPriceListsPageObj;
     CreditNotePage creditNotePageObj;
     StandardSellingListPage standardSellingListPageObj;
@@ -41,12 +46,12 @@ public class ComparingReportsTest extends BaseTest {
     private final String submittedStatus = "معتمد";
     private final String draftStatus = "مسودة";
     private final String invoiceName = "ACC-SINV";
-//    private final String accountName = "0 - NAMAC";
+    //    private final String accountName = "0 - NAMAC";
     private final String accountName = "1 الاصول - NAMAC";
     private final String customerName = "السلامة لتجارة المحاصيل الزراعية";
     private final String companyName = "شركة نماك الوطنية الزراعية";
 
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = false)
     public void TC01_comparingGeneralLedgerReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -84,7 +89,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2, enabled = false)
     public void TC02_comparingCustomersAgingReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -94,7 +99,7 @@ public class ComparingReportsTest extends BaseTest {
         randomNumber = random.nextInt(1000000000);
         itemCode = "item " + randomNumber;
         softAssert = new SoftAssert();
-     //   homePageObj = new HomePage(driver);
+        //   homePageObj = new HomePage(driver);
 //        driver.navigate().to(websiteLink_4);
 //        loginPageObj = new LoginPage(driver);
 //        homePageObj = loginPageObj.loginWithValidData(userName_4, password_4);
@@ -117,7 +122,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 3, enabled = true)
+    @Test(priority = 3, enabled = false)
     public void TC03_comparingTaxDeclarationReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -150,7 +155,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 4, enabled = true)
+    @Test(priority = 4, enabled = false)
     public void TC04_comparingStockBalanceReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -189,8 +194,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-
-    @Test(priority = 5, enabled = true)
+    @Test(priority = 5, enabled = false)
     public void TC05_comparingTrialBalanceReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -262,4 +266,82 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
+    @Test(priority = 6, enabled = false)
+    public void TC06_comparingBalanceSheetReport() throws InterruptedException, IOException {
+
+        homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
+        websiteLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "websiteLink_5");
+        homePageLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_5");
+        random = new Random();
+        randomNumber = random.nextInt(1000000000);
+        itemCode = "item " + randomNumber;
+        softAssert = new SoftAssert();
+        homePageObj = new HomePage(driver);
+        reportsListPageObj = homePageObj.openReportsListPage();
+        financialStatementsReportPageObj = reportsListPageObj.openFinancialStatementsReport();
+        String listName = financialStatementsReportPageObj.selectBalanceSheetReport();
+        String companyName = financialStatementsReportPageObj.getSelectedCompanyName();
+
+        String periodName = financialStatementsReportPageObj.getSelectedPeriodName();
+        String yearName = financialStatementsReportPageObj.getSelectedYearName();
+        financialStatementsReportPageObj.loadReportData_4();
+        String profitOrLossValueBeforeSyncing = financialStatementsReportPageObj.getProfitOrLossValue();
+        loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
+        loginPageObj.switchToDafater_5(websiteLink_5);
+        homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
+        reportsListPageObj = homePageObj.openReportsListPage();
+        balanceSheetReportPageObj = reportsListPageObj.openBalanceSheetReport_5();
+      String filtrationBasedOnOptionName =  balanceSheetReportPageObj.applyFilters_5(companyName, yearName);
+        String periodNameAtDafater5 = balanceSheetReportPageObj.getPeriodOptionName();
+        Assert.assertTrue(filtrationBasedOnOptionName.contains("السنة المالية"));
+        Assert.assertTrue(periodNameAtDafater5.contains("سنوى"));
+        balanceSheetReportPageObj.loadReportData_5();
+        balanceSheetReportPageObj.scrollInsideTable();
+       String profitOrLossValueAfterSyncing =  balanceSheetReportPageObj.getProfitOrLossValue();
+        System.out.println("verify that profit Or Loss value which exist at dafater 5 is equal to profit Or Loss value for the same company and level at dafater 4 ");
+        softAssert.assertTrue(profitOrLossValueBeforeSyncing.contains(profitOrLossValueAfterSyncing));
+        System.out.println("profit Or Loss value at dafater 4  before syncing is " + profitOrLossValueBeforeSyncing + " and after syncing at dafater 5 is " + profitOrLossValueAfterSyncing);
+        softAssert.assertAll();
+    }
+
+    @Test(priority = 7, enabled = true)
+    public void TC07_comparingProfitAndLossReport() throws InterruptedException, IOException {
+
+        homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
+        websiteLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "websiteLink_5");
+        homePageLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_5");
+        random = new Random();
+        randomNumber = random.nextInt(1000000000);
+        itemCode = "item " + randomNumber;
+        softAssert = new SoftAssert();
+        homePageObj = new HomePage(driver);
+        reportsListPageObj = homePageObj.openReportsListPage();
+        financialStatementsReportPageObj = reportsListPageObj.openFinancialStatementsReport();
+        String listName = financialStatementsReportPageObj.selectProfitAndLossReport();
+        String companyName = financialStatementsReportPageObj.getSelectedCompanyName();
+
+        String periodName = financialStatementsReportPageObj.getSelectedPeriodName();
+        String yearName = financialStatementsReportPageObj.getSelectedYearName();
+        financialStatementsReportPageObj.loadReportData_4();
+
+
+        String profitOrLossValueBeforeSyncing = financialStatementsReportPageObj.getProfitOrLossValue();
+        loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
+        loginPageObj.switchToDafater_5(websiteLink_5);
+        homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
+        reportsListPageObj = homePageObj.openReportsListPage();
+        profitAndLossReportPageObj = reportsListPageObj.openProfitAndLossReport_5();
+
+        String filtrationBasedOnOptionName =  profitAndLossReportPageObj.applyFilters_5(companyName, yearName);
+        String periodNameAtDafater5 = profitAndLossReportPageObj.getPeriodOptionName();
+        Assert.assertTrue(filtrationBasedOnOptionName.contains("السنة المالية"));
+        Assert.assertTrue(periodNameAtDafater5.contains("سنوى"));
+        profitAndLossReportPageObj.loadReportData_5();
+        profitAndLossReportPageObj.scrollInsideTable();
+        String profitOrLossValueAfterSyncing =  profitAndLossReportPageObj.getProfitOrLossValue();
+        System.out.println("verify that profit Or Loss value which exist at dafater 5 is equal to profit Or Loss value for the same company and level at dafater 4 ");
+        softAssert.assertTrue(profitOrLossValueBeforeSyncing.contains(profitOrLossValueAfterSyncing));
+        System.out.println("profit Or Loss value at dafater 4  before syncing is " + profitOrLossValueBeforeSyncing + " and after syncing at dafater 5 is " + profitOrLossValueAfterSyncing);
+        softAssert.assertAll();
+    }
 }

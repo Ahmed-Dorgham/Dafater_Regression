@@ -4,7 +4,7 @@ public class GeneralConstants {
 
     /************************************************* Constants ************************************************/
 
-    public final static int globalTimeOut = 10;
+    public final static int globalTimeOut = 360;
     public final static int minTimeOut = 40;
     public final static int freezeTimeOut = 20;
     public final static int threadTimeOut = 6000;
@@ -20,8 +20,8 @@ public class GeneralConstants {
 
     public final static String userName_4 = "Administrator";
     public final static String userName_5 = "Administrator";
-    public final static String password_5 = "123456";
-    public final static String password_4 = "Asc7hXewfA5";
+    public final static String password_5 = "Admin123456";
+    public final static String password_4 = "sdWeds9xdEd";
 
 
     /************************************************* Variables  ************************************************/

@@ -17,6 +17,7 @@ public class DataMigrationToolPage extends MainPage {
     private By syncDocTypesDataBtn = By.id("sync_doctypes_data");
     private By statusMsg = By.className("msgprint");
     private By editIcon = By.className("icon-xs");
+    private By closeIcon = By.xpath("(//*[contains(@class,'btn btn-modal-close btn-link')])");
     private By allCheckBox = By.xpath("//*[contains(@class,'grid-heading-row with-filter')]//*[contains(@type,'checkbox')]");
     private By vmUrlInputField = By.xpath("(//*[contains(@class,'input-with-feedback form-control')])[1]");
     private By apiKeyInputField = By.xpath("(//*[contains(@class,'input-with-feedback form-control')])[2]");
@@ -51,9 +52,17 @@ public class DataMigrationToolPage extends MainPage {
 
     public WebElement checkStatusMsg() {
         waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
-        System.out.println(" msg after clicking on btn is >>>   "+getWebElement(statusMsg).getText());
+        System.out.println(" msg after clicking on btn is >>>   " + getWebElement(statusMsg).getText());
         System.out.println(getWebElement(statusMsg).getText());
         return getWebElement(statusMsg);
+    }
+
+    public void closeStatusMsg() {
+
+        waitUntilElementVisibility(closeIcon, GeneralConstants.minTimeOut);
+        System.out.println("close success msg ");
+        getWebElement(closeIcon).click();
+
     }
 
     public void enterValidDataIntoMainData(String vmUrl, String apiKey, String secretKey) {

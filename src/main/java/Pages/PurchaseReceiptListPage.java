@@ -65,7 +65,7 @@ public class PurchaseReceiptListPage extends MainPage {
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(purchaseReceiptListLabel, GeneralConstants.minTimeOut);
            Thread.sleep(threadTimeOut);
-        waitUntilElementNotContainText(numberOfAllPurchaseReceipts,"تحديث");
+        waitUntilElementNotHaveSpecificText(numberOfAllPurchaseReceipts,"تحديث");
 
         System.out.println("number of all purchase receipt at list view after Syncing " + getWebElement(numberOfAllPurchaseReceipts).getText());
         return getWebElement(numberOfAllPurchaseReceipts).getText();

@@ -45,7 +45,19 @@ public class DeliveryNotePage extends MainPage {
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     private By wareHouseTab = By.id("module-anchor-Stock");
     private By newBtn = By.xpath("(//button[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')])");
-    private  By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)/div/p[@title='item 1']/strong)");
+    private By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)/div/p[@title='item 1']/strong)");
+    private By deliveryNoteIssueDateField = By.xpath("//*[contains(text(),' تاريخ اصدار السند')]/../following-sibling::div" +
+            "|//label[contains(@for,'posting_date')]/following-sibling::div " +
+            "| //*[contains(@for,'posting_date')]/following-sibling::div ");
+    private By successStatusField = By.xpath("//*[contains(@class,'title-text pull-left')]/following-sibling::div//span[contains(@class,'label label-success')]" +
+            "|//*[contains(@class,'ellipsis title-text')]/following-sibling::div/span");
+    private By customerNameField = By.xpath("//*[contains(text(),' اسم العميل')]/../following-sibling::div/a" +
+            "|//*[@data-doctype='Customerc']");
+    private By netTotalField = By.xpath("(//*[contains(@title,'net_total_export')]//span)[3]" +
+            "| (//*[@data-fieldname='total']//span[@dir='rtl'])[1]");
+    private By grandTotalField = By.xpath("(//*[contains(@title,'grand_total_export')]//span)[3]" +
+            "| //*[contains(text(),'المجموع الإجمالي')]/following-sibling::div/div/span");
+    private By draftStatusField = By.xpath("(//*[contains(@class,'ellipsis title-text')]/following-sibling::span)[4]");
 
     public void enterValidDataIntoDeliveryNotePage() throws InterruptedException {
         waitUntilElementToBePresent(newDeliveryNoteTitle, GeneralConstants.minTimeOut);
@@ -87,9 +99,9 @@ public class DeliveryNotePage extends MainPage {
 
     public String getSalesOrderStatusBeforeCreatingRelatedSalesInvoice() {
 //        System.out.println("Verify the status of sales invoice  ");
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         System.out.println("status of delivery note before creating related sales invoices " + getWebElement(deliveryNoteStatus).getText());
         return getWebElement(deliveryNoteStatus).getText();
 
@@ -107,7 +119,7 @@ public class DeliveryNotePage extends MainPage {
 
 //        Thread.sleep(9000);
         waitUntilElementToBePresent(deliveyNoteOpt, GeneralConstants.minTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(deliveyNoteOpt).click();
         clickByActions(deliveyNoteOpt);
 
@@ -119,7 +131,7 @@ public class DeliveryNotePage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(deliveryNoteNameAtViewList).click();
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         System.out.println("status of delivery note after creating related sales invoices " + getWebElement(deliveryNoteCompletedStatus).getText());
         return getWebElement(deliveryNoteCompletedStatus).getText();
 
@@ -134,14 +146,58 @@ public class DeliveryNotePage extends MainPage {
         getWebElement(salesInvoiceChoice).click();
         return new SalesInvoicesPage(driver);
     }
-//    public void enterValidDataIntoMainData (String vmUrl , String apiKey , String secretKey)
-//    {
-//        waitUntilElementVisibility(vmUrlInputField,GeneralConstants.minTimeOut);
-//        getWebElement(vmUrlInputField).clear();
-//        getWebElement(vmUrlInputField).sendKeys(vmUrl);
-//        getWebElement(apiKeyInputField).clear();
-//        getWebElement(apiKeyInputField).sendKeys(apiKey);
-//        getWebElement(secretKeyInputField).clear();
-//        getWebElement(secretKeyInputField).sendKeys(secretKey);
-//    }
+
+    public String getDeliveryNoteStatus() {
+        String draftStatus = "مسودة";
+        waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
+        if (tryToGetWebElement(successStatusField) == GeneralConstants.SUCCESS) {
+//            System.out.println(" status of sales invoice  " + getWebElement(successStatusField).getText());
+            return getWebElement(successStatusField).getText();
+        } else {
+//            System.out.println(" status of sales invoice  is " + draftStatus);
+            return draftStatus;
+        }
+    }
+
+    public String getDeliveryNoteIssueDate() {
+        waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("issue date of delivery note " + getWebElement(deliveryNoteIssueDateField).getText());
+        return getWebElement(deliveryNoteIssueDateField).getText();
+    }
+
+    public String getCustomerNameAtDeliveryNote() {
+        waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("customer name at delivery note  " + getWebElement(customerNameField).getText());
+        return getWebElement(customerNameField).getText();
+    }
+
+    public String getNetTotalValueAtSalesInvoice() {
+        waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("net total value of delivery note  " + getWebElement(netTotalField).getText());
+        return getWebElement(netTotalField).getText();
+    }
+
+    public String getGrandTotalValueAtSalesInvoice() {
+        waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("grand total value of   delivery note  " + getWebElement(grandTotalField).getText());
+        return getWebElement(grandTotalField).getText();
+    }
+
+    public String getSalesInvoiceStatusAtDafater_5() {
+        waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
+        if (tryToGetWebElement(successStatusField) == GeneralConstants.SUCCESS) {
+//            System.out.println("status of sales invoice  " + getWebElement(successStatusField).getText());
+            return getWebElement(successStatusField).getText();
+        } else {
+//            System.out.println("status of sales invoice  is  " + getWebElement(draftStatusField).getText());
+            return getWebElement(draftStatusField).getText();
+        }
+    }
+
+    public String getCustomerNameAtDeliveryNoteAtDafater_5() {
+        waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
+
+        System.out.println("customer name at delivery note  " + getWebElement(customerNameField).getText());
+        return getWebElement(customerNameField).getText();
+    }
 }

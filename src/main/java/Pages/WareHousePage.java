@@ -290,7 +290,7 @@ public class WareHousePage extends MainPage {
         waitUntilElementToBeClickable(wareHousesOpt, GeneralConstants.minTimeOut);
         getWebElement(wareHousesOpt).click();
         driver.navigate().refresh();
-        waitUntilElementNotContainText(listCount, "تحديث...");
+        waitUntilElementNotHaveSpecificText(listCount, "تحديث...");
 //        waitUntilElementToBePresent(closeFilterIcon, GeneralConstants.minTimeOut);
 //        getWebElement(closeFilterIcon).click();
         return new WareHouseListPage(driver);

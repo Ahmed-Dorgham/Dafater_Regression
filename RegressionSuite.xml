@@ -5,11 +5,11 @@
         <parameter name="Scope" value="Regression"/>
         <classes>
             <class name="TestCases.DataMigrationTest"></class>
-<!--            <class name="TestCases.AddingItemsTest"></class>-->
-<!--            <class name="TestCases.SalesInvoicesTest"></class>-->
-<!--            <class name="TestCases.PurchaseInvoicesTest"></class>-->
-<!--            <class name="TestCases.AddingWareHouseTest"></class>-->
-<!--            <class name="TestCases.PosViewTest"></class>-->
+            <!--            <class name="TestCases.AddingItemsTest"></class>-->
+            <!--            <class name="TestCases.SalesInvoicesTest"></class>-->
+            <!--            <class name="TestCases.PurchaseInvoicesTest"></class>-->
+            <!--            <class name="TestCases.AddingWareHouseTest"></class>-->
+            <!--            <class name="TestCases.PosViewTest"></class>-->
 
         </classes>
     </test>

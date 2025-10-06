@@ -74,7 +74,7 @@ public class CompaniesListPage extends MainPage {
 
         waitUntilElementToBePresent(companyLabel, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementNotHaveSpecificText(listCount,"تحديث",GeneralConstants.minTimeOut);
+        waitUntilElementNotHaveSpecificText(listCount,"تحديث");
         System.out.println("number of companies at list view after Syncing " + getWebElement(totalCompanies).getText());
         return getWebElement(totalCompanies).getText();
     }

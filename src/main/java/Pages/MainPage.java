@@ -42,8 +42,8 @@ public class MainPage extends GeneralConstants {
         wait = new WebDriverWait(driver, Duration.ofSeconds(duration));
         wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
-    public void waitUntilElementNotHaveSpecificText(By by,String text, int duration) {
-        wait = new WebDriverWait(driver, Duration.ofSeconds(duration));
+    public void waitUntilElementNotHaveSpecificText(By by,String text) {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(GeneralConstants.freezeTimeOut));
         wait.until(ExpectedConditions.not(textToBePresentInElementLocated(by,text)));
     }
     public void waitUntilElementNotToBeVisible(By by, int duration) {
@@ -97,13 +97,6 @@ public class MainPage extends GeneralConstants {
 
     }
 
-    public void waitUntilElementNotContainText(By by, String value) {
-
-        while (getWebElement(by).getText().contains(value)) {
-            System.out.println("******************     ***********************");
-        }
-
-    }
 
     public String readDataFromPropertiesFile(String filePath, String Key) throws IOException {
         File file = new File(filePath);

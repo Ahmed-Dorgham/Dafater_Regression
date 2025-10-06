@@ -22,6 +22,7 @@ public class HomePage extends MainPage {
             "| (//*[contains(@href,'#List/Customer')]/span)[1]");
 
     private By debitNotesOpt = By.xpath("(//*[contains(@id,'sidebar-selling-debit-note')]/span)[1]");
+    private By createBtn = By.xpath("//button[contains(@id,'appframe-btn-إنشاء')]");
     private By creditNotesOpt = By.xpath("(//*[contains(@id,'sidebar-selling-credit-notes')]/span)[1]" +
             "| (//*[contains(@id,'sidebar-selling-return-note')]/span)[1]");
     private By companiesOpt = By.xpath("//*[@id='sidebar-accounts-company-section-companies']/span" +
@@ -38,12 +39,20 @@ public class HomePage extends MainPage {
     private By stockEntryOpt = By.xpath("(//*[contains(@id,'sidebar-stock-stock-entry')]/span)[1]");
     private By deliveryNoteOpt = By.xpath("(//*[contains(@id,'sidebar-stock-delivery-note')]/span)[1]");
     private By purchaseReceiptOpt = By.xpath("(//*[contains(@id,'sidebar-stock-purchase-receipt')]/span)[1]");
+    private By journalEntryOpt = By.xpath("(//*[contains(@id,'sidebar-accounts-journal-voucher')]/span)[1]" +
+            " | (//*[contains(@id,'sidebar-accounts-journal-entry')]/span)[1]");
     private By arrowIcon = By.xpath("(//*[contains(@class,'header-btn btn header__profile-btn need-work')])/i");
     private By logoutBtn = By.xpath("(//*[contains(@class,'pos-header__sign-out')])");
     private By welcomeHeader = By.xpath("(//*[contains(@class,'starter-welcome-msg starter-box my-3 col-xs-12 d-flex d-between')])" +
             "| //*[contains(@class,'starter-menu-container')]//*[contains(@class,'starter-welcome-msg starter-box my-3 col-xs-12 d-flex justify-content-between')]/div/span");
 
     public By salesInvoicesTab = By.id("module-anchor-Selling");
+    public By sellingSetup = By.xpath("//*[@id='sidebar-selling-'] " +
+            "| //*[@id='sidebar-selling-initiate-sales'] ");
+    public By purchaseSetup = By.xpath("//*[@id='sidebar-buying-initiate-purchases'] ");
+    public By salesTaxesAndChargesOpt = By.id("sidebar-selling-sales-tax-charges");
+    public By purchaseTaxesAndChargesOpt = By.xpath("//*[@id='sidebar-buying-purchase-tax-charges']  " +
+            "| //*[@id='sidebar-buying-purchase-taxes-and-charges-master']");
     private By reportsTab = By.id("module-anchor-reports");
     private By accountsTab = By.id("module-anchor-Accounts");
     public By purchaseInvoicesTab = By.xpath("//*[contains(@id,'module-anchor-Buying')] |//*[contains(@id,'module-icon-purchases')] ");
@@ -77,7 +86,7 @@ public class HomePage extends MainPage {
     public SalesInvoicesListPage openSalesInvoicesListPage() throws InterruptedException {
         System.out.println("click on sales invoice tab ");
 
-        waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
+        waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.globalTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(salesInvoicesTab).click();
         if (tryToGetWebElement(salesInvoicesOpt) == GeneralConstants.FAILED) {
@@ -90,6 +99,40 @@ public class HomePage extends MainPage {
         return new SalesInvoicesListPage(driver);
     }
 
+    public SalesTaxesAndChargesTemplatesListPage openSalesTaxesAndChargesTemplatesListPage() throws InterruptedException {
+        System.out.println("click on selling tab ");
+
+        waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        getWebElement(salesInvoicesTab).click();
+        if (tryToGetWebElement(salesInvoicesOpt) == GeneralConstants.FAILED) {
+            System.out.println("************************************");
+            getWebElement(salesInvoicesTab).click();
+        }
+        waitUntilElementToBeClickable(sellingSetup, GeneralConstants.minTimeOut);
+        getWebElement(sellingSetup).click();
+        System.out.println(" open Sales Taxes And Charges Templates list");
+        waitUntilElementToBeClickable(salesTaxesAndChargesOpt, GeneralConstants.minTimeOut);
+        getWebElement(salesTaxesAndChargesOpt).click();
+        return new SalesTaxesAndChargesTemplatesListPage(driver);
+    }
+    public PurchaseTaxesAndChargesTemplatesListPage openPurchaseTaxesAndChargesTemplatesListPage() throws InterruptedException {
+        System.out.println("click on purchase tab ");
+
+        waitUntilElementToBeClickable(purchaseInvoicesTab, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        getWebElement(purchaseInvoicesTab).click();
+        if (tryToGetWebElement(purchaseInvoicesOpt) == GeneralConstants.FAILED) {
+            System.out.println("************************************");
+            getWebElement(purchaseInvoicesTab).click();
+        }
+        waitUntilElementToBeClickable(purchaseSetup, GeneralConstants.minTimeOut);
+        getWebElement(purchaseSetup).click();
+        System.out.println(" open purchase Taxes And Charges Templates list");
+        waitUntilElementToBeClickable(purchaseTaxesAndChargesOpt, GeneralConstants.minTimeOut);
+        getWebElement(purchaseTaxesAndChargesOpt).click();
+        return new PurchaseTaxesAndChargesTemplatesListPage(driver);
+    }
     public ReportsListPage openReportsListPage() throws InterruptedException {
         System.out.println("click on  reports tab ");
 
@@ -365,5 +408,21 @@ public class HomePage extends MainPage {
         waitUntilElementToBeClickable(purchaseReceiptOpt, GeneralConstants.minTimeOut);
         getWebElement(purchaseReceiptOpt).click();
         return new PurchaseReceiptListPage(driver);
+    }
+
+
+    public JournalEntrytListPage openJournalEntryListPage() throws InterruptedException {
+        System.out.println("click on Accounts tab ");
+        waitUntilElementToBeClickable(accountsTab, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        getWebElement(accountsTab).click();
+        if (tryToGetWebElement(journalEntryOpt) == GeneralConstants.FAILED) {
+            System.out.println("************************************");
+            getWebElement(accountsTab).click();
+        }
+        System.out.println("click on journal entry option ");
+        waitUntilElementToBeClickable(journalEntryOpt, GeneralConstants.minTimeOut);
+        getWebElement(journalEntryOpt).click();
+        return new JournalEntrytListPage(driver);
     }
 }

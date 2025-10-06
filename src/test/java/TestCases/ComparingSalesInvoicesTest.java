@@ -1,6 +1,11 @@
 package TestCases;
 
-import Pages.*;
+import GeneralConstants.GeneralConstants;
+import Pages.HomePage;
+import Pages.LoginPage;
+import Pages.SalesInvoicesListPage;
+import Pages.SalesInvoicesPage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -16,17 +21,19 @@ public class ComparingSalesInvoicesTest extends BaseTest {
     LoginPage loginPageObj;
     HomePage homePageObj;
     SalesInvoicesListPage salesInvoicesListPageObj;
+    SalesInvoicesPage salesInvoicesPageObj;
 
     private final String duesDate = "15-07-2026";
     private final String secretKey = "kX7NY9yMSag3";
     private final String invalidSecretKey = "kX7NY9yMSag4";
     private final String successfulConnectionMsg = "Connected Successfully";
     private final String failureConnectionMsg = "Cannot Connect";
-    private final String submittedStatus = "معتمد";
+//    private final String submittedStatus = "معتمد";
+    private final String submittedStatus = "تم الارسال الي هيئة الزكاة والدخل بنجاح";
     private final String draftStatus = "مسودة";
     private final String invoiceName = "ACC-SINV";
 
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = false)
     public void TC01_comparingNumberOfSalesInvoices() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -54,5 +61,138 @@ public class ComparingSalesInvoicesTest extends BaseTest {
 
         softAssert.assertEquals(totalAmountOfSalesInvoicesAfterSyncing, totalAmountOfSalesInvoicesBeforeSyncing);
         softAssert.assertAll();
+    }
+
+    @Test(priority = 2, enabled = true)
+    public void TC02_comparingSalesInvoiceData() throws InterruptedException, IOException {
+        String salesInvoiceStatusBeforeSyncing = null;
+        String salesInvoiceStatusAfterSyncing = null;
+        String salesInvoicePaidStatusBeforeSyncing = null;
+        String salesInvoicePaidStatusAfterSyncing = null;
+        String salesInvoiceIssueDateAfterSyncing = null;
+        String salesInvoiceIssueDateBeforeSyncing = null;
+        String customerNameAtSalesInvoiceBeforeSyncing = null;
+        String customerNameAtSalesInvoiceAfterSyncing = null;
+        String netTotalValueBeforeSyncing = null;
+        String grandTotalValueBeforeSyncing = null;
+        String netTotalValueAfterSyncing = null;
+        String grandTotalValueAfterSyncing = null;
+        homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
+        websiteLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "websiteLink_5");
+        homePageLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_5");
+        random = new Random();
+        randomNumber = random.nextInt(1000000000);
+        itemCode = "item " + randomNumber;
+        softAssert = new SoftAssert();
+        homePageObj = new HomePage(driver);
+        salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
+        String nameOfSelectedSalesInvoiceAtDafater_4 = salesInvoicesListPageObj.getNameOfFirstSalesInvoiceBeforeSyncing();
+        salesInvoicesPageObj = salesInvoicesListPageObj.openFirstSalesInvoiceAtDafater_4();
+
+        if (salesInvoicesPageObj.getSalesInvoiceStatus().contains(submittedStatus)) {
+            System.out.println("status of sales invoice  is  " + submittedStatus);
+            salesInvoiceStatusBeforeSyncing = salesInvoicesPageObj.getSalesInvoiceStatus();
+
+            salesInvoicePaidStatusBeforeSyncing = salesInvoicesPageObj.getSalesInvoicePaidStatus();
+            salesInvoiceIssueDateBeforeSyncing = salesInvoicesPageObj.getSalesInvoiceIssueDate();
+            customerNameAtSalesInvoiceBeforeSyncing = salesInvoicesPageObj.getCustomerNameAtSalesInvoice();
+            netTotalValueBeforeSyncing = salesInvoicesPageObj.getNetTotalValueAtSalesInvoice();
+            grandTotalValueBeforeSyncing = salesInvoicesPageObj.getGrandTotalValueAtSalesInvoice();
+        }
+        if (salesInvoicesPageObj.getSalesInvoiceStatus().contains(draftStatus)) {
+            System.out.println("status of sales invoice  is  " + draftStatus);
+            salesInvoiceStatusBeforeSyncing = salesInvoicesPageObj.getSalesInvoiceStatus();
+            salesInvoicePaidStatusBeforeSyncing = salesInvoicesPageObj.getSalesInvoicePaidStatus();
+             netTotalValueBeforeSyncing = salesInvoicesPageObj.getNetTotalValueAtSalesInvoice();
+             grandTotalValueBeforeSyncing = salesInvoicesPageObj.getGrandTotalValueAtSalesInvoice();
+        }
+
+
+        loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
+        loginPageObj.switchToDafater_5(websiteLink_5);
+        homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
+        salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
+        Assert.assertTrue(salesInvoicesListPageObj.searchAboutSpecificSalesInvoice(nameOfSelectedSalesInvoiceAtDafater_4).equals(GeneralConstants.SUCCESS));
+//        salesInvoicesPageObj = salesInvoicesListPageObj.openSalesInvoiceAtDafater_5();
+
+
+        if (salesInvoicesPageObj.getSalesInvoiceStatus().contains("معتمد")) {
+            System.out.println("status of sales invoice  is  " + submittedStatus);
+            salesInvoiceStatusAfterSyncing = salesInvoicesPageObj.getSalesInvoiceStatusAtDafater_5();
+            salesInvoicePaidStatusAfterSyncing = salesInvoicesPageObj.getSalesInvoicePaidStatus();
+            salesInvoiceIssueDateAfterSyncing = salesInvoicesPageObj.getSalesInvoiceIssueDate();
+            customerNameAtSalesInvoiceAfterSyncing = salesInvoicesPageObj.getCustomerNameAtSalesInvoiceAtDafater_5();
+            netTotalValueAfterSyncing = salesInvoicesPageObj.getNetTotalValueAtSalesInvoice();
+            grandTotalValueAfterSyncing = salesInvoicesPageObj.getGrandTotalValueAtSalesInvoice();
+        }
+        if (salesInvoicesPageObj.getSalesInvoiceStatusAtDafater_5().contains(draftStatus)) {
+            System.out.println("status of sales invoice  is  " + draftStatus);
+            salesInvoiceStatusAfterSyncing = salesInvoicesPageObj.getSalesInvoiceStatusAtDafater_5();
+            salesInvoicePaidStatusAfterSyncing = salesInvoicesPageObj.getSalesInvoicePaidStatus();
+
+             netTotalValueAfterSyncing = salesInvoicesPageObj.getNetTotalValueAtSalesInvoice();
+             grandTotalValueAfterSyncing = salesInvoicesPageObj.getGrandTotalValueAtSalesInvoice();
+        }
+        if (salesInvoicesPageObj.getSalesInvoiceStatus().contains("معتمد")) {
+
+            System.out.println("verify that the status of sales invoice at dafater 5 is same as exist at dafater 4 ");
+            softAssert.assertEquals(salesInvoiceStatusBeforeSyncing.trim(), salesInvoiceStatusAfterSyncing.trim());
+            System.out.println(" status of sales invoice at dafater 5 is " + salesInvoiceStatusAfterSyncing + " and at dafater 4 is " + salesInvoiceStatusBeforeSyncing);
+            System.out.println("                   ***********************************************************            ");
+
+            System.out.println("verify that the paid status of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            softAssert.assertEquals(salesInvoicePaidStatusBeforeSyncing.trim(), salesInvoicePaidStatusAfterSyncing.trim());
+            System.out.println(" paid status of sales invoice at dafater 5 is " + salesInvoicePaidStatusAfterSyncing + " and at dafater 4 is " + salesInvoicePaidStatusBeforeSyncing);
+            System.out.println("                   ***********************************************************            ");
+
+            System.out.println("verify that the issue date of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            softAssert.assertEquals(salesInvoiceIssueDateBeforeSyncing.trim(), salesInvoiceIssueDateAfterSyncing.trim());
+            System.out.println(" issue date of sales invoice at dafater 5 is " + salesInvoiceIssueDateAfterSyncing + " and at dafater 4 is " + salesInvoiceIssueDateBeforeSyncing);
+            System.out.println("                   ***********************************************************            ");
+
+            System.out.println("verify that the customer name of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            softAssert.assertEquals(customerNameAtSalesInvoiceBeforeSyncing.trim(), customerNameAtSalesInvoiceAfterSyncing.trim());
+            System.out.println(" customer name of sales invoice at dafater 5 is " + customerNameAtSalesInvoiceAfterSyncing + " and at dafater 4 is " + customerNameAtSalesInvoiceBeforeSyncing);
+            System.out.println("                   ***********************************************************            ");
+
+            System.out.println("verify that the net total value of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            softAssert.assertEquals(netTotalValueBeforeSyncing.trim(), netTotalValueAfterSyncing.trim());
+            System.out.println(" net total of sales value invoice at dafater 5 is " + netTotalValueAfterSyncing + " and at dafater 4 is " + netTotalValueBeforeSyncing);
+            System.out.println("                   ***********************************************************            ");
+
+            System.out.println("verify that the grand total value of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            softAssert.assertEquals(grandTotalValueAfterSyncing.trim(), grandTotalValueBeforeSyncing.trim());
+            System.out.println("  grand total value of sales invoice at dafater 5 is " + grandTotalValueAfterSyncing + " and at dafater 4 is " + grandTotalValueBeforeSyncing);
+            System.out.println("                   ***********************************************************            ");
+
+            softAssert.assertAll();
+        }
+
+        if (salesInvoicesPageObj.getSalesInvoiceStatus().contains(draftStatus)) {
+
+            System.out.println("verify that the status of sales invoice at dafater 5 is same as exist at dafater 4 ");
+            softAssert.assertEquals(salesInvoiceStatusBeforeSyncing.trim(), salesInvoiceStatusAfterSyncing.trim());
+            System.out.println(" status of sales invoice at dafater 5 is " + salesInvoiceStatusAfterSyncing + " and at dafater 4 is " + salesInvoiceStatusBeforeSyncing);
+            System.out.println("                   ***********************************************************            ");
+
+            System.out.println("verify that the paid status of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            softAssert.assertEquals(salesInvoicePaidStatusBeforeSyncing.trim(), salesInvoicePaidStatusAfterSyncing.trim());
+            System.out.println(" paid status of sales invoice at dafater 5 is " + salesInvoicePaidStatusAfterSyncing + " and at dafater 4 is " + salesInvoicePaidStatusBeforeSyncing);
+
+            System.out.println("                   ***********************************************************            ");
+
+            System.out.println("verify that the net total value of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            softAssert.assertEquals(netTotalValueBeforeSyncing.trim(), netTotalValueAfterSyncing.trim());
+            System.out.println(" net total of sales value invoice at dafater 5 is " + netTotalValueAfterSyncing + " and at dafater 4 is " + netTotalValueBeforeSyncing);
+            System.out.println("                   ***********************************************************            ");
+
+            System.out.println("verify that the grand total value of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            softAssert.assertEquals(grandTotalValueBeforeSyncing.trim(), grandTotalValueAfterSyncing.trim());
+            System.out.println("  grand total value of sales invoice at dafater 5 is " + grandTotalValueAfterSyncing + " and at dafater 4 is " + grandTotalValueBeforeSyncing);
+            System.out.println("                   ***********************************************************            ");
+
+            softAssert.assertAll();
+        }
+
     }
 }

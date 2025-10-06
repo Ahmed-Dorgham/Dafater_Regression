@@ -86,7 +86,7 @@ public class SuppliersListPage extends MainPage {
         waitUntilElementToBePresent(supplierLabel, GeneralConstants.minTimeOut);
         //   Thread.sleep(threadTimeOut);
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementNotHaveSpecificText(numberOfAllISuppliersField,"تحديث",GeneralConstants.freezeTimeOut);
+        waitUntilElementNotHaveSpecificText(numberOfAllISuppliersField,"تحديث");
         System.out.println("number of all suppliers at list view after Syncing " + getWebElement(numberOfAllISuppliersField).getText());
         return getWebElement(numberOfAllISuppliersField).getText();
     }

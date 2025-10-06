@@ -86,7 +86,7 @@ public class StockEntryListPage extends MainPage {
 
         waitUntilElementToBePresent(stockEntryListLabel, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        waitUntilElementNotContainText(listCount, "تحديث");
+        waitUntilElementNotHaveSpecificText(listCount, "تحديث");
         System.out.println("number of all stock entries at list view after Syncing " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }

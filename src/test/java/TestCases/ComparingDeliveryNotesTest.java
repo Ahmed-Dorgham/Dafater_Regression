@@ -1,6 +1,11 @@
 package TestCases;
 
-import Pages.*;
+import GeneralConstants.GeneralConstants;
+import Pages.DeliveryNoteListPage;
+import Pages.DeliveryNotePage;
+import Pages.HomePage;
+import Pages.LoginPage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -16,8 +21,11 @@ public class ComparingDeliveryNotesTest extends BaseTest {
     LoginPage loginPageObj;
     HomePage homePageObj;
     DeliveryNoteListPage deliveryNoteListPageObj;
+    DeliveryNotePage deliveryNotePageObj;
+    private final String submittedStatus = "معتمد";
+    private final String draftStatus = "مسودة";
 
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = false)
     public void TC01_comparingNumberOfDeliveryNotes() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -42,5 +50,63 @@ public class ComparingDeliveryNotesTest extends BaseTest {
 
     }
 
+    @Test(priority = 2, enabled = true)
+    public void TC02_comparingDeliveryNotesData() throws InterruptedException, IOException {
+        String deliveryNoteStatusBeforeSyncing = null;
+        String deliveryNoteStatusAfterSyncing = null;
+        String salesInvoicePaidStatusBeforeSyncing = null;
+        String salesInvoicePaidStatusAfterSyncing = null;
+        String deliveryNoteIssueDateAfterSyncing = null;
+        String deliveryNoteIssueDateBeforeSyncing = null;
+        String customerNameAtDeliveryNoteBeforeSyncing = null;
+        String customerNameAtDeliveryNoteAfterSyncing = null;
+        String netTotalValueBeforeSyncing = null;
+        String grandTotalValueBeforeSyncing = null;
+        String netTotalValueAfterSyncing = null;
+        String grandTotalValueAfterSyncing = null;
+
+        homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
+        websiteLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "websiteLink_5");
+        homePageLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_5");
+        random = new Random();
+        randomNumber = random.nextInt(1000000000);
+        itemCode = "item " + randomNumber;
+        softAssert = new SoftAssert();
+        homePageObj = new HomePage(driver);
+        deliveryNoteListPageObj = homePageObj.openDeliveryNoteListPage();
+        String nameOfSelectedDeliveryNoteAtDafater_4 = deliveryNoteListPageObj.getNameOfFirstDeliverNoteBeforeSyncing();
+        deliveryNotePageObj = deliveryNoteListPageObj.openFirstDeliveryNoteAtDafater_4();
+
+
+        if (deliveryNotePageObj.getDeliveryNoteStatus().contains(submittedStatus)) {
+            System.out.println("status of  delivery note is  " + submittedStatus);
+            deliveryNoteStatusBeforeSyncing = deliveryNotePageObj.getDeliveryNoteStatus();
+            deliveryNoteIssueDateBeforeSyncing = deliveryNotePageObj.getDeliveryNoteIssueDate();
+            customerNameAtDeliveryNoteBeforeSyncing = deliveryNotePageObj.getCustomerNameAtDeliveryNote();
+            netTotalValueBeforeSyncing = deliveryNotePageObj.getNetTotalValueAtSalesInvoice();
+            grandTotalValueBeforeSyncing = deliveryNotePageObj.getGrandTotalValueAtSalesInvoice();
+        }
+
+        loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
+        loginPageObj.switchToDafater_5(websiteLink_5);
+        homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
+        deliveryNoteListPageObj = homePageObj.openDeliveryNoteListPage();
+        Assert.assertTrue(deliveryNoteListPageObj.searchAboutSpecificDeliveryNote(nameOfSelectedDeliveryNoteAtDafater_4).equals(GeneralConstants.SUCCESS));
+
+
+
+        if (deliveryNotePageObj.getDeliveryNoteStatus().contains(submittedStatus)) {
+            System.out.println("status of delivery note is  " + submittedStatus);
+            deliveryNoteStatusAfterSyncing = deliveryNotePageObj.getSalesInvoiceStatusAtDafater_5();
+
+            deliveryNoteIssueDateAfterSyncing = deliveryNotePageObj.getDeliveryNoteIssueDate();
+            customerNameAtDeliveryNoteAfterSyncing = deliveryNotePageObj.getCustomerNameAtDeliveryNoteAtDafater_5();
+            netTotalValueAfterSyncing = deliveryNotePageObj.getNetTotalValueAtSalesInvoice();
+            grandTotalValueAfterSyncing = deliveryNotePageObj.getGrandTotalValueAtSalesInvoice();
+        }
+
+
+
+    }
 
 }

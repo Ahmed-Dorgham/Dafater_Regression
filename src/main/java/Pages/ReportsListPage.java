@@ -33,6 +33,13 @@ public class ReportsListPage extends MainPage {
             "|  //*[contains(@href,'/app/query-report/Dafater Trial Balance')]");
     private By grossProfitReport = By.xpath("//*[@id='report-customers-aging']" +
             "| //*[contains(@href,'/app/query-report/Gross Profit')]");
+
+    private By financialStatementsReport = By.xpath("//*[@id='page-report-financial-statements']" +
+            "| //*[contains(@href,'/app/query-report/Balance Sheet')]");
+
+    private By balanceSheetReport = By.xpath("//*[contains(@href,'/app/query-report/Balance Sheet')]");
+    private By profitAndLossReport = By.xpath("//*[contains(@href,'/app/query-report/Profit and Loss Statement')]");
+
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     By loadImage = By.xpath("(//*[contains(@alt,'Generic Empty State')])[3]" +
             "| (//*[contains(@class,'progress progress-striped active')])");
@@ -111,6 +118,42 @@ public class ReportsListPage extends MainPage {
         return new TrialBalanceReportPage(driver);
     }
 
+    public FinancialStatementsReportPage openFinancialStatementsReport() throws InterruptedException {
+        System.out.println("open Financial Statements report ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        Thread.sleep(threadTimeOut);
+        waitUntilElementToBePresent(financialStatementsReport, GeneralConstants.minTimeOut);
+        getWebElement(financialStatementsReport).click();
+
+        return new FinancialStatementsReportPage(driver);
+    }
+    public BalanceSheetReportPage openBalanceSheetReport_5() throws InterruptedException {
+        System.out.println("open Balance sheet report ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        Thread.sleep(threadTimeOut);
+        waitUntilElementToBePresent(balanceSheetReport, GeneralConstants.minTimeOut);
+        getWebElement(balanceSheetReport).click();
+
+        return new BalanceSheetReportPage(driver);
+    }
+    public ProfitAndLossReportPage openProfitAndLossReport_5() throws InterruptedException {
+        System.out.println("open Profit and loss  report ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        Thread.sleep(threadTimeOut);
+        waitUntilElementToBePresent(profitAndLossReport, GeneralConstants.minTimeOut);
+        getWebElement(profitAndLossReport).click();
+
+        return new ProfitAndLossReportPage(driver);
+    }
     public StockBalanceReportPage openStockBalanceReport_5() throws InterruptedException {
         System.out.println("open Stock Balance report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);

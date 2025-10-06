@@ -87,7 +87,7 @@ public class CustomersListPage extends MainPage {
         waitUntilElementToBePresent(customerLabel, GeneralConstants.minTimeOut);
         //   Thread.sleep(threadTimeOut);
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementNotHaveSpecificText(numberOfAllCustomersField,"تحديث",GeneralConstants.freezeTimeOut);
+        waitUntilElementNotHaveSpecificText(numberOfAllCustomersField,"تحديث");
         System.out.println("number of all suppliers at list view after Syncing " + getWebElement(numberOfAllCustomersField).getText());
         return getWebElement(numberOfAllCustomersField).getText();
     }

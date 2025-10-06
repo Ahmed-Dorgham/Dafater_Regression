@@ -1,9 +1,7 @@
 package TestCases;
 
 import GeneralConstants.GeneralConstants;
-import Pages.HomePage;
-import Pages.LoginPage;
-import Pages.MainPage;
+import Pages.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -19,10 +17,18 @@ public class BaseTest extends MainPage {
     MainPage mainPageObj;
     LoginPage loginPageObj;
     HomePage homePageObj;
+    SetupWizardPage setupWizardPageObj ;
     public String websiteLink_4;
     public String homePageLink_4;
     public String websiteLink_5;
     public String homePageLink_5;
+
+    public String companyName = "company1";
+    public String companyIdValue = "123456789";
+    public String taxIdValue = "123456789";
+    public String cityName = "city";
+    public String addressName = "address";
+    public String phoneValue = "564123987";
 
     @BeforeClass
     public void setup_driver() {
@@ -61,16 +67,17 @@ public class BaseTest extends MainPage {
     @BeforeMethod()
     @Parameters({"Scope"})
     public void loginWithValidData(String Scope) throws InterruptedException {
+
         loginPageObj = new LoginPage(driver);
         if (Scope.equals("Regression")) {
             homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
             WebDriverManager.chromedriver().clearDriverCache().setup();
-            waitUntilElementToBePresent(homePageObj.salesInvoicesTab, GeneralConstants.minTimeOut);
+//            waitUntilElementToBePresent(homePageObj.salesInvoicesTab, GeneralConstants.globalTimeOut);
 
         } else if (Scope.equals("Comparing")) {
             homePageObj = loginPageObj.loginWithValidData(userName_4, password_4);
             WebDriverManager.chromedriver().clearDriverCache().setup();
-            waitUntilElementToBePresent(homePageObj.salesInvoicesTab, GeneralConstants.minTimeOut);
+            waitUntilElementToBePresent(homePageObj.salesInvoicesTab, GeneralConstants.globalTimeOut);
             if (tryToGetWebElement(homePageObj.closeIcon) == GeneralConstants.SUCCESS) {
                 homePageObj.closeWelcomeMsg();
             }

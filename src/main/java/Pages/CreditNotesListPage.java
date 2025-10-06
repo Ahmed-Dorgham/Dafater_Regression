@@ -96,7 +96,7 @@ public class CreditNotesListPage extends MainPage {
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
         //   Thread.sleep(threadTimeOut);
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementNotHaveSpecificText(numberOfAllCreditNotesField,"تحديث",GeneralConstants.freezeTimeOut);
+        waitUntilElementNotHaveSpecificText(numberOfAllCreditNotesField,"تحديث");
         System.out.println("number of all debit notes at list view after Syncing " + getWebElement(numberOfAllCreditNotesField).getText());
         return getWebElement(numberOfAllCreditNotesField).getText();
     }

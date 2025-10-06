@@ -25,10 +25,26 @@ public class SalesInvoicesPage extends MainPage {
     private By customerOptSalesInvoice = By.xpath("((//*[contains(@data-target,'Customer')and @placeholder=' ']/following-sibling::ul)/li)[1] " +
             "| ((//*[contains(@data-target,'Customer')and @placeholder=' ']/following-sibling::ul)/div/p/strong)[1]");
     private By itemOpt = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)/li)[1]" +
-            "| ((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)//div/p/strong)[1]" );
+            "| ((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)//div/p/strong)[1]");
 
-    private  By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)//div//p[@title='item 1'])");
+    private By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)//div//p[@title='item 1'])");
     private By dueDateField = By.xpath("//*[contains(@id,'due_date')]");
+    //*[contains(@class,'ellipsis title-text')]/following-sibling::div/span
+    private By successStatusField = By.xpath("//*[contains(@class,'ellipsis title-text')]/following-sibling::div/span" +
+            "|//*[contains(@class,'title-text pull-left')]/following-sibling::div//span[contains(@class,'label label-success')]");
+    private By draftStatusField = By.xpath("(//*[contains(@class,'ellipsis title-text')]/following-sibling::span)[4]");
+    private By selectedCustomer = By.xpath("//*[contains(@data-fieldname,'customer')]/../ul/div/p/strong");
+    private By netTotalField = By.xpath("(//*[contains(@title,'net_total_export')]//span)[3]" +
+            "| (//*[@data-fieldname='total']//span[@dir='rtl'])[1]");
+    private By grandTotalField = By.xpath("(//*[contains(@title,'grand_total_export')]//span)[3]" +
+            "| //*[contains(text(),'المجموع الإجمالي')]/following-sibling::div/div/span");
+    private By paidStatusField = By.xpath("//*[contains(@class,'progress-chart col-md-12')]//h5" +
+            "|//*[contains(@class,'progress-chart col-md-12')]//p");
+    private By customerNameField = By.xpath("//*[contains(text(),' اسم العميل')]/../following-sibling::div/a" +
+            "|//*[@data-fieldname='customer']//*[@data-doctype='Customer']");
+    private By invoiceIssueDateField = By.xpath("//*[contains(text(),' تاريخ ادخال الفاتورة')]/../following-sibling::div" +
+            "|//label[contains(@for,'posting_date')]/following-sibling::div " +
+            "| //*[contains(@for,'posting_date')]/following-sibling::div ");
     private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
     private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
     private By saveAndSubmitBtn = By.xpath("//*[contains(@class,'btn btn-inverse btn-sm save-submit-action toolbar-btn')]");
@@ -67,7 +83,7 @@ public class SalesInvoicesPage extends MainPage {
     public void enterValidDataIntoSalesInvoicePageAndSumbit(String dueDate) throws InterruptedException {
         waitUntilElementToBePresent(newSalesInvoiceTitle, GeneralConstants.minTimeOut);
         System.out.println("select  customer ");
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(customerFieldSalesInvoice).click();
         if (tryToGetWebElement(customersListSalesInvoice) == GeneralConstants.FAILED) {
             getWebElement(customerFieldSalesInvoice).click();
@@ -80,7 +96,7 @@ public class SalesInvoicesPage extends MainPage {
         waitUntilElementVisibility(dueDateField, GeneralConstants.minTimeOut);
         getWebElement(dueDateField).sendKeys(dueDate);
         System.out.println("Scroll down to item field ");
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         scrollToSpeceficElement(totalAmountLabel);
         //   Thread.sleep(6000);
         System.out.println(" select item  ");
@@ -172,7 +188,7 @@ public class SalesInvoicesPage extends MainPage {
         System.out.println("unselect update stock opt");
         getWebElement(updateStockBtn).click();
         scrollToSpeceficElement(saveAndSubmitBtnFromAnotherDoc);
-        waitUntilElementToBePresent(saveAndSubmitBtnFromAnotherDoc,GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(saveAndSubmitBtnFromAnotherDoc, GeneralConstants.minTimeOut);
         System.out.println("save and submit sales invoice  ");
         getWebElement(saveAndSubmitBtnFromAnotherDoc).click();
         System.out.println("click on yes btn ");
@@ -258,15 +274,88 @@ public class SalesInvoicesPage extends MainPage {
         System.out.println("actual text is  " + getWebElement(invoiceName).getAttribute("title") + "  and expected text is  " + expected);
         return getWebElement(invoiceName).getText();
     }
+
+
+    public String getSalesInvoiceStatus() {
+        String draftStatus = "مسودة";
+        waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+        if (tryToGetWebElement(successStatusField) == GeneralConstants.SUCCESS) {
+//            System.out.println(" status of sales invoice  " + getWebElement(successStatusField).getText());
+            return getWebElement(successStatusField).getText();
+        } else {
+//            System.out.println(" status of sales invoice  is " + draftStatus);
+            return draftStatus;
+        }
+    }
+
+    public String getSalesInvoicePaidStatus() {
+        String paidStatus = "null";
+        waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+
+        if (tryToGetWebElement(paidStatusField) == GeneralConstants.SUCCESS) {
+            System.out.println("paid status of sales invoice  " + getWebElement(paidStatusField).getText());
+            return getWebElement(paidStatusField).getText();
+        } else {
+            System.out.println("paid status of sales invoice  is  " + paidStatus);
+            return paidStatus;
+        }
+
+    }
+
+    public String getSalesInvoiceStatusAtDafater_5() {
+        waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+        if (tryToGetWebElement(successStatusField) == GeneralConstants.SUCCESS) {
+//            System.out.println("status of sales invoice  " + getWebElement(successStatusField).getText());
+            return getWebElement(successStatusField).getText();
+        } else {
+//            System.out.println("status of sales invoice  is  " + getWebElement(draftStatusField).getText());
+            return getWebElement(draftStatusField).getText();
+        }
+    }
+
+
+    public String getSalesInvoiceIssueDate() {
+        waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("issue date of sales invoice  " + getWebElement(invoiceIssueDateField).getText());
+        return getWebElement(invoiceIssueDateField).getText();
+    }
+
+
+    public String getCustomerNameAtSalesInvoice() {
+        waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("customer name at sales invoice  " + getWebElement(customerNameField).getText());
+        return getWebElement(customerNameField).getText();
+    }
+    public String getCustomerNameAtSalesInvoiceAtDafater_5() {
+        waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+
+        System.out.println("customer name at sales invoice  " + getWebElement(customerNameField).getText());
+        return getWebElement(customerNameField).getText();
+    }
+    public String getNetTotalValueAtSalesInvoice() {
+        waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("net total value of sales invoice  " + getWebElement(netTotalField).getText());
+        return getWebElement(netTotalField).getText();
+    }
+
+    public String getGrandTotalValueAtSalesInvoice() {
+        waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("grand total value of  sales invoice  " + getWebElement(grandTotalField).getText());
+        waitUntilElementToBePresent(grandTotalField, GeneralConstants.minTimeOut);
+        return getWebElement(grandTotalField).getText();
+    }
+
+
     public String getInvoiceName() {
         System.out.println("Verify the name of sales invoice  ");
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(invoiceLabel, GeneralConstants.minTimeOut);
 
         System.out.println("sales invoice name is   " + getWebElement(invoiceLabel).getAttribute("title"));
         return getWebElement(invoiceLabel).getText();
     }
+
     public String getDraftInvoiceName(String expected) {
         System.out.println("Verify the name of sales invoice  ");
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
@@ -278,7 +367,7 @@ public class SalesInvoicesPage extends MainPage {
     public String getInvoiceNameForCreditNote(String expected) {
 //        System.out.println("Verify the name of sales invoice  ");
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(invoiceNameForCreditNote, GeneralConstants.minTimeOut);
         System.out.println("actual text is  " + getWebElement(invoiceNameForCreditNote).getAttribute("title") + "  and expected text is  " + expected);
         return getWebElement(invoiceNameForCreditNote).getText();
@@ -342,7 +431,6 @@ public class SalesInvoicesPage extends MainPage {
         getWebElement(generalLedgerChoice).click();
         return new GeneralLedgerReportPage(driver);
     }
-
 
 
 }
