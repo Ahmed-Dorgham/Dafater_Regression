@@ -90,9 +90,10 @@ public class BaseTest extends MainPage {
     @Parameters({"Scope"})
     public void tearDownTestCase(String Scope) throws InterruptedException {
         driver.navigate().to(homePageLink_5);
-        driver.manage().deleteAllCookies();
+//        driver.manage().deleteAllCookies();
         WebDriverManager.chromedriver().clearDriverCache().setup();
         homePageObj.logOutFromDafater_5();
+        driver.manage().deleteAllCookies();
         if (Scope.equals("Regression")) {
             driver.navigate().to(websiteLink_5);
         } else if (Scope.equals("Comparing")) {

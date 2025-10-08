@@ -18,9 +18,9 @@ public class AddingItemsTest extends BaseTest {
     ItemsPricesTablePage itemsPricesTablePageObj;
     ItemPricePage itemPricePageObj;
     @Test(priority = 1, enabled = true)
-    public void TC01_createNewSalesAndPurchaseItemAndAddingIntoPriceList() throws InterruptedException {
+    public void  TC01_createNewSalesAndPurchaseItemAndAddingIntoPriceList() throws InterruptedException {
         random = new Random();
-        randomNumber = random.nextInt(1000000000);
+        randomNumber = random.nextInt(100000);
         itemCode = "item 2" + randomNumber;
         homePageObj = new HomePage(driver);
         itemListPageObj = homePageObj.openItemListPage();

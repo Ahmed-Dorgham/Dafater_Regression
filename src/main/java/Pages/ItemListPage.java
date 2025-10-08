@@ -162,7 +162,7 @@ public class ItemListPage extends MainPage {
     public String getNumberOfPurchaseItemsAfterCreatingNewItem() {
 
         waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales items at list view after creating new item " + getWebElement(numberOfPurchaseItemsField).getText());
+        System.out.println("number of purchase items at list view after creating new item " + getWebElement(numberOfPurchaseItemsField).getText());
         return getWebElement(numberOfPurchaseItemsField).getText();
     }
 

@@ -17,9 +17,8 @@ public class LoginPage extends MainPage {
     private By loginBtn = By.id("login_btn");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
 
-    public HomePage loginWithValidData(String userName, String password) {
-        if (tryToGetWebElement(userNameField)==GeneralConstants.SUCCESS)
-        {
+    public HomePage loginWithValidData(String userName, String password) throws InterruptedException {
+        if (tryToGetWebElement(userNameField) == GeneralConstants.SUCCESS) {
             waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
             waitUntilElementToBePresent(userNameField, GeneralConstants.minTimeOut);
 //        getWebElement(userNameField).click();
@@ -27,6 +26,7 @@ public class LoginPage extends MainPage {
             getWebElement(userNameField).sendKeys(userName);
             getWebElement(passwordField).sendKeys(password);
             getWebElement(loginBtn).click();
+
         }
 
         return new HomePage(driver);

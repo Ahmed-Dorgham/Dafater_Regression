@@ -27,7 +27,6 @@ public class SalesInvoicesPage extends MainPage {
     private By itemOpt = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)/li)[1]" +
             "| ((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)//div/p/strong)[1]");
 
-    private By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)//div//p[@title='item 1'])");
     private By dueDateField = By.xpath("//*[contains(@id,'due_date')]");
     //*[contains(@class,'ellipsis title-text')]/following-sibling::div/span
     private By successStatusField = By.xpath("//*[contains(@class,'ellipsis title-text')]/following-sibling::div/span" +
@@ -80,7 +79,9 @@ public class SalesInvoicesPage extends MainPage {
     private By paidStatus = By.xpath("(//*[@class='indicator-pill no-indicator-dot whitespace-nowrap green'])");
     private By unpaidStatusElement = By.xpath("(//*[@class='indicator-pill no-indicator-dot whitespace-nowrap orange'])");
 
-    public void enterValidDataIntoSalesInvoicePageAndSumbit(String dueDate) throws InterruptedException {
+    public void enterValidDataIntoSalesInvoicePageAndSumbit(String dueDate ,String itemName) throws InterruptedException {
+         By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)//div//p[@title='"+itemName+"'])");
+
         waitUntilElementToBePresent(newSalesInvoiceTitle, GeneralConstants.minTimeOut);
         System.out.println("select  customer ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -102,11 +103,11 @@ public class SalesInvoicesPage extends MainPage {
         System.out.println(" select item  ");
         clickByActions(itemCodeField);
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
 
         getWebElement(itemCodeInputField).clear();
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
 //        getWebElement(itemCodeInputField).sendKeys("item 1");
         waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
         clickByActions(selectedItem);
@@ -125,7 +126,9 @@ public class SalesInvoicesPage extends MainPage {
 
     }
 
-    public void enterValidDataIntoSalesInvoicePageAndSave(String dueDate) throws InterruptedException {
+    public void enterValidDataIntoSalesInvoicePageAndSave(String dueDate,String itemName) throws InterruptedException {
+         By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)//div//p[@title='"+itemName+"'])");
+
         waitUntilElementToBePresent(newSalesInvoiceTitle, GeneralConstants.minTimeOut);
         System.out.println("select  customer ");
         getWebElement(customerFieldSalesInvoice).click();
@@ -144,12 +147,12 @@ public class SalesInvoicesPage extends MainPage {
         System.out.println(" select item  ");
         clickByActions(itemCodeField);
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
         getWebElement(itemCodeInputField).clear();
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
         getWebElement(itemCodeInputField).clear();
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
         waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
         clickByActions(selectedItem);
 

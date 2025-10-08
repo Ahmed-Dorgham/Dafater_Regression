@@ -37,7 +37,7 @@ public class DataMigrationTest extends BaseTest {
     }
 
     //    @Test(priority = 1,enabled = true,dependsOnMethods = "TC01_setupVm")
-    @Test(priority = 2, enabled = false)
+    @Test(priority = 2, enabled = true)
     public void TC02_checkSuccessVmConnection() {
         homePageObj = new HomePage(driver);
         dataMigrationToolPageObj = homePageObj.searchAboutDataMigrationTool();

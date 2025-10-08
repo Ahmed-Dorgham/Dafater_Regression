@@ -40,8 +40,8 @@ public class ItemPage extends MainPage {
     private By submittedStatus = By.xpath("(//*[contains(@class,'label label-success')])");
     private By draftStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap red')])/span");
     private By itemName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
-    private By itemName_3 = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
-    private By ItemCode = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
+    private By itemName_4 = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By ItemCode = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By DraftInvoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By invoiceNameForCreditNote = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[1]");
     private By invoiceNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Sales Invoice')])[1]");
@@ -250,9 +250,9 @@ public class ItemPage extends MainPage {
         System.out.println("Verify the name of item  ");
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementToBePresent(itemName_3,GeneralConstants.minTimeOut);
-        System.out.println("actual text is  " + getWebElement(itemName_3).getText() + "  and expected text is  " + expected);
-        return getWebElement(itemName_3).getText();
+        waitUntilElementToBePresent(itemName_4,GeneralConstants.minTimeOut);
+        System.out.println("actual text is  " + getWebElement(itemName_4).getAttribute("title") + "  and expected text is  " + expected);
+        return getWebElement(itemName_4).getAttribute("title");
     }
     public String getItemCode(String expected) {
         System.out.println("Verify the name of item  ");

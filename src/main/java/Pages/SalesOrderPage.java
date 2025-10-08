@@ -42,7 +42,7 @@ public class SalesOrderPage extends MainPage {
     private By salesInvoicesTab = By.id("module-anchor-Selling");
     private  By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)//div//p[@title='item 1']/strong)");
 
-    public void enterValidDataIntoSalesOrderPage(String dueDate) throws InterruptedException {
+    public void enterValidDataIntoSalesOrderPage(String dueDate,String itemName) throws InterruptedException {
         waitUntilElementToBePresent(newSalesOrderTitle, GeneralConstants.minTimeOut);
         System.out.println("select  customer ");
         getWebElement(customerFieldSalesOrder).click();
@@ -53,10 +53,10 @@ public class SalesOrderPage extends MainPage {
         scrollToSpeceficElement(totalAmountLabel);
         clickByActions(itemCodeField);
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
         getWebElement(itemCodeInputField).clear();
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
 //        getWebElement(itemCodeInputField).sendKeys("item 1");
         waitUntilElementToBePresent(selectedItem, GeneralConstants.minTimeOut);
 //        Thread.sleep(threadTimeOut);
