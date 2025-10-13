@@ -40,6 +40,7 @@ public class ItemPricePage extends MainPage {
     private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
     private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
     private By salesInvoicesTab = By.id("module-anchor-Selling");
+    private By saveMsg = By.id("alert-container");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     private By itemPriceField = By.xpath("(//input[contains(@data-fieldname,'price_list_rate')])[1]");
     private By saveBtn = By.xpath("(//button[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')])[4]");
@@ -103,6 +104,7 @@ public class ItemPricePage extends MainPage {
         scrollToSpeceficElement(saveBtn);
         System.out.println("click on save btn");
         getWebElement(saveBtn).click();
+        waitUntilElementToBePresent(saveMsg, GeneralConstants.minTimeOut);
     }
 
     public String getSalesOrderStatusBeforeCreatingRelatedSalesInvoice() {

@@ -34,7 +34,6 @@ public class PurchaseInvoicesPage extends MainPage {
     private By itemOpt = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)/li)[1]" +
             "| ((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)//div/p/strong)[1]");
     private By notSavedLabel = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap orange')])[2]");
-    private By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)//div//p[@title='item 1'])");
 
     private By saveAndSubmitBtn = By.xpath("//*[contains(@class,'btn btn-inverse btn-sm save-submit-action toolbar-btn')]");
     private By saveAndSubmitBtnFromAnotherDoc = By.xpath("(//*[contains(@class,'btn btn-inverse btn-sm save-submit-action toolbar-btn')])[2]");
@@ -67,6 +66,7 @@ public class PurchaseInvoicesPage extends MainPage {
             "| (//*[@data-fieldname='total']//span[@dir='rtl'])[1]");
     private By grandTotalField = By.xpath("(//*[@data-fieldname='grand_total']//span)[1]" +
             "| (//*[contains(@title,'grand_total_import')]//span)[3]");
+
     public String getPurchaseInvoiceStatus() {
         String draftStatus = "مسودة";
         waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
@@ -84,9 +84,10 @@ public class PurchaseInvoicesPage extends MainPage {
         System.out.println("issue date of sales invoice  " + getWebElement(invoiceIssueDateField).getText());
         return getWebElement(invoiceIssueDateField).getText();
     }
+
     public String getSupplierNameAtSalesInvoice() throws InterruptedException {
         waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
-        waitUntilElementToBePresent(supplierNameField,GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(supplierNameField, GeneralConstants.minTimeOut);
 
         System.out.println("supplier name at purchase invoice  " + getWebElement(supplierNameField).getText());
         return getWebElement(supplierNameField).getText();
@@ -104,7 +105,8 @@ public class PurchaseInvoicesPage extends MainPage {
         return getWebElement(grandTotalField).getText();
     }
 
-    public void enterValidDataIntoPurchaseInvoicePage() throws InterruptedException {
+    public void enterValidDataIntoPurchaseInvoicePage(String itemName) throws InterruptedException {
+        By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)//div//p[@title='" + itemName + "'])");
 
         waitUntilElementToBePresent(newPurchaseInvoiceTitle, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -120,10 +122,10 @@ public class PurchaseInvoicesPage extends MainPage {
 //        clickByActions(itemCodeField);
         getWebElement(itemCodeField).click();
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
         getWebElement(itemCodeInputField).clear();
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
 
         waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
         clickByActions(selectedItem);
@@ -237,7 +239,7 @@ public class PurchaseInvoicesPage extends MainPage {
         System.out.println("Verify the name of purchase invoice  ");
 
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
 //        waitUntilElementNotContainText(invoiceName,"فاتورة");
         if (tryToGetWebElement(closeIcon) == GeneralConstants.SUCCESS) {
             getWebElement(closeIcon).click();
@@ -245,11 +247,12 @@ public class PurchaseInvoicesPage extends MainPage {
         System.out.println("actual text is  " + getWebElement(invoiceName).getAttribute("title") + "  and expected text is  " + expected);
         return getWebElement(invoiceName).getText();
     }
+
     public String getInvoiceNameForPayment(String expected) {
         System.out.println("Verify the name of purchase invoice  ");
 
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
 
         if (tryToGetWebElement(closeIcon) == GeneralConstants.SUCCESS) {
             getWebElement(closeIcon).click();
@@ -257,6 +260,7 @@ public class PurchaseInvoicesPage extends MainPage {
         System.out.println("actual text is  " + getWebElement(invoiceNamePayment).getAttribute("title") + "  and expected text is  " + expected);
         return getWebElement(invoiceNamePayment).getText();
     }
+
     public String getInvoiceStatus(String expected) {
         System.out.println("Verify the status of purchase invoice  ");
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);

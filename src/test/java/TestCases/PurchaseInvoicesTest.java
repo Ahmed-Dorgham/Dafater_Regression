@@ -20,8 +20,14 @@ public class PurchaseInvoicesTest extends BaseTest {
     CompanyPage companyPageObj;
     CompaniesListPage companiesListPageObj;
     GeneralLedgerReportPage generalLedgerReportPageObj;
+    ItemPage itemPageObj;
+    ItemListPage itemListPageObj;
+    SellingPriceListsPage sellingPriceListsPageObj;
+    StandardSellingListPage standardSellingListPageObj;
+    ItemsPricesTablePage itemsPricesTablePageObj;
+    ItemPricePage itemPricePageObj;
     Random random;
-    double randomNumber;
+    int randomNumber;
     private final String vmUrl = "temp-wi28927.dafater.biz";
     private final String duesDate = "15-07-2026";
     private final String secretKey = "kX7NY9yMSag3";
@@ -34,14 +40,38 @@ public class PurchaseInvoicesTest extends BaseTest {
     private final String unpaidStatus = "غير مدفوع";
 //    String companyName = "Company 1";
     String companyName = "شركة نماك الوطنية الزراعية";
+    public String itemCode;
 
     @Test(priority = 1, enabled = true)
     public void TC01_createNewPurchaseInvoiceAndSubmit() throws InterruptedException {
+
         homePageObj = new HomePage(driver);
+        random = new Random();
+        randomNumber = random.nextInt(10000000);
+        itemCode = "item 2" + randomNumber;
+
+        itemListPageObj = homePageObj.openItemListPage();
+//        String numberOfAllItemsBeforeCreatingNewOne = itemListPageObj.getNumberOfAllItemsBeforeCreatingNewItem();
+        itemPageObj = itemListPageObj.clickOnNewItemBtn();
+        itemPageObj.enterValidDataIntoItemPage(itemCode);
+        Assert.assertTrue(itemPageObj.getItemName(itemCode).contains(itemCode));
+        System.out.println("Verify the name of current created item is existed at item list view ");
+        itemListPageObj = itemPageObj.openItemListPage();
+        Assert.assertTrue(itemListPageObj.getItemNameAtViewList(itemCode).contains(itemCode));
+//        String numberOfItemsAfterCreatingNewOne = itemListPageObj.getNumberOfAllItemsAfterCreatingNewItem();
+//        System.out.println("verify that number of all items at list view will increase by one after creating new item");
+//        Assert.assertFalse(numberOfAllItemsBeforeCreatingNewOne.contains(numberOfItemsAfterCreatingNewOne));
+//        System.out.println(" number of all items at list view before creating new one is " + numberOfAllItemsBeforeCreatingNewOne + " and after creating new one is  " + numberOfItemsAfterCreatingNewOne + " and this is correct ");
+        sellingPriceListsPageObj = itemListPageObj.openSellingPriceLists();
+        standardSellingListPageObj = sellingPriceListsPageObj.openStandardSellingList();
+        itemsPricesTablePageObj = standardSellingListPageObj.openItemsPricesTable();
+        itemPricePageObj = itemsPricesTablePageObj.openItemPricePage();
+        itemPricePageObj.addingPriceForItem(itemCode, itemPrice);
+        driver.navigate().to(homePageLink_5);
         purchaseInvoicesListPageObj = homePageObj.openPurchaseInvoicesListPage();
         String numberOfPurchaseInvoicesBeforeCreatingNewOne = purchaseInvoicesListPageObj.getListAccountBeforeCreatingNewPurchaseInvoices();
         purchaseInvoicesPageObj = purchaseInvoicesListPageObj.clickOnNewPurchaseInvoiceBtn();
-        purchaseInvoicesPageObj.enterValidDataIntoPurchaseInvoicePage();
+        purchaseInvoicesPageObj.enterValidDataIntoPurchaseInvoicePage(itemCode);
         Assert.assertTrue(purchaseInvoicesPageObj.getInvoiceStatus(submittedStatus).contains(submittedStatus));
         String purchaseInvoiceName = purchaseInvoicesPageObj.getInvoiceName(invoiceName);
         Assert.assertTrue(purchaseInvoiceName.contains(invoiceName));
@@ -75,7 +105,7 @@ public class PurchaseInvoicesTest extends BaseTest {
         homePageObj = new HomePage(driver);
         purchaseInvoicesListPageObj = homePageObj.openPurchaseInvoicesListPage();
         purchaseInvoicesPageObj = purchaseInvoicesListPageObj.clickOnNewPurchaseInvoiceBtn();
-        purchaseInvoicesPageObj.enterValidDataIntoPurchaseInvoicePage();
+        purchaseInvoicesPageObj.enterValidDataIntoPurchaseInvoicePage(itemCode);
         debitNotePageObj = purchaseInvoicesPageObj.createDebitNoteFromPurchaseInvoice();
         debitNotePageObj.saveAndSubmitDebitNoteFromPurchaseInvoice();
     }
@@ -88,7 +118,7 @@ public class PurchaseInvoicesTest extends BaseTest {
         homePageObj = new HomePage(driver);
         purchaseInvoicesListPageObj = homePageObj.openPurchaseInvoicesListPage();
         purchaseInvoicesPageObj = purchaseInvoicesListPageObj.clickOnNewPurchaseInvoiceBtn();
-        purchaseInvoicesPageObj.enterValidDataIntoPurchaseInvoicePage();
+        purchaseInvoicesPageObj.enterValidDataIntoPurchaseInvoicePage(itemCode);
         String purchaseInvoiceName = purchaseInvoicesPageObj.getInvoiceNameForPayment(invoiceName);
      paymentPageObj = purchaseInvoicesPageObj.createPaymentForPurchaseInvoice();
         String invoiceNameAtPaymentPage = paymentPageObj.getInvoiceNameFromPayment();
@@ -129,7 +159,7 @@ public class PurchaseInvoicesTest extends BaseTest {
         driver.navigate().to(homePageLink_5);
         purchaseInvoicesListPageObj = homePageObj.openPurchaseInvoicesListPage();
         purchaseInvoicesPageObj = purchaseInvoicesListPageObj.clickOnNewPurchaseInvoiceBtn();
-        purchaseInvoicesPageObj.enterValidDataIntoPurchaseInvoicePage();
+        purchaseInvoicesPageObj.enterValidDataIntoPurchaseInvoicePage(itemCode);
         String grandTotalAmountForPurchaseInvoice = purchaseInvoicesPageObj.getGrandTotalAmountOfPurchaseInvoice();
         String totalAmountForPurchaseInvoice = purchaseInvoicesPageObj.getTotalAmountOfPurchaseInvoice();
         generalLedgerReportPageObj = purchaseInvoicesPageObj.openGeneralLedgerReport();

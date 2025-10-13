@@ -105,8 +105,9 @@ public class SalesTaxesAndChargesTemplatesListPage extends MainPage {
     public String getNumberOfSalesTaxesAndChargesTemplatesAfterSyncing() {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
-        waitUntilElementNotHaveSpecificText(numberOfSalesTaxesAndChargesTemplates, "تحديث");
         waitUntilElementToBePresent(numberOfSalesTaxesAndChargesTemplates, GeneralConstants.minTimeOut);
+        waitUntilElementNotHaveSpecificText(numberOfSalesTaxesAndChargesTemplates, "تحديث");
+
         System.out.println("number of draft sales invoices at list view after syncing " + getWebElement(numberOfSalesTaxesAndChargesTemplates).getText());
         return getWebElement(numberOfSalesTaxesAndChargesTemplates).getText();
     }

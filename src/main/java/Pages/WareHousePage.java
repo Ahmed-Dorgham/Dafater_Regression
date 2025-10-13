@@ -18,10 +18,10 @@ public class WareHousePage extends MainPage {
     private By editIcon = By.className("icon-xs");
     private By newWareHouseTitle = By.xpath("//*[contains(@title,'المستودع جديد')]");
     private By itemCodeField = By.xpath("(//*[contains(@id,'item_code')])[1]");
-    private By itemGroupField = By.xpath("(//*[contains(@id,'item_group')])[2]");
+    private By companyInputField = By.xpath("(//*[contains(@data-target,'Company') and @placeholder=\" \" and @data-doctype = \"Warehouse\"])");
     private By itemPriceField = By.xpath("(//*[contains(@data-fieldtype,'Currency')])[3]");
     private By wareHouseInputField = By.xpath("(//*[contains(@id,'warehouse_name')])");
-    private By itemGroupsList = By.xpath("(//*[contains(@data-target,'Item Group')and @placeholder=' ']/following-sibling::ul)");
+    private By selectedCompany = By.xpath("(//*[contains(@data-target,'Company') and @placeholder=\" \" and @data-doctype = \"Warehouse\"])/following-sibling::ul/div/p/strong");
     private By itemGroupOpt = By.xpath("((//*[contains(@data-target,'Item Group')and @placeholder=' ']/following-sibling::ul/li))[1]");
     //    private By itemOpt = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)/li)[1]");
     private By dueDateField = By.xpath("//*[contains(@id,'due_date')]");
@@ -39,7 +39,7 @@ public class WareHousePage extends MainPage {
     private By submittedStatus = By.xpath("(//*[contains(@class,'label label-success')])");
     private By draftStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap red')])/span");
     private By itemName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
-    private By wareHouseName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By wareHouseName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
     private By ItemCode = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
     private By DraftInvoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By invoiceNameForCreditNote = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[1]");
@@ -106,12 +106,16 @@ public class WareHousePage extends MainPage {
 
         System.out.println("enter wareHouse name");
         getWebElement(wareHouseInputField).sendKeys(wareHouseName);
-//        System.out.println("select item group ");
-//        getWebElement(itemGroupField).click();
-//        waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
+        System.out.println("select company ");
+        getWebElement(companyInputField).click();
+        waitUntilElementToBePresent(selectedCompany, GeneralConstants.minTimeOut);
+        getWebElement(selectedCompany).click();
+
 //        waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
 //        getWebElement(itemGroupOpt).click();
+        Thread.sleep(threadTimeOut);
         System.out.println("click on save btn ");
+
         getWebElement(saveBtn).click();
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
     }
@@ -240,8 +244,8 @@ public class WareHousePage extends MainPage {
     public String getWareHouseName(String expected) {
         System.out.println("Verify the name of warehouse  ");
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
-        System.out.println("actual text is  " + getWebElement(itemName).getText() + "  and expected text is  " + expected);
-        return getWebElement(itemName).getText();
+        System.out.println("actual text is  " + getWebElement(wareHouseName).getText() + "  and expected text is  " + expected);
+        return getWebElement(wareHouseName).getText();
     }
 
     public String getItemCode(String expected) {

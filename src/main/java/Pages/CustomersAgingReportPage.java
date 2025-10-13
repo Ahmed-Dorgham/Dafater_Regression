@@ -61,7 +61,7 @@ public class CustomersAgingReportPage extends MainPage {
     private By generalLedgerReportTitle = By.xpath("//h3[@title='دفتر الأستاذ العام']");
 
     private By customerInputField_4 = By.xpath("//*[contains(@data-original-title,'عميل')]");
-    private By customerSearchField_4 = By.xpath("//*[contains(@data-original-title,'عميل')]//*[contains(@aria-label,'Search')]");
+    private By chosenCustomer_4 = By.xpath("((//*[contains(@data-original-title,'عميل')]//ul//li)[2]/a/span)[1]");
     private By enteredCustomer = By.xpath("//*[contains(@data-original-title,'عميل')]//*[contains(@class,'active')]");
     private By creditValue = By.xpath("(//*[contains(@class,'slick-cell b6 f6')])[3]/div/div/span");
     private By creditValue_5 = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-4')])[4]");
@@ -74,6 +74,7 @@ public class CustomersAgingReportPage extends MainPage {
     By customerField_5 = By.xpath("(//div[@data-fieldname='customer'])");
     By chosenCompany = By.xpath("(//*[contains(@data-target,'Company')])/following-sibling::ul/div/p/strong");
     By chosenCustomer = By.xpath("(//div[@data-fieldname='customer']/div/div/ul/div/p/strong)[1]");
+    By zeroValueBtn = By.id("show_accounts_with_zero_value");
     By customerInputField_5 = By.xpath("//input[@data-fieldname='customer']");
     By accounts = By.xpath("//div[contains(@class,'dt-cell__content dt-cell__content--col-2')]");
     By footer = By.xpath("//div[contains(@class,'report-footer text-muted')]");
@@ -209,7 +210,6 @@ public class CustomersAgingReportPage extends MainPage {
 
         return getWebElement(valueAtDefaultCreditAccount).getText();
     }
-
     public String getValueAtDefaultExpenseAccountFromGL(int i) {
         valueAtDefaultExpenseAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-3')])[" + i + "]");
         System.out.println("value which exist at default expense  account " + getWebElement(valueAtDefaultExpenseAccount).getText());
@@ -217,22 +217,21 @@ public class CustomersAgingReportPage extends MainPage {
         return getWebElement(valueAtDefaultExpenseAccount).getText();
     }
 
-    public void applyFilters(String customerName) {
+    public String chooseCustomer() {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         System.out.println("enter specific customer ");
         waitUntilElementToBePresent(customerInputField_4, GeneralConstants.minTimeOut);
         getWebElement(customerInputField_4).click();
-        waitUntilElementToBePresent(customerSearchField_4, GeneralConstants.minTimeOut);
-        getWebElement(customerSearchField_4).sendKeys(customerName);
-        waitUntilElementToBePresent(enteredCustomer, GeneralConstants.minTimeOut);
-        getWebElement(enteredCustomer).click();
+        waitUntilElementToBePresent(chosenCustomer_4, GeneralConstants.minTimeOut);
+        String chosenCustomerName = getWebElement(chosenCustomer_4).getText().split("\\(")[0].trim();
+        getWebElement(chosenCustomer_4).click();
+        System.out.println("chosen customer name is " + chosenCustomerName);
         getWebElement(loadDataBtn).click();
         waitUntilOverlayDisappear(loadImage, freezeTimeOut);
-
+        return chosenCustomerName;
     }
-
     public void applyFilters_5(String companyName, String customerName) {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(companyInputField, GeneralConstants.minTimeOut);
@@ -250,9 +249,8 @@ public class CustomersAgingReportPage extends MainPage {
         waitUntilElementToBePresent(chosenCustomer, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(chosenCustomer).click();
+        getWebElement(zeroValueBtn).click();
     }
-
-
     public String getOutstandingAmountValue() {
         waitUntilElementToBePresent(outstandingAmountValue, GeneralConstants.minTimeOut);
         System.out.println(" outstanding amount value for selected customer is " + getWebElement(outstandingAmountValue).getText());

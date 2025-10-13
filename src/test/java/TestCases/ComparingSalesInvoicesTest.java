@@ -33,7 +33,7 @@ public class ComparingSalesInvoicesTest extends BaseTest {
     private final String draftStatus = "مسودة";
     private final String invoiceName = "ACC-SINV";
 
-    @Test(priority = 1, enabled = false)
+    @Test(priority = 1, enabled = true)
     public void TC01_comparingNumberOfSalesInvoices() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -106,8 +106,6 @@ public class ComparingSalesInvoicesTest extends BaseTest {
              netTotalValueBeforeSyncing = salesInvoicesPageObj.getNetTotalValueAtSalesInvoice();
              grandTotalValueBeforeSyncing = salesInvoicesPageObj.getGrandTotalValueAtSalesInvoice();
         }
-
-
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
         loginPageObj.switchToDafater_5(websiteLink_5);
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);

@@ -53,7 +53,7 @@ public class HomePage extends MainPage {
     public By salesTaxesAndChargesOpt = By.id("sidebar-selling-sales-tax-charges");
     public By purchaseTaxesAndChargesOpt = By.xpath("//*[@id='sidebar-buying-purchase-tax-charges']  " +
             "| //*[@id='sidebar-buying-purchase-taxes-and-charges-master']");
-    private By reportsTab = By.id("module-anchor-reports");
+    private By reportsTab = By.xpath("//*[@id='module-anchor-reports']| //*[@id='module-icon-reports']/a/span");
     private By accountsTab = By.id("module-anchor-Accounts");
     public By purchaseInvoicesTab = By.xpath("//*[contains(@id,'module-anchor-Buying')] |//*[contains(@id,'module-icon-purchases')] ");
     private By wareHouseTab = By.id("module-anchor-Stock");
@@ -63,7 +63,8 @@ public class HomePage extends MainPage {
             "| //*[contains(@class,'header-btn btn need-work header__settings-btn')]");
     By setupOpt = By.xpath("//*[contains(@id,'toolbar-setup')]| //*[contains(@href,'/app/list-settings')]");
     public By closeIcon = By.xpath("(//*[contains(@class,'modal-header')]//*[contains(@class,'close')])[3]");
-
+    private By newReportBtn = By.xpath("//*[contains(@id,'appframe-btn-جديد')]" +
+            "| //*[contains(@class,'btn btn-default btn-sm toolbar-btn')]");
     public DataMigrationToolPage searchAboutDataMigrationTool() {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementVisibility(searchIcon, GeneralConstants.minTimeOut);
@@ -136,16 +137,20 @@ public class HomePage extends MainPage {
     public ReportsListPage openReportsListPage() throws InterruptedException {
         System.out.println("click on  reports tab ");
 
-        waitUntilElementToBeClickable(reportsTab, GeneralConstants.minTimeOut);
-        Thread.sleep(threadTimeOut);
-        getWebElement(reportsTab).click();
-        if (tryToGetWebElement(reportsTab) == GeneralConstants.FAILED) {
+        waitUntilElementToBeClickable(arrowIcon, GeneralConstants.minTimeOut);
+        System.out.println("wait until reports tab to be clickable  ");
+        waitUntilElementToBePresent(reportsTab, GeneralConstants.minTimeOut);
+        System.out.println("reports tab is clickable now");
+        Thread.sleep(15000);
+//        scrollToSpeceficElement(reportsTab);
+//        getWebElement(reportsTab).click();
+        clickByActions(reportsTab);
+        if (tryToGetWebElement(newReportBtn) == GeneralConstants.FAILED) {
             System.out.println("************************************");
-            getWebElement(reportsTab).click();
+            Thread.sleep(threadTimeOut);
+            clickByActions(reportsTab);
         }
-//        System.out.println("click on sales invoice option ");
-//        waitUntilElementToBeClickable(salesInvoicesOpt, GeneralConstants.minTimeOut);
-//        getWebElement(salesInvoicesOpt).click();
+
         return new ReportsListPage(driver);
     }
 
@@ -299,7 +304,7 @@ public class HomePage extends MainPage {
         waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(closeIcon, GeneralConstants.minTimeOut);
         getWebElement(closeIcon).click();
-        waitUntilElementToBePresent(welcomeHeader, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(salesInvoicesTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         waitUntilElementToBeClickable(arrowIcon, GeneralConstants.minTimeOut);
         getWebElement(arrowIcon).click();
@@ -313,7 +318,7 @@ public class HomePage extends MainPage {
 
     public LoginPage logOutFromDafater_5() throws InterruptedException {
         //  driver.navigate().to(homePageLink);
-        waitUntilElementToBePresent(welcomeHeader, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(salesInvoicesTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         waitUntilElementToBeClickable(arrowIcon, GeneralConstants.minTimeOut);
         getWebElement(arrowIcon).click();

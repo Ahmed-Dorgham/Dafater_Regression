@@ -40,7 +40,7 @@ public class ComparingPurchaseInvoicesTest extends BaseTest {
     private final String draftStatus = "مسودة";
     private final String invoiceName = "ACC-SINV";
 
-    @Test(priority = 1, enabled = false)
+    @Test(priority = 1, enabled = true)
     public void TC01_comparingNumberOfPurchaseInvoices() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -53,22 +53,28 @@ public class ComparingPurchaseInvoicesTest extends BaseTest {
         homePageObj = new HomePage(driver);
         purchaseInvoicesListPageObj = homePageObj.openPurchaseInvoicesListPage();
         String numberOfDraftPurchaseInvoicesBeforeSyncing = purchaseInvoicesListPageObj.getNumberOfDraftInvoicesBeforeSyncing();
+        Assert.assertFalse(numberOfDraftPurchaseInvoicesBeforeSyncing.equals(GeneralConstants.FAILED));
         String totalAmountOfPurchaseInvoicesBeforeSyncing = purchaseInvoicesListPageObj.getTotalAmountOfPurchaseInvoicesBeforeSyncing();
+        String numberOfPurchaseInvoicesBeforeCreatingNewOne = purchaseInvoicesListPageObj.getListAccountBeforeSyncing();
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
         loginPageObj.switchToDafater_5(websiteLink_5);
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
         purchaseInvoicesListPageObj = homePageObj.openPurchaseInvoicesListPage();
         String numberOfDraftPurchaseInvoicesAfterSyncing = purchaseInvoicesListPageObj.getNumberOfDraftInvoicesAfterSyncing();
         String totalAmountOfPurchaseInvoicesAfterSyncing = purchaseInvoicesListPageObj.getTotalAmountOfPurchaseInvoicesAfterSyncing();
-        System.out.println("verify that number of all draft sales invoices  which appear at dafater 5 is equal to number of all draft sales invoices at dafater 4 ");
+        System.out.println("verify that number of all draft purchase invoices  which appear at dafater 5 is equal to number of all draft purchase invoices at dafater 4 ");
         softAssert.assertEquals(numberOfDraftPurchaseInvoicesAfterSyncing, numberOfDraftPurchaseInvoicesBeforeSyncing);
-        System.out.println("verify that total amount of purchase invoices at dafater 5 is equal to  total amount of sales invoices at dafater 4 ");
+        System.out.println("verify that total amount of purchase invoices at dafater 5 is equal to  total amount of purchase invoices at dafater 4 ");
         softAssert.assertEquals(totalAmountOfPurchaseInvoicesAfterSyncing, totalAmountOfPurchaseInvoicesBeforeSyncing);
+
+
+        System.out.println(" verify that there is purchase invoice at dafater 4 to be compared");
+        Assert.assertFalse(numberOfPurchaseInvoicesBeforeCreatingNewOne.equals("0"));
         softAssert.assertAll();
     }
 
 
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2, enabled = true, dependsOnMethods = "TC01_comparingNumberOfPurchaseInvoices")
     public void TC02_comparingPurchaseInvoiceDatas() throws InterruptedException, IOException {
         String purchaseInvoiceStatusBeforeSyncing = null;
         String purchaseInvoiceIssueDateBeforeSyncing = null;
@@ -89,6 +95,7 @@ public class ComparingPurchaseInvoicesTest extends BaseTest {
         softAssert = new SoftAssert();
         homePageObj = new HomePage(driver);
         purchaseInvoicesListPageObj = homePageObj.openPurchaseInvoicesListPage();
+
         String nameOfSelectedPurchaseInvoiceAtDafater_4 = purchaseInvoicesListPageObj.getNameOfFirstPurchaseInvoiceBeforeSyncing();
         purchaseInvoicesPageObj = purchaseInvoicesListPageObj.openFirstPurchaseInvoiceAtDafater_4();
         if (purchaseInvoicesPageObj.getPurchaseInvoiceStatus().contains(submittedStatus)) {

@@ -204,38 +204,46 @@ public class StockBalanceReportPage extends MainPage {
     }
 
     public String getOpeningValueFromStockBalance_4() {
-        waitUntilOverlayDisappear(loadImage,freezeTimeOut);
-        System.out.println("opening value at stock balance at dafater 4 is  " + getWebElement(openingValue).getText());
 
-        return getWebElement(openingValue).getText();
+        waitUntilOverlayDisappear(loadImage, freezeTimeOut);
+        if (tryToGetWebElement(openingValue) == GeneralConstants.SUCCESS) {
+            System.out.println("opening value at stock balance at dafater 4 is  " + getWebElement(openingValue).getText());
+            return getWebElement(openingValue).getText();
+        } else
+        {System.out.println("no data appear at  stock balance report related to chosen warehouse ");
+            return GeneralConstants.FAILED;
+        }
     }
 
     public String getOpeningValueFromStockBalance_5() {
-        waitUntilOverlayDisappear(loadImage,freezeTimeOut);
+        waitUntilOverlayDisappear(loadImage, freezeTimeOut);
         System.out.println("opening value at stock balance at dafater 5 is  " + getWebElement(openingValue).getText());
 
         return getWebElement(openingValue).getText();
     }
-//    public String getClosingValueFromStockBalance_4() {
+
+    //    public String getClosingValueFromStockBalance_4() {
 //        waitUntilOverlayDisappear(loadImage,freezeTimeOut);
 //        System.out.println("closing value at stock balance at dafater 4 is  " + getWebElement(closingValue).getText());
 //
 //        return getWebElement(closingValue).getText();
 //    }
     public String getOpeningQuantityFromStockBalance_4() {
-        waitUntilOverlayDisappear(loadImage,freezeTimeOut);
+        waitUntilOverlayDisappear(loadImage, freezeTimeOut);
         System.out.println("opening quantity at stock balance at dafater 4 is  " + getWebElement(openingQuantity).getText());
 
         return getWebElement(openingQuantity).getText();
     }
+
     public String getOpeningQuantityFromStockBalance_5() {
-        waitUntilOverlayDisappear(loadImage,freezeTimeOut);
+        waitUntilOverlayDisappear(loadImage, freezeTimeOut);
         System.out.println("opening quantity at stock balance at dafater 5 is  " + getWebElement(openingQuantity).getText());
 
         return getWebElement(openingQuantity).getText();
     }
+
     public String getClosingQuantityFromStockBalance_4() {
-        waitUntilOverlayDisappear(loadImage,freezeTimeOut);
+        waitUntilOverlayDisappear(loadImage, freezeTimeOut);
         System.out.println("closing quantity at stock balance at dafater 4 is  " + getWebElement(closingQuantity).getText());
 
         return getWebElement(closingQuantity).getText();
@@ -311,7 +319,7 @@ public class StockBalanceReportPage extends MainPage {
         return getWebElement(totalTaxAmountValue).getText();
     }
 
-    public void applyFilters_5(String companyName,String wareHouseName) throws InterruptedException {
+    public void applyFilters_5(String companyName, String wareHouseName) throws InterruptedException {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(companyInputField, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -324,7 +332,7 @@ public class StockBalanceReportPage extends MainPage {
         getWebElement(wareHouseField_5).click();
         waitUntilElementToBePresent(wareHouseInputField_5, GeneralConstants.minTimeOut);
         getWebElement(wareHouseInputField_5).sendKeys(wareHouseName);
-        waitUntilElementToBePresent(chosenWarehouse_5,GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(chosenWarehouse_5, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(chosenWarehouse_5).click();
 //

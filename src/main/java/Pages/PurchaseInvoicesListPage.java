@@ -21,6 +21,7 @@ public class PurchaseInvoicesListPage extends MainPage {
 
     private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
     private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')]) | (//div[contains(text(),'مسودة')])");
+    private By purchaseListLabel = By.xpath("(//h5[contains(text(),'قائمة فاتورة شراء')])");
     private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     private By invoiceNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Purchase Invoice')])[1]");
@@ -30,6 +31,7 @@ public class PurchaseInvoicesListPage extends MainPage {
     By numberOfDraftInvoices = By.xpath("//h3[contains(text(),'مسودة')]/following-sibling::div" +
             "| //*[contains(@class,'general-lv-drafts ')]");
     By closeFilter = By.xpath("//*[contains(@class,'btn btn-default btn-xs remove-filter')]");
+    By emptyList = By.xpath("//*[contains(@class,'empty-invoice__title')]");
     By firstPurchaseInvoice = By.xpath("(//*[contains(@class,'result-list')]//*[contains(@class,'doclist-row row')])[1]//a" +
             "|(//*[contains(@class,'result')]//*[contains(@class,'list-row-container')])[1]//*[contains(@class,'list-row-col ellipsis list-subject level ')]//a");
     By searchIcon = By.xpath("//li[@class='fas fa-search']");
@@ -121,8 +123,13 @@ public class PurchaseInvoicesListPage extends MainPage {
 
     public String getNumberOfDraftInvoicesBeforeSyncing() throws InterruptedException {
 
-        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(purchaseListLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
+        if (tryToGetWebElement(emptyList) == GeneralConstants.SUCCESS) {
+            System.out.println("msg which appear at view list"+getWebElement(emptyList).getText());
+            System.out.println("there is no purchase invoice at purchase view list and comparing data of specific purchase invoice not applicable");
+           return GeneralConstants.FAILED;
+        }
         if (tryToGetWebElement(closeFilter) == GeneralConstants.SUCCESS) {
             System.out.println("close filter ");
             getWebElement(closeFilter).click();
@@ -193,6 +200,12 @@ public class PurchaseInvoicesListPage extends MainPage {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         System.out.println("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
+        return getWebElement(listCount).getText();
+    }
+    public String getListAccountBeforeSyncing() {
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        System.out.println("number of sales invoices at list view before Syncing " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 //    public void enterValidDataIntoMainData (String vmUrl , String apiKey , String secretKey)

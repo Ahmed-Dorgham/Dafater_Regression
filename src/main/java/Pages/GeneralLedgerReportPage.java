@@ -57,7 +57,8 @@ public class GeneralLedgerReportPage extends MainPage {
     private By itemOpt = By.xpath("(//*[contains(@id,'sidebar-stock-item')]/span)[1]");
     private By closeFilterIcon = By.xpath("(//*[contains(@class,'filter-icon')])[2]");
     private By loadDataBtn = By.xpath("//*[contains(@id,'appframe-btn-تحميل البيانات')]");
-    private By companyInputField = By.xpath("//*[@id='company']");
+    private By companyInputField = By.xpath("//*[@id='company'] " +
+            "| //input[@data-fieldname='company']");
     private By generalLedgerReportTitle = By.xpath("//h3[@title='دفتر الأستاذ العام']");
 
     private By accountInputField_4 = By.xpath("//*[@data-fieldname='account']");
@@ -71,9 +72,13 @@ public class GeneralLedgerReportPage extends MainPage {
     By loadImage = By.xpath("(//*[contains(@alt,'Generic Empty State')])[3]");
     By accountField_5 = By.xpath("(//*[contains(@data-fieldname,'account')])[1]");//div/p/strong)[1]
     By chosenCompany = By.xpath("(//*[contains(@data-target,'Company')])/following-sibling::ul/li" +
-            "| ((//*[contains(@data-target,'Company')])/following-sibling::ul/div/p/strong)");
+            "| ((//*[contains(@data-target,'Company')])/following-sibling::ul/div/p/strong)" +
+            " | //*[@id='ui-id-1']/li/a/span");
+
+
     By chosenAccount = By.xpath("((//*[contains(@data-fieldname,'account')])/ul/div/li/div/strong)[1]" +
-            "| ((//*[contains(@data-fieldname,'account')])/ul//div/p/strong)[1]");
+            "| ((//*[contains(@data-fieldname,'account')])/ul//div/p/strong)[1] " +
+            "| //*[@id='ui-id-2']/li/a/span");
     By accountInputField_5 = By.xpath("(//*[contains(@class,'dropdown-input-wrapper')]/input)[1]");
     By accounts = By.xpath("//div[contains(@class,'dt-cell__content dt-cell__content--col-2')]");
     By footer = By.xpath("//div[contains(@class,'report-footer text-muted')]");
@@ -139,6 +144,7 @@ public class GeneralLedgerReportPage extends MainPage {
         }
         return j + 1;
     }
+
     public int getDefaultIncomeAccountFromGL(String defaultIncomeAccount) {
         int i;
         int j = 0;
@@ -154,6 +160,7 @@ public class GeneralLedgerReportPage extends MainPage {
         }
         return j + 1;
     }
+
     public int getDefaultExpenseAccountFromGL(String defaultIncomeAccount) throws InterruptedException {
         int i;
         int j = 0;
@@ -170,6 +177,7 @@ public class GeneralLedgerReportPage extends MainPage {
         }
         return j + 1;
     }
+
     public int getDefaultCreditAccountFromGL(String defaultCreditAccount) throws InterruptedException {
         int i;
         int j = 0;
@@ -186,40 +194,74 @@ public class GeneralLedgerReportPage extends MainPage {
         }
         return j + 1;
     }
+
     public String getValueAtDefaultDebitAccountFromGL(int i) {
         valueAtDefaultDebitAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-3')])[" + i + "]");
         System.out.println("value which exist at default debit account " + getWebElement(valueAtDefaultDebitAccount).getText());
 
         return getWebElement(valueAtDefaultDebitAccount).getText();
     }
+
     public String getValueAtDefaultIncomeAccountFromGL(int i) {
         valueAtDefaultIncomeAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-4')])[" + i + "]");
         System.out.println("value which exist at default income account " + getWebElement(valueAtDefaultIncomeAccount).getText());
 
         return getWebElement(valueAtDefaultIncomeAccount).getText();
     }
+
     public String getValueAtDefaultCreditAccountFromGL(int i) {
         valueAtDefaultCreditAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-4')])[" + i + "]");
         System.out.println("value which exist at default credit account " + getWebElement(valueAtDefaultCreditAccount).getText());
 
         return getWebElement(valueAtDefaultCreditAccount).getText();
     }
+
     public String getValueAtDefaultExpenseAccountFromGL(int i) {
         valueAtDefaultExpenseAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-3')])[" + i + "]");
         System.out.println("value which exist at default expense  account " + getWebElement(valueAtDefaultExpenseAccount).getText());
 
         return getWebElement(valueAtDefaultExpenseAccount).getText();
     }
-    public void applyFilters(String accountName) {
+
+    public String chooseCompany() {
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        System.out.println("enter specific company ");
+        waitUntilElementToBePresent(companyInputField, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+
+        getWebElement(companyInputField).click();
+        getWebElement(companyInputField).clear();
+        getWebElement(companyInputField).click();
+        waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
+        String chosenCompanyName = getWebElement(chosenCompany).getText();
+        getWebElement(chosenCompany).click();
+        System.out.println(" chosen company is " + chosenCompanyName);
+        return chosenCompanyName;
+    }
+
+
+    public String chooseAccount() {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         System.out.println("enter specific account ");
         waitUntilElementToBePresent(accountInputField_4, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        getWebElement(accountInputField_4).sendKeys(accountName);
-        getWebElement(loadDataBtn).click();
 
+        getWebElement(accountInputField_4).click();
+        waitUntilElementToBePresent(chosenAccount, GeneralConstants.minTimeOut);
+        String chosenAccountName = getWebElement(chosenAccount).getText();
+        getWebElement(chosenAccount).click();
+        System.out.println(" chosen account is " + chosenAccountName);
+        return chosenAccountName;
+    }
+
+    public void clickOnLoadDataBtn() {
+        System.out.println("click on load data btn ");
+        waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
+        getWebElement(loadDataBtn).click();
     }
 
     public void applyFilters_5(String companyName, String accountName) throws InterruptedException {

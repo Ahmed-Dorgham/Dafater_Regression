@@ -17,13 +17,12 @@ public class BaseTest extends MainPage {
     MainPage mainPageObj;
     LoginPage loginPageObj;
     HomePage homePageObj;
-    SetupWizardPage setupWizardPageObj ;
     public String websiteLink_4;
     public String homePageLink_4;
     public String websiteLink_5;
     public String homePageLink_5;
 
-    public String companyName = "company1";
+    public String companyName = "شركة مجموعة بسام مطشر عجمي السعدون للتجارة" ;
     public String companyIdValue = "123456789";
     public String taxIdValue = "123456789";
     public String cityName = "city";

@@ -1,5 +1,6 @@
 package TestCases;
 
+import GeneralConstants.GeneralConstants;
 import Pages.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -38,18 +39,12 @@ public class ComparingReportsTest extends BaseTest {
     ItemsPricesTablePage itemsPricesTablePageObj;
     ItemPricePage itemPricePageObj;
 
-    private final String duesDate = "15-07-2026";
-    private final String secretKey = "kX7NY9yMSag3";
-    private final String invalidSecretKey = "kX7NY9yMSag4";
-    private final String successfulConnectionMsg = "Connected Successfully";
-    private final String failureConnectionMsg = "Cannot Connect";
+
+
     private final String submittedStatus = "معتمد";
     private final String draftStatus = "مسودة";
     private final String invoiceName = "ACC-SINV";
-    //    private final String accountName = "0 - NAMAC";
-    private final String accountName = "1 الاصول - NAMAC";
-    private final String customerName = "السلامة لتجارة المحاصيل الزراعية";
-    private final String companyName = "شركة نماك الوطنية الزراعية";
+
 
     @Test(priority = 1, enabled = false)
     public void TC01_comparingGeneralLedgerReport() throws InterruptedException, IOException {
@@ -64,7 +59,9 @@ public class ComparingReportsTest extends BaseTest {
         homePageObj = new HomePage(driver);
         reportsListPageObj = homePageObj.openReportsListPage();
         generalLedgerReportPageObj = reportsListPageObj.openGeneralLedgerReport();
-        generalLedgerReportPageObj.applyFilters(accountName);
+        companyName = generalLedgerReportPageObj.chooseCompany();
+       String accountName = generalLedgerReportPageObj.chooseAccount();
+       generalLedgerReportPageObj.clickOnLoadDataBtn();
         System.out.println("debit value for specific account before syncing  ");
         String debitValueOfSpecificAccountBeforeSyncing = generalLedgerReportPageObj.getDebitValue();
         System.out.println("credit value for specific account before syncing  ");
@@ -89,7 +86,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 2, enabled = false)
+    @Test(priority = 2, enabled = true)
     public void TC02_comparingCustomersAgingReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -99,13 +96,13 @@ public class ComparingReportsTest extends BaseTest {
         randomNumber = random.nextInt(1000000000);
         itemCode = "item " + randomNumber;
         softAssert = new SoftAssert();
-        //   homePageObj = new HomePage(driver);
+           homePageObj = new HomePage(driver);
 //        driver.navigate().to(websiteLink_4);
 //        loginPageObj = new LoginPage(driver);
 //        homePageObj = loginPageObj.loginWithValidData(userName_4, password_4);
         reportsListPageObj = homePageObj.openReportsListPage();
         customersAgingReportPageObj = reportsListPageObj.openCustomersAgingReport();
-        customersAgingReportPageObj.applyFilters(customerName);
+       String customerName = customersAgingReportPageObj.chooseCustomer();
         System.out.println(" outstanding amount for specific customer before syncing  ");
         String outstandingAmountOfSpecificCustomerBeforeSyncing = customersAgingReportPageObj.getOutstandingAmountValue();
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
@@ -175,6 +172,7 @@ public class ComparingReportsTest extends BaseTest {
         String wareHouseName = stockBalanceReportPageObj.getSelectedWarehouseName();
         stockBalanceReportPageObj.chooseSpecificWareHouse();
         String openingValueBeforeSyncing = stockBalanceReportPageObj.getOpeningValueFromStockBalance_4();
+        Assert.assertFalse(openingValueBeforeSyncing.equals(GeneralConstants.FAILED));
         String openingQuantityBeforeSyncing = stockBalanceReportPageObj.getOpeningQuantityFromStockBalance_4();
         String closingQuantityBeforeSyncing = stockBalanceReportPageObj.getClosingQuantityFromStockBalance_4();
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
@@ -204,7 +202,7 @@ public class ComparingReportsTest extends BaseTest {
         randomNumber = random.nextInt(1000000000);
         itemCode = "item " + randomNumber;
         softAssert = new SoftAssert();
-//        homePageObj = new HomePage(driver);
+        homePageObj = new HomePage(driver);
 //        driver.navigate().to(websiteLink_4);
 //        loginPageObj = new LoginPage(driver);
 //        homePageObj = loginPageObj.loginWithValidData(userName_4, password_4);
@@ -304,7 +302,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 7, enabled = true)
+    @Test(priority = 7, enabled = false)
     public void TC07_comparingProfitAndLossReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");

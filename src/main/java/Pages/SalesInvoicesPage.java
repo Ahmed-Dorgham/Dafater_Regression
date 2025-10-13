@@ -299,7 +299,7 @@ public class SalesInvoicesPage extends MainPage {
             System.out.println("paid status of sales invoice  " + getWebElement(paidStatusField).getText());
             return getWebElement(paidStatusField).getText();
         } else {
-            System.out.println("paid status of sales invoice  is  " + paidStatus);
+            System.out.println("paid status of sales invoice  is  " + paidStatus + " and this meaning that this invoice is draft and not have paid status ");
             return paidStatus;
         }
 

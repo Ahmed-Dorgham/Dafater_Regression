@@ -22,7 +22,7 @@ public class PurchaseTaxesAndChargesTemplatesListPage extends MainPage {
             "| (//h5[contains(text(),'قائمة تخصيص رسوم وضرائب المشتريات')])");
     private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
-    By numberOfSalesTaxesAndChargesTemplates = By.xpath("//*[contains(@class,'list-count')]/span" +
+    By numberOfPurchaseTaxesAndChargesTemplates = By.xpath("//*[contains(@class,'list-count')]/span" +
             "| //*[contains(@class,'total-rows')]");
     private By invoiceNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Sales Invoice')])[1]");
     private By invoiceStatusAtListView = By.xpath("(((((//*[contains(@class,'level list-row-head font-weight-bold')])/following-sibling::div)[2])/div/div/div)[3])/span/span");
@@ -66,17 +66,17 @@ public class PurchaseTaxesAndChargesTemplatesListPage extends MainPage {
     public String getNumberOfAllItemsBeforeSyncing() {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of draft sales invoices at list view before creating new sales invoices " + getWebElement(numberOfSalesTaxesAndChargesTemplates).getText());
-        return getWebElement(numberOfSalesTaxesAndChargesTemplates).getText();
+        System.out.println("number of draft sales invoices at list view before creating new sales invoices " + getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText());
+        return getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText();
     }
 
     public String getNumberOfPurchaseTaxesAndChargesTemplatesBeforeSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-        waitUntilElementToBePresent(numberOfSalesTaxesAndChargesTemplates, GeneralConstants.minTimeOut);
-        System.out.println("number of draft Sales Taxes And Charges Templates at list view before syncing " + getWebElement(numberOfSalesTaxesAndChargesTemplates).getText());
-        return getWebElement(numberOfSalesTaxesAndChargesTemplates).getText();
+        waitUntilElementToBePresent(numberOfPurchaseTaxesAndChargesTemplates, GeneralConstants.minTimeOut);
+        System.out.println("number of draft Sales Taxes And Charges Templates at list view before syncing " + getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText());
+        return getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText();
     }
 
     public String getTotalAmountOfSalesInvoicesBeforeSyncing() throws InterruptedException {
@@ -98,17 +98,18 @@ public class PurchaseTaxesAndChargesTemplatesListPage extends MainPage {
     public String getNumberOfDraftInvoicesAfterCreatingNewDraftSalesInvoices() {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of draft sales invoices at list view after creating new sales invoices " + getWebElement(numberOfSalesTaxesAndChargesTemplates).getText());
-        return getWebElement(numberOfSalesTaxesAndChargesTemplates).getText();
+        System.out.println("number of draft sales invoices at list view after creating new sales invoices " + getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText());
+        return getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText();
     }
 
     public String getNumberOfPurchaseTaxesAndChargesTemplatesAfterSyncing() {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
-        waitUntilElementNotHaveSpecificText(numberOfSalesTaxesAndChargesTemplates, "تحديث");
-        waitUntilElementToBePresent(numberOfSalesTaxesAndChargesTemplates, GeneralConstants.minTimeOut);
-        System.out.println("number of draft sales invoices at list view after syncing " + getWebElement(numberOfSalesTaxesAndChargesTemplates).getText());
-        return getWebElement(numberOfSalesTaxesAndChargesTemplates).getText();
+        waitUntilElementToBePresent(numberOfPurchaseTaxesAndChargesTemplates, GeneralConstants.minTimeOut);
+        waitUntilElementNotHaveSpecificText(numberOfPurchaseTaxesAndChargesTemplates, "تحديث");
+
+        System.out.println("number of Purchase Taxes And Charges Templates at list view after syncing " + getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText());
+        return getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText();
     }
 
     public String getListAccountAfterCreatingNewSalesInvoices() {
