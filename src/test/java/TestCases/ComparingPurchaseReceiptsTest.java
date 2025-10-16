@@ -3,6 +3,7 @@ package TestCases;
 import Pages.HomePage;
 import Pages.LoginPage;
 import Pages.PurchaseReceiptListPage;
+import io.qameta.allure.Allure;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -37,10 +38,10 @@ public class ComparingPurchaseReceiptsTest extends BaseTest {
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
         purchaseReceiptListPageObj = homePageObj.openPurchaseReceiptListPage();
         String numberOfAllPurchaseReceiptAfterSyncing = purchaseReceiptListPageObj.getNumberOfAllPurchaseReceiptsAfterSyncing();
-        System.out.println("verify that number of all purchase receipt which appear at dafater 5 is equal to number of all items at dafater 4 ");
+        Allure.step("verify that number of all purchase receipt which appear at dafater 5 is equal to number of all items at dafater 4 ");
         softAssert.assertEquals(numberOfAllPurchaseReceiptBeforeSyncing, numberOfAllPurchaseReceiptAfterSyncing);
         softAssert.assertAll();
-        System.out.println(" number of purchase receipt which appear at dafater 5 is " + numberOfAllPurchaseReceiptAfterSyncing + " and number of all purchase receipt at dafater 4 is " + numberOfAllPurchaseReceiptBeforeSyncing + " and this is correct ");
+        Allure.step(" number of purchase receipt which appear at dafater 5 is " + numberOfAllPurchaseReceiptAfterSyncing + " and number of all purchase receipt at dafater 4 is " + numberOfAllPurchaseReceiptBeforeSyncing + " and this is correct ");
 
     }
 

@@ -1,6 +1,7 @@
 package TestCases;
 
 import Pages.*;
+import io.qameta.allure.Allure;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -36,11 +37,11 @@ public class ComparingStockEntryTest extends BaseTest {
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
         stockEntryListPageObj = homePageObj.openStockEntryListPage();
         String numberOfAllStockEntryAfterSyncing = stockEntryListPageObj.getNumberOfAllStockEntriesAfterSyncing();
-        System.out.println("verify that number of all stock entries which appear at dafater 5 is equal to number of all stock entries at dafater 4 ");
+        Allure.step("verify that number of all stock entries which appear at dafater 5 is equal to number of all stock entries at dafater 4 ");
 
         softAssert.assertEquals(numberOfAllStockEntryBeforeSyncing, numberOfAllStockEntryAfterSyncing);
         softAssert.assertAll();
-        System.out.println(" number of stock entries which appear at dafater 5 is " + numberOfAllStockEntryAfterSyncing + " and number of all stock entries at dafater 4 is " + numberOfAllStockEntryBeforeSyncing + " and this is correct ");
+        Allure.step(" number of stock entries which appear at dafater 5 is " + numberOfAllStockEntryAfterSyncing + " and number of all stock entries at dafater 4 is " + numberOfAllStockEntryBeforeSyncing + " and this is correct ");
 
 
     }

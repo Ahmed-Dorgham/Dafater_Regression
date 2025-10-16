@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -65,7 +66,9 @@ public class HomePage extends MainPage {
     public By closeIcon = By.xpath("(//*[contains(@class,'modal-header')]//*[contains(@class,'close')])[3]");
     private By newReportBtn = By.xpath("//*[contains(@id,'appframe-btn-جديد')]" +
             "| //*[contains(@class,'btn btn-default btn-sm toolbar-btn')]");
+
     public DataMigrationToolPage searchAboutDataMigrationTool() {
+        Allure.step(" search About Data Migration Tool ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementVisibility(searchIcon, GeneralConstants.minTimeOut);
         getWebElement(searchIcon).click();
@@ -78,75 +81,78 @@ public class HomePage extends MainPage {
     }
 
     public void closeWelcomeMsg() {
-        System.out.println("close welcome msg ");
+        Allure.step("close welcome msg ");
         // waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(closeIcon, GeneralConstants.minTimeOut);
         getWebElement(closeIcon).click();
     }
 
     public SalesInvoicesListPage openSalesInvoicesListPage() throws InterruptedException {
-        System.out.println("click on sales invoice tab ");
+        Allure.step("click on sales invoice tab ");
 
         waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.globalTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(salesInvoicesTab).click();
         if (tryToGetWebElement(salesInvoicesOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(salesInvoicesTab).click();
         }
-        System.out.println("click on sales invoice option ");
+        Allure.step("click on sales invoice option ");
         waitUntilElementToBeClickable(salesInvoicesOpt, GeneralConstants.minTimeOut);
         getWebElement(salesInvoicesOpt).click();
         return new SalesInvoicesListPage(driver);
     }
 
     public SalesTaxesAndChargesTemplatesListPage openSalesTaxesAndChargesTemplatesListPage() throws InterruptedException {
-        System.out.println("click on selling tab ");
+        Allure.step("click on selling tab ");
 
         waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(salesInvoicesTab).click();
         if (tryToGetWebElement(salesInvoicesOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(salesInvoicesTab).click();
         }
         waitUntilElementToBeClickable(sellingSetup, GeneralConstants.minTimeOut);
         getWebElement(sellingSetup).click();
-        System.out.println(" open Sales Taxes And Charges Templates list");
+        Allure.step(" open Sales Taxes And Charges Templates list");
         waitUntilElementToBeClickable(salesTaxesAndChargesOpt, GeneralConstants.minTimeOut);
         getWebElement(salesTaxesAndChargesOpt).click();
         return new SalesTaxesAndChargesTemplatesListPage(driver);
     }
+
     public PurchaseTaxesAndChargesTemplatesListPage openPurchaseTaxesAndChargesTemplatesListPage() throws InterruptedException {
-        System.out.println("click on purchase tab ");
+        Allure.step("click on purchase tab ");
 
         waitUntilElementToBeClickable(purchaseInvoicesTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(purchaseInvoicesTab).click();
         if (tryToGetWebElement(purchaseInvoicesOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(purchaseInvoicesTab).click();
         }
         waitUntilElementToBeClickable(purchaseSetup, GeneralConstants.minTimeOut);
         getWebElement(purchaseSetup).click();
-        System.out.println(" open purchase Taxes And Charges Templates list");
+        Allure.step(" open purchase Taxes And Charges Templates list");
         waitUntilElementToBeClickable(purchaseTaxesAndChargesOpt, GeneralConstants.minTimeOut);
         getWebElement(purchaseTaxesAndChargesOpt).click();
         return new PurchaseTaxesAndChargesTemplatesListPage(driver);
     }
+
     public ReportsListPage openReportsListPage() throws InterruptedException {
-        System.out.println("click on  reports tab ");
+        Allure.step("click on  reports tab ");
 
         waitUntilElementToBeClickable(arrowIcon, GeneralConstants.minTimeOut);
-        System.out.println("wait until reports tab to be clickable  ");
+        Allure.step("wait until reports tab to be clickable  ");
         waitUntilElementToBePresent(reportsTab, GeneralConstants.minTimeOut);
-        System.out.println("reports tab is clickable now");
+        Allure.step("reports tab is clickable now");
         Thread.sleep(15000);
+        waitUntilElementToBePresent(reportsTab, GeneralConstants.minTimeOut);
 //        scrollToSpeceficElement(reportsTab);
 //        getWebElement(reportsTab).click();
         clickByActions(reportsTab);
         if (tryToGetWebElement(newReportBtn) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             Thread.sleep(threadTimeOut);
             clickByActions(reportsTab);
         }
@@ -155,16 +161,16 @@ public class HomePage extends MainPage {
     }
 
     public CompaniesListPage openCompaniesListPage() throws InterruptedException {
-        System.out.println("click on  accounts tab ");
+        Allure.step("click on  accounts tab ");
 
         waitUntilElementToBeClickable(accountsTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(accountsTab).click();
         if (tryToGetWebElement(accountsTab) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(accountsTab).click();
         }
-        System.out.println("open companies list ");
+        Allure.step("open companies list ");
         if (tryToGetWebElement(companyTab) == GeneralConstants.SUCCESS) {
             getWebElement(companyTab).click();
             waitUntilElementToBeClickable(companiesOpt, GeneralConstants.minTimeOut);
@@ -180,15 +186,15 @@ public class HomePage extends MainPage {
     }
 
     public ItemListPage openItemListPage() throws InterruptedException {
-        System.out.println("click on wareHouse tab ");
+        Allure.step("click on wareHouse tab ");
         waitUntilElementToBeClickable(wareHouseTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(wareHouseTab).click();
         if (tryToGetWebElement(salesInvoicesOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(wareHouseTab).click();
         }
-        System.out.println("click on item option ");
+        Allure.step("click on item option ");
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
         getWebElement(itemOpt).click();
         return new ItemListPage(driver);
@@ -196,102 +202,102 @@ public class HomePage extends MainPage {
 
 
     public StockEntryListPage openStockEntryListPage() throws InterruptedException {
-        System.out.println("click on wareHouse tab ");
+        Allure.step("click on wareHouse tab ");
         waitUntilElementToBeClickable(wareHouseTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(wareHouseTab).click();
         if (tryToGetWebElement(stockEntryOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(wareHouseTab).click();
         }
-        System.out.println("click on stock entry option ");
+        Allure.step("click on stock entry option ");
         waitUntilElementToBeClickable(stockEntryOpt, GeneralConstants.minTimeOut);
         getWebElement(stockEntryOpt).click();
         return new StockEntryListPage(driver);
     }
 
     public SetupPage openSetupPage() throws InterruptedException {
-        System.out.println("click on setting icon ");
+        Allure.step("click on setting icon ");
         waitUntilElementToBeClickable(settingIcon, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(settingIcon).click();
 
-        System.out.println("click on setup option ");
+        Allure.step("click on setup option ");
         waitUntilElementToBeClickable(setupOpt, GeneralConstants.minTimeOut);
         getWebElement(setupOpt).click();
         return new SetupPage(driver);
     }
 
     public SuppliersListPage openSuppliersListPage() throws InterruptedException {
-        System.out.println("click on purchase tab ");
+        Allure.step("click on purchase tab ");
         waitUntilElementToBeClickable(purchaseInvoicesTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(purchaseInvoicesTab).click();
         if (tryToGetWebElement(suppliersOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(purchaseInvoicesTab).click();
         }
-        System.out.println("click on suppliers option ");
+        Allure.step("click on suppliers option ");
         waitUntilElementToBeClickable(suppliersOpt, GeneralConstants.minTimeOut);
         getWebElement(suppliersOpt).click();
         return new SuppliersListPage(driver);
     }
 
     public CustomersListPage openCustomersListPage() throws InterruptedException {
-        System.out.println("click on sales tab ");
+        Allure.step("click on sales tab ");
         waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(salesInvoicesTab).click();
         if (tryToGetWebElement(customersOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(salesInvoicesTab).click();
         }
-        System.out.println("click on customers option ");
+        Allure.step("click on customers option ");
         waitUntilElementToBeClickable(customersOpt, GeneralConstants.minTimeOut);
         getWebElement(customersOpt).click();
         return new CustomersListPage(driver);
     }
 
     public DebitNotesListPage openDebitNotesListPage() throws InterruptedException {
-        System.out.println("click on sales tab ");
+        Allure.step("click on sales tab ");
         waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(salesInvoicesTab).click();
         if (tryToGetWebElement(customersOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(salesInvoicesTab).click();
         }
-        System.out.println("click on debit notes option ");
+        Allure.step("click on debit notes option ");
         waitUntilElementToBeClickable(debitNotesOpt, GeneralConstants.minTimeOut);
         getWebElement(debitNotesOpt).click();
         return new DebitNotesListPage(driver);
     }
 
     public CreditNotesListPage openCreditNotesListPage() throws InterruptedException {
-        System.out.println("click on sales tab ");
+        Allure.step("click on sales tab ");
         waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(salesInvoicesTab).click();
         if (tryToGetWebElement(customersOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(salesInvoicesTab).click();
         }
-        System.out.println("click on credit notes option ");
+        Allure.step("click on credit notes option ");
         waitUntilElementToBeClickable(creditNotesOpt, GeneralConstants.minTimeOut);
         getWebElement(creditNotesOpt).click();
         return new CreditNotesListPage(driver);
     }
 
     public DeliveryNoteListPage openDeliveryNoteListPage() throws InterruptedException {
-        System.out.println("click on wareHouse tab ");
+        Allure.step("click on wareHouse tab ");
         waitUntilElementToBeClickable(wareHouseTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(wareHouseTab).click();
         if (tryToGetWebElement(deliveryNoteOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(wareHouseTab).click();
         }
-        System.out.println("click on delivery note option ");
+        Allure.step("click on delivery note option ");
         waitUntilElementToBeClickable(deliveryNoteOpt, GeneralConstants.minTimeOut);
         getWebElement(deliveryNoteOpt).click();
         return new DeliveryNoteListPage(driver);
@@ -300,7 +306,7 @@ public class HomePage extends MainPage {
 
     public LoginPage logOutFromDafater_4(String homePageLink) throws InterruptedException {
         driver.navigate().to(homePageLink);
-        System.out.println("close welcome msg ");
+        Allure.step("close welcome msg ");
         waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(closeIcon, GeneralConstants.minTimeOut);
         getWebElement(closeIcon).click();
@@ -332,84 +338,84 @@ public class HomePage extends MainPage {
 
 
     public WareHouseListPage openWareHouseListPage() throws InterruptedException {
-        System.out.println("click on wareHouse tab ");
+        Allure.step("click on wareHouse tab ");
         waitUntilElementToBeClickable(wareHouseTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(wareHouseTab).click();
         if (tryToGetWebElement(wareHousesOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(wareHouseTab).click();
         }
-        System.out.println("click on warehouse option ");
+        Allure.step("click on warehouse option ");
         waitUntilElementToBeClickable(wareHousesOpt, GeneralConstants.minTimeOut);
         getWebElement(wareHousesOpt).click();
         return new WareHouseListPage(driver);
     }
 
     public PurchaseInvoicesListPage openPurchaseInvoicesListPage() throws InterruptedException {
-        System.out.println("click on purchase tab ");
+        Allure.step("click on purchase tab ");
         waitUntilElementToBeClickable(purchaseInvoicesTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
 
         getWebElement(purchaseInvoicesTab).click();
 
         if (tryToGetWebElement(purchaseInvoicesOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(purchaseInvoicesTab).click();
         }
-        System.out.println("click on purchase invoice ");
+        Allure.step("click on purchase invoice ");
         waitUntilElementToBeClickable(purchaseInvoicesOpt, GeneralConstants.minTimeOut);
         getWebElement(purchaseInvoicesOpt).click();
         return new PurchaseInvoicesListPage(driver);
     }
 
     public PaymentEntryListPage openPaymentEntryListPage() throws InterruptedException {
-        System.out.println("click on purchase tab ");
+        Allure.step("click on purchase tab ");
         waitUntilElementToBeClickable(purchaseInvoicesTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
 
         getWebElement(purchaseInvoicesTab).click();
 
         if (tryToGetWebElement(purchaseInvoicesOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(purchaseInvoicesTab).click();
         }
-        System.out.println("click on payment entry ");
+        Allure.step("click on payment entry ");
         waitUntilElementToBeClickable(paymentEntryOpt, GeneralConstants.minTimeOut);
         getWebElement(paymentEntryOpt).click();
         return new PaymentEntryListPage(driver);
     }
 
     public SalesOrderListPage openSalesOrdersListPage() {
-        System.out.println("click on sales invoice tab ");
+        Allure.step("click on sales invoice tab ");
         waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
         getWebElement(salesInvoicesTab).click();
-        System.out.println("click on sales orders option");
+        Allure.step("click on sales orders option");
         waitUntilElementToBeClickable(salesOrdersOpt, GeneralConstants.minTimeOut);
         getWebElement(salesOrdersOpt).click();
         return new SalesOrderListPage(driver);
     }
 
     public PurchaseOrderListPage openPurchaseOrdersListPage() {
-        System.out.println("click on purchase tab ");
+        Allure.step("click on purchase tab ");
         waitUntilElementToBeClickable(purchaseInvoicesTab, GeneralConstants.minTimeOut);
         getWebElement(purchaseInvoicesTab).click();
-        System.out.println("click on purchase order option");
+        Allure.step("click on purchase order option");
         waitUntilElementToBeClickable(purchaseOrdersOpt, GeneralConstants.minTimeOut);
         getWebElement(purchaseOrdersOpt).click();
         return new PurchaseOrderListPage(driver);
     }
 
     public PurchaseReceiptListPage openPurchaseReceiptListPage() throws InterruptedException {
-        System.out.println("click on wareHouse tab ");
+        Allure.step("click on wareHouse tab ");
         waitUntilElementToBeClickable(wareHouseTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(wareHouseTab).click();
         if (tryToGetWebElement(purchaseReceiptOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(wareHouseTab).click();
         }
-        System.out.println("click on purchase receipt option ");
+        Allure.step("click on purchase receipt option ");
         waitUntilElementToBeClickable(purchaseReceiptOpt, GeneralConstants.minTimeOut);
         getWebElement(purchaseReceiptOpt).click();
         return new PurchaseReceiptListPage(driver);
@@ -417,15 +423,15 @@ public class HomePage extends MainPage {
 
 
     public JournalEntrytListPage openJournalEntryListPage() throws InterruptedException {
-        System.out.println("click on Accounts tab ");
+        Allure.step("click on Accounts tab ");
         waitUntilElementToBeClickable(accountsTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(accountsTab).click();
         if (tryToGetWebElement(journalEntryOpt) == GeneralConstants.FAILED) {
-            System.out.println("************************************");
+            Allure.step("************************************");
             getWebElement(accountsTab).click();
         }
-        System.out.println("click on journal entry option ");
+        Allure.step("click on journal entry option ");
         waitUntilElementToBeClickable(journalEntryOpt, GeneralConstants.minTimeOut);
         getWebElement(journalEntryOpt).click();
         return new JournalEntrytListPage(driver);

@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -62,18 +63,18 @@ public class DeliveryNotePage extends MainPage {
     public void enterValidDataIntoDeliveryNotePage() throws InterruptedException {
         waitUntilElementToBePresent(newDeliveryNoteTitle, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        System.out.println("select  customer ");
+       Allure.step("select  customer ");
         getWebElement(customerFieldDeliveyNote).click();
         waitUntilElementVisibility(customersListSalesOrder, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(customerOptDeliveryNote, GeneralConstants.minTimeOut);
         getWebElement(customerOptDeliveryNote).click();
-//        System.out.println("enter dues date  ");
+//       Allure.step("enter dues date  ");
 //        waitUntilElementVisibility(dueDateField, GeneralConstants.minTimeOut);
 //        getWebElement(dueDateField).sendKeys(dueDate);
-        System.out.println("Scroll down to item field ");
+       Allure.step("Scroll down to item field ");
         scrollToSpeceficElement(totalAmountLabel);
         //Thread.sleep(6000);
-        System.out.println(" select item  ");
+       Allure.step(" select item  ");
         clickByActions(itemCodeField);
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
         getWebElement(itemCodeInputField).sendKeys("item 1");
@@ -83,26 +84,26 @@ public class DeliveryNotePage extends MainPage {
         waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
         clickByActions(selectedItem);
 //        clickByJs(getWebElement(itemOpt));
-//        System.out.println("unselect update stock opt");
+//       Allure.step("unselect update stock opt");
 //        getWebElement(updateStockBtn).click();
         // Thread.sleep(6000);
-        System.out.println("scroll up to save and submit btn ");
+       Allure.step("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
-        System.out.println(" save and submit delivery note ");
+       Allure.step(" save and submit delivery note ");
         getWebElement(saveAndSubmitBtn).click();
         //  Thread.sleep(10000);
-        System.out.println("click on yes btn ");
+       Allure.step("click on yes btn ");
         waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
         getWebElement(yesBtn).click();
 
     }
 
     public String getSalesOrderStatusBeforeCreatingRelatedSalesInvoice() {
-//        System.out.println("Verify the status of sales invoice  ");
+//       Allure.step("Verify the status of sales invoice  ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        System.out.println("status of delivery note before creating related sales invoices " + getWebElement(deliveryNoteStatus).getText());
+       Allure.step("status of delivery note before creating related sales invoices " + getWebElement(deliveryNoteStatus).getText());
         return getWebElement(deliveryNoteStatus).getText();
 
     }
@@ -110,12 +111,12 @@ public class DeliveryNotePage extends MainPage {
     public String getDeliveryNoteStatusAfterCreatingRelatedSalesInvoice() throws InterruptedException {
 
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
-        System.out.println("click on warehouse tab");
+       Allure.step("click on warehouse tab");
         waitUntilElementToBeClickable(wareHouseTab, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(wareHouseTab).click();
 //        getWebElement(salesInvoicesTab).click();
-        System.out.println("click on delivery note option");
+       Allure.step("click on delivery note option");
 
 //        Thread.sleep(9000);
         waitUntilElementToBePresent(deliveyNoteOpt, GeneralConstants.minTimeOut);
@@ -126,22 +127,22 @@ public class DeliveryNotePage extends MainPage {
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         driver.navigate().refresh();
-        System.out.println("open last created delivery note");
+       Allure.step("open last created delivery note");
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(deliveryNoteNameAtViewList).click();
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        System.out.println("status of delivery note after creating related sales invoices " + getWebElement(deliveryNoteCompletedStatus).getText());
+       Allure.step("status of delivery note after creating related sales invoices " + getWebElement(deliveryNoteCompletedStatus).getText());
         return getWebElement(deliveryNoteCompletedStatus).getText();
 
     }
 
     public SalesInvoicesPage createNewSalesInvoiceFromDeliveryNote() {
-        System.out.println("click on create btn");
+       Allure.step("click on create btn");
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
         getWebElement(createBtn).click();
-        System.out.println("click on sales invoice");
+       Allure.step("click on sales invoice");
         waitUntilElementVisibility(salesInvoiceChoice, GeneralConstants.minTimeOut);
         getWebElement(salesInvoiceChoice).click();
         return new SalesInvoicesPage(driver);
@@ -151,45 +152,45 @@ public class DeliveryNotePage extends MainPage {
         String draftStatus = "مسودة";
         waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
         if (tryToGetWebElement(successStatusField) == GeneralConstants.SUCCESS) {
-//            System.out.println(" status of sales invoice  " + getWebElement(successStatusField).getText());
+//           Allure.step(" status of sales invoice  " + getWebElement(successStatusField).getText());
             return getWebElement(successStatusField).getText();
         } else {
-//            System.out.println(" status of sales invoice  is " + draftStatus);
+//           Allure.step(" status of sales invoice  is " + draftStatus);
             return draftStatus;
         }
     }
 
     public String getDeliveryNoteIssueDate() {
         waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
-        System.out.println("issue date of delivery note " + getWebElement(deliveryNoteIssueDateField).getText());
+       Allure.step("issue date of delivery note " + getWebElement(deliveryNoteIssueDateField).getText());
         return getWebElement(deliveryNoteIssueDateField).getText();
     }
 
     public String getCustomerNameAtDeliveryNote() {
         waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
-        System.out.println("customer name at delivery note  " + getWebElement(customerNameField).getText());
+       Allure.step("customer name at delivery note  " + getWebElement(customerNameField).getText());
         return getWebElement(customerNameField).getText();
     }
 
     public String getNetTotalValueAtSalesInvoice() {
         waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
-        System.out.println("net total value of delivery note  " + getWebElement(netTotalField).getText());
+       Allure.step("net total value of delivery note  " + getWebElement(netTotalField).getText());
         return getWebElement(netTotalField).getText();
     }
 
     public String getGrandTotalValueAtSalesInvoice() {
         waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
-        System.out.println("grand total value of   delivery note  " + getWebElement(grandTotalField).getText());
+       Allure.step("grand total value of   delivery note  " + getWebElement(grandTotalField).getText());
         return getWebElement(grandTotalField).getText();
     }
 
     public String getSalesInvoiceStatusAtDafater_5() {
         waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
         if (tryToGetWebElement(successStatusField) == GeneralConstants.SUCCESS) {
-//            System.out.println("status of sales invoice  " + getWebElement(successStatusField).getText());
+//           Allure.step("status of sales invoice  " + getWebElement(successStatusField).getText());
             return getWebElement(successStatusField).getText();
         } else {
-//            System.out.println("status of sales invoice  is  " + getWebElement(draftStatusField).getText());
+//           Allure.step("status of sales invoice  is  " + getWebElement(draftStatusField).getText());
             return getWebElement(draftStatusField).getText();
         }
     }
@@ -197,7 +198,7 @@ public class DeliveryNotePage extends MainPage {
     public String getCustomerNameAtDeliveryNoteAtDafater_5() {
         waitUntilElementToBePresent(deliveryNoteIssueDateField, GeneralConstants.minTimeOut);
 
-        System.out.println("customer name at delivery note  " + getWebElement(customerNameField).getText());
+       Allure.step("customer name at delivery note  " + getWebElement(customerNameField).getText());
         return getWebElement(customerNameField).getText();
     }
 }

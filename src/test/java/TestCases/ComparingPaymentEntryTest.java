@@ -1,6 +1,7 @@
 package TestCases;
 
 import Pages.*;
+import io.qameta.allure.Allure;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -16,8 +17,9 @@ public class ComparingPaymentEntryTest extends BaseTest {
     LoginPage loginPageObj;
     HomePage homePageObj;
     PaymentEntryListPage paymentEntryListPageObj;
+
     @Test(priority = 1, enabled = true)
-    public void TC01_comparingNumberOfPurchaseInvoices() throws InterruptedException, IOException {
+    public void TC01_comparingNumberOfPaymentEntry() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
         websiteLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "websiteLink_5");
@@ -35,7 +37,7 @@ public class ComparingPaymentEntryTest extends BaseTest {
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
         paymentEntryListPageObj = homePageObj.openPaymentEntryListPage();
         String numberOfAllPaymentEntriesAfterSyncing = paymentEntryListPageObj.getNumberOfAllPaymentEntryAfterSyncing();
-        System.out.println("verify that number of all payment entry  which appear at dafater 5 is equal to number of all payment entry at dafater 4 ");
+        Allure.step("verify that number of all payment entry  which appear at dafater 5 is equal to number of all payment entry at dafater 4 ");
         softAssert.assertEquals(numberOfAllPaymentEntriesAfterSyncing, numberOfAllPaymentEntriesBeforeSyncing);
         softAssert.assertAll();
     }

@@ -5,6 +5,7 @@ import Pages.DataMigrationToolPage;
 import Pages.HomePage;
 import Pages.LoginPage;
 import Pages.SetupWizardPage;
+import io.qameta.allure.Allure;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -21,7 +22,7 @@ public class SetupVmTest extends BaseTest {
         homePageObj = new HomePage(driver);
         setupWizardPageObj = new SetupWizardPage(driver);
         if (tryToGetWebElement(setupWizardPageObj.countryField) == GeneralConstants.SUCCESS) {
-            System.out.println(" setup Vm  ");
+           Allure.step(" setup Vm  ");
             setupWizardPageObj = new SetupWizardPage(driver);
             setupWizardPageObj.enterDefaultVMData();
             setupWizardPageObj.setupAccount();

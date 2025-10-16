@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -48,7 +49,7 @@ public class ReportsListPage extends MainPage {
     By accountInputField = By.xpath("//*[contains(@data-fieldname,'account')]");
 
     public GeneralLedgerReportPage openGeneralLedgerReport() {
-        System.out.println("open general ledger report ");
+        Allure.step("open general ledger report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -58,12 +59,12 @@ public class ReportsListPage extends MainPage {
         // getWebElement(newBtn).click();
 
 //        waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
-        // System.out.println(getWebElement(connectionMsg).getText());
+        // Allure.step(getWebElement(connectionMsg).getText());
         return new GeneralLedgerReportPage(driver);
     }
 
     public CustomersAgingReportPage openCustomersAgingReport() {
-        System.out.println("open customers aging report ");
+        Allure.step("open customers aging report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -75,7 +76,7 @@ public class ReportsListPage extends MainPage {
     }
 
     public TaxDeclarationReportPage openTaxDeclarationReport() {
-        System.out.println("open tax declaration report ");
+        Allure.step("open tax declaration report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -88,7 +89,7 @@ public class ReportsListPage extends MainPage {
     }
 
     public StockBalanceReportPage openStockBalanceReport_4() throws InterruptedException {
-        System.out.println("open Stock Balance report ");
+        Allure.step("open Stock Balance report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -106,7 +107,7 @@ public class ReportsListPage extends MainPage {
     }
 
     public TrialBalanceReportPage openTrialBalanceReport() throws InterruptedException {
-        System.out.println("open trial Balance report ");
+        Allure.step("open trial Balance report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -119,7 +120,7 @@ public class ReportsListPage extends MainPage {
     }
 
     public FinancialStatementsReportPage openFinancialStatementsReport() throws InterruptedException {
-        System.out.println("open Financial Statements report ");
+        Allure.step("open Financial Statements report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -131,7 +132,7 @@ public class ReportsListPage extends MainPage {
         return new FinancialStatementsReportPage(driver);
     }
     public BalanceSheetReportPage openBalanceSheetReport_5() throws InterruptedException {
-        System.out.println("open Balance sheet report ");
+        Allure.step("open Balance sheet report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -143,7 +144,7 @@ public class ReportsListPage extends MainPage {
         return new BalanceSheetReportPage(driver);
     }
     public ProfitAndLossReportPage openProfitAndLossReport_5() throws InterruptedException {
-        System.out.println("open Profit and loss  report ");
+        Allure.step("open Profit and loss  report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -155,7 +156,7 @@ public class ReportsListPage extends MainPage {
         return new ProfitAndLossReportPage(driver);
     }
     public StockBalanceReportPage openStockBalanceReport_5() throws InterruptedException {
-        System.out.println("open Stock Balance report ");
+        Allure.step("open Stock Balance report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -168,7 +169,7 @@ public class ReportsListPage extends MainPage {
         return new StockBalanceReportPage(driver);
     }
     public GrossProfitReportPage openGrossProfitReport() {
-        System.out.println("open gross profit report ");
+        Allure.step("open gross profit report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -183,7 +184,7 @@ public class ReportsListPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        System.out.println("enter specific account ");
+        Allure.step("enter specific account ");
         getWebElement(accountInputField).sendKeys(accountName);
 
 

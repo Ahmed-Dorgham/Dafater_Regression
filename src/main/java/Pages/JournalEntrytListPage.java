@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,36 +25,35 @@ public class JournalEntrytListPage extends MainPage {
     By closeFilter = By.xpath("//*[contains(@class,'btn btn-default btn-xs remove-filter')]");
     private By journalEntryListLabel = By.xpath("//h5[contains(text(),'قائمة قيد يومية')]" +
             "| //h3[contains(text(),'قيد محاسبي')]");
-    By numberOfAllJournalEntries = By.xpath("//*[contains(@class,'total-rows')] " +
-            "|//*[contains(@class,'list-count')]/span");
+    By numberOfAllJournalEntries = By.xpath("//*[contains(@class,'total-rows')]");
 
     public PurchaseOrderPage clickOnNewPurchaseOrdersBtn() {
-        System.out.println("click on new purchase order btn ");
+        Allure.step("click on new purchase order btn ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
         getWebElement(newBtn).click();
 
 //        waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
-        // System.out.println(getWebElement(connectionMsg).getText());
+        // Allure.step(getWebElement(connectionMsg).getText());
         return new PurchaseOrderPage(driver);
     }
 
     public PurchaseReceiptPage clickOnNewPurchaseReceiptBtn() {
-        System.out.println("click on new purchase receipt btn ");
+        Allure.step("click on new purchase receipt btn ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(newBtn).click();
 
 //        waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
-        // System.out.println(getWebElement(connectionMsg).getText());
+        // Allure.step(getWebElement(connectionMsg).getText());
         return new PurchaseReceiptPage(driver);
     }
 
     public WebElement checkVmConnectionMsg() {
 
         waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
-        System.out.println(getWebElement(statusMsg).getText());
+        Allure.step(getWebElement(statusMsg).getText());
         return getWebElement(statusMsg);
     }
 
@@ -62,11 +62,11 @@ public class JournalEntrytListPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(journalEntryListLabel, GeneralConstants.minTimeOut);
         if (tryToGetWebElement(closeFilter) == GeneralConstants.SUCCESS) {
-            System.out.println("close filter ");
+            Allure.step("close filter ");
             getWebElement(closeFilter).click();
         }
         waitUntilElementToBePresent(numberOfAllJournalEntries, GeneralConstants.minTimeOut);
-        System.out.println("number of all  journal entry list view before Syncing " + getWebElement(numberOfAllJournalEntries).getText());
+        Allure.step("number of all  journal entry list view before Syncing " + getWebElement(numberOfAllJournalEntries).getText());
         return getWebElement(numberOfAllJournalEntries).getText();
     }
 
@@ -77,7 +77,15 @@ public class JournalEntrytListPage extends MainPage {
         Thread.sleep(threadTimeOut);
         waitUntilElementNotHaveSpecificText(numberOfAllJournalEntries, "تحديث");
 
-        System.out.println("number of all journal entry at list view after Syncing " + getWebElement(numberOfAllJournalEntries).getText());
+        Allure.step(" " + getWebElement(numberOfAllJournalEntries).getText());
+
+        if (getWebElement(numberOfAllJournalEntries).getText().contains("من"))
+        {
+            Allure.step("number of all journal entry at list view after Syncing " + getWebElement(numberOfAllJournalEntries).getText());
+
+            Allure.step("number of all journal entry at list view after Syncing 0 ");
+            return "0";
+        }
         return getWebElement(numberOfAllJournalEntries).getText();
     }
 }

@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,15 +24,15 @@ public class DeliveryNoteListPage extends MainPage {
     private By newBtn = By.xpath("(//button[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')])");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
 
-    By numberOfAllDeliveryNotes = By.xpath("//*[contains(@class,'total-rows')] " +
-            "|//*[contains(@class,'list-count')]/span");
+    By numberOfAllDeliveryNotes_4 = By.xpath("//*[contains(@class,'total-rows')]");
+    By numberOfAllDeliveryNotes_5 = By.xpath("//*[contains(@class,'total-rows')]");
     By closeFilter = By.xpath("//*[contains(@class,'btn btn-default btn-xs remove-filter')]");
     By firstDeliveryNote = By.xpath("(//*[contains(@class,'result-list')]//*[contains(@class,'doclist-row row')])[1]//a" +
             "|(//*[contains(@class,'result')]//*[contains(@class,'list-row-container')])[1]//*[contains(@class,'list-row-col ellipsis list-subject level ')]//a");
     By searchIcon = By.xpath("//li[@class='fas fa-search']");
     By nameField = By.xpath("//input[@data-fieldname='name']");
     public DeliveryNotePage clickOnNewDeliveryNoteBtn() {
-        System.out.println("click on new delivery note btn ");
+      Allure.step("click on new delivery note btn ");
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
 //        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
@@ -49,23 +50,34 @@ public class DeliveryNoteListPage extends MainPage {
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(deliveryNoteListLabel, GeneralConstants.minTimeOut);
         //   Thread.sleep(threadTimeOut);
-        System.out.println("number of all delivery notes at list view before Syncing " + getWebElement(numberOfAllDeliveryNotes).getText());
-        return getWebElement(numberOfAllDeliveryNotes).getText();
+      Allure.step("number of all delivery notes at list view before Syncing " + getWebElement(numberOfAllDeliveryNotes_4).getText());
+        return getWebElement(numberOfAllDeliveryNotes_4).getText();
     }
     public String getNumberOfAllDeliveryNotesAfterSyncing() throws InterruptedException {
 
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(deliveryNoteListLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-        waitUntilElementNotHaveSpecificText(numberOfAllDeliveryNotes,"تحديث");
+        waitUntilElementNotHaveSpecificText(numberOfAllDeliveryNotes_5,"تحديث");
+        if (getWebElement(numberOfAllDeliveryNotes_5).getText().contains("من"))
+        {
+            Allure.step("number of all Delivery Notes at list view after syncing  " + getWebElement(numberOfAllDeliveryNotes_5).getText());
 
-        System.out.println("number of all delivery notes at list view after Syncing " + getWebElement(numberOfAllDeliveryNotes).getText());
-        return getWebElement(numberOfAllDeliveryNotes).getText();
+            Allure.step("number of all Delivery Notes at list view after syncing  0 ");
+            return "0";
+        }
+      Allure.step("number of all delivery notes at list view after Syncing " + getWebElement(numberOfAllDeliveryNotes_5).getText());
+
+
+
+
+
+        return getWebElement(numberOfAllDeliveryNotes_5).getText();
     }
     public WebElement checkVmConnectionMsg() {
 
         waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
-        System.out.println(getWebElement(statusMsg).getText());
+      Allure.step(getWebElement(statusMsg).getText());
         return getWebElement(statusMsg);
     }
     public String getNameOfFirstDeliverNoteBeforeSyncing() throws InterruptedException {
@@ -74,18 +86,18 @@ public class DeliveryNoteListPage extends MainPage {
         waitUntilElementToBePresent(deliveryNoteListLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         if (tryToGetWebElement(closeFilter) == GeneralConstants.SUCCESS) {
-            System.out.println("close filter ");
+          Allure.step("close filter ");
             getWebElement(closeFilter).click();
         }
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        System.out.println("name of first delivery note  at list view at dafater 4  >> " + getWebElement(firstDeliveryNote).getText());
+      Allure.step("name of first delivery note  at list view at dafater 4  >> " + getWebElement(firstDeliveryNote).getText());
         return getWebElement(firstDeliveryNote).getText();
     }
     public DeliveryNotePage openFirstDeliveryNoteAtDafater_4() throws InterruptedException {
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(deliveryNoteListLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-        System.out.println(" open First Delivery Note At Dafater_4 ");
+      Allure.step(" open First Delivery Note At Dafater_4 ");
         getWebElement(firstDeliveryNote).click();
         return new DeliveryNotePage(driver);
     }
@@ -93,7 +105,7 @@ public class DeliveryNoteListPage extends MainPage {
 
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(deliveryNoteListLabel, GeneralConstants.minTimeOut);
-        System.out.println(" search about " + deliveryNoteName);
+      Allure.step(" search about " + deliveryNoteName);
         waitUntilElementToBePresent(searchIcon, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(searchIcon).click();
@@ -103,11 +115,11 @@ public class DeliveryNoteListPage extends MainPage {
 //        getWebElement(reloadIcon).click();
         Thread.sleep(threadTimeOut);
         if (tryToGetWebElement(firstDeliveryNote) == GeneralConstants.SUCCESS) {
-            System.out.println(" open delivery note which appear after searching");
+          Allure.step(" open delivery note which appear after searching");
             getWebElement(firstDeliveryNote).click();
             return GeneralConstants.SUCCESS;
         } else {
-            System.out.println(" error happen while syncing this delivery note " + deliveryNoteName + " from dafater 4 to dafater 5 and not synced successfully   ");
+          Allure.step(" error happen while syncing this delivery note " + deliveryNoteName + " from dafater 4 to dafater 5 and not synced successfully   ");
             return GeneralConstants.FAILED;
         }
 

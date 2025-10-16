@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,7 +23,7 @@ public class SalesOrderListPage extends MainPage {
     private By newBtn = By.xpath("(//button[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')])");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     public SalesOrderPage clickOnNewSalesOrdersBtn() {
-        System.out.println("click on new sales order btn ");
+       Allure.step("click on new sales order btn ");
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
@@ -31,14 +32,14 @@ public class SalesOrderListPage extends MainPage {
 //        clickByActions(newBtn);
 
 //        waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
-        // System.out.println(getWebElement(connectionMsg).getText());
+        //Allure.step(getWebElement(connectionMsg).getText());
         return new SalesOrderPage(driver);
     }
 
     public WebElement checkVmConnectionMsg() {
 
         waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
-        System.out.println(getWebElement(statusMsg).getText());
+       Allure.step(getWebElement(statusMsg).getText());
         return getWebElement(statusMsg);
     }
 //    public void enterValidDataIntoMainData (String vmUrl , String apiKey , String secretKey)

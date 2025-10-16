@@ -1,6 +1,7 @@
 package TestCases;
 
 import Pages.*;
+import io.qameta.allure.Allure;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -58,11 +59,11 @@ public class ComparingWareHousesTest extends BaseTest {
 
         String numberOfAllWareHousesAfterSyncing = wareHouseListPageObj.getNumberOfAllWareHousesAfterSyncing();
 
-        System.out.println("verify that number of all warehouses which appear at dafater 5 is equal to number of all warehouses at dafater 4 ");
+       Allure.step("verify that number of all warehouses which appear at dafater 5 is equal to number of all warehouses at dafater 4 ");
 
         Assert.assertEquals(numberOfAllTotalWareHousesBeforeSyncing, numberOfAllWareHousesAfterSyncing);
 
-        System.out.println(" number of warehouses which appear at dafater 5 is " + numberOfAllWareHousesAfterSyncing+" and number of all warehouses at dafater 4 is "+ numberOfAllTotalWareHousesBeforeSyncing +" and this is correct ");
+       Allure.step(" number of warehouses which appear at dafater 5 is " + numberOfAllWareHousesAfterSyncing+" and number of all warehouses at dafater 4 is "+ numberOfAllTotalWareHousesBeforeSyncing +" and this is correct ");
 
 
 

@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
@@ -46,66 +47,66 @@ public class PaymentPage extends MainPage {
 
     public void enterValidDataIntoSalesInvoicePage(String dueDate) throws InterruptedException {
         waitUntilElementVisibility(newSalesInvoiceTitle, GeneralConstants.minTimeOut);
-        System.out.println("select  customer ");
+       Allure.step("select  customer ");
         getWebElement(customerFieldSalesInvoice).click();
         waitUntilElementVisibility(customersListSalesInvoice, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(customerOptSalesInvoice, GeneralConstants.minTimeOut);
         getWebElement(customerOptSalesInvoice).click();
-        System.out.println("enter dues date  ");
+       Allure.step("enter dues date  ");
         waitUntilElementVisibility(dueDateField, GeneralConstants.minTimeOut);
         getWebElement(dueDateField).sendKeys(dueDate);
-        System.out.println("Scroll down to item field ");
+       Allure.step("Scroll down to item field ");
         scrollToSpeceficElement(itemCodeField);
         //   Thread.sleep(6000);
-        System.out.println(" select item  ");
+       Allure.step(" select item  ");
         clickByActions(itemCodeField);
         waitUntilElementVisibility(itemCodeInputField, GeneralConstants.minTimeOut);
         getWebElement(itemCodeInputField).sendKeys("item");
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
         getWebElement(itemOpt).click();
-        System.out.println("unselect update stock opt");
+       Allure.step("unselect update stock opt");
         getWebElement(updateStockBtn).click();
         //Thread.sleep(6000);
-        System.out.println("scroll up to save and submit btn ");
+       Allure.step("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
 
-        System.out.println(" save and submit btn sales invoice ");
+       Allure.step(" save and submit btn sales invoice ");
         getWebElement(saveAndSubmitBtn).click();
         //  Thread.sleep(10000);
-        System.out.println("click on yes btn ");
+       Allure.step("click on yes btn ");
         waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
         getWebElement(yesBtn).click();
 
     }
 
     public String getCreditNoteStatus(String expected) {
-//        System.out.println("Verify the status of sales invoice  ");
+//       Allure.step("Verify the status of sales invoice  ");
         waitUntilElementToBePresent(creditNoteStatus, GeneralConstants.minTimeOut);
-        System.out.println("actual text is " + getWebElement(creditNoteStatus).getText() + " and expected test is " + expected);
+       Allure.step("actual text is " + getWebElement(creditNoteStatus).getText() + " and expected test is " + expected);
         return getWebElement(creditNoteStatus).getText();
     }
 
     public String getInvoiceStatus(String expected) {
-        System.out.println("Verify the status of payment doc type  ");
+       Allure.step("Verify the status of payment doc type  ");
         waitUntilElementToBePresent(cancelBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         if (tryToGetWebElement(submittedStatus) == GeneralConstants.SUCCESS) {
-            System.out.println("actual text is " + getWebElement(submittedStatus).getText() + " and expected test is " + expected);
+           Allure.step("actual text is " + getWebElement(submittedStatus).getText() + " and expected test is " + expected);
             return getWebElement(submittedStatus).getText();
         } else if (tryToGetWebElement(draftStatus) == GeneralConstants.SUCCESS) {
-            System.out.println("actual text is " + getWebElement(draftStatus).getText() + " and expected test is " + expected);
+           Allure.step("actual text is " + getWebElement(draftStatus).getText() + " and expected test is " + expected);
             return getWebElement(draftStatus).getText();
         } else
             return "unexpected status";
     }
 
     public SalesInvoicesPage openPaidSalesInvoice() {
-        System.out.println("open paid sales invoice");
+       Allure.step("open paid sales invoice");
         getWebElement(paidSalesInvoiceLink).click();
         return new SalesInvoicesPage(driver);
     }
     public PurchaseInvoicesPage openPaidPurchaseInvoice() {
-        System.out.println("open paid  purchase invoice");
+       Allure.step("open paid  purchase invoice");
         getWebElement(paidSalesInvoiceLink).click();
         return new PurchaseInvoicesPage(driver);
     }
@@ -115,7 +116,7 @@ public class PaymentPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
 
         scrollToSpeceficElement(invoiceName);
-        System.out.println("invoice name at payment req " + getWebElement(invoiceName).getText());
+       Allure.step("invoice name at payment req " + getWebElement(invoiceName).getText());
         return getWebElement(invoiceName).getText();
     }
 
@@ -123,7 +124,7 @@ public class PaymentPage extends MainPage {
 
         waitUntilElementVisibility(saveAndSubmitBtnForPayment, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        System.out.println("scroll down to reference num field ");
+       Allure.step("scroll down to reference num field ");
         scrollToSpeceficElement(referenceNumField);
 ////        getWebElement(reasonField).click();
 //        clickByActions(reasonField);
@@ -131,16 +132,16 @@ public class PaymentPage extends MainPage {
         waitUntilElementToBePresent(referenceNumField, GeneralConstants.minTimeOut);
         getWebElement(referenceNumField).sendKeys(String.valueOf(referenceNum));
 //
-//        System.out.println("choose reason for credit note ");
+//       Allure.step("choose reason for credit note ");
 //        reason = new Select(getWebElement(reasonField));
 //        reason.selectByIndex(1);
         scrollToSpeceficElement(saveAndSubmitBtnForPayment);
-        System.out.println("save and submit creditNote ");
+       Allure.step("save and submit creditNote ");
         getWebElement(saveAndSubmitBtnForPayment).click();
-        System.out.println("click on yes btn ");
+       Allure.step("click on yes btn ");
         waitUntilElementToBeClickable(yesBtn_SO, GeneralConstants.minTimeOut);
         getWebElement(yesBtn_SO).click();
-//        System.out.println("click on close icon ");
+//       Allure.step("click on close icon ");
 //        waitUntilElementToBeClickable(closeIcon, GeneralConstants.minTimeOut);
 //        getWebElement(closeIcon).click();
         waitUntilElementToBePresent(cancelBtn, GeneralConstants.minTimeOut);
@@ -148,9 +149,9 @@ public class PaymentPage extends MainPage {
     }
 
     public String getInvoiceNameInsideCreditNote(String expected) {
-//        System.out.println("Verify the name of sales invoice  ");
+//       Allure.step("Verify the name of sales invoice  ");
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
-        System.out.println("actual text is  " + getWebElement(salesInvoiceNameInsideCreditNote).getAttribute("data-value") + "  and expected text is  " + expected);
+       Allure.step("actual text is  " + getWebElement(salesInvoiceNameInsideCreditNote).getAttribute("data-value") + "  and expected text is  " + expected);
         return getWebElement(salesInvoiceNameInsideCreditNote).getText();
     }
 }

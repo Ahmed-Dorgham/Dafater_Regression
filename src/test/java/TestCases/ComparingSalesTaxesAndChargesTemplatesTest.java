@@ -3,6 +3,7 @@ package TestCases;
 import Pages.HomePage;
 import Pages.LoginPage;
 import Pages.SalesTaxesAndChargesTemplatesListPage;
+import io.qameta.allure.Allure;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -40,11 +41,11 @@ public class ComparingSalesTaxesAndChargesTemplatesTest extends BaseTest {
         salesTaxesAndChargesTemplatesListPageObj = homePageObj.openSalesTaxesAndChargesTemplatesListPage();
 
         String numberOfSalesTaxesAndChargesTemplatesAfterSyncing = salesTaxesAndChargesTemplatesListPageObj.getNumberOfSalesTaxesAndChargesTemplatesAfterSyncing();
-        System.out.println("verify that number of all Sales Taxes And Charges Templates which appear at dafater 5 is equal to number of all Sales Taxes And Charges Templates at dafater 4 ");
+        Allure.step("verify that number of all Sales Taxes And Charges Templates which appear at dafater 5 is equal to number of all Sales Taxes And Charges Templates at dafater 4 ");
 
         softAssert.assertEquals(numberOfSalesTaxesAndChargesTemplatesAfterSyncing, numberOfSalesTaxesAndChargesTemplatesBeforeSyncing);
         softAssert.assertAll();
-        System.out.println(" number of Sales Taxes And Charges Templates which appear at dafater 5 is " + numberOfSalesTaxesAndChargesTemplatesAfterSyncing + " and number of all Sales Taxes And Charges Templates at dafater 4 is " + numberOfSalesTaxesAndChargesTemplatesBeforeSyncing + " and this is correct ");
+        Allure.step(" number of Sales Taxes And Charges Templates which appear at dafater 5 is " + numberOfSalesTaxesAndChargesTemplatesAfterSyncing + " and number of all Sales Taxes And Charges Templates at dafater 4 is " + numberOfSalesTaxesAndChargesTemplatesBeforeSyncing + " and this is correct ");
 
     }
 }

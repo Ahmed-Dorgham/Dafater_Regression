@@ -2,6 +2,7 @@ package TestCases;
 
 import GeneralConstants.GeneralConstants;
 import Pages.*;
+import io.qameta.allure.Allure;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -62,13 +63,13 @@ public class ComparingPurchaseInvoicesTest extends BaseTest {
         purchaseInvoicesListPageObj = homePageObj.openPurchaseInvoicesListPage();
         String numberOfDraftPurchaseInvoicesAfterSyncing = purchaseInvoicesListPageObj.getNumberOfDraftInvoicesAfterSyncing();
         String totalAmountOfPurchaseInvoicesAfterSyncing = purchaseInvoicesListPageObj.getTotalAmountOfPurchaseInvoicesAfterSyncing();
-        System.out.println("verify that number of all draft purchase invoices  which appear at dafater 5 is equal to number of all draft purchase invoices at dafater 4 ");
+        Allure.step("verify that number of all draft purchase invoices  which appear at dafater 5 is equal to number of all draft purchase invoices at dafater 4 ");
         softAssert.assertEquals(numberOfDraftPurchaseInvoicesAfterSyncing, numberOfDraftPurchaseInvoicesBeforeSyncing);
-        System.out.println("verify that total amount of purchase invoices at dafater 5 is equal to  total amount of purchase invoices at dafater 4 ");
+        Allure.step("verify that total amount of purchase invoices at dafater 5 is equal to  total amount of purchase invoices at dafater 4 ");
         softAssert.assertEquals(totalAmountOfPurchaseInvoicesAfterSyncing, totalAmountOfPurchaseInvoicesBeforeSyncing);
 
 
-        System.out.println(" verify that there is purchase invoice at dafater 4 to be compared");
+        Allure.step(" verify that there is purchase invoice at dafater 4 to be compared");
         Assert.assertFalse(numberOfPurchaseInvoicesBeforeCreatingNewOne.equals("0"));
         softAssert.assertAll();
     }
@@ -99,7 +100,7 @@ public class ComparingPurchaseInvoicesTest extends BaseTest {
         String nameOfSelectedPurchaseInvoiceAtDafater_4 = purchaseInvoicesListPageObj.getNameOfFirstPurchaseInvoiceBeforeSyncing();
         purchaseInvoicesPageObj = purchaseInvoicesListPageObj.openFirstPurchaseInvoiceAtDafater_4();
         if (purchaseInvoicesPageObj.getPurchaseInvoiceStatus().contains(submittedStatus)) {
-            System.out.println("status of purchase invoice  is  " + submittedStatus);
+            Allure.step("status of purchase invoice  is  " + submittedStatus);
             purchaseInvoiceStatusBeforeSyncing = purchaseInvoicesPageObj.getPurchaseInvoiceStatus();
             purchaseInvoiceIssueDateBeforeSyncing = purchaseInvoicesPageObj.getPurchaseInvoiceIssueDate();
             supplierNameAtPurchaseInvoiceBeforeSyncing = purchaseInvoicesPageObj.getSupplierNameAtSalesInvoice();
@@ -107,7 +108,7 @@ public class ComparingPurchaseInvoicesTest extends BaseTest {
             grandTotalValueBeforeSyncing = purchaseInvoicesPageObj.getGrandTotalValueAtPurchaseInvoice();
         }
         if (purchaseInvoicesPageObj.getPurchaseInvoiceStatus().contains(draftStatus)) {
-            System.out.println("status of purchase invoice  is  " + draftStatus);
+            Allure.step("status of purchase invoice  is  " + draftStatus);
             purchaseInvoiceStatusBeforeSyncing = purchaseInvoicesPageObj.getPurchaseInvoiceStatus();
             netTotalValueBeforeSyncing = purchaseInvoicesPageObj.getNetTotalValueAtPurchaseInvoice();
             grandTotalValueBeforeSyncing = purchaseInvoicesPageObj.getGrandTotalValueAtPurchaseInvoice();
@@ -121,7 +122,7 @@ public class ComparingPurchaseInvoicesTest extends BaseTest {
 //        purchaseInvoicesPageObj = purchaseInvoicesListPageObj.openPurchaseInvoiceAtDafater_5();
 
         if (purchaseInvoicesPageObj.getPurchaseInvoiceStatus().contains(submittedStatus)) {
-            System.out.println("status of purchase invoice  is  " + submittedStatus);
+            Allure.step("status of purchase invoice  is  " + submittedStatus);
             purchaseInvoiceStatusAfterSyncing = purchaseInvoicesPageObj.getPurchaseInvoiceStatus();
             purchaseInvoiceIssueDateAfterSyncing = purchaseInvoicesPageObj.getPurchaseInvoiceIssueDate();
             supplierNameAtPurchaseInvoiceAfterSyncing = purchaseInvoicesPageObj.getSupplierNameAtSalesInvoice();
@@ -129,7 +130,7 @@ public class ComparingPurchaseInvoicesTest extends BaseTest {
             grandTotalValueAfterSyncing = purchaseInvoicesPageObj.getGrandTotalValueAtPurchaseInvoice();
         }
         if (purchaseInvoicesPageObj.getPurchaseInvoiceStatus().contains(draftStatus)) {
-            System.out.println("status of purchase invoice  is  " + draftStatus);
+            Allure.step("status of purchase invoice  is  " + draftStatus);
             purchaseInvoiceStatusBeforeSyncing = purchaseInvoicesPageObj.getPurchaseInvoiceStatus();
             netTotalValueBeforeSyncing = purchaseInvoicesPageObj.getNetTotalValueAtPurchaseInvoice();
             grandTotalValueBeforeSyncing = purchaseInvoicesPageObj.getGrandTotalValueAtPurchaseInvoice();
@@ -138,49 +139,49 @@ public class ComparingPurchaseInvoicesTest extends BaseTest {
 
         if (purchaseInvoicesPageObj.getPurchaseInvoiceStatus().contains(submittedStatus)) {
 
-            System.out.println("verify that the status of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the status of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(purchaseInvoiceStatusAfterSyncing.trim(), purchaseInvoiceStatusAfterSyncing.trim());
-            System.out.println(" status of purchase invoice at dafater 5 is " + purchaseInvoiceStatusAfterSyncing + " and at dafater 4 is " + purchaseInvoiceStatusBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
-            System.out.println("verify that the issue date of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step(" status of purchase invoice at dafater 5 is " + purchaseInvoiceStatusAfterSyncing + " and at dafater 4 is " + purchaseInvoiceStatusBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
+            Allure.step("verify that the issue date of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(purchaseInvoiceIssueDateBeforeSyncing.trim(), purchaseInvoiceIssueDateAfterSyncing.trim());
-            System.out.println(" issue date of sales invoice at dafater 5 is " + purchaseInvoiceIssueDateAfterSyncing + " and at dafater 4 is " + purchaseInvoiceIssueDateBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step(" issue date of sales invoice at dafater 5 is " + purchaseInvoiceIssueDateAfterSyncing + " and at dafater 4 is " + purchaseInvoiceIssueDateBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
-            System.out.println("verify that the supplier name of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the supplier name of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(supplierNameAtPurchaseInvoiceBeforeSyncing.trim(), supplierNameAtPurchaseInvoiceAfterSyncing.trim());
-            System.out.println(" supplier name of purchase invoice at dafater 5 is " + supplierNameAtPurchaseInvoiceAfterSyncing + " and at dafater 4 is " + supplierNameAtPurchaseInvoiceBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step(" supplier name of purchase invoice at dafater 5 is " + supplierNameAtPurchaseInvoiceAfterSyncing + " and at dafater 4 is " + supplierNameAtPurchaseInvoiceBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
-            System.out.println("verify that the net total value of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the net total value of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(netTotalValueBeforeSyncing.trim(), netTotalValueAfterSyncing.trim());
-            System.out.println(" net total of purchase value invoice at dafater 5 is " + netTotalValueAfterSyncing + " and at dafater 4 is " + netTotalValueBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step(" net total of purchase value invoice at dafater 5 is " + netTotalValueAfterSyncing + " and at dafater 4 is " + netTotalValueBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
-            System.out.println("verify that the grand total value of sales invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the grand total value of sales invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(grandTotalValueAfterSyncing.trim(), grandTotalValueBeforeSyncing.trim());
-            System.out.println("  grand total value of sales invoice at dafater 5 is " + grandTotalValueAfterSyncing + " and at dafater 4 is " + grandTotalValueBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step("  grand total value of sales invoice at dafater 5 is " + grandTotalValueAfterSyncing + " and at dafater 4 is " + grandTotalValueBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
             softAssert.assertAll();
         }
 
         if (purchaseInvoicesPageObj.getPurchaseInvoiceStatus().contains(draftStatus)) {
 
-            System.out.println("verify that the status of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the status of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(purchaseInvoiceStatusBeforeSyncing.trim(), purchaseInvoiceStatusAfterSyncing.trim());
-            System.out.println(" status of purchase invoice at dafater 5 is " + purchaseInvoiceStatusAfterSyncing + " and at dafater 4 is " + purchaseInvoiceStatusBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step(" status of purchase invoice at dafater 5 is " + purchaseInvoiceStatusAfterSyncing + " and at dafater 4 is " + purchaseInvoiceStatusBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
-            System.out.println("verify that the net total value of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the net total value of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(netTotalValueBeforeSyncing.trim(), netTotalValueAfterSyncing.trim());
-            System.out.println(" net total of purchase value invoice at dafater 5 is " + netTotalValueAfterSyncing + " and at dafater 4 is " + netTotalValueBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step(" net total of purchase value invoice at dafater 5 is " + netTotalValueAfterSyncing + " and at dafater 4 is " + netTotalValueBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
-            System.out.println("verify that the grand total value of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the grand total value of purchase invoice " + nameOfSelectedPurchaseInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(grandTotalValueAfterSyncing.trim(), grandTotalValueBeforeSyncing.trim());
-            System.out.println("  grand total value of purchase invoice at dafater 5 is " + grandTotalValueAfterSyncing + " and at dafater 4 is " + grandTotalValueBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step("  grand total value of purchase invoice at dafater 5 is " + grandTotalValueAfterSyncing + " and at dafater 4 is " + grandTotalValueBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
             softAssert.assertAll();
         }

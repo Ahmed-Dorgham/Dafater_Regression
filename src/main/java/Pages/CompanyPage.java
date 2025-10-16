@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -70,28 +71,28 @@ public class CompanyPage extends MainPage {
 
     public void enterValidDataIntoSalesInvoicePageAndSubmit(String dueDate) throws InterruptedException {
 
-        System.out.println("enter dues date  ");
+       Allure.step("enter dues date  ");
         waitUntilElementVisibility(dueDateField, GeneralConstants.minTimeOut);
         getWebElement(dueDateField).sendKeys(dueDate);
-        System.out.println("Scroll down to item field ");
+       Allure.step("Scroll down to item field ");
         scrollToSpeceficElement(totalAmountLabel);
         //   Thread.sleep(6000);
-        System.out.println(" select item  ");
+       Allure.step(" select item  ");
         clickByActions(itemCodeField);
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
         getWebElement(itemCodeInputField).sendKeys("item");
         waitUntilElementToBeClickable(itemGroupOpt, GeneralConstants.minTimeOut);
         clickByActions(itemGroupOpt);
 
-        System.out.println("unselect update stock opt");
+       Allure.step("unselect update stock opt");
         getWebElement(updateStockBtn).click();
 
-        System.out.println("scroll up to save and submit btn ");
+       Allure.step("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
 
-        System.out.println(" save and submit sales invoice ");
+       Allure.step(" save and submit sales invoice ");
         getWebElement(saveAndSubmitBtn).click();
-        System.out.println("click on yes btn ");
+       Allure.step("click on yes btn ");
         waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
         getWebElement(yesBtn).click();
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
@@ -102,14 +103,14 @@ public class CompanyPage extends MainPage {
 
         waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
 
-        System.out.println("enter item code");
+       Allure.step("enter item code");
         getWebElement(itemCodeInputField).sendKeys(itemCode);
-        System.out.println("select item group ");
+       Allure.step("select item group ");
         getWebElement(itemGroupField).click();
         waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
         getWebElement(itemGroupOpt).click();
-        System.out.println("click on save btn ");
+       Allure.step("click on save btn ");
         getWebElement(saveBtn).click();
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
     }
@@ -117,21 +118,21 @@ public class CompanyPage extends MainPage {
     public void enterValidDataForSalesItem(String itemCode) throws InterruptedException {
 
         waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
-        System.out.println("enter item code");
+       Allure.step("enter item code");
         getWebElement(itemCodeInputField).sendKeys(itemCode);
-        System.out.println("select item group ");
+       Allure.step("select item group ");
         getWebElement(itemGroupField).click();
         waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
         getWebElement(itemGroupOpt).click();
-        System.out.println("click on purchase tab ");
+       Allure.step("click on purchase tab ");
         getWebElement(purchaseTab).click();
         getWebElement(purchaseTab).click();
-        System.out.println("unselect is purchase item checkbox ");
+       Allure.step("unselect is purchase item checkbox ");
         waitUntilElementToBePresent(isPurchaseItemCheckBox, GeneralConstants.minTimeOut);
         getWebElement(isPurchaseItemCheckBox).click();
 
-        System.out.println("click on save btn ");
+       Allure.step("click on save btn ");
         getWebElement(saveBtn).click();
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
     }
@@ -139,21 +140,21 @@ public class CompanyPage extends MainPage {
     public void enterValidDataForPurchaseItem(String itemCode) throws InterruptedException {
 
         waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
-        System.out.println("enter item code");
+       Allure.step("enter item code");
         getWebElement(itemCodeInputField).sendKeys(itemCode);
-        System.out.println("select item group ");
+       Allure.step("select item group ");
         getWebElement(itemGroupField).click();
         waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
         getWebElement(itemGroupOpt).click();
-        System.out.println("click on sales tab ");
+       Allure.step("click on sales tab ");
         getWebElement(salesTab).click();
         getWebElement(salesTab).click();
-        System.out.println("unselect is sales item checkbox ");
+       Allure.step("unselect is sales item checkbox ");
         waitUntilElementToBePresent(isSalesItemCheckBox, GeneralConstants.minTimeOut);
         getWebElement(isSalesItemCheckBox).click();
 
-        System.out.println("click on save btn ");
+       Allure.step("click on save btn ");
         getWebElement(saveBtn).click();
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
     }
@@ -162,16 +163,16 @@ public class CompanyPage extends MainPage {
 
         waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
 
-        System.out.println("enter item code");
+       Allure.step("enter item code");
         getWebElement(itemCodeInputField).sendKeys(itemCode);
-        System.out.println("select item group ");
+       Allure.step("select item group ");
         getWebElement(itemGroupField).click();
         waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
         getWebElement(itemGroupOpt).click();
 
 
-        System.out.println("click on save btn ");
+       Allure.step("click on save btn ");
         getWebElement(saveBtn).click();
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
 
@@ -179,15 +180,15 @@ public class CompanyPage extends MainPage {
     }
 
     public PosViewPage openPosView() throws InterruptedException {
-        System.out.println("click on is pos view btn");
+       Allure.step("click on is pos view btn");
         waitUntilElementToBePresent(posViewBtn, GeneralConstants.minTimeOut);
         getWebElement(posViewBtn).click();
-        System.out.println("click on accept btn ");
+       Allure.step("click on accept btn ");
 //        Thread.sleep(9000);
         waitUntilElementNotToBeVisible(posViewBtn, GeneralConstants.minTimeOut);
 //        Alert alert = driver.switchTo().alert();
 //        alert.accept();
-//        System.out.println("choose POS profile ");
+//       Allure.step("choose POS profile ");
 //        waitUntilElementToBePresent(posProfileUInputField, GeneralConstants.minTimeOut);
 //        getWebElement(posProfileUInputField).click();
         return new PosViewPage(driver);
@@ -196,19 +197,19 @@ public class CompanyPage extends MainPage {
 //    public void saveAndSubmitSalesInvoiceFromSalesOrder() throws InterruptedException {
 //
 //        waitUntilElementVisibility(saveAndSubmitBtnFromSalesOrder, GeneralConstants.minTimeOut);
-//        System.out.println("save and submit sales invoice  ");
+//       Allure.step("save and submit sales invoice  ");
 //        getWebElement(saveAndSubmitBtnFromSalesOrder).click();
-//        System.out.println("click on yes btn ");
+//       Allure.step("click on yes btn ");
 //        waitUntilElementToBeClickable(yesBtn_SO, GeneralConstants.minTimeOut);
 //        getWebElement(yesBtn_SO).click();
 //        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
 //    }
 
 //    public CreditNotePage createCreditNoteFromSalesInvoice() {
-//        System.out.println("click on create btn");
+//       Allure.step("click on create btn");
 //        waitUntilElementVisibility(createBtn, GeneralConstants.minTimeOut);
 //        getWebElement(createBtn).click();
-//        System.out.println("click on credit note");
+//       Allure.step("click on credit note");
 //        waitUntilElementVisibility(creditNoteChoice, GeneralConstants.minTimeOut);
 //        getWebElement(creditNoteChoice).click();
 //        return new CreditNotePage(driver);
@@ -218,7 +219,7 @@ public class CompanyPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        System.out.println("open accounts tab  ");
+       Allure.step("open accounts tab  ");
         waitUntilElementToBePresent(accountsTab, GeneralConstants.minTimeOut);
         getWebElement(accountsTab).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -230,7 +231,7 @@ public class CompanyPage extends MainPage {
         getWebElement(debitAccountInputField).click();
         waitUntilElementToBePresent(defaultDebitAccountInputField, GeneralConstants.minTimeOut);
 
-        System.out.println("default debit account name is  " + getWebElement(defaultDebitAccountInputField).getText());
+       Allure.step("default debit account name is  " + getWebElement(defaultDebitAccountInputField).getText());
         return getWebElement(defaultDebitAccountInputField).getText();
 
     }
@@ -239,7 +240,7 @@ public class CompanyPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        System.out.println("open accounts tab  ");
+       Allure.step("open accounts tab  ");
         waitUntilElementToBePresent(accountsTab, GeneralConstants.minTimeOut);
         getWebElement(accountsTab).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -251,20 +252,20 @@ public class CompanyPage extends MainPage {
         getWebElement(creditAccountInputField).click();
         waitUntilElementToBePresent(defaultCreditAccountInputField, GeneralConstants.minTimeOut);
 
-        System.out.println("default credit account name is  " + getWebElement(defaultCreditAccountInputField).getText());
+       Allure.step("default credit account name is  " + getWebElement(defaultCreditAccountInputField).getText());
         return getWebElement(defaultCreditAccountInputField).getText();
 
     }
 
     public String getDefaultIncomeAccount() throws InterruptedException {
-        System.out.println("click on close tab ");
+       Allure.step("click on close tab ");
 //        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(closeTab, GeneralConstants.minTimeOut);
         getWebElement(closeTab).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        System.out.println("open accounts tab ");
+       Allure.step("open accounts tab ");
         waitUntilElementToBePresent(accountsTab, GeneralConstants.minTimeOut);
         getWebElement(accountsTab).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -277,19 +278,19 @@ public class CompanyPage extends MainPage {
         Thread.sleep(threadTimeOut);
         scrollToSpeceficElement(defaultIncomeAccountInputField);
         waitUntilElementToBePresent(defaultIncomeAccountInputField, GeneralConstants.minTimeOut);
-        System.out.println("default income account name is  " + getWebElement(defaultIncomeAccountInputField).getText());
+       Allure.step("default income account name is  " + getWebElement(defaultIncomeAccountInputField).getText());
         return getWebElement(defaultIncomeAccountInputField).getText();
 
     }
 
     public String getDefaultExpenseAccount() throws InterruptedException {
-        System.out.println("click on close tab ");
+       Allure.step("click on close tab ");
 //        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(closeTab, GeneralConstants.minTimeOut);
         getWebElement(closeTab).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        System.out.println("open accounts tab ");
+       Allure.step("open accounts tab ");
         waitUntilElementToBePresent(accountsTab, GeneralConstants.minTimeOut);
         getWebElement(accountsTab).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -302,43 +303,43 @@ public class CompanyPage extends MainPage {
         Thread.sleep(threadTimeOut);
         scrollToSpeceficElement(defaultExpenseAccountInputField);
         waitUntilElementToBePresent(defaultExpenseAccountInputField, GeneralConstants.minTimeOut);
-        System.out.println("default expense account name is  " + getWebElement(defaultExpenseAccountInputField).getText());
+       Allure.step("default expense account name is  " + getWebElement(defaultExpenseAccountInputField).getText());
         return getWebElement(defaultExpenseAccountInputField).getText();
 
     }
 
     public String getItemName(String expected) {
-        System.out.println("Verify the name of item  ");
+       Allure.step("Verify the name of item  ");
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
-        System.out.println("actual text is  " + getWebElement(itemName).getText() + "  and expected text is  " + expected);
+       Allure.step("actual text is  " + getWebElement(itemName).getText() + "  and expected text is  " + expected);
         return getWebElement(itemName).getText();
     }
 
     public String getItemCode(String expected) {
-        System.out.println("Verify the name of item  ");
+       Allure.step("Verify the name of item  ");
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
-        System.out.println("actual text is  " + getWebElement(ItemCode).getText() + "  and expected text is  " + expected);
+       Allure.step("actual text is  " + getWebElement(ItemCode).getText() + "  and expected text is  " + expected);
         return getWebElement(ItemCode).getText();
     }
 //
 //    public String getDraftInvoiceName(String expected) {
-//        System.out.println("Verify the name of sales invoice  ");
+//       Allure.step("Verify the name of sales invoice  ");
 //        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
-//        System.out.println("actual text is  " + getWebElement(DraftInvoiceName).getAttribute("title") + "  and expected text is  " + expected);
+//       Allure.step("actual text is  " + getWebElement(DraftInvoiceName).getAttribute("title") + "  and expected text is  " + expected);
 //        return getWebElement(DraftInvoiceName).getText();
 //    }
 
 
     public String getInvoiceNameForCreditNote(String expected) {
-//        System.out.println("Verify the name of sales invoice  ");
+//       Allure.step("Verify the name of sales invoice  ");
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
-        System.out.println("actual text is  " + getWebElement(invoiceNameForCreditNote).getAttribute("title") + "  and expected text is  " + expected);
+       Allure.step("actual text is  " + getWebElement(invoiceNameForCreditNote).getAttribute("title") + "  and expected text is  " + expected);
         return getWebElement(invoiceNameForCreditNote).getText();
     }
 //
 //    public PurchaseInvoicesListPage goToPurchaseListView() {
 //        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
-//        System.out.println("navigate to sales invoices list  ");
+//       Allure.step("navigate to sales invoices list  ");
 //        getWebElement(salesInvoicesOpt).click();
 //        driver.navigate().refresh();
 //        return new PurchaseInvoicesListPage(driver);
@@ -347,16 +348,16 @@ public class CompanyPage extends MainPage {
     //
 //    public String getInvoiceNameAtViewList(String expected) {
 //        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
-//        System.out.println("navigate to sales invoices list  ");
+//       Allure.step("navigate to sales invoices list  ");
 //        getWebElement(salesInvoicesOpt).click();
 //        driver.navigate().refresh();
 //        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-//        System.out.println("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("title") + " and expected text is " + expected);
+//       Allure.step("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("title") + " and expected text is " + expected);
 //        return getWebElement(invoiceNameAtViewList).getText();
 //    }
     public ItemListPage openItemListPage() {
 
-        System.out.println("navigate to item list ");
+       Allure.step("navigate to item list ");
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
         getWebElement(itemOpt).click();
         driver.navigate().refresh();

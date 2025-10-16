@@ -1,6 +1,7 @@
 package TestCases;
 
 import Pages.*;
+import io.qameta.allure.Allure;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -56,13 +57,13 @@ public class SalesInvoicesTest extends BaseTest {
         itemPageObj = itemListPageObj.clickOnNewItemBtn();
         itemPageObj.enterValidDataIntoItemPage(itemCode);
         Assert.assertTrue(itemPageObj.getItemName(itemCode).contains(itemCode));
-        System.out.println("Verify the name of current created item is existed at item list view ");
+       Allure.step("Verify the name of current created item is existed at item list view ");
         itemListPageObj = itemPageObj.openItemListPage();
         Assert.assertTrue(itemListPageObj.getItemNameAtViewList(itemCode).contains(itemCode));
 //        String numberOfItemsAfterCreatingNewOne = itemListPageObj.getNumberOfAllItemsAfterCreatingNewItem();
-//        System.out.println("verify that number of all items at list view will increase by one after creating new item");
+//       Allure.step("verify that number of all items at list view will increase by one after creating new item");
 //        Assert.assertFalse(numberOfAllItemsBeforeCreatingNewOne.contains(numberOfItemsAfterCreatingNewOne));
-//        System.out.println(" number of all items at list view before creating new one is " + numberOfAllItemsBeforeCreatingNewOne + " and after creating new one is  " + numberOfItemsAfterCreatingNewOne + " and this is correct ");
+//       Allure.step(" number of all items at list view before creating new one is " + numberOfAllItemsBeforeCreatingNewOne + " and after creating new one is  " + numberOfItemsAfterCreatingNewOne + " and this is correct ");
         sellingPriceListsPageObj = itemListPageObj.openSellingPriceLists();
         standardSellingListPageObj = sellingPriceListsPageObj.openStandardSellingList();
         itemsPricesTablePageObj = standardSellingListPageObj.openItemsPricesTable();
@@ -77,16 +78,16 @@ public class SalesInvoicesTest extends BaseTest {
         Assert.assertTrue(salesInvoicesPageObj.getInvoiceStatus(draftStatus).contains(draftStatus));
         String salesInvoiceName = salesInvoicesPageObj.getDraftInvoiceName(invoiceName);
         Assert.assertTrue(salesInvoiceName.contains(invoiceName));
-        System.out.println("Verify the name of current created sales invoice is existed at sales invoice list view ");
+       Allure.step("Verify the name of current created sales invoice is existed at sales invoice list view ");
         Assert.assertTrue(salesInvoicesPageObj.getInvoiceNameAtViewList(salesInvoiceName).contains(salesInvoiceName));
         String numberOfSalesInvoicesAfterCreatingNewOne = salesInvoicesListPageObj.getListAccountAfterCreatingNewSalesInvoices();
-        System.out.println("verify that number of sales invoices at list view will increase by one after creating new sales invoice ");
+       Allure.step("verify that number of sales invoices at list view will increase by one after creating new sales invoice ");
         Assert.assertFalse(numberOfSalesInvoicesBeforeCreatingNewOne.contains(numberOfSalesInvoicesAfterCreatingNewOne));
-        System.out.println(" number of sales invoices at list view before creating new one is " + numberOfSalesInvoicesBeforeCreatingNewOne + " and after creating new one is  " + numberOfSalesInvoicesAfterCreatingNewOne + " and this is correct ");
+       Allure.step(" number of sales invoices at list view before creating new one is " + numberOfSalesInvoicesBeforeCreatingNewOne + " and after creating new one is  " + numberOfSalesInvoicesAfterCreatingNewOne + " and this is correct ");
         String numberOfDraftInvoicesAfterCreatingNewOne = salesInvoicesListPageObj.getNumberOfDraftInvoicesAfterCreatingNewDraftSalesInvoices();
-        System.out.println("verify that number of draft sales invoices at list view will increase by one after creating new draft sales invoice ");
+       Allure.step("verify that number of draft sales invoices at list view will increase by one after creating new draft sales invoice ");
         Assert.assertFalse(numberOfDraftInvoicesBeforeCreatingNewOne.contains(numberOfDraftInvoicesAfterCreatingNewOne));
-        System.out.println(" number of draft sales invoices at list view before creating new one is " + numberOfDraftInvoicesBeforeCreatingNewOne + " and after creating new one is  " + numberOfDraftInvoicesAfterCreatingNewOne + " and this is correct ");
+       Allure.step(" number of draft sales invoices at list view before creating new one is " + numberOfDraftInvoicesBeforeCreatingNewOne + " and after creating new one is  " + numberOfDraftInvoicesAfterCreatingNewOne + " and this is correct ");
 
     }
 
@@ -99,15 +100,15 @@ public class SalesInvoicesTest extends BaseTest {
         salesInvoicesPageObj.enterValidDataIntoSalesInvoicePageAndSumbit(duesDate, itemCode);
 
         Assert.assertTrue(salesInvoicesPageObj.getInvoiceStatus(submittedStatus).contains(submittedStatus));
-//        System.out.println("verify that the current created sales invoice wil appear at list view with same name  ");
+//       Allure.step("verify that the current created sales invoice wil appear at list view with same name  ");
         String salesInvoiceName = salesInvoicesPageObj.getInvoiceName(invoiceName);
         Assert.assertTrue(salesInvoiceName.contains(invoiceName));
-        System.out.println("Verify the name of current created sales invoice is existed at sales invoice list view ");
+       Allure.step("Verify the name of current created sales invoice is existed at sales invoice list view ");
         Assert.assertTrue(salesInvoicesPageObj.getInvoiceNameAtViewList(salesInvoiceName).contains(salesInvoiceName));
         String numberOfSalesInvoicesAfterCreatingNewOne = salesInvoicesListPageObj.getListAccountAfterCreatingNewSalesInvoices();
-        System.out.println("verify that number of sales invoices at list view will increase by one after creating new sales invoice ");
+       Allure.step("verify that number of sales invoices at list view will increase by one after creating new sales invoice ");
         Assert.assertFalse(numberOfSalesInvoicesBeforeCreatingNewOne.contains(numberOfSalesInvoicesAfterCreatingNewOne));
-        System.out.println(" number of sales invoices at list view before creating new one is " + numberOfSalesInvoicesBeforeCreatingNewOne + " and after creating new one is  " + numberOfSalesInvoicesAfterCreatingNewOne + " and this is correct ");
+       Allure.step(" number of sales invoices at list view before creating new one is " + numberOfSalesInvoicesBeforeCreatingNewOne + " and after creating new one is  " + numberOfSalesInvoicesAfterCreatingNewOne + " and this is correct ");
 
     }
 
@@ -121,9 +122,9 @@ public class SalesInvoicesTest extends BaseTest {
         salesInvoicesPageObj = salesOrdersPageObj.createNewSalesInvoiceFromSalesOrder();
         salesInvoicesPageObj.saveAndSubmitSalesInvoiceFromSalesOrder();
         String salesOrderStatusAfterCreatingRelatedSalesInvoice = salesOrdersPageObj.getSalesOrderStatusAfterCreatingRelatedSalesInvoice();
-        System.out.println("verify the status of sales order will change after creating sales invoice from this  sales order ");
+       Allure.step("verify the status of sales order will change after creating sales invoice from this  sales order ");
         Assert.assertFalse(salesOrderStatusBeforeCreatingRelatedSalesInvoice.contains(salesOrderStatusAfterCreatingRelatedSalesInvoice));
-        System.out.println(" status of sales order  before creating related sales invoice is " + salesOrderStatusBeforeCreatingRelatedSalesInvoice + " and after creating related one is  " + salesOrderStatusAfterCreatingRelatedSalesInvoice + " and this is correct ");
+       Allure.step(" status of sales order  before creating related sales invoice is " + salesOrderStatusBeforeCreatingRelatedSalesInvoice + " and after creating related one is  " + salesOrderStatusAfterCreatingRelatedSalesInvoice + " and this is correct ");
     }
 
     @Test(priority = 4, enabled = true)
@@ -135,7 +136,7 @@ public class SalesInvoicesTest extends BaseTest {
         String salesInvoiceName = salesInvoicesPageObj.getInvoiceNameForCreditNote(invoiceName);
         creditNotePageObj = salesInvoicesPageObj.createCreditNoteFromSalesInvoice();
         creditNotePageObj.saveAndSubmitCreditNoteFromSalesInvoice();
-        System.out.println("verify that credit note will include the same name of it's related sales invoice  ");
+       Allure.step("verify that credit note will include the same name of it's related sales invoice  ");
         Assert.assertTrue(creditNotePageObj.getInvoiceNameInsideCreditNote(salesInvoiceName).contains(salesInvoiceName));
 
     }
@@ -153,9 +154,9 @@ public class SalesInvoicesTest extends BaseTest {
         grossProfitReportPageObj = reportsListPageObj.openGrossProfitReport();
         grossProfitReportPageObj.applyFilters_5(companyName, salesInvoiceName);
         String sellingAmountValueAtGrossProfitReport = grossProfitReportPageObj.getSellingAmountValue_5();
-        System.out.println("verify that selling amount value at gross profit report has the same value of total Amount For Sales Invoice");
+       Allure.step("verify that selling amount value at gross profit report has the same value of total Amount For Sales Invoice");
         Assert.assertTrue(sellingAmountValueAtGrossProfitReport.contains(totalAmountForSalesInvoice));
-        System.out.println(" selling amount value at gross profit report has " + sellingAmountValueAtGrossProfitReport + " and  value of  total Amount For Sales Invoice is  " + totalAmountForSalesInvoice + " and this is correct ");
+       Allure.step(" selling amount value at gross profit report has " + sellingAmountValueAtGrossProfitReport + " and  value of  total Amount For Sales Invoice is  " + totalAmountForSalesInvoice + " and this is correct ");
 
     }
 
@@ -169,17 +170,17 @@ public class SalesInvoicesTest extends BaseTest {
         salesInvoicesPageObj = salesInvoicesListPageObj.clickOnNewSalesInvoiceBtn();
         salesInvoicesPageObj.enterValidDataIntoSalesInvoicePageAndSumbit(duesDate, itemCode);
         String salesInvoiceName = salesInvoicesPageObj.getInvoiceNameForPayment(invoiceName);
-        System.out.println("verify the payment status of created sales invoice will be unpaid");
+       Allure.step("verify the payment status of created sales invoice will be unpaid");
         Assert.assertTrue(salesInvoicesPageObj.getSalesInvoicePaymentStatusBeforePayment(unpaidStatus).contains(unpaidStatus));
         paymentPageObj = salesInvoicesPageObj.createPaymentForSalesInvoice();
         String invoiceNameAtPaymentPage = paymentPageObj.getInvoiceNameFromPayment();
-        System.out.println("verify that payment will include the same name of it's related sales invoice  ");
+       Allure.step("verify that payment will include the same name of it's related sales invoice  ");
         Assert.assertTrue(invoiceNameAtPaymentPage.contains(salesInvoiceName));
-        System.out.println("the payment page include sales invoice " + invoiceNameAtPaymentPage + " and this is the same name of sales invoice which created a while " + salesInvoiceName);
+       Allure.step("the payment page include sales invoice " + invoiceNameAtPaymentPage + " and this is the same name of sales invoice which created a while " + salesInvoiceName);
         paymentPageObj.saveAndSubmitPayment(randomNumber);
         Assert.assertTrue(paymentPageObj.getInvoiceStatus(submittedStatus).contains(submittedStatus));
         salesInvoicesPageObj = paymentPageObj.openPaidSalesInvoice();
-        System.out.println("verify the payment status of related sales invoice will be changed to paid");
+       Allure.step("verify the payment status of related sales invoice will be changed to paid");
         Assert.assertTrue(salesInvoicesPageObj.getSalesInvoicePaymentStatus(paidStatus).contains(paidStatus));
     }
 
@@ -193,9 +194,9 @@ public class SalesInvoicesTest extends BaseTest {
         salesInvoicesPageObj = deliveryNotePageObj.createNewSalesInvoiceFromDeliveryNote();
         salesInvoicesPageObj.saveAndSubmitSalesInvoiceFromDeliveryNote();
         String deliveryNoteStatusAfterCreatingRelatedSalesInvoice = deliveryNotePageObj.getDeliveryNoteStatusAfterCreatingRelatedSalesInvoice();
-        System.out.println("verify the status of delivery note will change after creating sales invoice from this  delivery note ");
+       Allure.step("verify the status of delivery note will change after creating sales invoice from this  delivery note ");
         Assert.assertFalse(deliveryNoteStatusBeforeCreatingRelatedSalesInvoice.contains(deliveryNoteStatusAfterCreatingRelatedSalesInvoice));
-        System.out.println(" status of delivery  note before creating related sales invoice is " + deliveryNoteStatusBeforeCreatingRelatedSalesInvoice + " and after creating related one is  " + deliveryNoteStatusAfterCreatingRelatedSalesInvoice + " and this is correct ");
+       Allure.step(" status of delivery  note before creating related sales invoice is " + deliveryNoteStatusBeforeCreatingRelatedSalesInvoice + " and after creating related one is  " + deliveryNoteStatusAfterCreatingRelatedSalesInvoice + " and this is correct ");
     }
 
     @Test(priority = 8, enabled = true)
@@ -217,25 +218,25 @@ public class SalesInvoicesTest extends BaseTest {
         generalLedgerReportPageObj = salesInvoicesPageObj.openGeneralLedgerReport();
         String valueAtDefaultDebitAccountAtGL = generalLedgerReportPageObj.getValueAtDefaultDebitAccountFromGL(generalLedgerReportPageObj.getDefaultDebitAccountFromGL(defaultDebitAccountAtCompanySettings));
 
-        System.out.println("verify that Default Debit Account At GL has the same value of grand total Amount For Sales Invoice");
+       Allure.step("verify that Default Debit Account At GL has the same value of grand total Amount For Sales Invoice");
         softAssert.assertTrue(valueAtDefaultDebitAccountAtGL.contains(grandTotalAmountForSalesInvoice));
-        System.out.println(" Default Debit Account At GL report has " + valueAtDefaultDebitAccountAtGL + " and  value of grand total Amount For Sales Invoice is  " + grandTotalAmountForSalesInvoice + " and this is correct ");
+       Allure.step(" Default Debit Account At GL report has " + valueAtDefaultDebitAccountAtGL + " and  value of grand total Amount For Sales Invoice is  " + grandTotalAmountForSalesInvoice + " and this is correct ");
 
 
 //        generalLedgerReportPageObj.getDefaultIncomeAccountFromGL(defaultIncomeAccountAtCompanySettings);
         String valueAtDefaultIncomeAccountAtGL = generalLedgerReportPageObj.getValueAtDefaultIncomeAccountFromGL(generalLedgerReportPageObj.getDefaultIncomeAccountFromGL(defaultIncomeAccountAtCompanySettings));
-        System.out.println("verify that Default income Account At GL has the same value of total Amount For Sales Invoice");
+       Allure.step("verify that Default income Account At GL has the same value of total Amount For Sales Invoice");
 
         softAssert.assertTrue(valueAtDefaultIncomeAccountAtGL.contains(totalAmountForSalesInvoice));
-        System.out.println(" Default income Account At GL report has " + valueAtDefaultIncomeAccountAtGL + " and  value of  total Amount For Sales Invoice is  " + totalAmountForSalesInvoice + " and this is correct ");
+       Allure.step(" Default income Account At GL report has " + valueAtDefaultIncomeAccountAtGL + " and  value of  total Amount For Sales Invoice is  " + totalAmountForSalesInvoice + " and this is correct ");
 
         String closingDebitValueAtGl = generalLedgerReportPageObj.getClosingDebitValueForInvoiceAtGL();
         String closingCreditValueAtGl = generalLedgerReportPageObj.getClosingCreditValueForInvoiceAtGL();
-        System.out.println("verify that closing values ( debit & credit )  at general ledger are equals to  grand total amount for sales invoice");
+       Allure.step("verify that closing values ( debit & credit )  at general ledger are equals to  grand total amount for sales invoice");
         softAssert.assertTrue(closingDebitValueAtGl.contains(grandTotalAmountForSalesInvoice));
         softAssert.assertTrue(closingCreditValueAtGl.contains(grandTotalAmountForSalesInvoice));
-        System.out.println(" closing debit value at general ledger is " + closingDebitValueAtGl + "  and grand total amount for sales invoice is " + grandTotalAmountForSalesInvoice + " and this is correct ");
-        System.out.println(" closing credit value at general ledger is " + closingCreditValueAtGl + "   and grand total amount for sales invoice is " + grandTotalAmountForSalesInvoice + " and this is correct ");
+       Allure.step(" closing debit value at general ledger is " + closingDebitValueAtGl + "  and grand total amount for sales invoice is " + grandTotalAmountForSalesInvoice + " and this is correct ");
+       Allure.step(" closing credit value at general ledger is " + closingCreditValueAtGl + "   and grand total amount for sales invoice is " + grandTotalAmountForSalesInvoice + " and this is correct ");
         softAssert.assertAll();
     }
 

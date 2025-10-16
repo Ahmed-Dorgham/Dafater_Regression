@@ -1,6 +1,7 @@
 package TestCases;
 
 import Pages.*;
+import io.qameta.allure.Allure;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -37,7 +38,7 @@ public class ComparingDebitNotesTest extends BaseTest {
         debitNotesListPageObj = homePageObj.openDebitNotesListPage();
         String numberOfAllDebitNotesAfterSyncing = debitNotesListPageObj.getNumberOfAllDebitNotesAfterSyncing();
 
-        System.out.println("verify that number of all debit notes which appear at dafater 5 is equal to number of all debit notes at dafater 4");
+      Allure.step("verify that number of all debit notes which appear at dafater 5 is equal to number of all debit notes at dafater 4");
         softAssert.assertEquals(numberOfAllDebitNotesBeforeSyncing, numberOfAllDebitNotesAfterSyncing);
         softAssert.assertAll();
 

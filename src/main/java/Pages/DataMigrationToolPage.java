@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,12 +31,12 @@ public class DataMigrationToolPage extends MainPage {
         getWebElement(checkVmConnectionBtn).click();
 
         waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
-        // System.out.println(getWebElement(connectionMsg).getText());
+        //Allure.step(getWebElement(connectionMsg).getText());
 
     }
 
     public void clickOnSyncDocTypesDataBtn() {
-        System.out.println("click on sync doc types data btn ");
+       Allure.step("click on sync doc types data btn ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementVisibility(syncDocTypesDataBtn, GeneralConstants.minTimeOut);
         getWebElement(syncDocTypesDataBtn).click();
@@ -44,7 +45,7 @@ public class DataMigrationToolPage extends MainPage {
     }
 
     public void selectAllDocTypes() {
-        System.out.println(" choose all doc types");
+       Allure.step(" choose all doc types");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementVisibility(allCheckBox, GeneralConstants.minTimeOut);
         getWebElement(allCheckBox).click();
@@ -52,20 +53,21 @@ public class DataMigrationToolPage extends MainPage {
 
     public WebElement checkStatusMsg() {
         waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
-        System.out.println(" msg after clicking on btn is >>>   " + getWebElement(statusMsg).getText());
-        System.out.println(getWebElement(statusMsg).getText());
+       Allure.step(" msg after clicking on btn is >>>   " + getWebElement(statusMsg).getText());
+       Allure.step(getWebElement(statusMsg).getText());
         return getWebElement(statusMsg);
     }
 
     public void closeStatusMsg() {
 
         waitUntilElementVisibility(closeIcon, GeneralConstants.minTimeOut);
-        System.out.println("close success msg ");
+       Allure.step("close success msg ");
         getWebElement(closeIcon).click();
 
     }
 
     public void enterValidDataIntoMainData(String vmUrl, String apiKey, String secretKey) {
+        Allure.step(" enter valid data into main data ");
         waitUntilElementVisibility(vmUrlInputField, GeneralConstants.minTimeOut);
         getWebElement(vmUrlInputField).clear();
         getWebElement(vmUrlInputField).sendKeys(vmUrl);

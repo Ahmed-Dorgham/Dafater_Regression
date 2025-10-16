@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
@@ -48,7 +49,7 @@ public class SetupWizardPage extends MainPage {
     private By addressTypeSelectMenu = By.xpath("(//*[contains(@id,'address_type')])");
 
     public void enterDefaultVMData() {
-        System.out.println(" enter default data for VM ");
+        Allure.step(" enter default data for VM ");
         waitUntilElementToBePresent(welcomeHeader, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(nextBtn, GeneralConstants.minTimeOut);
         getWebElement(nextBtn).click();
@@ -57,7 +58,7 @@ public class SetupWizardPage extends MainPage {
     }
 
     public void setupAccount() {
-        System.out.println(" setup Account ");
+        Allure.step(" setup Account ");
 
         waitUntilElementToBePresent(fullNameField, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(passwordField, GeneralConstants.minTimeOut);
@@ -67,57 +68,57 @@ public class SetupWizardPage extends MainPage {
     }
 
     public void setupOrganization(String companyName, String companyId, String taxId, String city, String address, String phone) {
-        System.out.println(" setup organization ");
-        System.out.println(" enter company name");
+        Allure.step(" setup organization ");
+        Allure.step(" enter company name");
         waitUntilElementToBePresent(companyNameField, GeneralConstants.minTimeOut);
         getWebElement(companyNameField).click();
         getWebElement(companyNameField).sendKeys(companyName);
 
-        System.out.println(" select id type ");
+        Allure.step(" select id type ");
         Select idSelect = new Select(getWebElement(idSelectMenu));
         getWebElement(idSelectMenu).click();
         idSelect.selectByValue("National ID");
 
-        System.out.println(" select company domain ");
+        Allure.step(" select company domain ");
         Select domainSelect = new Select(getWebElement(domainSelectMenu));
         getWebElement(domainSelectMenu).click();
         domainSelect.selectByValue("Manufacturing");
 
-        System.out.println(" enter company id ");
+        Allure.step(" enter company id ");
         waitUntilElementToBePresent(companyIdField, GeneralConstants.minTimeOut);
         getWebElement(companyIdField).click();
         getWebElement(companyIdField).sendKeys(companyId);
 
-        System.out.println(" enter tax id ");
+        Allure.step(" enter tax id ");
         waitUntilElementToBePresent(taxIdField, GeneralConstants.minTimeOut);
         getWebElement(taxIdField).click();
         getWebElement(taxIdField).sendKeys(taxId);
 
-        System.out.println(" enter address info ");
+        Allure.step(" enter address info ");
 
-        System.out.println(" enter city name ");
+        Allure.step(" enter city name ");
         waitUntilElementToBePresent(cityField, GeneralConstants.minTimeOut);
         getWebElement(cityField).click();
         getWebElement(cityField).sendKeys(city);
 
-        System.out.println(" select address type");
+        Allure.step(" select address type");
         Select addressTypeSelect = new Select(getWebElement(addressTypeSelectMenu));
         getWebElement(addressTypeSelectMenu).click();
         addressTypeSelect.selectByValue("Billing");
 
 
-        System.out.println(" enter address  ");
+        Allure.step(" enter address  ");
         waitUntilElementToBePresent(addressField, GeneralConstants.minTimeOut);
         getWebElement(addressField).click();
         getWebElement(addressField).sendKeys(address);
 
 
-        System.out.println(" enter phone  ");
+        Allure.step(" enter phone  ");
         waitUntilElementToBePresent(phoneField, GeneralConstants.minTimeOut);
         getWebElement(phoneField).click();
         getWebElement(phoneField).sendKeys(phone);
 
-        System.out.println(" click on complete setup btn");
+        Allure.step(" click on complete setup btn");
         waitUntilElementToBePresent(completeSetupBtn, GeneralConstants.minTimeOut);
         getWebElement(completeSetupBtn).click();
     }

@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -31,7 +32,7 @@ public class SellingPriceListsPage extends MainPage {
     private By totalInvoicesAmountAtViewList = By.xpath("//h3[contains(text(),'اجمالي الفواتير')]/following-sibling::div");
 
     public ItemPage clickOnNewItemBtn() {
-        System.out.println("click on new item btn ");
+       Allure.step("click on new item btn ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
@@ -45,14 +46,14 @@ public class SellingPriceListsPage extends MainPage {
 
         waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
-        System.out.println("actual text is " + getWebElement(itemNameAtViewList).getAttribute("title") + " and expected text is " + expected);
+       Allure.step("actual text is " + getWebElement(itemNameAtViewList).getAttribute("title") + " and expected text is " + expected);
         return getWebElement(itemNameAtViewList).getText();
     }
 
     public StandardSellingListPage openStandardSellingList() {
 
         waitUntilElementToBePresent(sellingPriceListsTitle, GeneralConstants.minTimeOut);
-        System.out.println("open standard selling list");
+       Allure.step("open standard selling list");
         scrollToSpeceficElement(standardSellingList);
         getWebElement(standardSellingList).click();
         return new StandardSellingListPage(driver);
@@ -61,21 +62,21 @@ public class SellingPriceListsPage extends MainPage {
     public String getNumberOfAllItemsBeforeCreatingNewItem() {
 
         waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of all items at list view before creating new item " + getWebElement(numberOfAllItemsField).getText());
+       Allure.step("number of all items at list view before creating new item " + getWebElement(numberOfAllItemsField).getText());
         return getWebElement(numberOfAllItemsField).getText();
     }
 
     public String getNumberOfItemsAfterCreatingNewItem() {
 
         waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of all items at list view after creating new item " + getWebElement(numberOfAllItemsField).getText());
+       Allure.step("number of all items at list view after creating new item " + getWebElement(numberOfAllItemsField).getText());
         return getWebElement(numberOfAllItemsField).getText();
     }
 
     public String getListAccountAfterCreatingNewSalesInvoices() {
 
         waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
+       Allure.step("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 //    public void enterValidDataIntoMainData (String vmUrl , String apiKey , String secretKey)

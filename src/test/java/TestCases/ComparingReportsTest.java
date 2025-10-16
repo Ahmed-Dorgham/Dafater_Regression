@@ -2,6 +2,7 @@ package TestCases;
 
 import GeneralConstants.GeneralConstants;
 import Pages.*;
+import io.qameta.allure.Allure;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -46,7 +47,7 @@ public class ComparingReportsTest extends BaseTest {
     private final String invoiceName = "ACC-SINV";
 
 
-    @Test(priority = 1, enabled = false)
+    @Test(priority = 1, enabled = true)
     public void TC01_comparingGeneralLedgerReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -62,9 +63,9 @@ public class ComparingReportsTest extends BaseTest {
         companyName = generalLedgerReportPageObj.chooseCompany();
        String accountName = generalLedgerReportPageObj.chooseAccount();
        generalLedgerReportPageObj.clickOnLoadDataBtn();
-        System.out.println("debit value for specific account before syncing  ");
+        Allure.step("debit value for specific account before syncing  ");
         String debitValueOfSpecificAccountBeforeSyncing = generalLedgerReportPageObj.getDebitValue();
-        System.out.println("credit value for specific account before syncing  ");
+        Allure.step("credit value for specific account before syncing  ");
 
         String creditValueOfSpecificAccountBeforeSyncing = generalLedgerReportPageObj.getCreditValue();
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
@@ -77,12 +78,12 @@ public class ComparingReportsTest extends BaseTest {
 
         String debitValueOfSpecificAccountAfterSyncing = generalLedgerReportPageObj.getDebitValue_5();
         String creditValueOfSpecificAccountAfterSyncing = generalLedgerReportPageObj.getCreditValue_5();
-        System.out.println("verify that debit value of this account " + accountName + " which exist at dafater 5 is equal to debit value for the same account at dafater 4 ");
+        Allure.step("verify that debit value of this account " + accountName + " which exist at dafater 5 is equal to debit value for the same account at dafater 4 ");
         softAssert.assertEquals(debitValueOfSpecificAccountBeforeSyncing, debitValueOfSpecificAccountAfterSyncing);
-        System.out.println("debit value at dafater 4  before syncing is " + debitValueOfSpecificAccountBeforeSyncing + " and after syncing at dafater 5 is " + debitValueOfSpecificAccountAfterSyncing);
-        System.out.println("verify that credit value of this account " + accountName + " which exist at dafater 5 is equal to credit value for the same account at dafater 4 ");
+        Allure.step("debit value at dafater 4  before syncing is " + debitValueOfSpecificAccountBeforeSyncing + " and after syncing at dafater 5 is " + debitValueOfSpecificAccountAfterSyncing);
+        Allure.step("verify that credit value of this account " + accountName + " which exist at dafater 5 is equal to credit value for the same account at dafater 4 ");
         softAssert.assertEquals(debitValueOfSpecificAccountBeforeSyncing, debitValueOfSpecificAccountAfterSyncing);
-        System.out.println("credit value at dafater 4  before syncing is " + creditValueOfSpecificAccountBeforeSyncing + " and after syncing at dafater 5 is " + creditValueOfSpecificAccountAfterSyncing);
+        Allure.step("credit value at dafater 4  before syncing is " + creditValueOfSpecificAccountBeforeSyncing + " and after syncing at dafater 5 is " + creditValueOfSpecificAccountAfterSyncing);
         softAssert.assertAll();
     }
 
@@ -103,7 +104,7 @@ public class ComparingReportsTest extends BaseTest {
         reportsListPageObj = homePageObj.openReportsListPage();
         customersAgingReportPageObj = reportsListPageObj.openCustomersAgingReport();
        String customerName = customersAgingReportPageObj.chooseCustomer();
-        System.out.println(" outstanding amount for specific customer before syncing  ");
+        Allure.step(" outstanding amount for specific customer before syncing  ");
         String outstandingAmountOfSpecificCustomerBeforeSyncing = customersAgingReportPageObj.getOutstandingAmountValue();
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
         loginPageObj.switchToDafater_5(websiteLink_5);
@@ -112,14 +113,14 @@ public class ComparingReportsTest extends BaseTest {
         customersAgingReportPageObj = reportsListPageObj.openCustomersAgingReport();
         customersAgingReportPageObj.applyFilters_5(companyName, customerName);
         String outstandingAmountOfSpecificCustomerAfterSyncing = customersAgingReportPageObj.getOutstandingAmounValue_5();
-        System.out.println("verify that outstanding Amount value of this customer " + customerName + " which exist at dafater 5 is equal to outstanding Amount value for the same customer  at dafater 4 ");
+        Allure.step("verify that outstanding Amount value of this customer " + customerName + " which exist at dafater 5 is equal to outstanding Amount value for the same customer  at dafater 4 ");
         softAssert.assertEquals(outstandingAmountOfSpecificCustomerBeforeSyncing, outstandingAmountOfSpecificCustomerAfterSyncing);
-        System.out.println("outstanding Amount  value at dafater 4  before syncing is " + outstandingAmountOfSpecificCustomerBeforeSyncing + " and after syncing at dafater 5 is " + outstandingAmountOfSpecificCustomerAfterSyncing);
+        Allure.step("outstanding Amount  value at dafater 4  before syncing is " + outstandingAmountOfSpecificCustomerBeforeSyncing + " and after syncing at dafater 5 is " + outstandingAmountOfSpecificCustomerAfterSyncing);
 
         softAssert.assertAll();
     }
 
-    @Test(priority = 3, enabled = false)
+    @Test(priority = 3, enabled = true)
     public void TC03_comparingTaxDeclarationReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -136,7 +137,7 @@ public class ComparingReportsTest extends BaseTest {
         reportsListPageObj = homePageObj.openReportsListPage();
         taxDeclarationReportPageObj = reportsListPageObj.openTaxDeclarationReport();
 //        taxDeclarationReportPageObj.applyFilters();
-        System.out.println(" total tax amount for specific duration before syncing  ");
+        Allure.step(" total tax amount for specific duration before syncing  ");
         String totalTaxAmountBeforeSyncing = taxDeclarationReportPageObj.getTotalTaxAmount();
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
         loginPageObj.switchToDafater_5(websiteLink_5);
@@ -145,14 +146,14 @@ public class ComparingReportsTest extends BaseTest {
         taxDeclarationReportPageObj = reportsListPageObj.openTaxDeclarationReport();
         taxDeclarationReportPageObj.applyFilters_5(companyName);
         String totalTaxAmountAfterSyncing = taxDeclarationReportPageObj.getTotalTaxAmount_5();
-        System.out.println("verify that total tax amount value for specific duration  which exist at dafater 5 is equal to total tax amount value for the same duration at dafater 4 ");
+        Allure.step("verify that total tax amount value for specific duration  which exist at dafater 5 is equal to total tax amount value for the same duration at dafater 4 ");
         softAssert.assertTrue(totalTaxAmountBeforeSyncing.contains(totalTaxAmountAfterSyncing));
-        System.out.println("total tax amount value at dafater 4  before syncing is " + totalTaxAmountBeforeSyncing + " and after syncing at dafater 5 is " + totalTaxAmountAfterSyncing);
+        Allure.step("total tax amount value at dafater 4  before syncing is " + totalTaxAmountBeforeSyncing + " and after syncing at dafater 5 is " + totalTaxAmountAfterSyncing);
 
         softAssert.assertAll();
     }
 
-    @Test(priority = 4, enabled = false)
+    @Test(priority = 4, enabled = true)
     public void TC04_comparingStockBalanceReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -183,16 +184,16 @@ public class ComparingReportsTest extends BaseTest {
         stockBalanceReportPageObj.applyFilters_5(companyName, wareHouseName);
         String openingValueAfterSyncing = stockBalanceReportPageObj.getOpeningValueFromStockBalance_5();
         String openingQuantityAfterSyncing = stockBalanceReportPageObj.getOpeningQuantityFromStockBalance_5();
-        System.out.println("verify that opening value for this warehouse " + wareHouseName + "  which exist at dafater 5 is equal to opening value for the same warehouse at dafater 4 ");
+        Allure.step("verify that opening value for this warehouse " + wareHouseName + "  which exist at dafater 5 is equal to opening value for the same warehouse at dafater 4 ");
         softAssert.assertTrue(openingValueBeforeSyncing.contains(openingValueAfterSyncing));
-        System.out.println("opening value at dafater 4  before syncing is " + openingValueBeforeSyncing + " and after syncing at dafater 5 is " + openingValueAfterSyncing);
-        System.out.println("verify that opening quantity for this warehouse " + wareHouseName + "  which exist at dafater 5 is equal to opening quantity for the same warehouse at dafater 4 ");
+        Allure.step("opening value at dafater 4  before syncing is " + openingValueBeforeSyncing + " and after syncing at dafater 5 is " + openingValueAfterSyncing);
+        Allure.step("verify that opening quantity for this warehouse " + wareHouseName + "  which exist at dafater 5 is equal to opening quantity for the same warehouse at dafater 4 ");
         softAssert.assertTrue(openingQuantityBeforeSyncing.contains(openingQuantityAfterSyncing));
-        System.out.println("opening quantity at dafater 4  before syncing is " + openingQuantityBeforeSyncing + " and after syncing at dafater 5 is " + openingQuantityAfterSyncing);
+        Allure.step("opening quantity at dafater 4  before syncing is " + openingQuantityBeforeSyncing + " and after syncing at dafater 5 is " + openingQuantityAfterSyncing);
         softAssert.assertAll();
     }
 
-    @Test(priority = 5, enabled = false)
+    @Test(priority = 5, enabled = true)
     public void TC05_comparingTrialBalanceReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -227,7 +228,7 @@ public class ComparingReportsTest extends BaseTest {
         trialBalanceReportPageObj = reportsListPageObj.openTrialBalanceReport();
         trialBalanceReportPageObj.applyFilters_5(companyName, levelName);
 //        trialBalanceReportPageObj.loadData();
-        System.out.println(" data at trial balance report at dafater 5  after syncing  ");
+        Allure.step(" data at trial balance report at dafater 5  after syncing  ");
         trialBalanceReportPageObj.scrollInsideTable();
         String totalOpeningDebitBalanceAfterSyncing = trialBalanceReportPageObj.getTotalOpeningDebitBalance();
         String totalOpeningCreditBalanceAfterSyncing = trialBalanceReportPageObj.getTotalOpeningCreditBalance();
@@ -236,35 +237,35 @@ public class ComparingReportsTest extends BaseTest {
         String totalClosingDebitBalanceAfterSyncing = trialBalanceReportPageObj.getTotalClosingDebitBalance();
         String totalClosingCreditBalanceAfterSyncing = trialBalanceReportPageObj.getTotalClosingCreditBalance();
 
-        System.out.println("verify that total opening debit balance value which exist at dafater 5 is equal to total opening debit balance value for the same company and level at dafater 4 ");
+        Allure.step("verify that total opening debit balance value which exist at dafater 5 is equal to total opening debit balance value for the same company and level at dafater 4 ");
         softAssert.assertTrue(totalOpeningDebitBalanceBeforeSyncing.contains(totalOpeningDebitBalanceAfterSyncing));
-        System.out.println("total opening debit balance value at dafater 4  before syncing is " + totalOpeningDebitBalanceBeforeSyncing + " and after syncing at dafater 5 is " + totalOpeningDebitBalanceAfterSyncing);
-        System.out.println("                          **********************************************************             ");
-        System.out.println("verify that total opening credit balance value which exist at dafater 5 is equal to total opening credit balance value for the same company and level at dafater 4 ");
+        Allure.step("total opening debit balance value at dafater 4  before syncing is " + totalOpeningDebitBalanceBeforeSyncing + " and after syncing at dafater 5 is " + totalOpeningDebitBalanceAfterSyncing);
+        Allure.step("                          **********************************************************             ");
+        Allure.step("verify that total opening credit balance value which exist at dafater 5 is equal to total opening credit balance value for the same company and level at dafater 4 ");
         softAssert.assertTrue(totalOpeningCreditBalanceBeforeSyncing.contains(totalOpeningCreditBalanceAfterSyncing));
-        System.out.println("total opening Credit balance value at dafater 4  before syncing is " + totalOpeningCreditBalanceBeforeSyncing + " and after syncing at dafater 5 is " + totalOpeningCreditBalanceAfterSyncing);
+        Allure.step("total opening Credit balance value at dafater 4  before syncing is " + totalOpeningCreditBalanceBeforeSyncing + " and after syncing at dafater 5 is " + totalOpeningCreditBalanceAfterSyncing);
 
-        System.out.println("                          **********************************************************             ");
-        System.out.println("verify that total debit balance value which exist at dafater 5 is equal to total debit balance value for the same company and level at dafater 4 ");
+        Allure.step("                          **********************************************************             ");
+        Allure.step("verify that total debit balance value which exist at dafater 5 is equal to total debit balance value for the same company and level at dafater 4 ");
         softAssert.assertTrue(totalDebitBalanceBeforeSyncing.contains(totalDebitBalanceAfterSyncing));
-        System.out.println("total debit balance value at dafater 4  before syncing is " + totalDebitBalanceBeforeSyncing + " and after syncing at dafater 5 is " + totalDebitBalanceAfterSyncing);
-        System.out.println("                          **********************************************************             ");
-        System.out.println("verify that total  credit balance value which exist at dafater 5 is equal to total credit balance value for the same company and level at dafater 4 ");
+        Allure.step("total debit balance value at dafater 4  before syncing is " + totalDebitBalanceBeforeSyncing + " and after syncing at dafater 5 is " + totalDebitBalanceAfterSyncing);
+        Allure.step("                          **********************************************************             ");
+        Allure.step("verify that total  credit balance value which exist at dafater 5 is equal to total credit balance value for the same company and level at dafater 4 ");
         softAssert.assertTrue(totalCreditBalanceBeforeSyncing.contains(totalCreditBalanceAfterSyncing));
-        System.out.println("total  Credit balance value at dafater 4  before syncing is " + totalCreditBalanceBeforeSyncing + " and after syncing at dafater 5 is " + totalCreditBalanceAfterSyncing);
-        System.out.println("                          **********************************************************             ");
-        System.out.println("verify that total closing debit balance value which exist at dafater 5 is equal to total closing debit balance value for the same company and level at dafater 4 ");
+        Allure.step("total  Credit balance value at dafater 4  before syncing is " + totalCreditBalanceBeforeSyncing + " and after syncing at dafater 5 is " + totalCreditBalanceAfterSyncing);
+        Allure.step("                          **********************************************************             ");
+        Allure.step("verify that total closing debit balance value which exist at dafater 5 is equal to total closing debit balance value for the same company and level at dafater 4 ");
         softAssert.assertTrue(totalClosingDebitBalanceBeforeSyncing.contains(totalClosingDebitBalanceAfterSyncing));
-        System.out.println("total closing debit balance value at dafater 4  before syncing is " + totalClosingDebitBalanceBeforeSyncing + " and after syncing at dafater 5 is " + totalClosingDebitBalanceAfterSyncing);
-        System.out.println("                          **********************************************************             ");
-        System.out.println("verify that total closing credit balance value which exist at dafater 5 is equal to total closing credit balance value for the same company and level at dafater 4 ");
+        Allure.step("total closing debit balance value at dafater 4  before syncing is " + totalClosingDebitBalanceBeforeSyncing + " and after syncing at dafater 5 is " + totalClosingDebitBalanceAfterSyncing);
+        Allure.step("                          **********************************************************             ");
+        Allure.step("verify that total closing credit balance value which exist at dafater 5 is equal to total closing credit balance value for the same company and level at dafater 4 ");
         softAssert.assertTrue(totalClosingCreditBalanceBeforeSyncing.contains(totalClosingCreditBalanceAfterSyncing));
-        System.out.println("total closing Credit balance value at dafater 4  before syncing is " + totalClosingCreditBalanceBeforeSyncing + " and after syncing at dafater 5 is " + totalClosingCreditBalanceAfterSyncing);
-        System.out.println("                          **********************************************************             ");
+        Allure.step("total closing Credit balance value at dafater 4  before syncing is " + totalClosingCreditBalanceBeforeSyncing + " and after syncing at dafater 5 is " + totalClosingCreditBalanceAfterSyncing);
+        Allure.step("                          **********************************************************             ");
         softAssert.assertAll();
     }
 
-    @Test(priority = 6, enabled = false)
+    @Test(priority = 6, enabled = true)
     public void TC06_comparingBalanceSheetReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -296,13 +297,13 @@ public class ComparingReportsTest extends BaseTest {
         balanceSheetReportPageObj.loadReportData_5();
         balanceSheetReportPageObj.scrollInsideTable();
        String profitOrLossValueAfterSyncing =  balanceSheetReportPageObj.getProfitOrLossValue();
-        System.out.println("verify that profit Or Loss value which exist at dafater 5 is equal to profit Or Loss value for the same company and level at dafater 4 ");
+        Allure.step("verify that profit Or Loss value which exist at dafater 5 is equal to profit Or Loss value for the same company and level at dafater 4 ");
         softAssert.assertTrue(profitOrLossValueBeforeSyncing.contains(profitOrLossValueAfterSyncing));
-        System.out.println("profit Or Loss value at dafater 4  before syncing is " + profitOrLossValueBeforeSyncing + " and after syncing at dafater 5 is " + profitOrLossValueAfterSyncing);
+        Allure.step("profit Or Loss value at dafater 4  before syncing is " + profitOrLossValueBeforeSyncing + " and after syncing at dafater 5 is " + profitOrLossValueAfterSyncing);
         softAssert.assertAll();
     }
 
-    @Test(priority = 7, enabled = false)
+    @Test(priority = 7, enabled = true)
     public void TC07_comparingProfitAndLossReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -337,9 +338,9 @@ public class ComparingReportsTest extends BaseTest {
         profitAndLossReportPageObj.loadReportData_5();
         profitAndLossReportPageObj.scrollInsideTable();
         String profitOrLossValueAfterSyncing =  profitAndLossReportPageObj.getProfitOrLossValue();
-        System.out.println("verify that profit Or Loss value which exist at dafater 5 is equal to profit Or Loss value for the same company and level at dafater 4 ");
+        Allure.step("verify that profit Or Loss value which exist at dafater 5 is equal to profit Or Loss value for the same company and level at dafater 4 ");
         softAssert.assertTrue(profitOrLossValueBeforeSyncing.contains(profitOrLossValueAfterSyncing));
-        System.out.println("profit Or Loss value at dafater 4  before syncing is " + profitOrLossValueBeforeSyncing + " and after syncing at dafater 5 is " + profitOrLossValueAfterSyncing);
+        Allure.step("profit Or Loss value at dafater 4  before syncing is " + profitOrLossValueBeforeSyncing + " and after syncing at dafater 5 is " + profitOrLossValueAfterSyncing);
         softAssert.assertAll();
     }
 }

@@ -4,6 +4,7 @@ import Pages.FiscalYearListPage;
 import Pages.HomePage;
 import Pages.LoginPage;
 import Pages.SetupPage;
+import io.qameta.allure.Allure;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -44,11 +45,11 @@ public class ComparingFiscalYearsTest extends BaseTest {
 
         String numberOfAllFiscalYearsAfterSyncing = fiscalYearListPageObj.getNumberOfAllFiscalYearsAfterSyncing();
 
-        System.out.println("verify that number of all fiscal years which appear at dafater 5 is equal to number of all fiscal years at dafater 4 ");
+        Allure.step("verify that number of all fiscal years which appear at dafater 5 is equal to number of all fiscal years at dafater 4 ");
 
         softAssert.assertEquals(numberOfAllFiscalYearsBeforeSyncing, numberOfAllFiscalYearsAfterSyncing);
         softAssert.assertAll();
-        System.out.println(" number of fiscal years which appear at dafater 5 is " + numberOfAllFiscalYearsAfterSyncing + " and number of all  fiscal years at dafater 4 is " + numberOfAllFiscalYearsBeforeSyncing + " and this is correct ");
+        Allure.step(" number of fiscal years which appear at dafater 5 is " + numberOfAllFiscalYearsAfterSyncing + " and number of all  fiscal years at dafater 4 is " + numberOfAllFiscalYearsBeforeSyncing + " and this is correct ");
 
     }
 

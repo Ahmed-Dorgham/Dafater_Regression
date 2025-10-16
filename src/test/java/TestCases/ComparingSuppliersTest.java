@@ -1,6 +1,7 @@
 package TestCases;
 
 import Pages.*;
+import io.qameta.allure.Allure;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -38,14 +39,14 @@ public class ComparingSuppliersTest extends BaseTest {
         String numberOfAllSuppliersAfterSyncing = suppliersListPageObj.getNumberOfAllSuppliersAfterSyncing();
         String suppliersDebitsValueAfterSyncing = suppliersListPageObj.getNumberOfSuppliersDebitsAfterSyncing();
         String prepaymentNotUsedValueAfterSyncing = suppliersListPageObj.getNumberOfPrepaymentNotUsedAfterSyncing();
-        System.out.println("verify that number of all suppliers which appear at dafater 5 is equal to number of all suppliers at dafater 4");
+      Allure.step("verify that number of all suppliers which appear at dafater 5 is equal to number of all suppliers at dafater 4");
 
         softAssert.assertEquals(numberOfAllSuppliersBeforeSyncing, numberOfAllSuppliersAfterSyncing);
 
-        System.out.println("verify that value of Suppliers Debits which appear at dafater 5 is equal to the value of Suppliers Debits at dafater 4");
+      Allure.step("verify that value of Suppliers Debits which appear at dafater 5 is equal to the value of Suppliers Debits at dafater 4");
 
         softAssert.assertEquals(suppliersDebitsValueBeforeSyncing, suppliersDebitsValueAfterSyncing);
-        System.out.println("verify that prepayment Not Used value  which appear at dafater 5 is equal to prepayment Not Used value at dafater 4");
+      Allure.step("verify that prepayment Not Used value  which appear at dafater 5 is equal to prepayment Not Used value at dafater 4");
         softAssert.assertEquals(prepaymentNotUsedValueBeforeSyncing, prepaymentNotUsedValueAfterSyncing);
         softAssert.assertAll();
 

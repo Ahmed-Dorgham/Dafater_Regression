@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -118,7 +119,7 @@ public class MainPage extends GeneralConstants {
 
     public String verifyTextContains(By by, String expected) {
         if (getWebElement(by).getText().contains(expected)) {
-            System.out.println("actual text is " + getWebElement(by).getText() + "and expected test is " + expected);
+          Allure.step("actual text is " + getWebElement(by).getText() + "and expected test is " + expected);
             return GeneralConstants.SUCCESS;
         } else
             return GeneralConstants.FAILED;

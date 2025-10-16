@@ -5,6 +5,7 @@ import Pages.DeliveryNoteListPage;
 import Pages.DeliveryNotePage;
 import Pages.HomePage;
 import Pages.LoginPage;
+import io.qameta.allure.Allure;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -25,7 +26,7 @@ public class ComparingDeliveryNotesTest extends BaseTest {
     private final String submittedStatus = "معتمد";
     private final String draftStatus = "مسودة";
 
-    @Test(priority = 1, enabled = false)
+    @Test(priority = 1, enabled = true)
     public void TC01_comparingNumberOfDeliveryNotes() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -43,14 +44,14 @@ public class ComparingDeliveryNotesTest extends BaseTest {
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
         deliveryNoteListPageObj = homePageObj.openDeliveryNoteListPage();
         String numberOfAllDeliveryNotesAfterSyncing = deliveryNoteListPageObj.getNumberOfAllDeliveryNotesAfterSyncing();
-        System.out.println("verify that number of all delivery notes which appear at dafater 5 is equal to number of all items at dafater 4 ");
+       Allure.step("verify that number of all delivery notes which appear at dafater 5 is equal to number of all items at dafater 4 ");
         softAssert.assertEquals(numberOfAllDeliveryNotesBeforeSyncing, numberOfAllDeliveryNotesAfterSyncing);
         softAssert.assertAll();
-        System.out.println(" number of delivery notes which appear at dafater 5 is " + numberOfAllDeliveryNotesAfterSyncing + " and number of all  delivery notes at dafater 4 is " + numberOfAllDeliveryNotesBeforeSyncing + " and this is correct ");
+       Allure.step(" number of delivery notes which appear at dafater 5 is " + numberOfAllDeliveryNotesAfterSyncing + " and number of all  delivery notes at dafater 4 is " + numberOfAllDeliveryNotesBeforeSyncing + " and this is correct ");
 
     }
 
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2, enabled = true,dependsOnMethods = "TC01_comparingNumberOfDeliveryNotes")
     public void TC02_comparingDeliveryNotesData() throws InterruptedException, IOException {
         String deliveryNoteStatusBeforeSyncing = null;
         String deliveryNoteStatusAfterSyncing = null;
@@ -79,7 +80,7 @@ public class ComparingDeliveryNotesTest extends BaseTest {
 
 
         if (deliveryNotePageObj.getDeliveryNoteStatus().contains(submittedStatus)) {
-            System.out.println("status of  delivery note is  " + submittedStatus);
+           Allure.step("status of  delivery note is  " + submittedStatus);
             deliveryNoteStatusBeforeSyncing = deliveryNotePageObj.getDeliveryNoteStatus();
             deliveryNoteIssueDateBeforeSyncing = deliveryNotePageObj.getDeliveryNoteIssueDate();
             customerNameAtDeliveryNoteBeforeSyncing = deliveryNotePageObj.getCustomerNameAtDeliveryNote();
@@ -96,7 +97,7 @@ public class ComparingDeliveryNotesTest extends BaseTest {
 
 
         if (deliveryNotePageObj.getDeliveryNoteStatus().contains(submittedStatus)) {
-            System.out.println("status of delivery note is  " + submittedStatus);
+           Allure.step("status of delivery note is  " + submittedStatus);
             deliveryNoteStatusAfterSyncing = deliveryNotePageObj.getSalesInvoiceStatusAtDafater_5();
 
             deliveryNoteIssueDateAfterSyncing = deliveryNotePageObj.getDeliveryNoteIssueDate();

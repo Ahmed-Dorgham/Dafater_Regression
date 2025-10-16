@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -24,8 +25,8 @@ public class DebitNotesListPage extends MainPage {
     private By closeFilterIcon = By.xpath("(//*[contains(@class,'filter-icon')])[2]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')] | //*[contains(@id,'freeze')]");
     By viewCompleteScreen = By.xpath("//*[@class='btn btn-secondary btn-sm ']");
-    By numberOfAllDebitNotesField = By.xpath("//*[contains(@class,'total-rows')] " +
-            "|//*[contains(@class,'list-count')]/span");
+    By numberOfAllDebitNotesField_4 = By.xpath("//*[contains(@class,'total-rows')]");
+    By numberOfAllDebitNotesField_5 = By.xpath("//*[contains(@class,'total-rows')]");
     By numberOfCustomersDebitsField = By.xpath("//h3[contains(text(),'ديون العملاء')]/following-sibling::div/span" +
             "|//*[contains(@class,'customer-lv-debits ')]");
     By numberOfPrepaymentNotUserField = By.xpath("//h3[contains(text(),'الدفعات المقدمة غير المستخدمة')]/following-sibling::div/span" +
@@ -38,7 +39,7 @@ public class DebitNotesListPage extends MainPage {
     private By sellingPriceListsOpt = By.xpath("//*[contains(@id,'sidebar-selling-price-lists')]");
 
     public ItemPage clickOnNewItemBtn() {
-        System.out.println("click on new item btn ");
+      Allure.step("click on new item btn ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
@@ -54,14 +55,14 @@ public class DebitNotesListPage extends MainPage {
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
 
-        System.out.println("actual text is " + getWebElement(itemNameAtViewList).getAttribute("title") + " and expected text is " + expected);
+      Allure.step("actual text is " + getWebElement(itemNameAtViewList).getAttribute("title") + " and expected text is " + expected);
         return getWebElement(itemNameAtViewList).getText();
     }
 
     public String getListAccountBeforeCreatingNewSalesInvoices() {
 
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
+      Allure.step("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 
@@ -69,33 +70,39 @@ public class DebitNotesListPage extends MainPage {
 
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
 
-        System.out.println("number of all items at list view before creating new item " + getWebElement(numberOfAllDebitNotesField).getText());
-        return getWebElement(numberOfAllDebitNotesField).getText();
+      Allure.step("number of all items at list view before creating new item " + getWebElement(numberOfAllDebitNotesField_4).getText());
+        return getWebElement(numberOfAllDebitNotesField_4).getText();
     }
 
     public String getNumberOfAllDebitNotesBeforeSyncing() throws InterruptedException {
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-
-        Thread.sleep(threadTimeOut);
-        System.out.println("number of all debit notes at list view before Syncing " + getWebElement(numberOfAllDebitNotesField).getText());
-        return getWebElement(numberOfAllDebitNotesField).getText();
+        //Thread.sleep(threadTimeOut);
+      Allure.step("number of all debit notes at list view before Syncing " + getWebElement(numberOfAllDebitNotesField_4).getText());
+        return getWebElement(numberOfAllDebitNotesField_4).getText();
     }
 
     public String getNumberOfAllDebitNotesAfterSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
-        //   Thread.sleep(threadTimeOut);
+
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementNotHaveSpecificText(numberOfAllDebitNotesField,"تحديث");
-        System.out.println("number of all debit notes at list view after Syncing " + getWebElement(numberOfAllDebitNotesField).getText());
-        return getWebElement(numberOfAllDebitNotesField).getText();
+        waitUntilElementNotHaveSpecificText(numberOfAllDebitNotesField_5,"تحديث");
+//        Thread.sleep(threadTimeOut);
+     if (getWebElement(numberOfAllDebitNotesField_5).getText().contains("من"))
+     {
+         Allure.step("number of all debit notes at list view after Syncing " + getWebElement(numberOfAllDebitNotesField_5).getText());
+
+         Allure.step("number of all debit notes at list view after Syncing 0 ");
+         return "0";
+     }
+     return getWebElement(numberOfAllDebitNotesField_5).getText();
     }
 
     public String getNumberOfSalesItemsBeforeCreatingNewItem() {
 
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales items at list view before creating new item " + getWebElement(numberOfCustomersDebitsField).getText());
+      Allure.step("number of sales items at list view before creating new item " + getWebElement(numberOfCustomersDebitsField).getText());
         return getWebElement(numberOfCustomersDebitsField).getText();
     }
 
@@ -103,7 +110,7 @@ public class DebitNotesListPage extends MainPage {
 
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
 //        Thread.sleep(threadTimeOut);
-        System.out.println("value of Customers debits at list view before Syncing " + getWebElement(numberOfCustomersDebitsField).getText());
+      Allure.step("value of Customers debits at list view before Syncing " + getWebElement(numberOfCustomersDebitsField).getText());
         return getWebElement(numberOfCustomersDebitsField).getText();
     }
 
@@ -111,14 +118,14 @@ public class DebitNotesListPage extends MainPage {
 
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
 //        Thread.sleep(threadTimeOut);
-        System.out.println("value of Customers Debits at list view after Syncing " + getWebElement(numberOfCustomersDebitsField).getText());
+      Allure.step("value of Customers Debits at list view after Syncing " + getWebElement(numberOfCustomersDebitsField).getText());
         return getWebElement(numberOfCustomersDebitsField).getText();
     }
 
     public String getNumberOfPurchaseItemsBeforeCreatingNewItem() {
 
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of purchase items at list view before creating new item " + getWebElement(numberOfPrepaymentNotUserField).getText());
+      Allure.step("number of purchase items at list view before creating new item " + getWebElement(numberOfPrepaymentNotUserField).getText());
         return getWebElement(numberOfPrepaymentNotUserField).getText();
     }
 
@@ -126,7 +133,7 @@ public class DebitNotesListPage extends MainPage {
 
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
 //        Thread.sleep(threadTimeOut);
-        System.out.println("value of prepayment not used at list view before Syncing " + getWebElement(numberOfPrepaymentNotUserField).getText());
+      Allure.step("value of prepayment not used at list view before Syncing " + getWebElement(numberOfPrepaymentNotUserField).getText());
         return getWebElement(numberOfPrepaymentNotUserField).getText();
     }
 
@@ -134,14 +141,14 @@ public class DebitNotesListPage extends MainPage {
 
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
 //        Thread.sleep(threadTimeOut);
-        System.out.println("value of prepayment Not Used at list view after Syncing " + getWebElement(numberOfPrepaymentNotUserField).getText());
+      Allure.step("value of prepayment Not Used at list view after Syncing " + getWebElement(numberOfPrepaymentNotUserField).getText());
         return getWebElement(numberOfPrepaymentNotUserField).getText();
     }
 
     public SellingPriceListsPage openSellingPriceLists() {
-        System.out.println("click on sales invoices tab ");
+      Allure.step("click on sales invoices tab ");
         getWebElement(salesInvoicesTab).click();
-        System.out.println("open prices list page  ");
+      Allure.step("open prices list page  ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(sellingPriceListsOpt, GeneralConstants.minTimeOut);
         getWebElement(sellingPriceListsOpt).click();
@@ -152,28 +159,28 @@ public class DebitNotesListPage extends MainPage {
     public String getNumberOfAllItemsAfterCreatingNewItem() {
 
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of all items at list view after creating new item " + getWebElement(numberOfAllDebitNotesField).getText());
-        return getWebElement(numberOfAllDebitNotesField).getText();
+      Allure.step("number of all items at list view after creating new item " + getWebElement(numberOfAllDebitNotesField_4).getText());
+        return getWebElement(numberOfAllDebitNotesField_4).getText();
     }
 
     public String getNumberOfSalesItemsAfterCreatingNewItem() {
 
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales items at list view after creating new item " + getWebElement(numberOfCustomersDebitsField).getText());
+      Allure.step("number of sales items at list view after creating new item " + getWebElement(numberOfCustomersDebitsField).getText());
         return getWebElement(numberOfCustomersDebitsField).getText();
     }
 
     public String getNumberOfPurchaseItemsAfterCreatingNewItem() {
 
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales items at list view after creating new item " + getWebElement(numberOfPrepaymentNotUserField).getText());
+      Allure.step("number of sales items at list view after creating new item " + getWebElement(numberOfPrepaymentNotUserField).getText());
         return getWebElement(numberOfPrepaymentNotUserField).getText();
     }
 
     public String getListAccountAfterCreatingNewSalesInvoices() {
 
         waitUntilElementToBePresent(debitNoteLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
+      Allure.step("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 }

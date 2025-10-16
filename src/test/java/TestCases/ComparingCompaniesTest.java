@@ -1,6 +1,7 @@
 package TestCases;
 
 import Pages.*;
+import io.qameta.allure.Allure;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -39,11 +40,11 @@ public class ComparingCompaniesTest extends BaseTest {
 
         String numberOfAllCompaniesAfterSyncing = companiesListPageOj.getNumberOfAllCompaniesAfterSyncing();
 
-        System.out.println("verify that number of all companies which appear at dafater 5 is equal to number of all companies at dafater 4 ");
+       Allure.step("verify that number of all companies which appear at dafater 5 is equal to number of all companies at dafater 4 ");
 
         Assert.assertEquals(numberOfAllTotalCompaniesBeforeSyncing, numberOfAllCompaniesAfterSyncing);
 
-        System.out.println(" number of companies which appear at dafater 5 is " + numberOfAllCompaniesAfterSyncing+" and number of all companies at dafater 4 is "+ numberOfAllTotalCompaniesBeforeSyncing +" and this is correct ");
+       Allure.step(" number of companies which appear at dafater 5 is " + numberOfAllCompaniesAfterSyncing+" and number of all companies at dafater 4 is "+ numberOfAllTotalCompaniesBeforeSyncing +" and this is correct ");
 
     }
 

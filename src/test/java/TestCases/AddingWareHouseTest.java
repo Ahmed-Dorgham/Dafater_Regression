@@ -1,6 +1,7 @@
 package TestCases;
 
 import Pages.*;
+import io.qameta.allure.Allure;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -25,13 +26,13 @@ public class AddingWareHouseTest extends BaseTest {
         wareHousePageObj = wareHouseListPageObj.clickOnNewWareHouseBtn();
         wareHousePageObj.enterValidDataIntoWareHousePage(wareHouseName);
         Assert.assertTrue(wareHousePageObj.getWareHouseName(wareHouseName).contains(wareHouseName));
-        System.out.println("Verify the name of current created item is existed at item list view ");
+        Allure.step("Verify the name of current created item is existed at item list view ");
         wareHouseListPageObj = wareHousePageObj.openWareHouseListPage();
         Assert.assertTrue(wareHouseListPageObj.getWareHouseNameAtViewList(wareHouseName).contains(wareHouseName));
         String numberOfWareHousesAfterCreatingNewOne = wareHouseListPageObj.getNumberOfAllWareHousesAfterCreatingNewWareHouse();
-        System.out.println("verify that number of all warehouse at list view will increase by one after creating new warehouse");
+        Allure.step("verify that number of all warehouse at list view will increase by one after creating new warehouse");
         Assert.assertFalse(numberOfAllWareHousesBeforeCreatingNewOne.contains(numberOfWareHousesAfterCreatingNewOne));
-        System.out.println(" number of all warehouses at list view before creating new one is " + numberOfAllWareHousesBeforeCreatingNewOne + " and after creating new one is  " + numberOfWareHousesAfterCreatingNewOne + " and this is correct ");
+        Allure.step(" number of all warehouses at list view before creating new one is " + numberOfAllWareHousesBeforeCreatingNewOne + " and after creating new one is  " + numberOfWareHousesAfterCreatingNewOne + " and this is correct ");
     }
 
 }

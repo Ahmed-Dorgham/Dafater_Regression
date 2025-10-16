@@ -1,6 +1,7 @@
 package TestCases;
 
 import Pages.*;
+import io.qameta.allure.Allure;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -41,13 +42,13 @@ public class ComparingCreditNotesTest extends BaseTest {
         String numberOfDraftCreditNotesAfterSyncing = creditNotesListPageObj.getNumberOfDraftCreditNotesAfterSyncing();
         String valueOfTotalInvoicesAtCreditNotesListViewAfterSyncing = creditNotesListPageObj.getValueOfTotalInvoicesAfterSyncing();
         String valueOfOutstandingAmountAtCreditNotesListViewAfterSyncing = creditNotesListPageObj.getValueOfOutstandingAmountAfterSyncing();
-        System.out.println("verify that number of all credit notes which appear at dafater 5 is equal to number of all credit notes at dafater 4");
+        Allure.step("verify that number of all credit notes which appear at dafater 5 is equal to number of all credit notes at dafater 4");
         softAssert.assertEquals(numberOfAllCreditNotesBeforeSyncing, numberOfAllCreditNotesAfterSyncing);
-        System.out.println("verify that number of draft credit notes which appear at dafater 5 is equal to number of draft credit notes at dafater 4");
+        Allure.step("verify that number of draft credit notes which appear at dafater 5 is equal to number of draft credit notes at dafater 4");
         softAssert.assertEquals(numberOfDraftCreditNotesBeforeSyncing, numberOfDraftCreditNotesAfterSyncing);
-        System.out.println("verify that value Of Total Invoices At Credit Notes List View which appear at dafater 5 is equal to value Of Total Invoices At Credit Notes List View at dafater 4");
+        Allure.step("verify that value Of Total Invoices At Credit Notes List View which appear at dafater 5 is equal to value Of Total Invoices At Credit Notes List View at dafater 4");
         softAssert.assertEquals(valueOfTotalInvoicesAtCreditNotesListViewBeforeSyncing, valueOfTotalInvoicesAtCreditNotesListViewAfterSyncing);
-        System.out.println("verify that value Of outstanding amount At Credit Notes List View which appear at dafater 5 is equal to value Of outstanding amount At Credit Notes List View at dafater 4");
+        Allure.step("verify that value Of outstanding amount At Credit Notes List View which appear at dafater 5 is equal to value Of outstanding amount At Credit Notes List View at dafater 4");
         softAssert.assertEquals(valueOfOutstandingAmountAtCreditNotesListViewBeforeSyncing, valueOfOutstandingAmountAtCreditNotesListViewAfterSyncing);
         softAssert.assertAll();
     }

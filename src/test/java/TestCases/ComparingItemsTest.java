@@ -1,6 +1,7 @@
 package TestCases;
 
 import Pages.*;
+import io.qameta.allure.Allure;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -53,14 +54,14 @@ public class ComparingItemsTest extends BaseTest {
         String numberOfAllItemsAfterSyncing = itemListPageObj.getNumberOfAllItemsAfterSyncing();
         String numberOfSalesItemsAfterSyncing = itemListPageObj.getNumberOfSalesItemsAfterSyncing();
         String numberOfPurchaseItemsAfterSyncing = itemListPageObj.getNumberOfPurchaseItemsAfterSyncing();
-        System.out.println("verify that number of all items which appear at dafater 5 is equal to number of all items at dafater 4 ");
+        Allure.step("verify that number of all items which appear at dafater 5 is equal to number of all items at dafater 4 ");
 
         softAssert.assertEquals(numberOfAllItemsBeforeSyncing, numberOfAllItemsAfterSyncing);
 
-        System.out.println("verify that number of sales items which appear at dafater 5 is equal to number of all items at dafater 4 ");
+        Allure.step("verify that number of sales items which appear at dafater 5 is equal to number of all items at dafater 4 ");
 
         softAssert.assertEquals(numberOfSalesItemsBeforeSyncing, numberOfSalesItemsAfterSyncing);
-        System.out.println("verify that number of purchase items which appear at dafater 5 is equal to number of all items at dafater 4 ");
+        Allure.step("verify that number of purchase items which appear at dafater 5 is equal to number of all items at dafater 4 ");
         softAssert.assertEquals(numberOfPurchaseItemsBeforeSyncing, numberOfPurchaseItemsAfterSyncing);
         softAssert.assertAll();
 

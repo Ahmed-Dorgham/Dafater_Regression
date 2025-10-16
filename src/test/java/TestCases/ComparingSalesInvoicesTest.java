@@ -5,6 +5,7 @@ import Pages.HomePage;
 import Pages.LoginPage;
 import Pages.SalesInvoicesListPage;
 import Pages.SalesInvoicesPage;
+import io.qameta.allure.Allure;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -54,10 +55,10 @@ public class ComparingSalesInvoicesTest extends BaseTest {
 
         String numberOfDraftSalesInvoicesAfterSyncing = salesInvoicesListPageObj.getNumberOfDraftInvoicesAfterSyncing();
         String totalAmountOfSalesInvoicesAfterSyncing = salesInvoicesListPageObj.getTotalAmountOfSalesInvoicesAfterSyncing();
-        System.out.println("verify that number of all draft sales invoices  which appear at dafater 5 is equal to number of all draft sales invoices at dafater 4 ");
+        Allure.step("verify that number of all draft sales invoices  which appear at dafater 5 is equal to number of all draft sales invoices at dafater 4 ");
 
         softAssert.assertEquals(numberOfDraftSalesInvoicesAfterSyncing, numberOfDraftSalesInvoicesBeforeSyncing);
-        System.out.println("verify that total amount of sales invoices at dafater 5 is equal to  total amount of sales invoices at dafater 4 ");
+        Allure.step("verify that total amount of sales invoices at dafater 5 is equal to  total amount of sales invoices at dafater 4 ");
 
         softAssert.assertEquals(totalAmountOfSalesInvoicesAfterSyncing, totalAmountOfSalesInvoicesBeforeSyncing);
         softAssert.assertAll();
@@ -90,7 +91,7 @@ public class ComparingSalesInvoicesTest extends BaseTest {
         salesInvoicesPageObj = salesInvoicesListPageObj.openFirstSalesInvoiceAtDafater_4();
 
         if (salesInvoicesPageObj.getSalesInvoiceStatus().contains(submittedStatus)) {
-            System.out.println("status of sales invoice  is  " + submittedStatus);
+            Allure.step("status of sales invoice  is  " + submittedStatus);
             salesInvoiceStatusBeforeSyncing = salesInvoicesPageObj.getSalesInvoiceStatus();
 
             salesInvoicePaidStatusBeforeSyncing = salesInvoicesPageObj.getSalesInvoicePaidStatus();
@@ -100,7 +101,7 @@ public class ComparingSalesInvoicesTest extends BaseTest {
             grandTotalValueBeforeSyncing = salesInvoicesPageObj.getGrandTotalValueAtSalesInvoice();
         }
         if (salesInvoicesPageObj.getSalesInvoiceStatus().contains(draftStatus)) {
-            System.out.println("status of sales invoice  is  " + draftStatus);
+            Allure.step("status of sales invoice  is  " + draftStatus);
             salesInvoiceStatusBeforeSyncing = salesInvoicesPageObj.getSalesInvoiceStatus();
             salesInvoicePaidStatusBeforeSyncing = salesInvoicesPageObj.getSalesInvoicePaidStatus();
              netTotalValueBeforeSyncing = salesInvoicesPageObj.getNetTotalValueAtSalesInvoice();
@@ -115,7 +116,7 @@ public class ComparingSalesInvoicesTest extends BaseTest {
 
 
         if (salesInvoicesPageObj.getSalesInvoiceStatus().contains("معتمد")) {
-            System.out.println("status of sales invoice  is  " + submittedStatus);
+            Allure.step("status of sales invoice  is  " + submittedStatus);
             salesInvoiceStatusAfterSyncing = salesInvoicesPageObj.getSalesInvoiceStatusAtDafater_5();
             salesInvoicePaidStatusAfterSyncing = salesInvoicesPageObj.getSalesInvoicePaidStatus();
             salesInvoiceIssueDateAfterSyncing = salesInvoicesPageObj.getSalesInvoiceIssueDate();
@@ -124,7 +125,7 @@ public class ComparingSalesInvoicesTest extends BaseTest {
             grandTotalValueAfterSyncing = salesInvoicesPageObj.getGrandTotalValueAtSalesInvoice();
         }
         if (salesInvoicesPageObj.getSalesInvoiceStatusAtDafater_5().contains(draftStatus)) {
-            System.out.println("status of sales invoice  is  " + draftStatus);
+            Allure.step("status of sales invoice  is  " + draftStatus);
             salesInvoiceStatusAfterSyncing = salesInvoicesPageObj.getSalesInvoiceStatusAtDafater_5();
             salesInvoicePaidStatusAfterSyncing = salesInvoicesPageObj.getSalesInvoicePaidStatus();
 
@@ -133,61 +134,61 @@ public class ComparingSalesInvoicesTest extends BaseTest {
         }
         if (salesInvoicesPageObj.getSalesInvoiceStatus().contains("معتمد")) {
 
-            System.out.println("verify that the status of sales invoice at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the status of sales invoice at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(salesInvoiceStatusBeforeSyncing.trim(), salesInvoiceStatusAfterSyncing.trim());
-            System.out.println(" status of sales invoice at dafater 5 is " + salesInvoiceStatusAfterSyncing + " and at dafater 4 is " + salesInvoiceStatusBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step(" status of sales invoice at dafater 5 is " + salesInvoiceStatusAfterSyncing + " and at dafater 4 is " + salesInvoiceStatusBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
-            System.out.println("verify that the paid status of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the paid status of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(salesInvoicePaidStatusBeforeSyncing.trim(), salesInvoicePaidStatusAfterSyncing.trim());
-            System.out.println(" paid status of sales invoice at dafater 5 is " + salesInvoicePaidStatusAfterSyncing + " and at dafater 4 is " + salesInvoicePaidStatusBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step(" paid status of sales invoice at dafater 5 is " + salesInvoicePaidStatusAfterSyncing + " and at dafater 4 is " + salesInvoicePaidStatusBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
-            System.out.println("verify that the issue date of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the issue date of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(salesInvoiceIssueDateBeforeSyncing.trim(), salesInvoiceIssueDateAfterSyncing.trim());
-            System.out.println(" issue date of sales invoice at dafater 5 is " + salesInvoiceIssueDateAfterSyncing + " and at dafater 4 is " + salesInvoiceIssueDateBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step(" issue date of sales invoice at dafater 5 is " + salesInvoiceIssueDateAfterSyncing + " and at dafater 4 is " + salesInvoiceIssueDateBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
-            System.out.println("verify that the customer name of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the customer name of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(customerNameAtSalesInvoiceBeforeSyncing.trim(), customerNameAtSalesInvoiceAfterSyncing.trim());
-            System.out.println(" customer name of sales invoice at dafater 5 is " + customerNameAtSalesInvoiceAfterSyncing + " and at dafater 4 is " + customerNameAtSalesInvoiceBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step(" customer name of sales invoice at dafater 5 is " + customerNameAtSalesInvoiceAfterSyncing + " and at dafater 4 is " + customerNameAtSalesInvoiceBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
-            System.out.println("verify that the net total value of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the net total value of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(netTotalValueBeforeSyncing.trim(), netTotalValueAfterSyncing.trim());
-            System.out.println(" net total of sales value invoice at dafater 5 is " + netTotalValueAfterSyncing + " and at dafater 4 is " + netTotalValueBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step(" net total of sales value invoice at dafater 5 is " + netTotalValueAfterSyncing + " and at dafater 4 is " + netTotalValueBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
-            System.out.println("verify that the grand total value of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the grand total value of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(grandTotalValueAfterSyncing.trim(), grandTotalValueBeforeSyncing.trim());
-            System.out.println("  grand total value of sales invoice at dafater 5 is " + grandTotalValueAfterSyncing + " and at dafater 4 is " + grandTotalValueBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step("  grand total value of sales invoice at dafater 5 is " + grandTotalValueAfterSyncing + " and at dafater 4 is " + grandTotalValueBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
             softAssert.assertAll();
         }
 
         if (salesInvoicesPageObj.getSalesInvoiceStatus().contains(draftStatus)) {
 
-            System.out.println("verify that the status of sales invoice at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the status of sales invoice at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(salesInvoiceStatusBeforeSyncing.trim(), salesInvoiceStatusAfterSyncing.trim());
-            System.out.println(" status of sales invoice at dafater 5 is " + salesInvoiceStatusAfterSyncing + " and at dafater 4 is " + salesInvoiceStatusBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step(" status of sales invoice at dafater 5 is " + salesInvoiceStatusAfterSyncing + " and at dafater 4 is " + salesInvoiceStatusBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
-            System.out.println("verify that the paid status of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the paid status of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(salesInvoicePaidStatusBeforeSyncing.trim(), salesInvoicePaidStatusAfterSyncing.trim());
-            System.out.println(" paid status of sales invoice at dafater 5 is " + salesInvoicePaidStatusAfterSyncing + " and at dafater 4 is " + salesInvoicePaidStatusBeforeSyncing);
+            Allure.step(" paid status of sales invoice at dafater 5 is " + salesInvoicePaidStatusAfterSyncing + " and at dafater 4 is " + salesInvoicePaidStatusBeforeSyncing);
 
-            System.out.println("                   ***********************************************************            ");
+            Allure.step("                   ***********************************************************            ");
 
-            System.out.println("verify that the net total value of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the net total value of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(netTotalValueBeforeSyncing.trim(), netTotalValueAfterSyncing.trim());
-            System.out.println(" net total of sales value invoice at dafater 5 is " + netTotalValueAfterSyncing + " and at dafater 4 is " + netTotalValueBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step(" net total of sales value invoice at dafater 5 is " + netTotalValueAfterSyncing + " and at dafater 4 is " + netTotalValueBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
-            System.out.println("verify that the grand total value of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
+            Allure.step("verify that the grand total value of sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + " at dafater 5 is same as exist at dafater 4 ");
             softAssert.assertEquals(grandTotalValueBeforeSyncing.trim(), grandTotalValueAfterSyncing.trim());
-            System.out.println("  grand total value of sales invoice at dafater 5 is " + grandTotalValueAfterSyncing + " and at dafater 4 is " + grandTotalValueBeforeSyncing);
-            System.out.println("                   ***********************************************************            ");
+            Allure.step("  grand total value of sales invoice at dafater 5 is " + grandTotalValueAfterSyncing + " and at dafater 4 is " + grandTotalValueBeforeSyncing);
+            Allure.step("                   ***********************************************************            ");
 
             softAssert.assertAll();
         }

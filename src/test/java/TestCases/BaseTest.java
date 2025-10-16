@@ -3,13 +3,21 @@ package TestCases;
 import GeneralConstants.GeneralConstants;
 import Pages.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.*;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class BaseTest extends MainPage {
 
@@ -21,7 +29,9 @@ public class BaseTest extends MainPage {
     public String homePageLink_4;
     public String websiteLink_5;
     public String homePageLink_5;
-
+    public static TakesScreenshot takesScreenshot;
+    String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
+    String dateTime = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
     public String companyName = "شركة مجموعة بسام مطشر عجمي السعدون للتجارة" ;
     public String companyIdValue = "123456789";
     public String taxIdValue = "123456789";
@@ -108,5 +118,23 @@ public class BaseTest extends MainPage {
             System.out.println("Driver quit executed");
         }
     }
+
+    public static File takeScreenshot(WebDriver driver, String testName) throws IOException {
+        Allure.step("capture ScreenShot...........");
+        String screenShotPath = System.getProperty("user.dir") + "\\ScreenShots\\" + testName + "_screenshot.png";
+        takesScreenshot = (TakesScreenshot) driver;
+        File src = takesScreenshot.getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(src, new File(screenShotPath));
+        return src;
+    }
+    @Step("After Method")
+    @AfterMethod
+    public void onTestFailure(ITestResult result) throws IOException {
+        if (result.getStatus() == ITestResult.FAILURE) {
+            File screenshot = takeScreenshot(driver, result.getName());
+            Allure.addAttachment("screenshot", FileUtils.openInputStream(screenshot));
+        }
+    }
+
 
 }

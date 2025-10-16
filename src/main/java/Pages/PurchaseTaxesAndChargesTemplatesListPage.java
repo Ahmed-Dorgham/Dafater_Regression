@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -31,7 +32,7 @@ public class PurchaseTaxesAndChargesTemplatesListPage extends MainPage {
             "|//*[@class='sales-invoice-lv-total-invoices ']");
 
     public SalesInvoicesPage clickOnNewSalesInvoiceBtn() {
-        System.out.println("click on new sales invoice btn ");
+        Allure.step("click on new sales invoice btn ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
@@ -45,28 +46,28 @@ public class PurchaseTaxesAndChargesTemplatesListPage extends MainPage {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
-        System.out.println("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("title") + " and expected text is " + expected);
+        Allure.step("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("title") + " and expected text is " + expected);
         return getWebElement(invoiceNameAtViewList).getText();
     }
 
     public String getListAccountBeforeCreatingNewSalesInvoices() {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
+        Allure.step("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 
     public String getListAccountBeforeSyncing() {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales invoices at list view before syncing " + getWebElement(listCount).getText());
+        Allure.step("number of sales invoices at list view before syncing " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 
     public String getNumberOfAllItemsBeforeSyncing() {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of draft sales invoices at list view before creating new sales invoices " + getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText());
+        Allure.step("number of draft sales invoices at list view before creating new sales invoices " + getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText());
         return getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText();
     }
 
@@ -75,7 +76,7 @@ public class PurchaseTaxesAndChargesTemplatesListPage extends MainPage {
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         waitUntilElementToBePresent(numberOfPurchaseTaxesAndChargesTemplates, GeneralConstants.minTimeOut);
-        System.out.println("number of draft Sales Taxes And Charges Templates at list view before syncing " + getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText());
+        Allure.step("number of draft Sales Taxes And Charges Templates at list view before syncing " + getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText());
         return getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText();
     }
 
@@ -83,7 +84,7 @@ public class PurchaseTaxesAndChargesTemplatesListPage extends MainPage {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-        System.out.println("total amount of sales invoices at list view before syncing " + getWebElement(totalAmountOfSalesInvoicesAtViewList).getText());
+        Allure.step("total amount of sales invoices at list view before syncing " + getWebElement(totalAmountOfSalesInvoicesAtViewList).getText());
         return getWebElement(totalAmountOfSalesInvoicesAtViewList).getText();
     }
 
@@ -91,14 +92,14 @@ public class PurchaseTaxesAndChargesTemplatesListPage extends MainPage {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-        System.out.println("total amount of sales invoices at list view after syncing " + getWebElement(totalAmountOfSalesInvoicesAtViewList).getText());
+        Allure.step("total amount of sales invoices at list view after syncing " + getWebElement(totalAmountOfSalesInvoicesAtViewList).getText());
         return getWebElement(totalAmountOfSalesInvoicesAtViewList).getText();
     }
 
     public String getNumberOfDraftInvoicesAfterCreatingNewDraftSalesInvoices() {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of draft sales invoices at list view after creating new sales invoices " + getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText());
+        Allure.step("number of draft sales invoices at list view after creating new sales invoices " + getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText());
         return getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText();
     }
 
@@ -108,14 +109,14 @@ public class PurchaseTaxesAndChargesTemplatesListPage extends MainPage {
         waitUntilElementToBePresent(numberOfPurchaseTaxesAndChargesTemplates, GeneralConstants.minTimeOut);
         waitUntilElementNotHaveSpecificText(numberOfPurchaseTaxesAndChargesTemplates, "تحديث");
 
-        System.out.println("number of Purchase Taxes And Charges Templates at list view after syncing " + getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText());
+        Allure.step("number of Purchase Taxes And Charges Templates at list view after syncing " + getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText());
         return getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText();
     }
 
     public String getListAccountAfterCreatingNewSalesInvoices() {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
+        Allure.step("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 

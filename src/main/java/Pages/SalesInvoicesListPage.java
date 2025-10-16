@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.apache.poi.ss.formula.functions.T;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -39,7 +40,7 @@ public class SalesInvoicesListPage extends MainPage {
     By closeFilter = By.xpath("//*[contains(@class,'btn btn-default btn-xs remove-filter')]");
 
     public SalesInvoicesPage clickOnNewSalesInvoiceBtn() {
-        System.out.println("click on new sales invoice btn ");
+        Allure.step("click on new sales invoice btn ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
@@ -53,28 +54,28 @@ public class SalesInvoicesListPage extends MainPage {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
-        System.out.println("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("title") + " and expected text is " + expected);
+        Allure.step("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("title") + " and expected text is " + expected);
         return getWebElement(invoiceNameAtViewList).getText();
     }
 
     public String getListAccountBeforeCreatingNewSalesInvoices() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
+        Allure.step("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 
     public String getListAccountBeforeSyncing() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales invoices at list view before syncing " + getWebElement(listCount).getText());
+        Allure.step("number of sales invoices at list view before syncing " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 
     public String getNumberOfAllItemsBeforeSyncing() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of draft sales invoices at list view before creating new sales invoices " + getWebElement(numberOfDraftInvoices).getText());
+        Allure.step("number of draft sales invoices at list view before creating new sales invoices " + getWebElement(numberOfDraftInvoices).getText());
         return getWebElement(numberOfDraftInvoices).getText();
     }
 
@@ -82,7 +83,7 @@ public class SalesInvoicesListPage extends MainPage {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-        System.out.println("number of draft sales invoices at list view before syncing " + getWebElement(numberOfDraftInvoices).getText());
+        Allure.step("number of draft sales invoices at list view before syncing " + getWebElement(numberOfDraftInvoices).getText());
         return getWebElement(numberOfDraftInvoices).getText();
     }
 
@@ -92,11 +93,11 @@ public class SalesInvoicesListPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         Thread.sleep(threadTimeOut);
         if (tryToGetWebElement(closeFilter) == GeneralConstants.SUCCESS) {
-            System.out.println("close filter ");
+            Allure.step("close filter ");
             getWebElement(closeFilter).click();
         }
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        System.out.println("name of first sales invoice at list view at dafater 4  >> " + getWebElement(firstSalesInvoice).getText());
+        Allure.step("name of first sales invoice at list view at dafater 4  >> " + getWebElement(firstSalesInvoice).getText());
         return getWebElement(firstSalesInvoice).getText();
     }
 
@@ -104,7 +105,7 @@ public class SalesInvoicesListPage extends MainPage {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-        System.out.println(" open First Sales Invoice At Dafater_4 ");
+        Allure.step(" open First Sales Invoice At Dafater_4 ");
         getWebElement(firstSalesInvoice).click();
         return new SalesInvoicesPage(driver);
     }
@@ -113,7 +114,7 @@ public class SalesInvoicesListPage extends MainPage {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-        System.out.println(" open same Sales Invoice At Dafater_5  ");
+        Allure.step(" open same Sales Invoice At Dafater_5  ");
         getWebElement(firstSalesInvoice).click();
         return new SalesInvoicesPage(driver);
     }
@@ -122,7 +123,7 @@ public class SalesInvoicesListPage extends MainPage {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-        System.out.println("total amount of sales invoices at list view before syncing " + getWebElement(totalAmountOfSalesInvoicesAtViewList).getText());
+        Allure.step("total amount of sales invoices at list view before syncing " + getWebElement(totalAmountOfSalesInvoicesAtViewList).getText());
         return getWebElement(totalAmountOfSalesInvoicesAtViewList).getText();
     }
 
@@ -130,28 +131,28 @@ public class SalesInvoicesListPage extends MainPage {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-        System.out.println("total amount of sales invoices at list view after syncing " + getWebElement(totalAmountOfSalesInvoicesAtViewList).getText());
+        Allure.step("total amount of sales invoices at list view after syncing " + getWebElement(totalAmountOfSalesInvoicesAtViewList).getText());
         return getWebElement(totalAmountOfSalesInvoicesAtViewList).getText();
     }
 
     public String getNumberOfDraftInvoicesAfterCreatingNewDraftSalesInvoices() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of draft sales invoices at list view after creating new sales invoices " + getWebElement(numberOfDraftInvoices).getText());
+        Allure.step("number of draft sales invoices at list view after creating new sales invoices " + getWebElement(numberOfDraftInvoices).getText());
         return getWebElement(numberOfDraftInvoices).getText();
     }
 
     public String getNumberOfDraftInvoicesAfterSyncing() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of draft sales invoices at list view after syncing " + getWebElement(numberOfDraftInvoices).getText());
+        Allure.step("number of draft sales invoices at list view after syncing " + getWebElement(numberOfDraftInvoices).getText());
         return getWebElement(numberOfDraftInvoices).getText();
     }
 
     public String searchAboutSpecificSalesInvoice(String invoiceName) throws InterruptedException {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        System.out.println(" search about " + invoiceName);
+        Allure.step(" search about " + invoiceName);
         waitUntilElementToBePresent(searchIcon, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(searchIcon).click();
@@ -160,11 +161,11 @@ public class SalesInvoicesListPage extends MainPage {
 //        getWebElement(reloadIcon).click();
         Thread.sleep(threadTimeOut);
         if (tryToGetWebElement(firstSalesInvoice) == GeneralConstants.SUCCESS) {
-            System.out.println(" open sales invoice which appear after searching");
+            Allure.step(" open sales invoice which appear after searching");
             getWebElement(firstSalesInvoice).click();
             return GeneralConstants.SUCCESS;
         } else {
-            System.out.println(" error happen while syncing this sales invoice " + invoiceName + " from dafater 4 to dafater 5 and not synced successfully   ");
+            Allure.step(" error happen while syncing this sales invoice " + invoiceName + " from dafater 4 to dafater 5 and not synced successfully   ");
             return GeneralConstants.FAILED;
         }
 
@@ -173,7 +174,7 @@ public class SalesInvoicesListPage extends MainPage {
     public String getListAccountAfterCreatingNewSalesInvoices() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
+        Allure.step("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 

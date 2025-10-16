@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -38,6 +39,6 @@ public class LoginPage extends MainPage {
         driver.get(loginPageLink_5);
 
 
-        System.out.println("switch to Dafater 5 ");
+        Allure.step("switch to Dafater 5 ");
     }
 }

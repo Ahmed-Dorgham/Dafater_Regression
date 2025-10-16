@@ -7,7 +7,7 @@ public class GeneralConstants {
     public final static int globalTimeOut = 360;
     public final static int minTimeOut = 40;
     public final static int freezeTimeOut = 20;
-    public final static int threadTimeOut = 6000;
+    public final static int threadTimeOut = 8000;
     public final static int tryTimeOut = 5;
     public final static int randomNum = (int) (Math.random() * 10000);
     public final static int registerSheetColumnsNum = 14;

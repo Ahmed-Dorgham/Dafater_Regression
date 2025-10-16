@@ -1,6 +1,7 @@
 package TestCases;
 
 import Pages.*;
+import io.qameta.allure.Allure;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -55,13 +56,13 @@ public class PurchaseInvoicesTest extends BaseTest {
         itemPageObj = itemListPageObj.clickOnNewItemBtn();
         itemPageObj.enterValidDataIntoItemPage(itemCode);
         Assert.assertTrue(itemPageObj.getItemName(itemCode).contains(itemCode));
-        System.out.println("Verify the name of current created item is existed at item list view ");
+        Allure.step("Verify the name of current created item is existed at item list view ");
         itemListPageObj = itemPageObj.openItemListPage();
         Assert.assertTrue(itemListPageObj.getItemNameAtViewList(itemCode).contains(itemCode));
 //        String numberOfItemsAfterCreatingNewOne = itemListPageObj.getNumberOfAllItemsAfterCreatingNewItem();
-//        System.out.println("verify that number of all items at list view will increase by one after creating new item");
+//        Allure.step("verify that number of all items at list view will increase by one after creating new item");
 //        Assert.assertFalse(numberOfAllItemsBeforeCreatingNewOne.contains(numberOfItemsAfterCreatingNewOne));
-//        System.out.println(" number of all items at list view before creating new one is " + numberOfAllItemsBeforeCreatingNewOne + " and after creating new one is  " + numberOfItemsAfterCreatingNewOne + " and this is correct ");
+//        Allure.step(" number of all items at list view before creating new one is " + numberOfAllItemsBeforeCreatingNewOne + " and after creating new one is  " + numberOfItemsAfterCreatingNewOne + " and this is correct ");
         sellingPriceListsPageObj = itemListPageObj.openSellingPriceLists();
         standardSellingListPageObj = sellingPriceListsPageObj.openStandardSellingList();
         itemsPricesTablePageObj = standardSellingListPageObj.openItemsPricesTable();
@@ -76,12 +77,12 @@ public class PurchaseInvoicesTest extends BaseTest {
         String purchaseInvoiceName = purchaseInvoicesPageObj.getInvoiceName(invoiceName);
         Assert.assertTrue(purchaseInvoiceName.contains(invoiceName));
         purchaseInvoicesListPageObj = purchaseInvoicesPageObj.goToPurchaseListView();
-        System.out.println("Verify the name of current created purchase invoice is existed at purchase  invoice list view ");
+        Allure.step("Verify the name of current created purchase invoice is existed at purchase  invoice list view ");
         Assert.assertTrue(purchaseInvoicesListPageObj.getInvoiceNameAtViewList(purchaseInvoiceName).contains(purchaseInvoiceName));
         String numberOfPurchaseInvoicesAfterCreatingNewOne = purchaseInvoicesListPageObj.getListAccountAfterCreatingNewSalesInvoices();
-        System.out.println("verify that number of purchase invoices at list view will increase by one after creating new purchase invoice ");
+        Allure.step("verify that number of purchase invoices at list view will increase by one after creating new purchase invoice ");
         Assert.assertFalse(numberOfPurchaseInvoicesBeforeCreatingNewOne.contains(numberOfPurchaseInvoicesAfterCreatingNewOne));
-        System.out.println("number of purchase invoices at list view before creating new one is " + numberOfPurchaseInvoicesBeforeCreatingNewOne + " and after creating new one is  " + numberOfPurchaseInvoicesAfterCreatingNewOne + " and this is correct ");
+        Allure.step("number of purchase invoices at list view before creating new one is " + numberOfPurchaseInvoicesBeforeCreatingNewOne + " and after creating new one is  " + numberOfPurchaseInvoicesAfterCreatingNewOne + " and this is correct ");
     }
 
     @Test(priority = 2, enabled = true)
@@ -94,10 +95,10 @@ public class PurchaseInvoicesTest extends BaseTest {
         purchaseInvoicesPageObj = purchaseOrdersPageObj.createNewPurchaseInvoiceFromSalesOrder();
         purchaseInvoicesPageObj.saveAndSubmitPurchaseInvoiceFromPurchaseOrder();
         String purchaseOrderStatusAfterCreatingRelatedPurchaseInvoice = purchaseOrdersPageObj.getPurchaseOrderStatusAfterCreatingRelatedPurchaseInvoice();
-        System.out.println("verify the status of purchase order will change after creating purchase invoice from this purchase order ");
+        Allure.step("verify the status of purchase order will change after creating purchase invoice from this purchase order ");
         Assert.assertFalse(purchaseOrderStatusBeforeCreatingRelatedSalesInvoice.contains(purchaseOrderStatusAfterCreatingRelatedPurchaseInvoice));
 
-        System.out.println(" status of purchase order  before creating related purchase invoice is " + purchaseOrderStatusBeforeCreatingRelatedSalesInvoice + " and after creating related one is  " + purchaseOrderStatusAfterCreatingRelatedPurchaseInvoice + " and this is correct ");
+        Allure.step(" status of purchase order  before creating related purchase invoice is " + purchaseOrderStatusBeforeCreatingRelatedSalesInvoice + " and after creating related one is  " + purchaseOrderStatusAfterCreatingRelatedPurchaseInvoice + " and this is correct ");
     }
 
     @Test(priority = 3, enabled = true)
@@ -122,13 +123,13 @@ public class PurchaseInvoicesTest extends BaseTest {
         String purchaseInvoiceName = purchaseInvoicesPageObj.getInvoiceNameForPayment(invoiceName);
      paymentPageObj = purchaseInvoicesPageObj.createPaymentForPurchaseInvoice();
         String invoiceNameAtPaymentPage = paymentPageObj.getInvoiceNameFromPayment();
-        System.out.println("verify that payment will include the same name of it's related purchase invoice  ");
+        Allure.step("verify that payment will include the same name of it's related purchase invoice  ");
         Assert.assertTrue(invoiceNameAtPaymentPage.contains(purchaseInvoiceName));
-        System.out.println("the payment page include purchase invoice " + invoiceNameAtPaymentPage + " and this is the same name of sales invoice which created a while " + purchaseInvoiceName);
+        Allure.step("the payment page include purchase invoice " + invoiceNameAtPaymentPage + " and this is the same name of sales invoice which created a while " + purchaseInvoiceName);
         paymentPageObj.saveAndSubmitPayment(randomNumber);
         Assert.assertTrue(paymentPageObj.getInvoiceStatus(submittedStatus).contains(submittedStatus));
         purchaseInvoicesPageObj = paymentPageObj.openPaidPurchaseInvoice();
-        System.out.println("verify the payment status of related purchase invoice will be changed to paid");
+        Allure.step("verify the payment status of related purchase invoice will be changed to paid");
         Assert.assertTrue(purchaseInvoicesPageObj.getPurchaseInvoicePaymentStatus(paidStatus).contains(paidStatus));
     }
 
@@ -142,9 +143,9 @@ public class PurchaseInvoicesTest extends BaseTest {
         purchaseInvoicesPageObj = purchaseReceiptPageObj.createNewPurchaseInvoiceFromPurchaseReceipt();
         purchaseInvoicesPageObj.saveAndSubmitPurchaseInvoiceFromPurchaseReceipt();
         String purchaseReceiptStatusAfterCreatingRelatedPurchaseInvoice = purchaseReceiptPageObj.getPurchaseReceiptStatusAfterCreatingRelatedPurchaseInvoice();
-        System.out.println("verify the status of purchase receipt will change after creating purchase invoice from this purchase receipt ");
+        Allure.step("verify the status of purchase receipt will change after creating purchase invoice from this purchase receipt ");
         Assert.assertFalse(purchaseReceiptStatusBeforeCreatingRelatedSalesInvoice.contains(purchaseReceiptStatusAfterCreatingRelatedPurchaseInvoice));
-        System.out.println(" status of purchase receipt  before creating related purchase invoice is " + purchaseReceiptStatusBeforeCreatingRelatedSalesInvoice + " and after creating related one is  " + purchaseReceiptStatusAfterCreatingRelatedPurchaseInvoice + " and this is correct ");
+        Allure.step(" status of purchase receipt  before creating related purchase invoice is " + purchaseReceiptStatusBeforeCreatingRelatedSalesInvoice + " and after creating related one is  " + purchaseReceiptStatusAfterCreatingRelatedPurchaseInvoice + " and this is correct ");
 
     }
 
@@ -164,20 +165,20 @@ public class PurchaseInvoicesTest extends BaseTest {
         String totalAmountForPurchaseInvoice = purchaseInvoicesPageObj.getTotalAmountOfPurchaseInvoice();
         generalLedgerReportPageObj = purchaseInvoicesPageObj.openGeneralLedgerReport();
         String valueAtDefaultCreditAccountAtGL = generalLedgerReportPageObj.getValueAtDefaultCreditAccountFromGL(generalLedgerReportPageObj.getDefaultCreditAccountFromGL(defaultCreditAccountAtCompanySettings));
-        System.out.println("verify that Default Credit Account At GL has the same value of total Amount For purchase Invoice");
+        Allure.step("verify that Default Credit Account At GL has the same value of total Amount For purchase Invoice");
         Assert.assertTrue(valueAtDefaultCreditAccountAtGL.contains(grandTotalAmountForPurchaseInvoice));
-        System.out.println(" Default Credit Account At GL report has " + valueAtDefaultCreditAccountAtGL + " and  value of total Amount For Purchase Invoice is  " + grandTotalAmountForPurchaseInvoice + " and this is correct ");
+        Allure.step(" Default Credit Account At GL report has " + valueAtDefaultCreditAccountAtGL + " and  value of total Amount For Purchase Invoice is  " + grandTotalAmountForPurchaseInvoice + " and this is correct ");
         String valueAtDefaultExpenseAccountAtGL = generalLedgerReportPageObj.getValueAtDefaultExpenseAccountFromGL(generalLedgerReportPageObj.getDefaultExpenseAccountFromGL(defaultExpenseAccountAtCompanySettings));
-        System.out.println("verify that Default expense Account At GL has the same value of total Amount For purchase Invoice");
+        Allure.step("verify that Default expense Account At GL has the same value of total Amount For purchase Invoice");
         Assert.assertTrue(valueAtDefaultExpenseAccountAtGL.contains(totalAmountForPurchaseInvoice));
-        System.out.println(" Default expense Account At GL report has " + valueAtDefaultExpenseAccountAtGL + " and  value of  total Amount For purchase Invoice is  " + totalAmountForPurchaseInvoice + " and this is correct ");
+        Allure.step(" Default expense Account At GL report has " + valueAtDefaultExpenseAccountAtGL + " and  value of  total Amount For purchase Invoice is  " + totalAmountForPurchaseInvoice + " and this is correct ");
         String closingDebitValueAtGl =  generalLedgerReportPageObj.getClosingDebitValueForInvoiceAtGL();
         String closingCreditValueAtGl =  generalLedgerReportPageObj.getClosingCreditValueForInvoiceAtGL();
-        System.out.println("verify that closing values ( debit & credit )  at general ledger are equals to  grand total amount for purchase invoice" );
+        Allure.step("verify that closing values ( debit & credit )  at general ledger are equals to  grand total amount for purchase invoice" );
         Assert.assertTrue(closingDebitValueAtGl.contains(grandTotalAmountForPurchaseInvoice));
         Assert.assertTrue(closingCreditValueAtGl.contains(grandTotalAmountForPurchaseInvoice));
-        System.out.println(" closing debit value at general ledger is "+closingDebitValueAtGl+"  and grand total amount for purchase invoice is " + grandTotalAmountForPurchaseInvoice +" and this is correct " );
-        System.out.println(" closing credit value at general ledger is "+closingCreditValueAtGl+"   and grand total amount for purchase invoice is " + grandTotalAmountForPurchaseInvoice +" and this is correct " );
+        Allure.step(" closing debit value at general ledger is "+closingDebitValueAtGl+"  and grand total amount for purchase invoice is " + grandTotalAmountForPurchaseInvoice +" and this is correct " );
+        Allure.step(" closing credit value at general ledger is "+closingCreditValueAtGl+"   and grand total amount for purchase invoice is " + grandTotalAmountForPurchaseInvoice +" and this is correct " );
 
 
 

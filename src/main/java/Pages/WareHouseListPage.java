@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -38,7 +39,7 @@ public class WareHouseListPage extends MainPage {
     private By sellingPriceListsOpt = By.xpath("//*[contains(@id,'sidebar-selling-price-lists')]");
 
     public WareHousePage clickOnNewWareHouseBtn() {
-        System.out.println("click on new warehouse btn ");
+     Allure.step("click on new warehouse btn ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(wareHouseLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
@@ -53,14 +54,14 @@ public class WareHouseListPage extends MainPage {
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
 
-        System.out.println("actual text is " + getWebElement(wareHouseNameAtViewList).getAttribute("title") + " and expected text is " + expected);
+     Allure.step("actual text is " + getWebElement(wareHouseNameAtViewList).getAttribute("title") + " and expected text is " + expected);
         return getWebElement(wareHouseNameAtViewList).getText();
     }
 
     public String getNumberOfAllWareHousesBeforeSyncing() {
 
         waitUntilElementToBePresent(wareHouseLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of warehouse at list view before Syncing " + getWebElement(totalWareHouses).getText());
+     Allure.step("number of warehouse at list view before Syncing " + getWebElement(totalWareHouses).getText());
         return getWebElement(totalWareHouses).getText();
     }
     public String getNumberOfAllWareHousesAfterSyncing() {
@@ -68,14 +69,14 @@ public class WareHouseListPage extends MainPage {
         waitUntilElementToBePresent(wareHouseLabel, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
         waitUntilElementNotHaveSpecificText(listCount,"تحديث");
-        System.out.println("number of warehouse at list view after Syncing " + getWebElement(totalWareHouses).getText());
+     Allure.step("number of warehouse at list view after Syncing " + getWebElement(totalWareHouses).getText());
         return getWebElement(totalWareHouses).getText();
     }
     public String getNumberOfAllWareHouseBeforeCreatingNewWareHouse() {
 
         waitUntilElementToBePresent(wareHouseLabel, GeneralConstants.minTimeOut);
         waitUntilElementNotHaveSpecificText(listCount, "تحديث");
-        System.out.println("number of all warehouses at list view before creating new warehouse " + getWebElement(listCount).getText());
+     Allure.step("number of all warehouses at list view before creating new warehouse " + getWebElement(listCount).getText());
 
         return getWebElement(listCount).getText();
     }
@@ -83,21 +84,21 @@ public class WareHouseListPage extends MainPage {
 //    public String getNumberOfSalesItemsBeforeCreatingNewItem() {
 //
 //        waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
-//        System.out.println("number of sales items at list view before creating new item " + getWebElement(numberOfSalesItemsField).getText());
+//     Allure.step("number of sales items at list view before creating new item " + getWebElement(numberOfSalesItemsField).getText());
 //        return getWebElement(numberOfSalesItemsField).getText();
 //    }
 //
 //    public String getNumberOfPurchaseItemsBeforeCreatingNewItem() {
 //
 //        waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
-//        System.out.println("number of purchase items at list view before creating new item " + getWebElement(numberOfPurchaseItemsField).getText());
+//     Allure.step("number of purchase items at list view before creating new item " + getWebElement(numberOfPurchaseItemsField).getText());
 //        return getWebElement(numberOfPurchaseItemsField).getText();
 //    }
 
     public SellingPriceListsPage openSellingPriceLists() {
-        System.out.println("click on sales invoices tab ");
+     Allure.step("click on sales invoices tab ");
         getWebElement(salesInvoicesTab).click();
-        System.out.println("open prices list page  ");
+     Allure.step("open prices list page  ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(sellingPriceListsOpt, GeneralConstants.minTimeOut);
         getWebElement(sellingPriceListsOpt).click();
@@ -108,7 +109,7 @@ public class WareHouseListPage extends MainPage {
     public String getNumberOfAllWareHousesAfterCreatingNewWareHouse() {
 
         waitUntilElementToBePresent(wareHouseLabel, GeneralConstants.minTimeOut);
-        System.out.println("number of all warehouse at list view after creating new warehouse " + getWebElement(listCount).getText());
+     Allure.step("number of all warehouse at list view after creating new warehouse " + getWebElement(listCount).getText());
         getWebElement(listCount).click();
         return getWebElement(listCount).getText();
     }
@@ -116,21 +117,21 @@ public class WareHouseListPage extends MainPage {
 //    public String getNumberOfSalesItemsAfterCreatingNewItem() {
 //
 //        waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
-//        System.out.println("number of sales items at list view after creating new item " + getWebElement(numberOfSalesItemsField).getText());
+//     Allure.step("number of sales items at list view after creating new item " + getWebElement(numberOfSalesItemsField).getText());
 //        return getWebElement(numberOfSalesItemsField).getText();
 //    }
 //
 //    public String getNumberOfPurchaseItemsAfterCreatingNewItem() {
 //
 //        waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
-//        System.out.println("number of sales items at list view after creating new item " + getWebElement(numberOfPurchaseItemsField).getText());
+//     Allure.step("number of sales items at list view after creating new item " + getWebElement(numberOfPurchaseItemsField).getText());
 //        return getWebElement(numberOfPurchaseItemsField).getText();
 //    }
 //
 //    public String getListAccountAfterCreatingNewSalesInvoices() {
 //
 //        waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
-//        System.out.println("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
+//     Allure.step("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
 //        return getWebElement(listCount).getText();
 //    }
 //    public void enterValidDataIntoMainData (String vmUrl , String apiKey , String secretKey)

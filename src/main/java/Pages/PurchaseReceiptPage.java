@@ -1,6 +1,7 @@
 package Pages;
 
 import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -49,33 +50,33 @@ public class PurchaseReceiptPage extends MainPage {
 
     public void enterValidDataIntoPurchaseOrderPage() throws InterruptedException {
         waitUntilElementVisibility(newPurchaseReceiptTitle, GeneralConstants.minTimeOut);
-        System.out.println("select  supplier ");
+       Allure.step("select  supplier ");
         getWebElement(supplierFieldPurchaseOrder).click();
         waitUntilElementVisibility(suppliersListPurchaseOrder, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(supplierOptPurchaseOrder, GeneralConstants.minTimeOut);
         getWebElement(supplierOptPurchaseOrder).click();
-//        System.out.println("enter dues date  ");
+//       Allure.step("enter dues date  ");
 //        waitUntilElementVisibility(dueDateField, GeneralConstants.minTimeOut);
 //        getWebElement(dueDateField).sendKeys(dueDate);
-        System.out.println("Scroll down to item field ");
+       Allure.step("Scroll down to item field ");
         scrollToSpeceficElement(itemCodeField);
 //        Thread.sleep(6000);
-        System.out.println(" select item  ");
+       Allure.step(" select item  ");
         clickByActions(itemCodeField);
         waitUntilElementVisibility(itemCodeInputField, GeneralConstants.minTimeOut);
         getWebElement(itemCodeInputField).sendKeys("item");
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
         scrollToSpeceficElement(itemOpt);
         getWebElement(itemOpt).click();
-//        System.out.println("unselect update stock opt");
+//       Allure.step("unselect update stock opt");
 //        getWebElement(updateStockBtn).click();
 //        Thread.sleep(6000);
-        System.out.println("scroll up to save and submit btn ");
+       Allure.step("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
-        System.out.println("save and submit purchase receipt ");
+       Allure.step("save and submit purchase receipt ");
         getWebElement(saveAndSubmitBtn).click();
         //Thread.sleep(10000);
-        System.out.println("click on yes btn ");
+       Allure.step("click on yes btn ");
         waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
         getWebElement(yesBtn).click();
 
@@ -83,14 +84,14 @@ public class PurchaseReceiptPage extends MainPage {
 
     public void enterValidDataIntoPurchaseReceiptPage() throws InterruptedException {
         waitUntilElementVisibility(newPurchaseReceiptTitle, GeneralConstants.minTimeOut);
-        System.out.println("select  supplier ");
+       Allure.step("select  supplier ");
         getWebElement(supplierFieldPurchaseOrder).click();
         waitUntilElementVisibility(suppliersListPurchaseOrder, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(supplierOptPurchaseOrder, GeneralConstants.minTimeOut);
         getWebElement(supplierOptPurchaseOrder).click();
-        System.out.println("Scroll down to item field ");
+       Allure.step("Scroll down to item field ");
         scrollToSpeceficElement(itemCodeField);
-        System.out.println(" select item  ");
+       Allure.step(" select item  ");
         waitUntilElementToBePresent(itemCodeField, GeneralConstants.minTimeOut);
 //        clickByActions(itemCodeField);
         getWebElement(itemCodeField).click();
@@ -103,40 +104,40 @@ public class PurchaseReceiptPage extends MainPage {
 
         waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
         clickByActions(selectedItem);
-        System.out.println("scroll up to save and submit btn ");
+       Allure.step("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
-        System.out.println("save and submit purchase receipt ");
+       Allure.step("save and submit purchase receipt ");
         getWebElement(saveAndSubmitBtn).click();
         //Thread.sleep(10000);
-        System.out.println("click on yes btn ");
+       Allure.step("click on yes btn ");
         waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
         getWebElement(yesBtn).click();
 
     }
 
     public String getPurchaseOrderStatusBeforeCreatingRelatedPurchaseInvoice() {
-//        System.out.println("Verify the status of sales invoice  ");
+//       Allure.step("Verify the status of sales invoice  ");
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
-        System.out.println("status of purchase order before creating related purchase invoices " + getWebElement(purchaseOrderStatus).getText());
+       Allure.step("status of purchase order before creating related purchase invoices " + getWebElement(purchaseOrderStatus).getText());
         return getWebElement(purchaseOrderStatus).getText();
 
     }
 
     public String getPurchaseReceiptStatusBeforeCreatingRelatedPurchaseInvoice() {
-//        System.out.println("Verify the status of sales invoice  ");
+//       Allure.step("Verify the status of sales invoice  ");
         waitUntilElementToBePresent(cancelBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
 
         if (tryToGetWebElement(closeIcon) == GeneralConstants.SUCCESS) {
             getWebElement(closeIcon).click();
         }
-        System.out.println("status of purchase receipt before creating related purchase invoices " + getWebElement(purchaseReceiptStatus).getText());
+       Allure.step("status of purchase receipt before creating related purchase invoices " + getWebElement(purchaseReceiptStatus).getText());
         return getWebElement(purchaseReceiptStatus).getText();
 
     }
 
     public PurchaseInvoicesPage createNewPurchaseInvoiceFromPurchaseReceipt() {
-        System.out.println("click on create btn");
+       Allure.step("click on create btn");
         waitUntilElementVisibility(createBtn, GeneralConstants.minTimeOut);
         if (tryToGetWebElement(closeIcon) == GeneralConstants.SUCCESS) {
             getWebElement(closeIcon).click();
@@ -144,7 +145,7 @@ public class PurchaseReceiptPage extends MainPage {
 
 
         getWebElement(createBtn).click();
-        System.out.println("click on purchase invoice");
+       Allure.step("click on purchase invoice");
         waitUntilElementVisibility(purchaseInvoiceChoice, GeneralConstants.minTimeOut);
         getWebElement(purchaseInvoiceChoice).click();
         return new PurchaseInvoicesPage(driver);
@@ -163,7 +164,7 @@ public class PurchaseReceiptPage extends MainPage {
         getWebElement(wareHouseTab).click();
 //        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
 //        getWebElement(salesInvoicesTab).click();
-        System.out.println("click on purchase receipt option");
+       Allure.step("click on purchase receipt option");
         waitUntilElementToBePresent(purchaseReceiptOpt, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
 //        Thread.sleep(9000);
@@ -172,10 +173,10 @@ public class PurchaseReceiptPage extends MainPage {
 
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
         driver.navigate().refresh();
-        System.out.println("open last created purchase receipt ");
+       Allure.step("open last created purchase receipt ");
         getWebElement(purchaseReceiptNameAtViewList).click();
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
-        System.out.println("status of purchase receipt after creating related purchase invoices " + getWebElement(purchaseReceiptCompletedStatus).getText());
+       Allure.step("status of purchase receipt after creating related purchase invoices " + getWebElement(purchaseReceiptCompletedStatus).getText());
         return getWebElement(purchaseReceiptCompletedStatus).getText();
 
     }
