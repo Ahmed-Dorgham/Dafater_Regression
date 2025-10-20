@@ -22,10 +22,15 @@ public class DataMigrationToolPage extends MainPage {
     private By allCheckBox = By.xpath("//*[contains(@class,'grid-heading-row with-filter')]//*[contains(@type,'checkbox')]");
     private By vmUrlInputField = By.xpath("(//*[contains(@class,'input-with-feedback form-control')])[1]");
     private By apiKeyInputField = By.xpath("(//*[contains(@class,'input-with-feedback form-control')])[2]");
+    private By saveBtn = By.xpath("(//*[contains(@data-action_name,'Save')])");
     private By secretKeyInputField = By.xpath("(//*[contains(@class,'input-with-feedback form-control')])[3]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
 
     public void clickOnCheckVmConnectionBtn() {
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+
+        waitUntilElementVisibility(saveBtn, GeneralConstants.minTimeOut);
+        getWebElement(saveBtn).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementVisibility(checkVmConnectionBtn, GeneralConstants.minTimeOut);
         getWebElement(checkVmConnectionBtn).click();
@@ -36,7 +41,11 @@ public class DataMigrationToolPage extends MainPage {
     }
 
     public void clickOnSyncDocTypesDataBtn() {
-       Allure.step("click on sync doc types data btn ");
+        Allure.step("click on sync doc types data btn ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+
+        waitUntilElementVisibility(saveBtn, GeneralConstants.minTimeOut);
+        getWebElement(saveBtn).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementVisibility(syncDocTypesDataBtn, GeneralConstants.minTimeOut);
         getWebElement(syncDocTypesDataBtn).click();
@@ -45,7 +54,7 @@ public class DataMigrationToolPage extends MainPage {
     }
 
     public void selectAllDocTypes() {
-       Allure.step(" choose all doc types");
+        Allure.step(" choose all doc types");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementVisibility(allCheckBox, GeneralConstants.minTimeOut);
         getWebElement(allCheckBox).click();
@@ -53,15 +62,15 @@ public class DataMigrationToolPage extends MainPage {
 
     public WebElement checkStatusMsg() {
         waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
-       Allure.step(" msg after clicking on btn is >>>   " + getWebElement(statusMsg).getText());
-       Allure.step(getWebElement(statusMsg).getText());
+        Allure.step(" msg after clicking on btn is >>>   " + getWebElement(statusMsg).getText());
+        Allure.step(getWebElement(statusMsg).getText());
         return getWebElement(statusMsg);
     }
 
     public void closeStatusMsg() {
 
         waitUntilElementVisibility(closeIcon, GeneralConstants.minTimeOut);
-       Allure.step("close success msg ");
+        Allure.step("close success msg ");
         getWebElement(closeIcon).click();
 
     }
@@ -75,5 +84,6 @@ public class DataMigrationToolPage extends MainPage {
         getWebElement(apiKeyInputField).sendKeys(apiKey);
         getWebElement(secretKeyInputField).clear();
         getWebElement(secretKeyInputField).sendKeys(secretKey);
+
     }
 }

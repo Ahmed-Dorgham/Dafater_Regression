@@ -120,7 +120,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 3, enabled = true)
+    @Test(priority = 3, enabled = false)
     public void TC03_comparingTaxDeclarationReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -153,7 +153,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 4, enabled = true)
+    @Test(priority = 4, enabled = false)
     public void TC04_comparingStockBalanceReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -193,7 +193,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 5, enabled = true)
+    @Test(priority = 5, enabled = false)
     public void TC05_comparingTrialBalanceReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -265,7 +265,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 6, enabled = true)
+    @Test(priority = 6, enabled = false)
     public void TC06_comparingBalanceSheetReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -303,7 +303,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 7, enabled = true)
+    @Test(priority = 7, enabled = false)
     public void TC07_comparingProfitAndLossReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");

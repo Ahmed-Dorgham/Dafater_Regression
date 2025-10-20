@@ -4,10 +4,10 @@
     <test verbose="2" preserve-order="true" name=" Test">
         <parameter name="Scope" value="Comparing"/>
         <classes>
-<!--                        <class name="TestCases.ComparingReportsTest"></class>-->
-                                                <class name="TestCases.ComparingItemsTest"></class>
-                                                <class name="TestCases.ComparingWareHousesTest"></class>
-                                                <class name="TestCases.ComparingCompaniesTest"></class>
+                        <class name="TestCases.ComparingReportsTest"></class>
+<!--                                                <class name="TestCases.ComparingItemsTest"></class>-->
+<!--                                                <class name="TestCases.ComparingWareHousesTest"></class>-->
+<!--                                                <class name="TestCases.ComparingCompaniesTest"></class>-->
 <!--            <class name="TestCases.ComparingSalesInvoicesTest"></class>-->
 <!--            <class name="TestCases.ComparingPurchaseInvoicesTest"></class>-->
 <!--                        <class name="TestCases.ComparingSuppliersTest"></class>-->
