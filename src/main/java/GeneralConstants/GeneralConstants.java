@@ -21,7 +21,7 @@ public class GeneralConstants {
     public final static String userName_4 = "Administrator";
     public final static String userName_5 = "Administrator";
     public final static String password_5 = "123456";
-    public final static String password_4 = "cAAscAAxhv7N";
+    public final static String password_4 = "cdWeewshgcfd";
 
 
     /************************************************* Variables  ************************************************/

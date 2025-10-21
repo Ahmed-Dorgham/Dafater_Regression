@@ -1,9 +1,12 @@
 package TestCases;
 
 import GeneralConstants.GeneralConstants;
-import Pages.*;
+import Pages.HomePage;
+import Pages.LoginPage;
+import Pages.MainPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import io.qameta.allure.*;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -21,7 +24,7 @@ import java.util.Date;
 
 public class BaseTest extends MainPage {
 
-      public static WebDriver driver;
+    public static WebDriver driver;
     MainPage mainPageObj;
     LoginPage loginPageObj;
     HomePage homePageObj;
@@ -32,7 +35,7 @@ public class BaseTest extends MainPage {
     public static TakesScreenshot takesScreenshot;
     String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
     String dateTime = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-    public String companyName = "شركة مجموعة بسام مطشر عجمي السعدون للتجارة" ;
+    public String companyName = "شركة مجموعة بسام مطشر عجمي السعدون للتجارة";
     public String companyIdValue = "123456789";
     public String taxIdValue = "123456789";
     public String cityName = "city";
@@ -112,10 +115,10 @@ public class BaseTest extends MainPage {
 
     @AfterClass
     public void tearDown() {
-        System.out.println("Running tearDown...");
+        Allure.step("Running tearDown...");
         if (driver != null) {
             driver.quit();
-            System.out.println("Driver quit executed");
+            Allure.step("Driver quit executed");
         }
     }
 
@@ -127,6 +130,7 @@ public class BaseTest extends MainPage {
         FileUtils.copyFile(src, new File(screenShotPath));
         return src;
     }
+
     @Step("After Method")
     @AfterMethod
     public void onTestFailure(ITestResult result) throws IOException {

@@ -38,7 +38,9 @@ public class SalesInvoicesListPage extends MainPage {
     private By totalAmountOfSalesInvoicesAtViewList = By.xpath("//h3[contains(text(),'اجمالي الفواتير')]/following-sibling::div" +
             "|//*[@class='sales-invoice-lv-total-invoices ']");
     By closeFilter = By.xpath("//*[contains(@class,'btn btn-default btn-xs remove-filter')]");
-
+    private By reportsTab = By.xpath("//*[@id='module-anchor-reports']| //*[@id='module-icon-reports']/a/span");
+    private By newReportBtn = By.xpath("//*[contains(@id,'appframe-btn-جديد')]" +
+            "| //*[contains(@class,'btn btn-default btn-sm toolbar-btn')]");
     public SalesInvoicesPage clickOnNewSalesInvoiceBtn() {
         Allure.step("click on new sales invoice btn ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -99,6 +101,23 @@ public class SalesInvoicesListPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         Allure.step("name of first sales invoice at list view at dafater 4  >> " + getWebElement(firstSalesInvoice).getText());
         return getWebElement(firstSalesInvoice).getText();
+    }
+    public ReportsListPage openReportsListPage() throws InterruptedException {
+
+
+        Allure.step("wait until reports tab to be clickable  ");
+        waitUntilElementToBePresent(reportsTab, GeneralConstants.minTimeOut);
+
+        waitUntilElementToBePresent(reportsTab, GeneralConstants.minTimeOut);
+        Allure.step("click on  reports tab ");
+        clickByActions(reportsTab);
+        if (tryToGetWebElement(newReportBtn) == GeneralConstants.FAILED) {
+            Allure.step("************************************");
+            Thread.sleep(threadTimeOut);
+            clickByActions(reportsTab);
+        }
+
+        return new ReportsListPage(driver);
     }
 
     public SalesInvoicesPage openFirstSalesInvoiceAtDafater_4() throws InterruptedException {

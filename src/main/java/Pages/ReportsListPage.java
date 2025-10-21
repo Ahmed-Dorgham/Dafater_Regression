@@ -56,10 +56,6 @@ public class ReportsListPage extends MainPage {
 //        scrollToSpeceficElement(generalLedgerReport);
         waitUntilElementToBePresent(generalLedgerReport, GeneralConstants.minTimeOut);
         getWebElement(generalLedgerReport).click();
-        // getWebElement(newBtn).click();
-
-//        waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
-        // Allure.step(getWebElement(connectionMsg).getText());
         return new GeneralLedgerReportPage(driver);
     }
 

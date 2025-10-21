@@ -74,7 +74,7 @@ public class ComparingReportsTest extends BaseTest {
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
         reportsListPageObj = homePageObj.openReportsListPage();
         generalLedgerReportPageObj = reportsListPageObj.openGeneralLedgerReport();
-        generalLedgerReportPageObj.applyFilters_5(companyName, accountName);
+        generalLedgerReportPageObj.applyFiltersWithCompanyAndAccount_5(companyName, accountName);
 
         String debitValueOfSpecificAccountAfterSyncing = generalLedgerReportPageObj.getDebitValue_5();
         String creditValueOfSpecificAccountAfterSyncing = generalLedgerReportPageObj.getCreditValue_5();
@@ -82,7 +82,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertEquals(debitValueOfSpecificAccountBeforeSyncing, debitValueOfSpecificAccountAfterSyncing);
         Allure.step("debit value at dafater 4  before syncing is " + debitValueOfSpecificAccountBeforeSyncing + " and after syncing at dafater 5 is " + debitValueOfSpecificAccountAfterSyncing);
         Allure.step("verify that credit value of this account " + accountName + " which exist at dafater 5 is equal to credit value for the same account at dafater 4 ");
-        softAssert.assertEquals(debitValueOfSpecificAccountBeforeSyncing, debitValueOfSpecificAccountAfterSyncing);
+        softAssert.assertEquals(creditValueOfSpecificAccountBeforeSyncing, creditValueOfSpecificAccountAfterSyncing);
         Allure.step("credit value at dafater 4  before syncing is " + creditValueOfSpecificAccountBeforeSyncing + " and after syncing at dafater 5 is " + creditValueOfSpecificAccountAfterSyncing);
         softAssert.assertAll();
     }
