@@ -41,9 +41,10 @@ public class SalesOrderPage extends MainPage {
     private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
     private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
     private By salesInvoicesTab = By.id("module-anchor-Selling");
-    private  By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)//div//p[@title='item 1']/strong)");
 
     public void enterValidDataIntoSalesOrderPage(String dueDate,String itemName) throws InterruptedException {
+          By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)//div//p[@title='"+itemName+"']/strong)");
+
         waitUntilElementToBePresent(newSalesOrderTitle, GeneralConstants.minTimeOut);
       Allure.step("select  customer ");
         getWebElement(customerFieldSalesOrder).click();

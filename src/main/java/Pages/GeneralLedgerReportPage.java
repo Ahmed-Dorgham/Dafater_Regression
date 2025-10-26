@@ -73,6 +73,7 @@ public class GeneralLedgerReportPage extends MainPage {
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     By loadImage = By.xpath("(//*[contains(@alt,'Generic Empty State')])[3]");
     By accountField_5 = By.xpath("(//*[contains(@data-fieldname,'account')])[1]");
+    By deleteAllBtn = By.xpath("(//*[contains(@data-fieldname,'account')])[1]//button");
     By voucherInputField_5 = By.xpath("(//*[contains(@id,'voucher_no')])[1]");
     By chosenCompany = By.xpath("(//*[contains(@data-target,'Company')])/following-sibling::ul/li" +
             "| ((//*[contains(@data-target,'Company')])/following-sibling::ul/div/p/strong)" +
@@ -102,28 +103,28 @@ public class GeneralLedgerReportPage extends MainPage {
 //        waitUntilElementToBePresent(customersListSalesInvoice, GeneralConstants.minTimeOut);
 //        waitUntilElementToBeClickable(customerOptSalesInvoice, GeneralConstants.minTimeOut);
 //        getWebElement(customerOptSalesInvoice).click();
-       Allure.step("enter dues date  ");
+        Allure.step("enter dues date  ");
         waitUntilElementVisibility(dueDateField, GeneralConstants.minTimeOut);
         getWebElement(dueDateField).sendKeys(dueDate);
-       Allure.step("Scroll down to item field ");
+        Allure.step("Scroll down to item field ");
         scrollToSpeceficElement(totalAmountLabel);
         //   Thread.sleep(6000);
-       Allure.step(" select item  ");
+        Allure.step(" select item  ");
         clickByActions(itemCodeField);
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
         getWebElement(itemCodeInputField).sendKeys("item");
         waitUntilElementToBeClickable(itemGroupOpt, GeneralConstants.minTimeOut);
         clickByActions(itemGroupOpt);
 
-       Allure.step("unselect update stock opt");
+        Allure.step("unselect update stock opt");
         getWebElement(updateStockBtn).click();
 
-       Allure.step("scroll up to save and submit btn ");
+        Allure.step("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
 
-       Allure.step(" save and submit sales invoice ");
+        Allure.step(" save and submit sales invoice ");
         getWebElement(saveAndSubmitBtn).click();
-       Allure.step("click on yes btn ");
+        Allure.step("click on yes btn ");
         waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
         getWebElement(yesBtn).click();
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
@@ -142,7 +143,7 @@ public class GeneralLedgerReportPage extends MainPage {
 
         for (i = 0; i < getListOfWebElements(accounts).size(); i++) {
             if (getListOfWebElements(accounts).get(i).getAttribute("title").contains(defaultDebitAccount)) {
-               Allure.step(" default debit account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
+                Allure.step(" default debit account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
                 j = i;
             }
         }
@@ -158,7 +159,7 @@ public class GeneralLedgerReportPage extends MainPage {
         getListOfWebElements(accounts);
         for (i = 0; i < getListOfWebElements(accounts).size(); i++) {
             if (getListOfWebElements(accounts).get(i).getAttribute("title").contains(defaultIncomeAccount)) {
-               Allure.step(" default income account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
+                Allure.step(" default income account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
                 j = i;
             }
         }
@@ -175,7 +176,7 @@ public class GeneralLedgerReportPage extends MainPage {
         getListOfWebElements(accounts);
         for (i = 0; i < getListOfWebElements(accounts).size(); i++) {
             if (getListOfWebElements(accounts).get(i).getAttribute("title").contains(defaultIncomeAccount)) {
-               Allure.step(" default Expense account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
+                Allure.step(" default Expense account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
                 j = i;
             }
         }
@@ -192,7 +193,7 @@ public class GeneralLedgerReportPage extends MainPage {
         getListOfWebElements(accounts);
         for (i = 0; i < getListOfWebElements(accounts).size(); i++) {
             if (getListOfWebElements(accounts).get(i).getAttribute("title").contains(defaultCreditAccount)) {
-               Allure.step(" default credit account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
+                Allure.step(" default credit account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
                 j = i;
             }
         }
@@ -201,28 +202,28 @@ public class GeneralLedgerReportPage extends MainPage {
 
     public String getValueAtDefaultDebitAccountFromGL(int i) {
         valueAtDefaultDebitAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-3')])[" + i + "]");
-       Allure.step("value which exist at default debit account " + getWebElement(valueAtDefaultDebitAccount).getText());
+        Allure.step("value which exist at default debit account " + getWebElement(valueAtDefaultDebitAccount).getText());
 
         return getWebElement(valueAtDefaultDebitAccount).getText();
     }
 
     public String getValueAtDefaultIncomeAccountFromGL(int i) {
         valueAtDefaultIncomeAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-4')])[" + i + "]");
-       Allure.step("value which exist at default income account " + getWebElement(valueAtDefaultIncomeAccount).getText());
+        Allure.step("value which exist at default income account " + getWebElement(valueAtDefaultIncomeAccount).getText());
 
         return getWebElement(valueAtDefaultIncomeAccount).getText();
     }
 
     public String getValueAtDefaultCreditAccountFromGL(int i) {
         valueAtDefaultCreditAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-4')])[" + i + "]");
-       Allure.step("value which exist at default credit account " + getWebElement(valueAtDefaultCreditAccount).getText());
+        Allure.step("value which exist at default credit account " + getWebElement(valueAtDefaultCreditAccount).getText());
 
         return getWebElement(valueAtDefaultCreditAccount).getText();
     }
 
     public String getValueAtDefaultExpenseAccountFromGL(int i) {
         valueAtDefaultExpenseAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-3')])[" + i + "]");
-       Allure.step("value which exist at default expense  account " + getWebElement(valueAtDefaultExpenseAccount).getText());
+        Allure.step("value which exist at default expense  account " + getWebElement(valueAtDefaultExpenseAccount).getText());
 
         return getWebElement(valueAtDefaultExpenseAccount).getText();
     }
@@ -231,7 +232,7 @@ public class GeneralLedgerReportPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-       Allure.step("enter specific company ");
+        Allure.step("enter specific company ");
         waitUntilElementToBePresent(companyInputField, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
 
@@ -241,7 +242,7 @@ public class GeneralLedgerReportPage extends MainPage {
         waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
         String chosenCompanyName = getWebElement(chosenCompany).getText();
         getWebElement(chosenCompany).click();
-       Allure.step(" chosen company is " + chosenCompanyName);
+        Allure.step(" chosen company is " + chosenCompanyName);
         return chosenCompanyName;
     }
 
@@ -250,7 +251,7 @@ public class GeneralLedgerReportPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-       Allure.step("enter specific account ");
+        Allure.step("enter specific account ");
         waitUntilElementToBePresent(accountInputField_4, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
 
@@ -258,9 +259,10 @@ public class GeneralLedgerReportPage extends MainPage {
         waitUntilElementToBePresent(chosenAccount, GeneralConstants.minTimeOut);
         String chosenAccountName = getWebElement(chosenAccount).getText();
         getWebElement(chosenAccount).click();
-       Allure.step(" chosen account is " + chosenAccountName);
+        Allure.step(" chosen account is " + chosenAccountName);
         return chosenAccountName;
     }
+
     public void searchAboutSpecificVoucher(String voucherName) {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
@@ -270,8 +272,9 @@ public class GeneralLedgerReportPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(voucherInputField_4).sendKeys(voucherName);
     }
+
     public void clickOnLoadDataBtn() {
-       Allure.step("click on load data btn ");
+        Allure.step("click on load data btn ");
         waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
         getWebElement(loadDataBtn).click();
     }
@@ -280,12 +283,12 @@ public class GeneralLedgerReportPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(companyInputField, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-       Allure.step("enter company name ");
+        Allure.step("enter company name ");
         getWebElement(companyInputField).clear();
         getWebElement(companyInputField).sendKeys(companyName);
         waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
         getWebElement(chosenCompany).click();
-       Allure.step("enter account name ");
+        Allure.step("enter account name ");
         waitUntilElementToBePresent(accountField_5, GeneralConstants.minTimeOut);
         getWebElement(accountField_5).click();
         waitUntilElementToBePresent(accountInputField_5, GeneralConstants.minTimeOut);
@@ -296,6 +299,30 @@ public class GeneralLedgerReportPage extends MainPage {
         getWebElement(chosenAccount).click();
         Thread.sleep(threadTimeOut);
     }
+
+    public void applyFiltersWithCompanyOnly_5(String companyName) throws InterruptedException {
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(companyInputField, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Allure.step("enter company name ");
+        getWebElement(companyInputField).clear();
+        getWebElement(companyInputField).sendKeys(companyName);
+        waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
+        getWebElement(chosenCompany).click();
+//        Allure.step("enter account name ");
+        waitUntilElementToBePresent(accountField_5, GeneralConstants.minTimeOut);
+        getWebElement(accountField_5).click();
+        waitUntilElementToBePresent(deleteAllBtn, GeneralConstants.minTimeOut);
+        getWebElement(deleteAllBtn).click();
+//        waitUntilElementToBePresent(accountInputField_5, GeneralConstants.minTimeOut);
+//        getWebElement(accountInputField_5).sendKeys(accountName);
+//        waitUntilElementToBePresent(chosenAccount, GeneralConstants.minTimeOut);
+//        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+//        Thread.sleep(threadTimeOut);
+//        getWebElement(chosenAccount).click();
+        Thread.sleep(threadTimeOut);
+    }
+
     public void applyFiltersWithCompanyAndVoucherName_5(String companyName, String voucherNameName) throws InterruptedException {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(companyInputField, GeneralConstants.minTimeOut);
@@ -311,9 +338,10 @@ public class GeneralLedgerReportPage extends MainPage {
         getWebElement(voucherInputField_5).sendKeys(voucherNameName);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
     }
+
     public String getDebitValue() {
         waitUntilElementToBePresent(debitValue, GeneralConstants.minTimeOut);
-       Allure.step(" debit value for selected account is " + getWebElement(debitValue).getText());
+        Allure.step(" debit value for selected account is " + getWebElement(debitValue).getText());
         return getWebElement(debitValue).getText();
     }
 
@@ -321,7 +349,7 @@ public class GeneralLedgerReportPage extends MainPage {
         waitUntilElementToBePresent(generalLedgerReportTitle, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
         scrollToSpeceficElement(debitValue_GL);
-       Allure.step(" closing debit value at general ledger report is " + getWebElement(debitValue_GL).getText());
+        Allure.step(" closing debit value at general ledger report is " + getWebElement(debitValue_GL).getText());
         return getWebElement(debitValue_GL).getText();
     }
 
@@ -330,7 +358,7 @@ public class GeneralLedgerReportPage extends MainPage {
         waitUntilElementToBePresent(generalLedgerReportTitle, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
         scrollToSpeceficElement(creditValue_GL);
-       Allure.step(" closing credit value at general ledger report is " + getWebElement(creditValue_GL).getText());
+        Allure.step(" closing credit value at general ledger report is " + getWebElement(creditValue_GL).getText());
         return getWebElement(creditValue_GL).getText();
     }
 
@@ -338,21 +366,21 @@ public class GeneralLedgerReportPage extends MainPage {
 //        Thread.sleep(20000);
         waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(debitValue_5, GeneralConstants.minTimeOut);
-       Allure.step(" debit value for selected account is " + getWebElement(debitValue_5).getAttribute("title"));
+        Allure.step(" debit value for selected account is " + getWebElement(debitValue_5).getAttribute("title"));
         return getWebElement(debitValue_5).getText();
     }
 
     public String getCreditValue() {
 
         waitUntilElementToBePresent(creditValue, GeneralConstants.minTimeOut);
-       Allure.step(" credit value for selected account is " + getWebElement(creditValue).getText());
+        Allure.step(" credit value for selected account is " + getWebElement(creditValue).getText());
         return getWebElement(creditValue).getText();
     }
 
     public String getCreditValue_5() throws InterruptedException {
         waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(creditValue_5, GeneralConstants.minTimeOut);
-       Allure.step(" credit value for selected account is " + getWebElement(creditValue_5).getAttribute("title"));
+        Allure.step(" credit value for selected account is " + getWebElement(creditValue_5).getAttribute("title"));
         return getWebElement(creditValue_5).getText();
     }
 
@@ -360,14 +388,14 @@ public class GeneralLedgerReportPage extends MainPage {
 
         waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
 
-       Allure.step("enter item code");
+        Allure.step("enter item code");
         getWebElement(itemCodeInputField).sendKeys(itemCode);
-       Allure.step("select item group ");
+        Allure.step("select item group ");
         getWebElement(itemGroupField).click();
         waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
         getWebElement(itemGroupOpt).click();
-       Allure.step("click on save btn ");
+        Allure.step("click on save btn ");
         getWebElement(saveBtn).click();
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
     }
@@ -375,21 +403,21 @@ public class GeneralLedgerReportPage extends MainPage {
     public void enterValidDataForSalesItem(String itemCode) throws InterruptedException {
 
         waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
-       Allure.step("enter item code");
+        Allure.step("enter item code");
         getWebElement(itemCodeInputField).sendKeys(itemCode);
-       Allure.step("select item group ");
+        Allure.step("select item group ");
         getWebElement(itemGroupField).click();
         waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
         getWebElement(itemGroupOpt).click();
-       Allure.step("click on purchase tab ");
+        Allure.step("click on purchase tab ");
         getWebElement(purchaseTab).click();
         getWebElement(purchaseTab).click();
-       Allure.step("unselect is purchase item checkbox ");
+        Allure.step("unselect is purchase item checkbox ");
         waitUntilElementToBePresent(isPurchaseItemCheckBox, GeneralConstants.minTimeOut);
         getWebElement(isPurchaseItemCheckBox).click();
 
-       Allure.step("click on save btn ");
+        Allure.step("click on save btn ");
         getWebElement(saveBtn).click();
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
     }
@@ -397,21 +425,21 @@ public class GeneralLedgerReportPage extends MainPage {
     public void enterValidDataForPurchaseItem(String itemCode) throws InterruptedException {
 
         waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
-       Allure.step("enter item code");
+        Allure.step("enter item code");
         getWebElement(itemCodeInputField).sendKeys(itemCode);
-       Allure.step("select item group ");
+        Allure.step("select item group ");
         getWebElement(itemGroupField).click();
         waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
         getWebElement(itemGroupOpt).click();
-       Allure.step("click on sales tab ");
+        Allure.step("click on sales tab ");
         getWebElement(salesTab).click();
         getWebElement(salesTab).click();
-       Allure.step("unselect is sales item checkbox ");
+        Allure.step("unselect is sales item checkbox ");
         waitUntilElementToBePresent(isSalesItemCheckBox, GeneralConstants.minTimeOut);
         getWebElement(isSalesItemCheckBox).click();
 
-       Allure.step("click on save btn ");
+        Allure.step("click on save btn ");
         getWebElement(saveBtn).click();
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
     }
@@ -420,16 +448,16 @@ public class GeneralLedgerReportPage extends MainPage {
 
         waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
 
-       Allure.step("enter item code");
+        Allure.step("enter item code");
         getWebElement(itemCodeInputField).sendKeys(itemCode);
-       Allure.step("select item group ");
+        Allure.step("select item group ");
         getWebElement(itemGroupField).click();
         waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
         getWebElement(itemGroupOpt).click();
 
 
-       Allure.step("click on save btn ");
+        Allure.step("click on save btn ");
         getWebElement(saveBtn).click();
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
 
@@ -437,10 +465,10 @@ public class GeneralLedgerReportPage extends MainPage {
     }
 
     public PosViewPage openPosView() throws InterruptedException {
-       Allure.step("click on is pos view btn");
+        Allure.step("click on is pos view btn");
         waitUntilElementToBePresent(posViewBtn, GeneralConstants.minTimeOut);
         getWebElement(posViewBtn).click();
-       Allure.step("click on accept btn ");
+        Allure.step("click on accept btn ");
 //        Thread.sleep(9000);
         waitUntilElementNotToBeVisible(posViewBtn, GeneralConstants.minTimeOut);
 //        Alert alert = driver.switchTo().alert();
@@ -494,16 +522,16 @@ public class GeneralLedgerReportPage extends MainPage {
 //    }
 
     public String getItemName(String expected) {
-       Allure.step("Verify the name of item  ");
+        Allure.step("Verify the name of item  ");
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
-       Allure.step("actual text is  " + getWebElement(itemName).getText() + "  and expected text is  " + expected);
+        Allure.step("actual text is  " + getWebElement(itemName).getText() + "  and expected text is  " + expected);
         return getWebElement(itemName).getText();
     }
 
     public String getItemCode(String expected) {
-       Allure.step("Verify the name of item  ");
+        Allure.step("Verify the name of item  ");
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
-       Allure.step("actual text is  " + getWebElement(ItemCode).getText() + "  and expected text is  " + expected);
+        Allure.step("actual text is  " + getWebElement(ItemCode).getText() + "  and expected text is  " + expected);
         return getWebElement(ItemCode).getText();
     }
 //
@@ -518,7 +546,7 @@ public class GeneralLedgerReportPage extends MainPage {
     public String getInvoiceNameForCreditNote(String expected) {
 //       Allure.step("Verify the name of sales invoice  ");
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
-       Allure.step("actual text is  " + getWebElement(invoiceNameForCreditNote).getAttribute("title") + "  and expected text is  " + expected);
+        Allure.step("actual text is  " + getWebElement(invoiceNameForCreditNote).getAttribute("title") + "  and expected text is  " + expected);
         return getWebElement(invoiceNameForCreditNote).getText();
     }
 //
@@ -542,7 +570,7 @@ public class GeneralLedgerReportPage extends MainPage {
 //    }
     public ItemListPage openItemListPage() {
 
-       Allure.step("navigate to item list ");
+        Allure.step("navigate to item list ");
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
         getWebElement(itemOpt).click();
         driver.navigate().refresh();

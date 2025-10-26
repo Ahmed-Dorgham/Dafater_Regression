@@ -65,7 +65,7 @@ public class CompanyPage extends MainPage {
     private By defaultDebitAccountInputField = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By defaultCreditAccountInputField = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By defaultExpenseAccountInputField = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
-    private By defaultIncomeAccountInputField = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By defaultIncomeAccountInputField = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[5]");
     private By closeTab = By.xpath("(//i[contains(@class,'fal fa-times')])[4]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')] | //*[contains(@id,'freeze')]");
 
@@ -263,6 +263,7 @@ public class CompanyPage extends MainPage {
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(closeTab, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
         getWebElement(closeTab).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
        Allure.step("open accounts tab ");

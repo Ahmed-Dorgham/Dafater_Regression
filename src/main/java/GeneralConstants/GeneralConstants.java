@@ -4,7 +4,7 @@ public class GeneralConstants {
 
     /************************************************* Constants ************************************************/
 
-    public final static int globalTimeOut = 360;
+    public final static int globalTimeOut = 60;
     public final static int minTimeOut = 40;
     public final static int freezeTimeOut = 20;
     public final static int threadTimeOut = 8000;

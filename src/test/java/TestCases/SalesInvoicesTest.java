@@ -27,7 +27,7 @@ public class SalesInvoicesTest extends BaseTest {
     CompanyPage companyPageObj;
     ReportsListPage reportsListPageObj;
 
-    public String itemCode;
+    public String itemCode ;
 
     ItemPage itemPageObj;
     ItemListPage itemListPageObj;
@@ -42,7 +42,8 @@ public class SalesInvoicesTest extends BaseTest {
     private final String draftStatus = "مسودة";
     private final String invoiceName = "ACC-SINV";
     //    String companyName = "Company 1";
-    String companyName = "شركة نماك الوطنية الزراعية";
+    String companyName = "شركة مجموعة بسام مطشر عجمي السعدون للتجارة";
+//    String companyName = "شركة نماك الوطنية الزراعية";
 
     @Test(priority = 1, enabled = true, alwaysRun = true)
     public void TC01_createNewSalesInvoiceAndSaveOnly() throws InterruptedException {
@@ -88,9 +89,7 @@ public class SalesInvoicesTest extends BaseTest {
        Allure.step("verify that number of draft sales invoices at list view will increase by one after creating new draft sales invoice ");
         Assert.assertFalse(numberOfDraftInvoicesBeforeCreatingNewOne.contains(numberOfDraftInvoicesAfterCreatingNewOne));
        Allure.step(" number of draft sales invoices at list view before creating new one is " + numberOfDraftInvoicesBeforeCreatingNewOne + " and after creating new one is  " + numberOfDraftInvoicesAfterCreatingNewOne + " and this is correct ");
-
     }
-
     @Test(priority = 2, enabled = true)
     public void TC02_createNewSalesInvoiceAndSubmit() throws InterruptedException {
         homePageObj = new HomePage(driver);
@@ -189,7 +188,7 @@ public class SalesInvoicesTest extends BaseTest {
         homePageObj = new HomePage(driver);
         deliveryNoteListPageObj = homePageObj.openDeliveryNoteListPage();
         deliveryNotePageObj = deliveryNoteListPageObj.clickOnNewDeliveryNoteBtn();
-        deliveryNotePageObj.enterValidDataIntoDeliveryNotePage();
+        deliveryNotePageObj.enterValidDataIntoDeliveryNotePage(itemCode);
         String deliveryNoteStatusBeforeCreatingRelatedSalesInvoice = deliveryNotePageObj.getSalesOrderStatusBeforeCreatingRelatedSalesInvoice();
         salesInvoicesPageObj = deliveryNotePageObj.createNewSalesInvoiceFromDeliveryNote();
         salesInvoicesPageObj.saveAndSubmitSalesInvoiceFromDeliveryNote();

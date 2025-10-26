@@ -46,7 +46,6 @@ public class DeliveryNotePage extends MainPage {
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     private By wareHouseTab = By.id("module-anchor-Stock");
     private By newBtn = By.xpath("(//button[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')])");
-    private By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)/div/p[@title='item 1']/strong)");
     private By deliveryNoteIssueDateField = By.xpath("//*[contains(text(),' تاريخ اصدار السند')]/../following-sibling::div" +
             "|//label[contains(@for,'posting_date')]/following-sibling::div " +
             "| //*[contains(@for,'posting_date')]/following-sibling::div ");
@@ -60,7 +59,9 @@ public class DeliveryNotePage extends MainPage {
             "| //*[contains(text(),'المجموع الإجمالي')]/following-sibling::div/div/span");
     private By draftStatusField = By.xpath("(//*[contains(@class,'ellipsis title-text')]/following-sibling::span)[4]");
 
-    public void enterValidDataIntoDeliveryNotePage() throws InterruptedException {
+    public void enterValidDataIntoDeliveryNotePage(String itemName) throws InterruptedException {
+         By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)/div/p[@title='"+itemName+"']/strong)");
+
         waitUntilElementToBePresent(newDeliveryNoteTitle, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
        Allure.step("select  customer ");
@@ -77,16 +78,12 @@ public class DeliveryNotePage extends MainPage {
        Allure.step(" select item  ");
         clickByActions(itemCodeField);
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
-        getWebElement(itemCodeInputField).sendKeys("item 1");
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
+        getWebElement(itemCodeInputField).sendKeys(itemName);
         waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
         clickByActions(selectedItem);
-//        clickByJs(getWebElement(itemOpt));
-//       Allure.step("unselect update stock opt");
-//        getWebElement(updateStockBtn).click();
-        // Thread.sleep(6000);
        Allure.step("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
        Allure.step(" save and submit delivery note ");

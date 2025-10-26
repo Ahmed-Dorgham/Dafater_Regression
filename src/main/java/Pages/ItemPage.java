@@ -40,7 +40,7 @@ public class ItemPage extends MainPage {
     private By yesBtn = By.xpath("(//*[contains(@class,'btn btn-primary btn-sm btn-modal-primary')])");
     private By submittedStatus = By.xpath("(//*[contains(@class,'label label-success')])");
     private By draftStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap red')])/span");
-    private By itemName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
+    private By itemName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By itemName_4 = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By ItemCode = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By DraftInvoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
