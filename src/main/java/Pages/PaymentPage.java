@@ -90,10 +90,10 @@ public class PaymentPage extends MainPage {
        Allure.step("Verify the status of payment doc type  ");
         waitUntilElementToBePresent(cancelBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        if (tryToGetWebElement(submittedStatus) == GeneralConstants.SUCCESS) {
+        if (tryToGetWebElementV(submittedStatus) == GeneralConstants.SUCCESS) {
            Allure.step("actual text is " + getWebElement(submittedStatus).getText() + " and expected test is " + expected);
             return getWebElement(submittedStatus).getText();
-        } else if (tryToGetWebElement(draftStatus) == GeneralConstants.SUCCESS) {
+        } else if (tryToGetWebElementV(draftStatus) == GeneralConstants.SUCCESS) {
            Allure.step("actual text is " + getWebElement(draftStatus).getText() + " and expected test is " + expected);
             return getWebElement(draftStatus).getText();
         } else

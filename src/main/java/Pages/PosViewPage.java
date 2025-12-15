@@ -73,7 +73,7 @@ public class PosViewPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(itemOpt).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        if (tryToGetWebElement(noItemsLabel) == GeneralConstants.SUCCESS) {
+        if (tryToGetWebElementV(noItemsLabel) == GeneralConstants.SUCCESS) {
            Allure.step("***************************");
             waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
             getWebElement(itemOpt).click();
@@ -163,7 +163,7 @@ public class PosViewPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(itemOpt).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        if (tryToGetWebElement(noItemsLabel) == GeneralConstants.SUCCESS) {
+        if (tryToGetWebElementV(noItemsLabel) == GeneralConstants.SUCCESS) {
            Allure.step("***************************");
             waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
             getWebElement(itemOpt).click();

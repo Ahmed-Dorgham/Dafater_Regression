@@ -2,9 +2,11 @@ package Pages;
 
 import GeneralConstants.GeneralConstants;
 import io.qameta.allure.Allure;
-import org.apache.poi.ss.formula.functions.T;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class SalesInvoicesListPage extends MainPage {
     private String dataMigrationTitle = "data migration";
@@ -19,7 +21,9 @@ public class SalesInvoicesListPage extends MainPage {
     private By statusMsg = By.className("msgprint");
     private By editIcon = By.className("icon-xs");
     private By salesInvoiceLabel = By.xpath("(//*[contains(@title,'فاتورة المبيعات')]");
-    private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
+    private By listCount = By.xpath("(//*[contains(@class,'list-count')])" +
+            "|(//*[contains(@class,'total-rows')])");
+
     private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])" +
             "| (//div[contains(text(),'مسودة')])");
     private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
@@ -37,10 +41,94 @@ public class SalesInvoicesListPage extends MainPage {
     private By invoiceTotalAmountValueAtListView = By.xpath("(((((//*[contains(@class,'level list-row-head font-weight-bold')])/following-sibling::div)[2])/div/div/div))[6]/span/a/div/span");
     private By totalAmountOfSalesInvoicesAtViewList = By.xpath("//h3[contains(text(),'اجمالي الفواتير')]/following-sibling::div" +
             "|//*[@class='sales-invoice-lv-total-invoices ']");
+    private By totalOutstandingAmountOfSalesInvoicesAtViewList = By.xpath("//h3[contains(text(),'المبلغ المعلق')]/following-sibling::div" +
+            "|//*[@class='sales-invoice-lv-total-invoices ']");
+    private By totalPaymentReceivedAmountOfSalesInvoicesAtViewList = By.xpath("//h3[contains(text(),'الدفعات المقدمة')]/following-sibling::div" +
+            "|//*[@class='sales-invoice-lv-total-invoices ']");
     By closeFilter = By.xpath("//*[contains(@class,'btn btn-default btn-xs remove-filter')]");
+
     private By reportsTab = By.xpath("//*[@id='module-anchor-reports']| //*[@id='module-icon-reports']/a/span");
     private By newReportBtn = By.xpath("//*[contains(@id,'appframe-btn-جديد')]" +
             "| //*[contains(@class,'btn btn-default btn-sm toolbar-btn')]");
+
+    public By totalOutstandingAmountValue = By.xpath("//*[contains(@title,'المعلق')]//span//span");
+
+
+
+
+    public double getTotalOutstandingAmountOfSalesInvoicesBeforeSyncing() throws InterruptedException {
+
+        double sumOfTotalOutstandingAmountValues = 0;
+        waitUntilElementVisibility(draftLabel, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Thread.sleep(threadTimeOut);
+        while (!getWebElement(listCountOffset).getText().contains(getWebElement(listCount).getText())) {
+           // System.out.println(getWebElement(listCountOffset).getText());
+           // System.out.println(getWebElement(listCount).getText());
+            totalOutstandingAmountValues = driver.findElements(totalOutstandingAmountValue);
+            for (int i = 0; i < totalOutstandingAmountValues.size(); i++) {
+                sumOfTotalOutstandingAmountValues += Double.parseDouble(totalOutstandingAmountValues.get(i).getText().replace(",", ""));
+               // System.out.println(sumOfTotalOutstandingAmountValues);
+            }
+            //System.out.println("click on next icon");
+            getWebElement(nextIcon).click();
+            Thread.sleep(threadTimeOut);
+        }
+
+        if (getWebElement(listCountOffset).getText().contains(getWebElement(listCount).getText())) {
+//            System.out.println(getWebElement(listCountOffset).getText());
+//            System.out.println(getWebElement(listCount).getText());
+            totalOutstandingAmountValues = driver.findElements(totalOutstandingAmountValue);
+            for (int i = 0; i < totalOutstandingAmountValues.size(); i++) {
+                sumOfTotalOutstandingAmountValues += Double.parseDouble(totalOutstandingAmountValues.get(i).getText().replace(",", ""));
+//                System.out.println(sumOfTotalOutstandingAmountValues);
+            }
+            //System.out.println("click on next icon");
+            getWebElement(nextIcon).click();
+            Thread.sleep(threadTimeOut);
+        }
+        System.out.println("total outstanding  amount of Submitted sales invoices at list view before syncing " + sumOfTotalOutstandingAmountValues);
+        Allure.step("total outstanding amount of Submitted sales invoices at list view before syncing " + sumOfTotalOutstandingAmountValues);
+
+        return sumOfTotalOutstandingAmountValues;
+    }
+
+    public double getTotalAmountOfSalesInvoicesBeforeSyncing() throws InterruptedException {
+        double sumOfTotalAmountValues = 0;
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        while (!getWebElement(listCountOffset).getText().contains(getWebElement(listCount).getText())) {
+           // System.out.println(getWebElement(listCountOffset).getText());
+           // System.out.println(getWebElement(listCount).getText());
+            totalAmountValues = driver.findElements(totalAmountValue);
+            for (int i = 0; i < totalAmountValues.size(); i++) {
+                sumOfTotalAmountValues += Double.parseDouble(totalAmountValues.get(i).getText().replace(",", ""));
+                //System.out.println(sumOfTotalAmountValues);
+            }
+          //  System.out.println("click on next icon");
+            getWebElement(nextIcon).click();
+            Thread.sleep(threadTimeOut);
+        }
+
+        if (getWebElement(listCountOffset).getText().contains(getWebElement(listCount).getText())) {
+           // System.out.println(getWebElement(listCountOffset).getText());
+           // System.out.println(getWebElement(listCount).getText());
+            totalAmountValues = driver.findElements(totalAmountValue);
+            for (int i = 0; i < totalAmountValues.size(); i++) {
+                sumOfTotalAmountValues += Double.parseDouble(totalAmountValues.get(i).getText().replace(",", ""));
+                //System.out.println(sumOfTotalAmountValues);
+            }
+            //System.out.println("click on next icon");
+            getWebElement(nextIcon).click();
+            Thread.sleep(threadTimeOut);
+        }
+        System.out.println("total amount of sales invoices at list view before syncing " + sumOfTotalAmountValues);
+        Allure.step("total amount of sales invoices at list view before syncing " + sumOfTotalAmountValues);
+        return sumOfTotalAmountValues;
+    }
+
+
+
     public SalesInvoicesPage clickOnNewSalesInvoiceBtn() {
         Allure.step("click on new sales invoice btn ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -70,16 +158,18 @@ public class SalesInvoicesListPage extends MainPage {
     public String getListAccountBeforeSyncing() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        System.out.println("number of sales invoices at list view before syncing " + getWebElement(listCount).getText());
         Allure.step("number of sales invoices at list view before syncing " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 
-    public String getNumberOfAllItemsBeforeSyncing() {
+    public String getNumberOfAllDraftSalesInvoicesBeforeSyncing() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Allure.step("number of draft sales invoices at list view before creating new sales invoices " + getWebElement(numberOfDraftInvoices).getText());
         return getWebElement(numberOfDraftInvoices).getText();
     }
+
 
     public String getNumberOfDraftInvoicesBeforeSyncing() throws InterruptedException {
 
@@ -94,7 +184,7 @@ public class SalesInvoicesListPage extends MainPage {
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         Thread.sleep(threadTimeOut);
-        if (tryToGetWebElement(closeFilter) == GeneralConstants.SUCCESS) {
+        if (tryToGetWebElementV(closeFilter) == GeneralConstants.SUCCESS) {
             Allure.step("close filter ");
             getWebElement(closeFilter).click();
         }
@@ -102,6 +192,7 @@ public class SalesInvoicesListPage extends MainPage {
         Allure.step("name of first sales invoice at list view at dafater 4  >> " + getWebElement(firstSalesInvoice).getText());
         return getWebElement(firstSalesInvoice).getText();
     }
+
     public ReportsListPage openReportsListPage() throws InterruptedException {
 
 
@@ -111,7 +202,7 @@ public class SalesInvoicesListPage extends MainPage {
         waitUntilElementToBePresent(reportsTab, GeneralConstants.minTimeOut);
         Allure.step("click on  reports tab ");
         clickByActions(reportsTab);
-        if (tryToGetWebElement(newReportBtn) == GeneralConstants.FAILED) {
+        if (tryToGetWebElementV(newReportBtn) == GeneralConstants.FAILED) {
             Allure.step("************************************");
             Thread.sleep(threadTimeOut);
             clickByActions(reportsTab);
@@ -138,22 +229,32 @@ public class SalesInvoicesListPage extends MainPage {
         return new SalesInvoicesPage(driver);
     }
 
-    public String getTotalAmountOfSalesInvoicesBeforeSyncing() throws InterruptedException {
-
-        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        Thread.sleep(threadTimeOut);
-        Allure.step("total amount of sales invoices at list view before syncing " + getWebElement(totalAmountOfSalesInvoicesAtViewList).getText());
-        return getWebElement(totalAmountOfSalesInvoicesAtViewList).getText();
-    }
 
     public String getTotalAmountOfSalesInvoicesAfterSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
+        System.out.println("total amount of sales invoices at list view after syncing " + getWebElement(totalAmountOfSalesInvoicesAtViewList).getText());
         Allure.step("total amount of sales invoices at list view after syncing " + getWebElement(totalAmountOfSalesInvoicesAtViewList).getText());
         return getWebElement(totalAmountOfSalesInvoicesAtViewList).getText();
     }
 
+    public String getTotalOutstandingAmountOfSalesInvoicesAfterSyncing() throws InterruptedException {
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        System.out.println("total outstanding amount of sales invoices at list view after syncing " + getWebElement(totalOutstandingAmountOfSalesInvoicesAtViewList).getText());
+        Allure.step("total outstanding  amount of sales invoices at list view after syncing " + getWebElement(totalOutstandingAmountOfSalesInvoicesAtViewList).getText());
+        return getWebElement(totalOutstandingAmountOfSalesInvoicesAtViewList).getText();
+    }
+    public String getTotalPaymentReceivedAmountOfSalesInvoicesAfterSyncing() throws InterruptedException {
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        System.out.println("total payment received amount of sales invoices at list view after syncing " + getWebElement(totalPaymentReceivedAmountOfSalesInvoicesAtViewList).getText());
+        Allure.step("total payment received  amount of sales invoices at list view after syncing " + getWebElement(totalPaymentReceivedAmountOfSalesInvoicesAtViewList).getText());
+        return getWebElement(totalPaymentReceivedAmountOfSalesInvoicesAtViewList).getText();
+    }
     public String getNumberOfDraftInvoicesAfterCreatingNewDraftSalesInvoices() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
@@ -179,7 +280,7 @@ public class SalesInvoicesListPage extends MainPage {
         getWebElement(nameField).sendKeys(invoiceName);
 //        getWebElement(reloadIcon).click();
         Thread.sleep(threadTimeOut);
-        if (tryToGetWebElement(firstSalesInvoice) == GeneralConstants.SUCCESS) {
+        if (tryToGetWebElementV(firstSalesInvoice) == GeneralConstants.SUCCESS) {
             Allure.step(" open sales invoice which appear after searching");
             getWebElement(firstSalesInvoice).click();
             return GeneralConstants.SUCCESS;
@@ -197,6 +298,13 @@ public class SalesInvoicesListPage extends MainPage {
         return getWebElement(listCount).getText();
     }
 
+    public String getListAccountAfterSyncing() {
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        System.out.println("number of sales invoices at list view After Syncing " + getWebElement(listCount).getAttribute("textContent"));
+        Allure.step("number of sales invoices at list view After Syncing " + getWebElement(listCount).getAttribute("textContent"));
+        return getWebElement(listCount).getAttribute("textContent");
+    }
 
 //    public void enterValidDataIntoMainData (String vmUrl , String apiKey , String secretKey)
 //    {

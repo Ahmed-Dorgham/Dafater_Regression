@@ -1,9 +1,7 @@
 package TestCases;
 
 import GeneralConstants.GeneralConstants;
-import Pages.HomePage;
-import Pages.LoginPage;
-import Pages.MainPage;
+import Pages.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -28,6 +26,8 @@ public class BaseTest extends MainPage {
     MainPage mainPageObj;
     LoginPage loginPageObj;
     HomePage homePageObj;
+    CompaniesListPage companiesListPageObj;
+    CompanyPage companyPageObj;
     public String websiteLink_4;
     public String homePageLink_4;
     public String websiteLink_5;
@@ -35,7 +35,10 @@ public class BaseTest extends MainPage {
     public static TakesScreenshot takesScreenshot;
     String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
     String dateTime = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-    public String companyName = "شركة مجموعة بسام مطشر عجمي السعدون للتجارة";
+//    public String companyName = "مؤسسة محمد سليمان صلبي الحربي للتجارة";
+//    public String companyName = "شركة سابر للتقييم العقاري";
+    public String companyName = "مؤسسة روعة النخبة للمقاولات";
+    //    public String companyName = "شركة مجموعة بسام مطشر عجمي السعدون للتجارة";
     public String companyIdValue = "123456789";
     public String taxIdValue = "123456789";
     public String cityName = "city";
@@ -90,21 +93,29 @@ public class BaseTest extends MainPage {
             homePageObj = loginPageObj.loginWithValidData(userName_4, password_4);
             WebDriverManager.chromedriver().clearDriverCache().setup();
             waitUntilElementToBePresent(homePageObj.salesInvoicesTab, GeneralConstants.globalTimeOut);
-            if (tryToGetWebElement(homePageObj.closeIcon) == GeneralConstants.SUCCESS) {
+            if (tryToGetWebElementV(homePageObj.closeIconWelcome) == GeneralConstants.SUCCESS) {
                 homePageObj.closeWelcomeMsg();
             }
+
         } else {
             System.out.println(" there is an error happen");
         }
     }
 
+
     @AfterMethod
     @Parameters({"Scope"})
     public void tearDownTestCase(String Scope) throws InterruptedException {
         driver.navigate().to(homePageLink_5);
-//        driver.manage().deleteAllCookies();
         WebDriverManager.chromedriver().clearDriverCache().setup();
-        homePageObj.logOutFromDafater_5();
+        if (tryToGetWebElementV(homePageObj.loginBtn) == GeneralConstants.SUCCESS) {
+            Allure.step("go to login page");
+            getWebElement(homePageObj.loginBtn).click();
+            waitUntilElementVisibility(loginPageObj.userNameField, GeneralConstants.minTimeOut);
+        } else {
+            homePageObj.logOutFromDafater_5();
+        }
+
         driver.manage().deleteAllCookies();
         if (Scope.equals("Regression")) {
             driver.navigate().to(websiteLink_5);

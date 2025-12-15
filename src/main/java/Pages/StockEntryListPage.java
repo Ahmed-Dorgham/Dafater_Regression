@@ -89,15 +89,11 @@ public class StockEntryListPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementNotHaveSpecificText(listCount_5, "تحديث");
       Allure.step("number of all stock entries at list view after Syncing " + getWebElement(listCount_5).getText());
-        if (getWebElement(listCount_5).getText().contains("من"))
-        {
-            Allure.step("number of all stock entries at list view after Syncing  " + getWebElement(listCount_5).getText());
 
-            Allure.step("number of all stock entries at list view after Syncing  0 ");
-            return "0";
-        }
+            System.out.println("number of all stock entries at list view after Syncing  " + getWebElement(listCount_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(listCount_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1]);
+            Allure.step("number of all stock entries at list view after Syncing  " + getWebElement(listCount_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(listCount_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1]);
 
-        return getWebElement(listCount_5).getText();
+        return getWebElement(listCount_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(listCount_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1];
     }
 
     public String getNumberOfAllItemsAfterSyncing() throws InterruptedException {

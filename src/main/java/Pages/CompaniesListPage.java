@@ -36,7 +36,7 @@ public class CompaniesListPage extends MainPage {
     private By totalInvoicesAmountAtViewList = By.xpath("//h3[contains(text(),'اجمالي الفواتير')]/following-sibling::div");
     private By salesInvoicesTab = By.id("module-anchor-Selling");
     private By sellingPriceListsOpt = By.xpath("//*[contains(@id,'sidebar-selling-price-lists')]");
-    private By chosenCompany ;
+    private By chosenCompany;
     private By totalCompanies = By.xpath("(//*[contains(@class,'total-rows')])" +
             "| (//*[contains(@class,'list-count')])");
     private By companyLabel = By.xpath("(//h3[contains(text(),'الشركة')])" +
@@ -44,15 +44,15 @@ public class CompaniesListPage extends MainPage {
 
     public CompanyPage openSpecificCompany(String companyName) {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        waitUntilElementToBePresent(viewInListTitle,GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(viewInListTitle, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-       chosenCompany = By.xpath( "//*[contains(@title,'" + companyName + "')]");
+        chosenCompany = By.xpath("//*[contains(@title,'" + companyName + "')]");
         Allure.step("open company  ");
-        waitUntilElementToBePresent(chosenCompany,GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
         scrollToSpeceficElement(chosenCompany);
-        waitUntilElementToBePresent(chosenCompany,GeneralConstants.minTimeOut);
-       getWebElement(chosenCompany).click();
-       return new CompanyPage(driver);
+        waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
+        getWebElement(chosenCompany).click();
+        return new CompanyPage(driver);
 
     }
 
@@ -71,14 +71,24 @@ public class CompaniesListPage extends MainPage {
         Allure.step("number of companies at list view before Syncing " + getWebElement(totalCompanies).getText());
         return getWebElement(totalCompanies).getText();
     }
-    public String getNumberOfAllCompaniesAfterSyncing() {
+
+    public String getNumberOfAllCompaniesAfterSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(companyLabel, GeneralConstants.minTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementNotHaveSpecificText(listCount,"تحديث");
-        Allure.step("number of companies at list view after Syncing " + getWebElement(totalCompanies).getText());
-        return getWebElement(totalCompanies).getText();
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementNotHaveSpecificText(listCount, "تحديث");
+
+//        if (getWebElement(totalCompanies).getAttribute("textContent").contains("من")) {
+//            System.out.println("number of all companies at list view after Syncing " + getWebElement(totalCompanies).getText());
+//            Allure.step("number of all companies at list view after Syncing " + getWebElement(totalCompanies).getText());
+//
+//            Allure.step("number of all companies at list view after Syncing 0 ");
+//            return "0";
+//        }
+        return getWebElement(totalCompanies).getAttribute("textContent");
+
     }
+
     public String getNumberOfAllItemsBeforeCreatingNewItem() throws InterruptedException {
 
         waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);

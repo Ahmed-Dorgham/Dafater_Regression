@@ -21,9 +21,9 @@ public class DataMigrationToolPage extends MainPage {
     private By closeIcon = By.xpath("(//*[contains(@class,'btn btn-modal-close btn-link')])");
     private By allCheckBox = By.xpath("//*[contains(@class,'grid-heading-row with-filter')]//*[contains(@type,'checkbox')]");
     private By vmUrlInputField = By.xpath("(//*[contains(@class,'input-with-feedback form-control')])[1]");
-    private By apiKeyInputField = By.xpath("(//*[contains(@class,'input-with-feedback form-control')])[2]");
+    private By apiKeyInputField = By.xpath("(//*[contains(@class,'input-with-feedback form-control')])[1]");
     private By saveBtn = By.xpath("(//*[contains(@data-action_name,'Save')])");
-    private By secretKeyInputField = By.xpath("(//*[contains(@class,'input-with-feedback form-control')])[3]");
+    private By secretKeyInputField = By.xpath("(//*[contains(@class,'input-with-feedback form-control')])[2]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
 
     public void clickOnCheckVmConnectionBtn() {
@@ -46,6 +46,10 @@ public class DataMigrationToolPage extends MainPage {
 
         waitUntilElementVisibility(saveBtn, GeneralConstants.minTimeOut);
         getWebElement(saveBtn).click();
+        Allure.step(" choose all doc types");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementVisibility(allCheckBox, GeneralConstants.minTimeOut);
+        getWebElement(allCheckBox).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementVisibility(syncDocTypesDataBtn, GeneralConstants.minTimeOut);
         getWebElement(syncDocTypesDataBtn).click();
@@ -77,9 +81,10 @@ public class DataMigrationToolPage extends MainPage {
 
     public void enterValidDataIntoMainData(String vmUrl, String apiKey, String secretKey) {
         Allure.step(" enter valid data into main data ");
-        waitUntilElementVisibility(vmUrlInputField, GeneralConstants.minTimeOut);
-        getWebElement(vmUrlInputField).clear();
-        getWebElement(vmUrlInputField).sendKeys(vmUrl);
+//        waitUntilElementVisibility(vmUrlInputField, GeneralConstants.minTimeOut);
+//        getWebElement(vmUrlInputField).clear();
+//        getWebElement(vmUrlInputField).sendKeys(vmUrl);
+        waitUntilElementVisibility(apiKeyInputField, GeneralConstants.minTimeOut);
         getWebElement(apiKeyInputField).clear();
         getWebElement(apiKeyInputField).sendKeys(apiKey);
         getWebElement(secretKeyInputField).clear();

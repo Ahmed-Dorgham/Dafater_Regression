@@ -37,13 +37,12 @@ public class ComparingJournalEntriesTest extends BaseTest {
         loginPageObj.switchToDafater_5(websiteLink_5);
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
         journalEntryListPageObj = homePageObj.openJournalEntryListPage();
+//        Allure.step("filter with journal entries only at view list without returns ");
+//        journalEntryListPageObj.filterDocTypes();
         String numberOfAllPurchaseReceiptAfterSyncing = journalEntryListPageObj.getNumberOfAllJournalEntriesAfterSyncing();
         Allure.step("verify that number of all Journal entry which appear at dafater 5 is equal to number of all Journal entry at dafater 4 ");
         softAssert.assertEquals(numberOfAllJournalEntryBeforeSyncing, numberOfAllPurchaseReceiptAfterSyncing);
         softAssert.assertAll();
         Allure.step(" number of all Journal entry which appear at dafater 5 is " + numberOfAllPurchaseReceiptAfterSyncing + " and number of all Journal entry at dafater 4 is " + numberOfAllJournalEntryBeforeSyncing + " and this is correct ");
-
     }
-
-
 }

@@ -103,7 +103,7 @@ public class PurchaseTaxesAndChargesTemplatesListPage extends MainPage {
         return getWebElement(numberOfPurchaseTaxesAndChargesTemplates).getText();
     }
 
-    public String getNumberOfPurchaseTaxesAndChargesTemplatesAfterSyncing() {
+    public String getNumberOfPurchaseTaxesAndChargesTemplatesAfterSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(taxesAndChargesLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(numberOfPurchaseTaxesAndChargesTemplates, GeneralConstants.minTimeOut);

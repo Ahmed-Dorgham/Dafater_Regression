@@ -60,6 +60,7 @@ public class ComparingWareHousesTest extends BaseTest {
         String numberOfAllWareHousesAfterSyncing = wareHouseListPageObj.getNumberOfAllWareHousesAfterSyncing();
 
        Allure.step("verify that number of all warehouses which appear at dafater 5 is equal to number of all warehouses at dafater 4 ");
+        System.out.println(" number of warehouses which appear at dafater 5 is " + numberOfAllWareHousesAfterSyncing+" and number of all warehouses at dafater 4 is "+ numberOfAllTotalWareHousesBeforeSyncing +" and this is correct ");
 
         Assert.assertEquals(numberOfAllTotalWareHousesBeforeSyncing, numberOfAllWareHousesAfterSyncing);
 

@@ -20,10 +20,12 @@ public class ItemListPage extends MainPage {
     private By salesInvoiceListTitle = By.xpath("(//*[contains(@title,'فاتورة المبيعات')]");
     private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
     private By allItemsLabel = By.xpath("(//h3[contains(text(),'جميع العناصر')])| (//div[contains(text(),'الاصناف الكلية')])");
-    private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
+    private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]" +
+            "| //*[contains(@id,'appframe-btn-جديد')]");
     private By closeFilterIcon = By.xpath("(//*[contains(@class,'filter-icon')])[2]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')] | //*[contains(@id,'freeze')]");
     By viewCompleteScreen = By.xpath("//*[@class='btn btn-secondary btn-sm ']");
+    By saveBtn = By.xpath("//*[contains(@id,'appframe-btn-حفظ')]");
     By numberOfAllItemsField = By.xpath("//h3[contains(text(),'جميع العناصر')]/following-sibling::div " +
             "|//*[contains(@class,'item-all')]");
     By numberOfSalesItemsField = By.xpath("//h3[contains(text(),'عناصر البيع')]/following-sibling::div " +
@@ -31,11 +33,14 @@ public class ItemListPage extends MainPage {
     By numberOfPurchaseItemsField = By.xpath("//h3[contains(text(),'عناصر الشراء')]/following-sibling::div" +
             "|//*[contains(@class,'item-purchase-items ')]");
     private By itemNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Item')])[1]");
+    private By itemNameAtViewList_4 = By.xpath("((//div[contains(@class,'list-row')])[3]//div)[2]//a");
+
     private By invoiceStatusAtListView = By.xpath("(((((//*[contains(@class,'level list-row-head font-weight-bold')])/following-sibling::div)[2])/div/div/div)[3])/span/span");
     private By invoiceTotalAmountValueAtListView = By.xpath("(((((//*[contains(@class,'level list-row-head font-weight-bold')])/following-sibling::div)[2])/div/div/div))[6]/span/a/div/span");
     private By totalInvoicesAmountAtViewList = By.xpath("//h3[contains(text(),'اجمالي الفواتير')]/following-sibling::div");
     private By salesInvoicesTab = By.id("module-anchor-Selling");
-    private By sellingPriceListsOpt = By.xpath("//*[contains(@id,'sidebar-selling-price-lists')]");
+    private By sellingPriceListsOpt = By.xpath("//*[contains(@id,'sidebar-selling-price-lists')]" +
+            "|//*[contains(@href,'#List/Price List')]");
 
     public ItemPage clickOnNewItemBtn() {
        Allure.step("click on new item btn ");
@@ -48,7 +53,17 @@ public class ItemListPage extends MainPage {
         getWebElement(viewCompleteScreen).click();
         return new ItemPage(driver);
     }
+    public ItemPage clickOnNewItemBtn_4() {
+        Allure.step("click on new item btn ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
+        waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
 
+        getWebElement(newBtn).click();
+        waitUntilElementToBePresent(saveBtn, GeneralConstants.minTimeOut);
+
+        return new ItemPage(driver);
+    }
     public String getItemNameAtViewList(String expected) {
 
         waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
@@ -57,7 +72,16 @@ public class ItemListPage extends MainPage {
        Allure.step("actual text is " + getWebElement(itemNameAtViewList).getAttribute("title") + " and expected text is " + expected);
         return getWebElement(itemNameAtViewList).getText();
     }
+    public String getItemNameAtViewList_4(String expected) throws InterruptedException {
 
+        waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+
+        System.out.println("actual text is " + getWebElement(itemNameAtViewList_4).getText() + " and expected text is " + expected);
+        Allure.step("actual text is " + getWebElement(itemNameAtViewList_4).getText() + " and expected text is " + expected);
+        return getWebElement(itemNameAtViewList_4).getText();
+    }
     public String getListAccountBeforeCreatingNewSalesInvoices() {
 
         waitUntilElementToBePresent(allItemsLabel, GeneralConstants.minTimeOut);

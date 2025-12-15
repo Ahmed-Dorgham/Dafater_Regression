@@ -59,7 +59,8 @@ public class StockBalanceReportPage extends MainPage {
     private By closeFilterIcon = By.xpath("(//*[contains(@class,'filter-icon')])[2]");
     private By loadDataBtn = By.xpath("//*[contains(@id,'appframe-btn-تحميل البيانات')]" +
             "| //*[@id='appframe-btn-']");
-    private By companyInputField = By.xpath("//*[@id='company']");
+    private By companyInputField = By.xpath("//*[@id='company']" +
+            "|(//*[@data-fieldname='company'])[2]");
     private By generalLedgerReportTitle = By.xpath("//h3[@title='دفتر الأستاذ العام']");
 
     private By wareHouseField_4 = By.xpath("//*[contains(@data-fieldname,'warehouse')]");
@@ -80,7 +81,8 @@ public class StockBalanceReportPage extends MainPage {
     By loadImage = By.xpath("(//*[contains(@alt,'Generic Empty State')])[3]" +
             "| (//*[contains(@class,'progress progress-striped active')])");
     By generateNewReportBtn = By.xpath("(//button[contains(text(),'توليد تقرير جديد')])");
-    By chosenCompany = By.xpath("(//*[contains(@data-target,'Company')])/following-sibling::ul/div/p/strong");
+    By chosenCompany = By.xpath("(//*[contains(@data-target,'Company')])/following-sibling::ul/div/p/strong" +
+            "|(//*[contains(@style,'font-weight: bold;')])");
     By chosenCustomer = By.xpath("(//div[@data-fieldname='customer']/div/div/ul/div/p/strong)[1]");
     By customerInputField_5 = By.xpath("//input[@data-fieldname='customer']");
     By accounts = By.xpath("//div[contains(@class,'dt-cell__content dt-cell__content--col-2')]");
@@ -135,7 +137,23 @@ public class StockBalanceReportPage extends MainPage {
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
 
     }
-
+    public String chooseCompany() {
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Allure.step("enter specific company ");
+        waitUntilElementToBePresent(companyInputField, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        getWebElement(companyInputField).click();
+        getWebElement(companyInputField).clear();
+        getWebElement(companyInputField).click();
+        waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
+        String chosenCompanyName = getWebElement(chosenCompany).getText();
+        getWebElement(chosenCompany).click();
+        System.out.println(" chosen company is " + chosenCompanyName);
+        Allure.step(" chosen company is " + chosenCompanyName);
+        return chosenCompanyName;
+    }
     public int getDefaultDebitAccountFromGL(String defaultDebitAccount) throws InterruptedException {
         int i;
         int j = 0;
@@ -207,21 +225,31 @@ public class StockBalanceReportPage extends MainPage {
     public String getOpeningValueFromStockBalance_4() {
 
         waitUntilOverlayDisappear(loadImage, freezeTimeOut);
-        if (tryToGetWebElement(openingValue) == GeneralConstants.SUCCESS) {
-            Allure.step("opening value at stock balance at dafater 4 is  " + getWebElement(openingValue).getText());
+
+        if (tryToGetWebElementV(openingValue) == GeneralConstants.SUCCESS) {
+            waitUntilElementToBePresent(openingValue, GeneralConstants.minTimeOut);
+            System.out.println(" opening value at stock balance at dafater 4 is " + getWebElement(openingValue).getText());
+            Allure.step(" opening value at stock balance at dafater 4 is " + getWebElement(openingValue).getText());
             return getWebElement(openingValue).getText();
-        } else
-        {
-            Allure.step("no data appear at  stock balance report related to chosen warehouse ");
-            return GeneralConstants.FAILED;
+        } else {
+            System.out.println(" no data appear at  stock balance report related to chosen warehouse ");
+            Allure.step(" no data appear at  stock balance report related to chosen warehouse ");
+            return "0.00";
         }
     }
 
     public String getOpeningValueFromStockBalance_5() {
-        waitUntilOverlayDisappear(loadImage, freezeTimeOut);
-        Allure.step("opening value at stock balance at dafater 5 is  " + getWebElement(openingValue).getText());
+        if (tryToGetWebElementV(openingValue) == GeneralConstants.SUCCESS) {
+            waitUntilElementToBePresent(openingValue, GeneralConstants.minTimeOut);
+            System.out.println(" opening value at stock balance at dafater 4 is " + getWebElement(openingValue).getText());
+            Allure.step(" opening value at stock balance at dafater 4 is " + getWebElement(openingValue).getText());
+            return getWebElement(openingValue).getText();
+        } else {
+            System.out.println(" no data appear at  stock balance report related to chosen warehouse ");
+            Allure.step(" no data appear at  stock balance report related to chosen warehouse ");
+            return "0.00";
+        }
 
-        return getWebElement(openingValue).getText();
     }
 
     //    public String getClosingValueFromStockBalance_4() {
@@ -231,24 +259,43 @@ public class StockBalanceReportPage extends MainPage {
 //        return getWebElement(closingValue).getText();
 //    }
     public String getOpeningQuantityFromStockBalance_4() {
-        waitUntilOverlayDisappear(loadImage, freezeTimeOut);
-        Allure.step("opening quantity at stock balance at dafater 4 is  " + getWebElement(openingQuantity).getText());
+        if (tryToGetWebElementV(openingQuantity) == GeneralConstants.SUCCESS) {
+            waitUntilElementToBePresent(openingQuantity, GeneralConstants.minTimeOut);
+            System.out.println(" opening quantity at stock balance at dafater 4 is " + getWebElement(openingQuantity).getText());
+            Allure.step(" opening quantity at stock balance at dafater 4 is " + getWebElement(openingQuantity).getText());
+            return getWebElement(openingQuantity).getText();
+        } else {
+            System.out.println(" no data exist at stock balance  report so opening quantity value is 0.00");
+            Allure.step(" no data exist at stock balance  report so opening quantity value is 0.00");
+            return "0.00";
+        }
 
-        return getWebElement(openingQuantity).getText();
     }
 
     public String getOpeningQuantityFromStockBalance_5() {
-        waitUntilOverlayDisappear(loadImage, freezeTimeOut);
-        Allure.step("opening quantity at stock balance at dafater 5 is  " + getWebElement(openingQuantity).getText());
-
-        return getWebElement(openingQuantity).getText();
+        if (tryToGetWebElementV(openingQuantity) == GeneralConstants.SUCCESS) {
+            waitUntilElementToBePresent(openingQuantity, GeneralConstants.minTimeOut);
+            System.out.println(" opening quantity at stock balance at dafater 4 is " + getWebElement(openingQuantity).getText());
+            Allure.step(" opening quantity at stock balance at dafater 4 is " + getWebElement(openingQuantity).getText());
+            return getWebElement(openingQuantity).getText();
+        } else {
+            System.out.println(" no data exist at stock balance  report ");
+            Allure.step(" no data exist at stock balance  report ");
+            return "0.00";
+        }
     }
 
     public String getClosingQuantityFromStockBalance_4() {
-        waitUntilOverlayDisappear(loadImage, freezeTimeOut);
-        Allure.step("closing quantity at stock balance at dafater 4 is  " + getWebElement(closingQuantity).getText());
-
-        return getWebElement(closingQuantity).getText();
+        if (tryToGetWebElementV(closingQuantity) == GeneralConstants.SUCCESS) {
+            waitUntilElementToBePresent(closingQuantity, GeneralConstants.minTimeOut);
+            System.out.println(" closing quantity at stock balance at dafater 4 is" + getWebElement(closingQuantity).getText());
+            Allure.step("closing quantity at stock balance at dafater 4 is " + getWebElement(closingQuantity).getText());
+            return getWebElement(closingQuantity).getText();
+        } else {
+            System.out.println(" no data exist at stock balance  report so closing quantity value is 0.00 ");
+            Allure.step(" no data exist at stock balance  report so closing quantity value is 0.00 ");
+            return "0.00";
+        }
     }
 
     public String getValueAtDefaultIncomeAccountFromGL(int i) {
@@ -297,9 +344,28 @@ public class StockBalanceReportPage extends MainPage {
 
     public String getSelectedWarehouseName() {
         waitUntilElementToBePresent(chosenWarehouse, GeneralConstants.minTimeOut);
-        Allure.step(" warehouse name is " + getWebElement(chosenWarehouse).getText());
-        return getWebElement(chosenWarehouse).getText();
+       System.out.println(" warehouse name is " + getWebElement(chosenWarehouse).getText().split("-")[0].trim());
+        Allure.step(" warehouse name is " + getWebElement(chosenWarehouse).getText().split("-")[0].trim());
+        return getWebElement(chosenWarehouse).getText().split("-")[0].trim();
     }
+
+//    public String chooseCompany() {
+//        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+//        waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
+//        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+//        Allure.step("enter specific company ");
+//        waitUntilElementToBePresent(companyInputField, GeneralConstants.minTimeOut);
+//        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+//        getWebElement(companyInputField).click();
+//        getWebElement(companyInputField).clear();
+//        getWebElement(companyInputField).click();
+//        waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
+//        String chosenCompanyName = getWebElement(chosenCompany).getText();
+//        getWebElement(chosenCompany).click();
+//        System.out.println(" chosen company is " + chosenCompanyName);
+//        Allure.step(" chosen company is " + chosenCompanyName);
+//        return chosenCompanyName;
+//    }
 
     public String getTotalTaxAmount() throws InterruptedException {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);

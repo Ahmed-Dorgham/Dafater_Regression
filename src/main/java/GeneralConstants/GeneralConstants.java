@@ -20,8 +20,12 @@ public class GeneralConstants {
 
     public final static String userName_4 = "Administrator";
     public final static String userName_5 = "Administrator";
-    public final static String password_5 = "123456";
-    public final static String password_4 = "cdWeewshgcfd";
+    public final static String password_5 = "Admin123456";
+    //    public final static String password_5 = "123456";
+//    public final static String password_4 = "Asc7yhXewfA5";
+    public final static String password_4 = "sdWeds9xdEd";
+//    public final static String password_4 = "cdWeewshgcfd";
+//    public final static String password_4 = "cAAscAAxhv7N";
 
 
     /************************************************* Variables  ************************************************/

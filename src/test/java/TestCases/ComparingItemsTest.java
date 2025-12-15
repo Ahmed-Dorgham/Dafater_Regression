@@ -66,6 +66,4 @@ public class ComparingItemsTest extends BaseTest {
         softAssert.assertAll();
 
     }
-
-
 }

@@ -20,12 +20,13 @@ public class PurchaseReceiptListPage extends MainPage {
     private By editIcon = By.className("icon-xs");
     private By salesInvoiceListTitle = By.xpath("(//*[contains(@title,'فاتورة المبيعات')]");
 
-    private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
+    private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]" +
+            "|(//*[contains(@id,'appframe-btn-جديد')])[2]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     private By purchaseReceiptListLabel = By.xpath("//h5[contains(text(),'قائمة سند إستلام')]" +
             "| //h3[contains(text(),'سند إستلام')]");
-    By numberOfAllPurchaseReceipts_4 = By.xpath("//*[contains(@class,'total-rows')");
-    By numberOfAllPurchaseReceipts_5 = By.xpath("//*[contains(@class,'total-rows') ");
+    By numberOfAllPurchaseReceipts_4 = By.xpath("//*[contains(@class,'total-rows')]");
+    By numberOfAllPurchaseReceipts_5 = By.xpath("//*[contains(@class,'total-rows')]");
     public PurchaseOrderPage clickOnNewPurchaseOrdersBtn() {
        Allure.step("click on new purchase order btn ");
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
@@ -68,15 +69,10 @@ public class PurchaseReceiptListPage extends MainPage {
            Thread.sleep(threadTimeOut);
         waitUntilElementNotHaveSpecificText(numberOfAllPurchaseReceipts_5,"تحديث");
 
-       Allure.step("number of all purchase receipt at list view after Syncing " + getWebElement(numberOfAllPurchaseReceipts_5).getText());
+        System.out.println("number of all purchase receipt at list view after Syncing " + getWebElement(numberOfAllPurchaseReceipts_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(numberOfAllPurchaseReceipts_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1]);
+       Allure.step("number of all purchase receipt at list view after Syncing " + getWebElement(numberOfAllPurchaseReceipts_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(numberOfAllPurchaseReceipts_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1]);
 
-        if (getWebElement(numberOfAllPurchaseReceipts_5).getText().contains("من"))
-        {
-            Allure.step("number of all purchase receipt at list view after Syncing " + getWebElement(numberOfAllPurchaseReceipts_5).getText());
 
-            Allure.step("number of all purchase receipt at list view after Syncing 0 ");
-            return "0";
-        }
-       return getWebElement(numberOfAllPurchaseReceipts_5).getText();
+       return getWebElement(numberOfAllPurchaseReceipts_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(numberOfAllPurchaseReceipts_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1];
     }
 }

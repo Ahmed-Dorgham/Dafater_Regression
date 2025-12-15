@@ -4,8 +4,10 @@ import GeneralConstants.GeneralConstants;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 
 public class ItemPage extends MainPage {
+    Actions actions = new Actions(driver);
     private String dataMigrationTitle = "data migration";
     // private WebDriver driver ;
 
@@ -20,11 +22,21 @@ public class ItemPage extends MainPage {
     private By newItemTitle = By.xpath("//*[contains(@title,'صنف جديد')]");
     private By itemCodeField = By.xpath("(//*[contains(@id,'item_code')])[1]");
     private By itemGroupField = By.xpath("(//*[contains(@id,'item_group')])[2]");
+    private By itemGroupField_4 = By.xpath("//input[contains(@data-fieldname,'item_group')]");
     private By itemPriceField = By.xpath("(//*[contains(@data-fieldtype,'Currency')])[3]");
-    private By itemCodeInputField = By.xpath("(//*[contains(@id,'item_code')])");
+    private By itemCodeInputField = By.xpath("(//*[contains(@id,'item_code')])" +
+            "| (//input[contains(@data-fieldname,'item_code')])");
+    private By itemCodeEnglishInputField = By.xpath("(//input[contains(@data-fieldname,'item_name')])[3]");
+    private By itemDescriptionField = By.xpath("(//textarea[contains(@data-fieldname,'description')])[2]");
+    private By itemDescriptionInputField = By.xpath("((//div[contains(@class,'clearfix form-group form-control-group has-error')])[1]//div)[2]");
+    private By defaultWareHouseField = By.xpath("(//input[contains(@data-fieldname,'default_warehouse')])");
     private By itemGroupsList = By.xpath("(//*[contains(@data-target,'Item Group')and @placeholder=' ']/following-sibling::ul)");
+    private By defaultWareHouseOpt = By.xpath("(//li[contains(@class,'ui-menu-item')][1]/a)");
+    private By valuationMethodField = By.xpath("(//*[contains(@title,'طريقة التقييم')]//*[contains(text(),'إختر')])[1]");
+    private By valuationMethodFieldOpt = By.xpath("(//*[contains(@title,'طريقة التقييم')]//ul//li)[3]");
     private By itemGroupOpt = By.xpath("((//*[contains(@data-target,'Item Group')and @placeholder=' ']/following-sibling::ul/li))[1]" +
-            "| ((//*[contains(@data-target,'Item Group')and @placeholder=' ']/following-sibling::ul/div/p))[1]");
+            "| ((//*[contains(@data-target,'Item Group')and @placeholder=' ']/following-sibling::ul/div/p))[1]" +
+            "| //li[contains(@class,'ui-menu-item')][1]/a");
     //    private By itemOpt = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)/li)[1]");
     private By dueDateField = By.xpath("//*[contains(@id,'due_date')]");
     private By salesTab = By.xpath("//*[contains(@id,'item-sales_details-tab')]");
@@ -34,13 +46,17 @@ public class ItemPage extends MainPage {
     private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
     private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
     private By saveAndSubmitBtn = By.xpath("//*[contains(@class,'btn btn-inverse btn-sm save-submit-action toolbar-btn')]");
-    private By saveBtn = By.xpath("//*[contains(@data-action_name,'Save')]");
-    private By enablingLabel = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap blue')])");
+    private By saveBtn = By.xpath("//*[contains(@data-action_name,'Save')]" +
+            "| //*[contains(@id,'appframe-btn-حفظ')]");
+    private By enablingLabel = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap blue')])" +
+            "|  //*[contains(@id,'appframe-btn-إنشاء نسخة')]");
     private By saveAndSubmitBtnFromSalesOrder = By.xpath("(//*[contains(@class,'btn btn-inverse btn-sm save-submit-action toolbar-btn')])[2]");
     private By yesBtn = By.xpath("(//*[contains(@class,'btn btn-primary btn-sm btn-modal-primary')])");
     private By submittedStatus = By.xpath("(//*[contains(@class,'label label-success')])");
     private By draftStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap red')])/span");
-    private By itemName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By itemName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]" +
+            "| (//h3[contains(@class,'ellipsis title-text')])[3]" +
+            "| (//h5[contains(@class,'title-text pull-left')])[2]");
     private By itemName_4 = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By ItemCode = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By DraftInvoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
@@ -51,6 +67,8 @@ public class ItemPage extends MainPage {
     private By salesInvoicesOpt = By.xpath("//*[contains(@id,'sidebar-selling-invoice')]");
     private By creditNoteChoice = By.xpath("//*[contains(text(),'مرتجع / اشعار دائن') and @class = 'dropdown-item']");
     private By itemsLabel = By.xpath("(//*[contains(text(),'الاصناف')])[2]");
+    private By valuationMethods = By.xpath("//*[contains(@data-fieldname,'valuation_method')]");
+
     private By totalAmountLabel = By.xpath("(//*[contains(text(),'الكمية الإجمالية')])");
     private By posProfileUInputField = By.xpath("//input[contains(@data-fieldname,'pos_profile')]");
     private By posProfileChoice = By.xpath("(//input[contains(@data-fieldname,'pos_profile')]/following-sibling::ul/li)[1]");
@@ -72,28 +90,28 @@ public class ItemPage extends MainPage {
 //        waitUntilElementToBePresent(customersListSalesInvoice, GeneralConstants.minTimeOut);
 //        waitUntilElementToBeClickable(customerOptSalesInvoice, GeneralConstants.minTimeOut);
 //        getWebElement(customerOptSalesInvoice).click();
-       Allure.step("enter dues date  ");
+        Allure.step("enter dues date  ");
         waitUntilElementVisibility(dueDateField, GeneralConstants.minTimeOut);
         getWebElement(dueDateField).sendKeys(dueDate);
-       Allure.step("Scroll down to item field ");
+        Allure.step("Scroll down to item field ");
         scrollToSpeceficElement(totalAmountLabel);
         //   Thread.sleep(6000);
-       Allure.step(" select item  ");
+        Allure.step(" select item  ");
         clickByActions(itemCodeField);
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
         getWebElement(itemCodeInputField).sendKeys("item");
         waitUntilElementToBeClickable(itemGroupOpt, GeneralConstants.minTimeOut);
         clickByActions(itemGroupOpt);
 
-       Allure.step("unselect update stock opt");
+        Allure.step("unselect update stock opt");
         getWebElement(updateStockBtn).click();
 
-       Allure.step("scroll up to save and submit btn ");
+        Allure.step("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
 
-       Allure.step(" save and submit sales invoice ");
+        Allure.step(" save and submit sales invoice ");
         getWebElement(saveAndSubmitBtn).click();
-       Allure.step("click on yes btn ");
+        Allure.step("click on yes btn ");
         waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
         getWebElement(yesBtn).click();
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
@@ -104,36 +122,69 @@ public class ItemPage extends MainPage {
 
         waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
 
-       Allure.step("enter item code");
+        Allure.step("enter item code");
         getWebElement(itemCodeInputField).sendKeys(itemCode);
-       Allure.step("select item group ");
-        getWebElement(itemGroupField).click();
+        Allure.step("select item group ");
+//        getWebElement(itemGroupField).click();
+        waitUntilElementVisibility(itemGroupField, GeneralConstants.minTimeOut);
+        clickByActions(itemGroupField);
         waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
         getWebElement(itemGroupOpt).click();
-       Allure.step("click on save btn ");
+        Allure.step("click on save btn ");
         getWebElement(saveBtn).click();
+        waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
+    }
+
+    public void enterValidDataIntoItemPage_4(String itemCode) throws InterruptedException {
+        Allure.step("select item group ");
+        getWebElement(itemGroupField_4).click();
+        waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
+        getWebElement(itemGroupOpt).click();
+        Allure.step("enter item code in english ");
+        getWebElement(itemCodeEnglishInputField).click();
+        getWebElement(itemCodeEnglishInputField).sendKeys(itemCode);
+        Allure.step("enter item code ");
+        getWebElement(itemCodeInputField).click();
+        getWebElement(itemCodeInputField).sendKeys(itemCode);
+//        Allure.step("enter item description");
+//
+//        actions.click(getWebElement(itemDescriptionField)).build().perform();
+//        getWebElement(itemDescriptionField).sendKeys(itemCode);
+        Allure.step("select default warehouse ");
+        getWebElement(defaultWareHouseField).click();
+        waitUntilElementVisibility(defaultWareHouseOpt, GeneralConstants.minTimeOut);
+        actions.click(getWebElement(defaultWareHouseOpt)).build().perform();
+        Allure.step("select valuation method ");
+        getWebElement(valuationMethodField).click();
+        waitUntilElementVisibility(valuationMethodFieldOpt,GeneralConstants.minTimeOut);
+        getWebElement(valuationMethodFieldOpt).click();
+        Allure.step("click on save btn ");
+        scrollToSpeceficElement(saveBtn);
+        Allure.step("click on save btn ");
+        Thread.sleep(threadTimeOut);
+        actions.click(getWebElement(saveBtn)).build().perform();
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
     }
 
     public void enterValidDataForSalesItem(String itemCode) throws InterruptedException {
 
         waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
-       Allure.step("enter item code");
+        Allure.step("enter item code");
         getWebElement(itemCodeInputField).sendKeys(itemCode);
-       Allure.step("select item group ");
+        Allure.step("select item group ");
         getWebElement(itemGroupField).click();
         waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
         getWebElement(itemGroupOpt).click();
-       Allure.step("click on purchase tab ");
+        Allure.step("click on purchase tab ");
         getWebElement(purchaseTab).click();
         getWebElement(purchaseTab).click();
-       Allure.step("unselect is purchase item checkbox ");
+        Allure.step("unselect is purchase item checkbox ");
         waitUntilElementToBePresent(isPurchaseItemCheckBox, GeneralConstants.minTimeOut);
         getWebElement(isPurchaseItemCheckBox).click();
 
-       Allure.step("click on save btn ");
+        Allure.step("click on save btn ");
         getWebElement(saveBtn).click();
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
     }
@@ -141,22 +192,22 @@ public class ItemPage extends MainPage {
     public void enterValidDataForPurchaseItem(String itemCode) throws InterruptedException {
 
         waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
-       Allure.step("enter item code");
+        Allure.step("enter item code");
         getWebElement(itemCodeInputField).sendKeys(itemCode);
-       Allure.step("select item group ");
+        Allure.step("select item group ");
         getWebElement(itemGroupField).click();
         waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
         getWebElement(itemGroupOpt).click();
-       Allure.step("click on sales tab ");
+        Allure.step("click on sales tab ");
         getWebElement(salesTab).click();
         getWebElement(salesTab).click();
-       Allure.step("unselect is sales item checkbox ");
+        Allure.step("unselect is sales item checkbox ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(isSalesItemCheckBox, GeneralConstants.minTimeOut);
         getWebElement(isSalesItemCheckBox).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-       Allure.step("click on save btn ");
+        Allure.step("click on save btn ");
         getWebElement(saveBtn).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
@@ -166,16 +217,16 @@ public class ItemPage extends MainPage {
 
         waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
 
-       Allure.step("enter item code");
+        Allure.step("enter item code");
         getWebElement(itemCodeInputField).sendKeys(itemCode);
-       Allure.step("select item group ");
+        Allure.step("select item group ");
         getWebElement(itemGroupField).click();
         waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
         getWebElement(itemGroupOpt).click();
 
 
-       Allure.step("click on save btn ");
+        Allure.step("click on save btn ");
         getWebElement(saveBtn).click();
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
 
@@ -183,10 +234,10 @@ public class ItemPage extends MainPage {
     }
 
     public PosViewPage openPosView() throws InterruptedException {
-       Allure.step("click on is pos view btn");
+        Allure.step("click on is pos view btn");
         waitUntilElementToBePresent(posViewBtn, GeneralConstants.minTimeOut);
         getWebElement(posViewBtn).click();
-       Allure.step("click on accept btn ");
+        Allure.step("click on accept btn ");
 //        Thread.sleep(9000);
         waitUntilElementNotToBeVisible(posViewBtn, GeneralConstants.minTimeOut);
 //        Alert alert = driver.switchTo().alert();
@@ -240,25 +291,27 @@ public class ItemPage extends MainPage {
 //    }
 
     public String getItemName(String expected) {
-       Allure.step("Verify the name of item  ");
+        Allure.step("Verify the name of item  ");
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementToBePresent(itemName,GeneralConstants.minTimeOut);
-       Allure.step("actual text is  " + getWebElement(itemName).getText() + "  and expected text is  " + expected);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(itemName, GeneralConstants.minTimeOut);
+        Allure.step("actual text is  " + getWebElement(itemName).getText() + "  and expected text is  " + expected);
         return getWebElement(itemName).getText();
     }
+
     public String getItemName_3(String expected) {
-       Allure.step("Verify the name of item  ");
+        Allure.step("Verify the name of item  ");
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementToBePresent(itemName_4,GeneralConstants.minTimeOut);
-       Allure.step("actual text is  " + getWebElement(itemName_4).getAttribute("title") + "  and expected text is  " + expected);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(itemName_4, GeneralConstants.minTimeOut);
+        Allure.step("actual text is  " + getWebElement(itemName_4).getAttribute("title") + "  and expected text is  " + expected);
         return getWebElement(itemName_4).getAttribute("title");
     }
+
     public String getItemCode(String expected) {
-       Allure.step("Verify the name of item  ");
+        Allure.step("Verify the name of item  ");
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
-       Allure.step("actual text is  " + getWebElement(ItemCode).getText() + "  and expected text is  " + expected);
+        Allure.step("actual text is  " + getWebElement(ItemCode).getText() + "  and expected text is  " + expected);
         return getWebElement(ItemCode).getText();
     }
 //
@@ -273,7 +326,7 @@ public class ItemPage extends MainPage {
     public String getInvoiceNameForCreditNote(String expected) {
 //       Allure.step("Verify the name of sales invoice  ");
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
-       Allure.step("actual text is  " + getWebElement(invoiceNameForCreditNote).getAttribute("title") + "  and expected text is  " + expected);
+        Allure.step("actual text is  " + getWebElement(invoiceNameForCreditNote).getAttribute("title") + "  and expected text is  " + expected);
         return getWebElement(invoiceNameForCreditNote).getText();
     }
 //
@@ -297,12 +350,20 @@ public class ItemPage extends MainPage {
 //    }
     public ItemListPage openItemListPage() {
 
-       Allure.step("navigate to item list ");
+        Allure.step("navigate to item list ");
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
         getWebElement(itemOpt).click();
         driver.navigate().refresh();
-        waitUntilElementToBePresent(closeFilterIcon, GeneralConstants.minTimeOut);
-        getWebElement(closeFilterIcon).click();
-        return new ItemListPage(driver);
+
+        if (tryToGetWebElementV(closeFilterIcon)==GeneralConstants.SUCCESS)
+        {
+            Allure.step("click on close filter icon  ");
+            getWebElement(closeFilterIcon).click();
+            return new ItemListPage(driver);
+        }
+
+        else
+            return new ItemListPage(driver);
+
     }
 }

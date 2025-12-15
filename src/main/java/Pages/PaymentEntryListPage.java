@@ -43,23 +43,22 @@ public class PaymentEntryListPage extends MainPage {
 
         waitUntilElementToBePresent(paymentEntryLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-       Allure.step("number of all payment entry at list view before syncing " + getWebElement(numberOfAllPaymentEntry_4).getText());
-        return getWebElement(numberOfAllPaymentEntry_4).getText();
+      System.out.println("number of all payment entry at list view before syncing " + getWebElement(numberOfAllPaymentEntry_4).getAttribute("textContent"));
+       Allure.step("number of all payment entry at list view before syncing " + getWebElement(numberOfAllPaymentEntry_4).getAttribute("textContent"));
+        return getWebElement(numberOfAllPaymentEntry_4).getAttribute("textContent");
     }
-    public String getNumberOfAllPaymentEntryAfterSyncing() {
+    public String getNumberOfAllPaymentEntryAfterSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(paymentEntryLabel, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
         waitUntilElementNotHaveSpecificText(numberOfAllPaymentEntry_5,"تحديث");
-        if (getWebElement(numberOfAllPaymentEntry_5).getText().contains("من"))
-        {
-            Allure.step("number of all payment entry at list view after syncing  " + getWebElement(numberOfAllPaymentEntry_5).getText());
 
-            Allure.step("number of all payment entry at list view after syncing  0 ");
-            return "0";
-        }
+           System.out.println("number of all payment entry at list view after syncing  " + getWebElement(numberOfAllPaymentEntry_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(numberOfAllPaymentEntry_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1]);
+            Allure.step("number of all payment entry at list view after syncing  " + getWebElement(numberOfAllPaymentEntry_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(numberOfAllPaymentEntry_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1]);
 
-       return getWebElement(numberOfAllPaymentEntry_5).getText();
+
+
+       return getWebElement(numberOfAllPaymentEntry_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(numberOfAllPaymentEntry_5).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1];
     }
     public String getTotalAmountOfPurchaseInvoicesAfterSyncing() throws InterruptedException {
 

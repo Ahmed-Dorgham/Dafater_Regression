@@ -18,8 +18,12 @@ public class CreditNotesListPage extends MainPage {
     private By statusMsg = By.className("msgprint");
     private By editIcon = By.className("icon-xs");
     private By salesInvoiceListTitle = By.xpath("(//*[contains(@title,'فاتورة المبيعات')]");
-    private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
-    private By creditNoteLabel = By.xpath("(//h3[contains(text(),'فاتورة المبيعات')])| (//h5[contains(text(),'قائمة اشعار دائن')])");
+    private By listCount = By.xpath("(//*[contains(@class,'list-count')])" +
+            "|(//*[contains(@class,'total-rows')])");
+    private By creditNoteLabel = By.xpath("(//h3[contains(text(),'فاتورة المبيعات')])" +
+            "| (//h5[contains(text(),'قائمة اشعار دائن')])" +
+            "| (//h5[contains(text(),'قائمة مرتجع المشتريات')])" +
+            "| (//h3[contains(text(),'فاتورة المشتريات')])");
 
     private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
     private By closeFilterIcon = By.xpath("(//*[contains(@class,'filter-icon')])[2]");
@@ -47,8 +51,39 @@ public class CreditNotesListPage extends MainPage {
 
     private By valueOfOutstandingAmount = By.xpath("//h3[contains(text(),'المبلغ المعلق')]/following-sibling::div" +
             "|//*[@class='return-note-lv-outstanding-amt ']");
+    By closeFilter = By.xpath("//*[contains(@class,'btn btn-default btn-xs remove-filter')]");
+    By firstCreditNote = By.xpath("(//*[contains(@class,'result-list')]//*[contains(@class,'doclist-row row')])[1]//a" +
+            "|(//*[contains(@class,'result')]//*[contains(@class,'list-row-container')])[1]//*[contains(@class,'list-row-col ellipsis list-subject level ')]//a");
+    By searchIcon = By.xpath("//li[@class='fas fa-search']");
+    By nameField = By.xpath("//input[@data-fieldname='name']");
+    private By totalPaymentReceivedAmountOfCreditNotesAtViewList = By.xpath("//h3[contains(text(),'الدفعات المقدمة')]/following-sibling::div" +
+            "|//h3[contains(text(),'المبلغ المدفوع')]/following-sibling::div" +
+            "|//*[@class='sales-invoice-lv-total-invoices ']");
+
+    public String searchAboutSpecificCreditNote(String invoiceName) throws InterruptedException {
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        Allure.step(" search about " + invoiceName);
+        waitUntilElementToBePresent(searchIcon, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        getWebElement(searchIcon).click();
+        waitUntilElementToBePresent(nameField, GeneralConstants.minTimeOut);
+        getWebElement(nameField).sendKeys(invoiceName);
+//        getWebElement(reloadIcon).click();
+        Thread.sleep(threadTimeOut);
+        if (tryToGetWebElementV(firstCreditNote) == GeneralConstants.SUCCESS) {
+            Allure.step(" open credit note which appear after searching");
+            getWebElement(firstCreditNote).click();
+            return GeneralConstants.SUCCESS;
+        } else {
+            Allure.step(" error happen while syncing this credit note " + invoiceName + " from dafater 4 to dafater 5 and not synced successfully   ");
+            return GeneralConstants.FAILED;
+        }
+
+    }
+
     public ItemPage clickOnNewItemBtn() {
-       Allure.step("click on new item btn ");
+        Allure.step("click on new item btn ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(newBtn, GeneralConstants.minTimeOut);
@@ -64,14 +99,14 @@ public class CreditNotesListPage extends MainPage {
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
 
-       Allure.step("actual text is " + getWebElement(itemNameAtViewList).getAttribute("title") + " and expected text is " + expected);
+        Allure.step("actual text is " + getWebElement(itemNameAtViewList).getAttribute("title") + " and expected text is " + expected);
         return getWebElement(itemNameAtViewList).getText();
     }
 
     public String getListAccountBeforeCreatingNewSalesInvoices() {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
-       Allure.step("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
+        Allure.step("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 
@@ -79,16 +114,17 @@ public class CreditNotesListPage extends MainPage {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
 
-       Allure.step("number of all items at list view before creating new item " + getWebElement(numberOfAllCreditNotesField).getText());
+        Allure.step("number of all items at list view before creating new item " + getWebElement(numberOfAllCreditNotesField).getText());
         return getWebElement(numberOfAllCreditNotesField).getText();
     }
 
     public String getNumberOfAllCreditNotesBeforeSyncing() throws InterruptedException {
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
 
         Thread.sleep(threadTimeOut);
-       Allure.step("number of all credit notes at list view before Syncing " + getWebElement(numberOfAllCreditNotesField).getText());
+        System.out.println("number of all credit notes at list view before Syncing " + getWebElement(numberOfAllCreditNotesField).getText());
+        Allure.step("number of all credit notes at list view before Syncing " + getWebElement(numberOfAllCreditNotesField).getText());
         return getWebElement(numberOfAllCreditNotesField).getText();
     }
 
@@ -96,21 +132,41 @@ public class CreditNotesListPage extends MainPage {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
         //   Thread.sleep(threadTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-        waitUntilElementNotHaveSpecificText(numberOfAllCreditNotesField,"تحديث");
-       Allure.step("number of all debit notes at list view after Syncing " + getWebElement(numberOfAllCreditNotesField).getText());
-        return getWebElement(numberOfAllCreditNotesField).getText();
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementNotHaveSpecificText(numberOfAllCreditNotesField, "تحديث");
+        System.out.println("number of all credit notes at list view after Syncing " + getWebElement(numberOfAllCreditNotesField).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim().split(" ")[getWebElement(numberOfAllCreditNotesField).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim().split(" ").length - 1]);
+        Allure.step("number of all credit notes at list view after Syncing " + getWebElement(numberOfAllCreditNotesField).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim().split(" ")[getWebElement(numberOfAllCreditNotesField).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim().split(" ").length - 1]);
+        return  getWebElement(numberOfAllCreditNotesField).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim().split(" ")[getWebElement(numberOfAllCreditNotesField).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim().split(" ").length - 1];
     }
 
+    public CreditNotePage openFirstCreditNoteAtDafater_4() throws InterruptedException {
 
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        Allure.step(" open First Sales Invoice At Dafater_4 ");
+        getWebElement(firstCreditNote).click();
+        return new CreditNotePage(driver);
+    }
 
+    public String getNameOfFirstCreditNoteBeforeSyncing() throws InterruptedException {
 
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Thread.sleep(threadTimeOut);
+        if (tryToGetWebElementV(closeFilter) == GeneralConstants.SUCCESS) {
+            Allure.step("close filter ");
+            getWebElement(closeFilter).click();
+        }
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Allure.step("name of first Credit Note at list view at dafater 4  >> " + getWebElement(firstCreditNote).getText());
+        return getWebElement(firstCreditNote).getText();
+    }
 
 
     public String getNumberOfSalesItemsBeforeCreatingNewItem() {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
-       Allure.step("number of sales items at list view before creating new item " + getWebElement(numberOfCustomersDebitsField).getText());
+        Allure.step("number of sales items at list view before creating new item " + getWebElement(numberOfCustomersDebitsField).getText());
         return getWebElement(numberOfCustomersDebitsField).getText();
     }
 
@@ -118,7 +174,7 @@ public class CreditNotesListPage extends MainPage {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
 //        Thread.sleep(threadTimeOut);
-       Allure.step("value of Customers debits at list view before Syncing " + getWebElement(numberOfCustomersDebitsField).getText());
+        Allure.step("value of Customers debits at list view before Syncing " + getWebElement(numberOfCustomersDebitsField).getText());
         return getWebElement(numberOfCustomersDebitsField).getText();
     }
 
@@ -126,69 +182,166 @@ public class CreditNotesListPage extends MainPage {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
 //        Thread.sleep(threadTimeOut);
-       Allure.step("value of Customers Debits at list view after Syncing " + getWebElement(numberOfCustomersDebitsField).getText());
+        Allure.step("value of Customers Debits at list view after Syncing " + getWebElement(numberOfCustomersDebitsField).getText());
         return getWebElement(numberOfCustomersDebitsField).getText();
     }
 
     public String getNumberOfPurchaseItemsBeforeCreatingNewItem() {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
-       Allure.step("number of purchase items at list view before creating new item " + getWebElement(numberOfPrepaymentNotUserField).getText());
+        Allure.step("number of purchase items at list view before creating new item " + getWebElement(numberOfPrepaymentNotUserField).getText());
         return getWebElement(numberOfPrepaymentNotUserField).getText();
     }
-    public String getNumberOfDraftInvoicesBeforeSyncing() throws InterruptedException {
+
+    public String getNumberOfDraftCreditNotesBeforeSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-       Allure.step("number of draft credit notes at list view before syncing " + getWebElement(numberOfDraftInvoices).getText());
+        System.out.println("number of draft credit notes at list view before syncing " + getWebElement(numberOfDraftInvoices).getText());
+        Allure.step("number of draft credit notes at list view before syncing " + getWebElement(numberOfDraftInvoices).getText());
         return getWebElement(numberOfDraftInvoices).getText();
     }
+
     public String getNumberOfDraftCreditNotesAfterSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-       Allure.step("number of draft credit notes at list view after syncing " + getWebElement(numberOfDraftInvoices).getText());
+        System.out.println("number of draft credit notes at list view after syncing " + getWebElement(numberOfDraftInvoices).getText());
+        Allure.step("number of draft credit notes at list view after syncing " + getWebElement(numberOfDraftInvoices).getText());
         return getWebElement(numberOfDraftInvoices).getText();
     }
-    public String getValueOfTotalInvoicesBeforeSyncing() throws InterruptedException {
 
+    public double getValueOfTotalInvoicesBeforeSyncing() throws InterruptedException {
+        double sumOfTotalAmountValues = 0;
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-       Allure.step("value of total invoices at list view before syncing " + getWebElement(valueOfTotalInvoices).getText());
-        return getWebElement(valueOfTotalInvoices).getText();
+        while (!getWebElement(listCountOffset).getText().contains(getWebElement(listCount).getText())) {
+            // System.out.println(getWebElement(listCountOffset).getText());
+            // System.out.println(getWebElement(listCount).getText());
+            totalAmountValues = driver.findElements(totalAmountValue);
+            for (int i = 0; i < totalAmountValues.size(); i++) {
+                sumOfTotalAmountValues += Double.parseDouble(totalAmountValues.get(i).getText().replace(",", ""));
+                //System.out.println(sumOfTotalAmountValues);
+            }
+            //  System.out.println("click on next icon");
+            waitUntilElementToBeClickable(nextIcon, GeneralConstants.minTimeOut);
+            getWebElement(nextIcon).click();
+            Thread.sleep(threadTimeOut);
+        }
+
+        if (getWebElement(listCountOffset).getText().contains(getWebElement(listCount).getText())) {
+            // System.out.println(getWebElement(listCountOffset).getText());
+            // System.out.println(getWebElement(listCount).getText());
+            totalAmountValues = driver.findElements(totalAmountValue);
+            for (int i = 0; i < totalAmountValues.size(); i++) {
+                sumOfTotalAmountValues += Double.parseDouble(totalAmountValues.get(i).getText().replace(",", ""));
+                //System.out.println(sumOfTotalAmountValues);
+            }
+
+            if (getWebElement(listCount).getText().equals("0")) {
+                System.out.println("value of total invoices of credit notes at list view before syncing  " + sumOfTotalAmountValues);
+                Allure.step("value of total invoices of of credit notes at list view before syncing " + sumOfTotalAmountValues);
+                return sumOfTotalAmountValues;
+            } else {
+                System.out.println("click on next icon");
+//                scrollToSpeceficElement(nextIcon);
+                getWebElement(nextIcon).click();
+                Thread.sleep(threadTimeOut);
+            }
+        }
+        System.out.println("value of total invoices of Credit notes at list view before syncing  " + sumOfTotalAmountValues);
+        Allure.step("value of total invoices of Credit notes at list view before syncing  " + sumOfTotalAmountValues);
+        return sumOfTotalAmountValues;
+
     }
+
     public String getValueOfTotalInvoicesAfterSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-       Allure.step("value of total invoices at list view After syncing " + getWebElement(valueOfTotalInvoices).getText());
-        return getWebElement(valueOfTotalInvoices).getText();
+       System.out.println("value of total invoices at list view After syncing " + getWebElement(valueOfTotalInvoices).getAttribute("textContent").replaceAll("\\s+", ""));
+        Allure.step("value of total invoices at list view After syncing " + getWebElement(valueOfTotalInvoices).getAttribute("textContent").replaceAll("\\s+", ""));
+        return getWebElement(valueOfTotalInvoices).getAttribute("textContent").replaceAll("\\s+", "");
     }
-    public String getValueOfOutstandingAmountBeforeSyncing() throws InterruptedException {
 
-        waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
+    public double getValueOfOutstandingAmountBeforeSyncing() throws InterruptedException {
+        double sumOfTotalOutstandingAmountValues = 0;
+        waitUntilElementVisibility(draftLabel, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Thread.sleep(threadTimeOut);
+        while (!getWebElement(listCountOffset).getText().contains(getWebElement(listCount).getText())) {
+            // System.out.println(getWebElement(listCountOffset).getText());
+            // System.out.println(getWebElement(listCount).getText());
+            totalOutstandingAmountValues = driver.findElements(totalOutstandingAmountValue);
+            for (int i = 0; i < totalOutstandingAmountValues.size(); i++) {
+                sumOfTotalOutstandingAmountValues += Double.parseDouble(totalOutstandingAmountValues.get(i).getText().replace(",", ""));
+                // System.out.println(sumOfTotalOutstandingAmountValues);
+            }
+            //System.out.println("click on next icon");
+            waitUntilElementToBeClickable(nextIcon, GeneralConstants.minTimeOut);
+            getWebElement(nextIcon).click();
+            Thread.sleep(threadTimeOut);
+        }
+
+        if (getWebElement(listCountOffset).getText().contains(getWebElement(listCount).getText())) {
+//            System.out.println(getWebElement(listCountOffset).getText());
+//            System.out.println(getWebElement(listCount).getText());
+            totalOutstandingAmountValues = driver.findElements(totalOutstandingAmountValue);
+            for (int i = 0; i < totalOutstandingAmountValues.size(); i++) {
+                sumOfTotalOutstandingAmountValues += Double.parseDouble(totalOutstandingAmountValues.get(i).getText().replace(",", ""));
+//                System.out.println(sumOfTotalOutstandingAmountValues);
+            }
+            if (getWebElement(listCount).getText().equals("0")) {
+                System.out.println("total outstanding  amount of  credit notes at list view before syncing  " + sumOfTotalOutstandingAmountValues);
+                Allure.step("total outstanding  amount of  credit notes at list view before syncing  " + sumOfTotalOutstandingAmountValues);
+                return sumOfTotalOutstandingAmountValues;
+            } else {
+                System.out.println("click on next icon");
+//                scrollToSpeceficElement(nextIcon);
+                getWebElement(nextIcon).click();
+                Thread.sleep(threadTimeOut);
+            }
+        }
+        System.out.println("total outstanding  amount of  credit notes at list view before syncing " + sumOfTotalOutstandingAmountValues);
+        Allure.step("total outstanding amount of credit notes  at list view before syncing " + sumOfTotalOutstandingAmountValues);
+        return sumOfTotalOutstandingAmountValues;
+    }
+
+    public String getTotalPaymentReceivedAmountOfCreditNotesAfterSyncing() throws InterruptedException {
+
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-       Allure.step("value of outstanding amount at list view before syncing " + getWebElement(valueOfOutstandingAmount).getText());
-        return getWebElement(valueOfOutstandingAmount).getText();
+        System.out.println("total payment received amount of credit notes at list view after syncing " + getWebElement(totalPaymentReceivedAmountOfCreditNotesAtViewList).getAttribute("textContent").replaceAll("\\s+", ""));
+        Allure.step("total payment received  amount of credit notes at list view after syncing " + getWebElement(totalPaymentReceivedAmountOfCreditNotesAtViewList).getAttribute("textContent").replaceAll("\\s+", ""));
+        return getWebElement(totalPaymentReceivedAmountOfCreditNotesAtViewList).getAttribute("textContent").replaceAll("\\s+", "");
+    }
+    public String getTotalPaidAmountOfCreditNotesAfterSyncing() throws InterruptedException {
+
+        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        System.out.println("total paid amount amount of credit notes at list view after syncing " + getWebElement(totalPaymentReceivedAmountOfCreditNotesAtViewList).getAttribute("textContent").replaceAll("\\s+", ""));
+        Allure.step("total paid amount  amount of credit notes at list view after syncing " + getWebElement(totalPaymentReceivedAmountOfCreditNotesAtViewList).getAttribute("textContent").replaceAll("\\s+", ""));
+        return getWebElement(totalPaymentReceivedAmountOfCreditNotesAtViewList).getAttribute("textContent").replaceAll("\\s+", "");
     }
     public String getValueOfOutstandingAmountAfterSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-       Allure.step("value of outstanding amount at list view after syncing " + getWebElement(valueOfOutstandingAmount).getText());
-        return getWebElement(valueOfOutstandingAmount).getText();
+       System.out.println("value of outstanding amount at list view after syncing " + getWebElement(valueOfOutstandingAmount).getAttribute("textContent").replaceAll("\\s+", ""));
+        Allure.step("value of outstanding amount at list view after syncing " + getWebElement(valueOfOutstandingAmount).getAttribute("textContent").replaceAll("\\s+", ""));
+        return getWebElement(valueOfOutstandingAmount).getAttribute("textContent").replaceAll("\\s+", "");
     }
+
     public String getNumberOfPrepaymentNotUsedBeforeSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
 //        Thread.sleep(threadTimeOut);
-       Allure.step("value of prepayment not used at list view before Syncing " + getWebElement(numberOfPrepaymentNotUserField).getText());
+        Allure.step("value of prepayment not used at list view before Syncing " + getWebElement(numberOfPrepaymentNotUserField).getText());
         return getWebElement(numberOfPrepaymentNotUserField).getText();
     }
 
@@ -196,14 +349,14 @@ public class CreditNotesListPage extends MainPage {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
 //        Thread.sleep(threadTimeOut);
-       Allure.step("value of prepayment Not Used at list view after Syncing " + getWebElement(numberOfPrepaymentNotUserField).getText());
+        Allure.step("value of prepayment Not Used at list view after Syncing " + getWebElement(numberOfPrepaymentNotUserField).getText());
         return getWebElement(numberOfPrepaymentNotUserField).getText();
     }
 
     public SellingPriceListsPage openSellingPriceLists() {
-       Allure.step("click on sales invoices tab ");
+        Allure.step("click on sales invoices tab ");
         getWebElement(salesInvoicesTab).click();
-       Allure.step("open prices list page  ");
+        Allure.step("open prices list page  ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(sellingPriceListsOpt, GeneralConstants.minTimeOut);
         getWebElement(sellingPriceListsOpt).click();
@@ -214,28 +367,28 @@ public class CreditNotesListPage extends MainPage {
     public String getNumberOfAllItemsAfterCreatingNewItem() {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
-       Allure.step("number of all items at list view after creating new item " + getWebElement(numberOfAllCreditNotesField).getText());
+        Allure.step("number of all items at list view after creating new item " + getWebElement(numberOfAllCreditNotesField).getText());
         return getWebElement(numberOfAllCreditNotesField).getText();
     }
 
     public String getNumberOfSalesItemsAfterCreatingNewItem() {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
-       Allure.step("number of sales items at list view after creating new item " + getWebElement(numberOfCustomersDebitsField).getText());
+        Allure.step("number of sales items at list view after creating new item " + getWebElement(numberOfCustomersDebitsField).getText());
         return getWebElement(numberOfCustomersDebitsField).getText();
     }
 
     public String getNumberOfPurchaseItemsAfterCreatingNewItem() {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
-       Allure.step("number of sales items at list view after creating new item " + getWebElement(numberOfPrepaymentNotUserField).getText());
+        Allure.step("number of sales items at list view after creating new item " + getWebElement(numberOfPrepaymentNotUserField).getText());
         return getWebElement(numberOfPrepaymentNotUserField).getText();
     }
 
     public String getListAccountAfterCreatingNewSalesInvoices() {
 
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
-       Allure.step("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
+        Allure.step("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
         return getWebElement(listCount).getText();
     }
 }

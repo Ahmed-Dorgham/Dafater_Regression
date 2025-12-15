@@ -97,7 +97,7 @@ public class PurchaseOrderPage extends MainPage {
 //        getWebElement(salesInvoicesTab).click();
         Allure.step("click on purchase orders option");
         waitUntilElementToBePresent(purchaseOrdersOpt, GeneralConstants.minTimeOut);
-        if (tryToGetWebElement(purchaseOrdersOpt) == GeneralConstants.SUCCESS)
+        if (tryToGetWebElementV(purchaseOrdersOpt) == GeneralConstants.SUCCESS)
         {
 //            getWebElement(purchaseOrdersOpt).click();
             clickByActions(purchaseOrdersOpt);

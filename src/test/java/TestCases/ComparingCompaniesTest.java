@@ -36,7 +36,7 @@ public class ComparingCompaniesTest extends BaseTest {
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
         loginPageObj.switchToDafater_5(websiteLink_5);
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
-        companiesListPageOj = homePageObj.openCompaniesListPage();
+        companiesListPageOj = homePageObj.openCompaniesListPage_5();
 
         String numberOfAllCompaniesAfterSyncing = companiesListPageOj.getNumberOfAllCompaniesAfterSyncing();
 

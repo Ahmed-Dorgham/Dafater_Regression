@@ -61,13 +61,14 @@ public class JournalEntrytListPage extends MainPage {
 
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(journalEntryListLabel, GeneralConstants.minTimeOut);
-        if (tryToGetWebElement(closeFilter) == GeneralConstants.SUCCESS) {
+        if (tryToGetWebElementV(closeFilter) == GeneralConstants.SUCCESS) {
             Allure.step("close filter ");
             getWebElement(closeFilter).click();
         }
         waitUntilElementToBePresent(numberOfAllJournalEntries, GeneralConstants.minTimeOut);
-        Allure.step("number of all  journal entry list view before Syncing " + getWebElement(numberOfAllJournalEntries).getText());
-        return getWebElement(numberOfAllJournalEntries).getText();
+        System.out.println("number of all  journal entry list view before Syncing " + getWebElement(numberOfAllJournalEntries).getAttribute("textContent"));
+        Allure.step("number of all  journal entry list view before Syncing " + getWebElement(numberOfAllJournalEntries).getAttribute("textContent"));
+        return getWebElement(numberOfAllJournalEntries).getAttribute("textContent");
     }
 
     public String getNumberOfAllJournalEntriesAfterSyncing() throws InterruptedException {
@@ -77,15 +78,10 @@ public class JournalEntrytListPage extends MainPage {
         Thread.sleep(threadTimeOut);
         waitUntilElementNotHaveSpecificText(numberOfAllJournalEntries, "تحديث");
 
-        Allure.step(" " + getWebElement(numberOfAllJournalEntries).getText());
+        System.out.println("number of all journal entry at list view after Syncing " +getWebElement(numberOfAllJournalEntries).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(numberOfAllJournalEntries).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1]);
+        Allure.step("number of all journal entry at list view after Syncing " + getWebElement(numberOfAllJournalEntries).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(numberOfAllJournalEntries).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1]);
 
-        if (getWebElement(numberOfAllJournalEntries).getText().contains("من"))
-        {
-            Allure.step("number of all journal entry at list view after Syncing " + getWebElement(numberOfAllJournalEntries).getText());
 
-            Allure.step("number of all journal entry at list view after Syncing 0 ");
-            return "0";
-        }
-        return getWebElement(numberOfAllJournalEntries).getText();
+        return getWebElement(numberOfAllJournalEntries).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(numberOfAllJournalEntries).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1];
     }
 }

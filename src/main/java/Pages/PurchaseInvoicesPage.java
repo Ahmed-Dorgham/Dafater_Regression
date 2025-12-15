@@ -71,7 +71,7 @@ public class PurchaseInvoicesPage extends MainPage {
     public String getPurchaseInvoiceStatus() {
         String draftStatus = "مسودة";
         waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
-        if (tryToGetWebElement(successStatusField) == GeneralConstants.SUCCESS) {
+        if (tryToGetWebElementV(successStatusField) == GeneralConstants.SUCCESS) {
 //           Allure.step(" status of sales invoice  " + getWebElement(successStatusField).getText());
             return getWebElement(successStatusField).getText();
         } else {
@@ -168,7 +168,7 @@ public class PurchaseInvoicesPage extends MainPage {
         scrollToSpeceficElement(viewBtn);
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        if (tryToGetWebElement(closeIcon) == GeneralConstants.SUCCESS) {
+        if (tryToGetWebElementV(closeIcon) == GeneralConstants.SUCCESS) {
             getWebElement(closeIcon).click();
         }
         getWebElement(viewBtn).click();
@@ -242,7 +242,7 @@ public class PurchaseInvoicesPage extends MainPage {
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
 //        waitUntilElementNotContainText(invoiceName,"فاتورة");
-        if (tryToGetWebElement(closeIcon) == GeneralConstants.SUCCESS) {
+        if (tryToGetWebElementV(closeIcon) == GeneralConstants.SUCCESS) {
             getWebElement(closeIcon).click();
         }
        Allure.step("actual text is  " + getWebElement(invoiceName).getAttribute("title") + "  and expected text is  " + expected);
@@ -255,7 +255,7 @@ public class PurchaseInvoicesPage extends MainPage {
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
 
-        if (tryToGetWebElement(closeIcon) == GeneralConstants.SUCCESS) {
+        if (tryToGetWebElementV(closeIcon) == GeneralConstants.SUCCESS) {
             getWebElement(closeIcon).click();
         }
        Allure.step("actual text is  " + getWebElement(invoiceNamePayment).getAttribute("title") + "  and expected text is  " + expected);
@@ -299,7 +299,7 @@ public class PurchaseInvoicesPage extends MainPage {
        Allure.step("click on create btn");
         waitUntilElementToBeClickable(viewBtn, GeneralConstants.minTimeOut);
 
-        if (tryToGetWebElement(closeIcon) == GeneralConstants.SUCCESS) {
+        if (tryToGetWebElementV(closeIcon) == GeneralConstants.SUCCESS) {
             getWebElement(closeIcon).click();
         }
         getWebElement(viewBtn).click();

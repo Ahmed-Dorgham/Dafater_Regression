@@ -59,7 +59,8 @@ public class TaxDeclarationReportPage extends MainPage {
     private By closeFilterIcon = By.xpath("(//*[contains(@class,'filter-icon')])[2]");
     private By loadDataBtn = By.xpath("//*[contains(@id,'appframe-btn-تحميل البيانات')]" +
             "| //*[@id='appframe-btn-']");
-    private By companyInputField = By.xpath("//*[@id='company']");
+    private By companyInputField = By.xpath("//*[@id='company']" +
+            "|(//*[@data-fieldname='company'])[2]");
     private By generalLedgerReportTitle = By.xpath("//h3[@title='دفتر الأستاذ العام']");
 
     private By customerInputField_4 = By.xpath("//*[contains(@data-original-title,'عميل')]");
@@ -76,7 +77,8 @@ public class TaxDeclarationReportPage extends MainPage {
     By loadImage = By.xpath("(//*[contains(@alt,'Generic Empty State')])[3]" +
             "| (//*[contains(@class,'progress progress-striped active')])");
     By customerField_5 = By.xpath("(//div[@data-fieldname='customer'])");
-    By chosenCompany = By.xpath("(//*[contains(@data-target,'Company')])/following-sibling::ul/div/p/strong");
+    By chosenCompany = By.xpath("(//*[contains(@data-target,'Company')])/following-sibling::ul/div/p/strong" +
+            "|(//*[contains(@style,'font-weight: bold;')])");
     By chosenCustomer = By.xpath("(//div[@data-fieldname='customer']/div/div/ul/div/p/strong)[1]");
     By customerInputField_5 = By.xpath("//input[@data-fieldname='customer']");
     By accounts = By.xpath("//div[contains(@class,'dt-cell__content dt-cell__content--col-2')]");
@@ -255,6 +257,24 @@ public class TaxDeclarationReportPage extends MainPage {
         waitUntilElementToBePresent(totalTaxAmountValue, GeneralConstants.minTimeOut);
       Allure.step(" total tax amount value for specific duration  is " + getWebElement(totalTaxAmountValue).getText());
         return getWebElement(totalTaxAmountValue).getText();
+    }
+
+    public String chooseCompany() {
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Allure.step("enter specific company ");
+        waitUntilElementToBePresent(companyInputField, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        getWebElement(companyInputField).click();
+        getWebElement(companyInputField).clear();
+        getWebElement(companyInputField).click();
+        waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
+        String chosenCompanyName = getWebElement(chosenCompany).getText();
+        getWebElement(chosenCompany).click();
+        System.out.println(" chosen company is " + chosenCompanyName);
+        Allure.step(" chosen company is " + chosenCompanyName);
+        return chosenCompanyName;
     }
     public String getTotalTaxAmount_5() throws InterruptedException {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);

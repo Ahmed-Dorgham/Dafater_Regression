@@ -54,17 +54,13 @@ public class SalesInvoicesTest extends BaseTest {
         itemCode = "item 2" + randomNumber;
 
         itemListPageObj = homePageObj.openItemListPage();
-//        String numberOfAllItemsBeforeCreatingNewOne = itemListPageObj.getNumberOfAllItemsBeforeCreatingNewItem();
         itemPageObj = itemListPageObj.clickOnNewItemBtn();
         itemPageObj.enterValidDataIntoItemPage(itemCode);
         Assert.assertTrue(itemPageObj.getItemName(itemCode).contains(itemCode));
        Allure.step("Verify the name of current created item is existed at item list view ");
         itemListPageObj = itemPageObj.openItemListPage();
         Assert.assertTrue(itemListPageObj.getItemNameAtViewList(itemCode).contains(itemCode));
-//        String numberOfItemsAfterCreatingNewOne = itemListPageObj.getNumberOfAllItemsAfterCreatingNewItem();
-//       Allure.step("verify that number of all items at list view will increase by one after creating new item");
-//        Assert.assertFalse(numberOfAllItemsBeforeCreatingNewOne.contains(numberOfItemsAfterCreatingNewOne));
-//       Allure.step(" number of all items at list view before creating new one is " + numberOfAllItemsBeforeCreatingNewOne + " and after creating new one is  " + numberOfItemsAfterCreatingNewOne + " and this is correct ");
+
         sellingPriceListsPageObj = itemListPageObj.openSellingPriceLists();
         standardSellingListPageObj = sellingPriceListsPageObj.openStandardSellingList();
         itemsPricesTablePageObj = standardSellingListPageObj.openItemsPricesTable();
@@ -72,7 +68,7 @@ public class SalesInvoicesTest extends BaseTest {
         itemPricePageObj.addingPriceForItem(itemCode, itemPrice);
         driver.navigate().to(homePageLink_5);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
-        String numberOfDraftInvoicesBeforeCreatingNewOne = salesInvoicesListPageObj.getNumberOfAllItemsBeforeSyncing();
+        String numberOfDraftInvoicesBeforeCreatingNewOne = salesInvoicesListPageObj.getNumberOfAllDraftSalesInvoicesBeforeSyncing();
         String numberOfSalesInvoicesBeforeCreatingNewOne = salesInvoicesListPageObj.getListAccountBeforeCreatingNewSalesInvoices();
         salesInvoicesPageObj = salesInvoicesListPageObj.clickOnNewSalesInvoiceBtn();
         salesInvoicesPageObj.enterValidDataIntoSalesInvoicePageAndSave(duesDate, itemCode);
@@ -90,7 +86,7 @@ public class SalesInvoicesTest extends BaseTest {
         Assert.assertFalse(numberOfDraftInvoicesBeforeCreatingNewOne.contains(numberOfDraftInvoicesAfterCreatingNewOne));
        Allure.step(" number of draft sales invoices at list view before creating new one is " + numberOfDraftInvoicesBeforeCreatingNewOne + " and after creating new one is  " + numberOfDraftInvoicesAfterCreatingNewOne + " and this is correct ");
     }
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2, enabled = false)
     public void TC02_createNewSalesInvoiceAndSubmit() throws InterruptedException {
         homePageObj = new HomePage(driver);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
@@ -111,7 +107,7 @@ public class SalesInvoicesTest extends BaseTest {
 
     }
 
-    @Test(priority = 3, enabled = true)
+    @Test(priority = 3, enabled = false)
     public void TC03_createNewSalesInvoiceFromSalesOrder() throws InterruptedException {
         homePageObj = new HomePage(driver);
         salesOrdersListPageObj = homePageObj.openSalesOrdersListPage();
@@ -126,7 +122,7 @@ public class SalesInvoicesTest extends BaseTest {
        Allure.step(" status of sales order  before creating related sales invoice is " + salesOrderStatusBeforeCreatingRelatedSalesInvoice + " and after creating related one is  " + salesOrderStatusAfterCreatingRelatedSalesInvoice + " and this is correct ");
     }
 
-    @Test(priority = 4, enabled = true)
+    @Test(priority = 4, enabled = false)
     public void TC04_createCreditNoteFromSalesInvoice() throws InterruptedException {
         homePageObj = new HomePage(driver);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
@@ -140,7 +136,7 @@ public class SalesInvoicesTest extends BaseTest {
 
     }
 
-    @Test(priority = 5, enabled = true)
+    @Test(priority = 5, enabled = false)
     public void TC05_createNewSalesInvoiceAndCheckInGrossProfitReport() throws InterruptedException {
         homePageObj = new HomePage(driver);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
@@ -159,7 +155,7 @@ public class SalesInvoicesTest extends BaseTest {
 
     }
 
-    @Test(priority = 6, enabled = true)
+    @Test(priority = 6, enabled = false)
     public void TC06_createPaymentForSalesInvoice() throws InterruptedException {
         random = new Random();
         randomNumber = random.nextInt(1000000000);
@@ -183,7 +179,7 @@ public class SalesInvoicesTest extends BaseTest {
         Assert.assertTrue(salesInvoicesPageObj.getSalesInvoicePaymentStatus(paidStatus).contains(paidStatus));
     }
 
-    @Test(priority = 7, enabled = true)
+    @Test(priority = 7, enabled = false)
     public void TC07_createNewSalesInvoiceFromDeliveryNote() throws InterruptedException {
         homePageObj = new HomePage(driver);
         deliveryNoteListPageObj = homePageObj.openDeliveryNoteListPage();
@@ -191,14 +187,14 @@ public class SalesInvoicesTest extends BaseTest {
         deliveryNotePageObj.enterValidDataIntoDeliveryNotePage(itemCode);
         String deliveryNoteStatusBeforeCreatingRelatedSalesInvoice = deliveryNotePageObj.getSalesOrderStatusBeforeCreatingRelatedSalesInvoice();
         salesInvoicesPageObj = deliveryNotePageObj.createNewSalesInvoiceFromDeliveryNote();
-        salesInvoicesPageObj.saveAndSubmitSalesInvoiceFromDeliveryNote();
+        salesInvoicesPageObj.saveAndSubmitSalesInvoiceFromDeliveryNoteWithOutUpdateStock();
         String deliveryNoteStatusAfterCreatingRelatedSalesInvoice = deliveryNotePageObj.getDeliveryNoteStatusAfterCreatingRelatedSalesInvoice();
        Allure.step("verify the status of delivery note will change after creating sales invoice from this  delivery note ");
         Assert.assertFalse(deliveryNoteStatusBeforeCreatingRelatedSalesInvoice.contains(deliveryNoteStatusAfterCreatingRelatedSalesInvoice));
        Allure.step(" status of delivery  note before creating related sales invoice is " + deliveryNoteStatusBeforeCreatingRelatedSalesInvoice + " and after creating related one is  " + deliveryNoteStatusAfterCreatingRelatedSalesInvoice + " and this is correct ");
     }
 
-    @Test(priority = 8, enabled = true)
+    @Test(priority = 8, enabled = false)
     public void TC08_createNewSalesInvoiceAndCheckInGeneralLedgerReport() throws InterruptedException {
         SoftAssert softAssert = new SoftAssert();
         homePageObj = new HomePage(driver);

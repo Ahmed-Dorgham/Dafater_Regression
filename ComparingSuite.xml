@@ -4,24 +4,30 @@
     <test verbose="2" preserve-order="true" name=" Test">
         <parameter name="Scope" value="Comparing"/>
         <classes>
-                        <class name="TestCases.ComparingReportsTest"></class>
-<!--                                                <class name="TestCases.ComparingItemsTest"></class>-->
-<!--                                                <class name="TestCases.ComparingWareHousesTest"></class>-->
-<!--                                                <class name="TestCases.ComparingCompaniesTest"></class>-->
-<!--            <class name="TestCases.ComparingSalesInvoicesTest"></class>-->
-<!--            <class name="TestCases.ComparingPurchaseInvoicesTest"></class>-->
+                                                <class name="TestCases.ComparingItemsTest"></class>
+            <class name="TestCases.ComparingWareHousesTest"></class>
+                                                <class name="TestCases.ComparingCompaniesTest"></class>
+            <class name="TestCases.ComparingSalesInvoicesTest"></class>
+<!--                        <class name="TestCases.ComparingPurchaseInvoicesTest"></class>-->
 <!--                        <class name="TestCases.ComparingSuppliersTest"></class>-->
-<!--                                    <class name="TestCases.ComparingCustomersTest"></class>-->
-<!--                        <class name="TestCases.ComparingDebitNotesTest"></class>-->
-<!--                                    <class name="TestCases.ComparingCreditNotesTest"></class>-->
-<!--                        <class name="TestCases.ComparingPaymentEntryTest"></class>-->
-            <!--                        <class name="TestCases.ComparingFiscalYearsTest"></class>-->
-<!--                        <class name="TestCases.ComparingStockEntryTest"></class>-->
-<!--                        <class name="TestCases.ComparingDeliveryNotesTest"></class>-->
-<!--                        <class name="TestCases.ComparingPurchaseReceiptsTest"></class>-->
-<!--            <class name="TestCases.ComparingJournalEntriesTest"></class>-->
-<!--            <class name="TestCases.ComparingSalesTaxesAndChargesTemplatesTest"></class>-->
-<!--            <class name="TestCases.ComparingPurchaseTaxesAndChargesTemplatesTest"></class>-->
+<!--                        <class name="TestCases.ComparingChartOfAccountsDataTest"></class>-->
+<!--                        <class name="TestCases.ComparingCustomersTest"></class>-->
+<!--                        <class name="TestCases.ComparingDebitNotesTestSalesModule"></class>-->
+<!--                        <class name="TestCases.ComparingCreditNotesTestSalesModule"></class>-->
+<!--                        <class name="TestCases.ComparingCreditNotesTestPurchaseModule"></class>-->
+
+<!--                                                <class name="TestCases.ComparingPaymentEntryTest"></class>-->
+<!--                                                <class name="TestCases.ComparingFiscalYearsTest"></class>-->
+
+
+<!--                                                <class name="TestCases.ComparingStockEntryTest"></class>-->
+<!--                                                <class name="TestCases.ComparingDeliveryNotesTest"></class>-->
+<!--                                                <class name="TestCases.ComparingPurchaseReceiptsTest"></class>-->
+<!--                                                <class name="TestCases.ComparingJournalEntriesTest"></class>-->
+<!--                                                <class name="TestCases.ComparingSalesTaxesAndChargesTemplatesTest"></class>-->
+<!--                                                <class name="TestCases.ComparingPurchaseTaxesAndChargesTemplatesTest"></class>-->
+<!--                        <class name="TestCases.ComparingReportsTest"></class>-->
+
             <!---->
         </classes>
     </test>

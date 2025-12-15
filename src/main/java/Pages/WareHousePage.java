@@ -289,7 +289,7 @@ public class WareHousePage extends MainPage {
 //        Allure.step("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("title") + " and expected text is " + expected);
 //        return getWebElement(invoiceNameAtViewList).getText();
 //    }
-    public WareHouseListPage openWareHouseListPage() {
+    public WareHouseListPage openWareHouseListPage() throws InterruptedException {
 
         Allure.step("navigate to warehouse list ");
         waitUntilElementToBeClickable(wareHousesOpt, GeneralConstants.minTimeOut);

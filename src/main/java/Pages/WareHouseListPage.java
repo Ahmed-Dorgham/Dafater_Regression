@@ -19,8 +19,7 @@ public class WareHouseListPage extends MainPage {
     private By editIcon = By.className("icon-xs");
     private By salesInvoiceListTitle = By.xpath("(//*[contains(@title,'فاتورة المبيعات')]");
     private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
-    private By totalWareHouses = By.xpath("(//*[contains(@class,'total-rows')])" +
-            "| (//*[contains(@class,'list-count')])");
+    private By totalWareHouses = By.xpath("(//*[contains(@class,'total-rows')])| (//*[contains(@class,'list-count')])");
     private By wareHouseLabel = By.xpath("(//h3[contains(text(),'المستودع')])" +
             "| (//h5[contains(text(),'قائمة مستودع')])");
     private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
@@ -64,15 +63,15 @@ public class WareHouseListPage extends MainPage {
      Allure.step("number of warehouse at list view before Syncing " + getWebElement(totalWareHouses).getText());
         return getWebElement(totalWareHouses).getText();
     }
-    public String getNumberOfAllWareHousesAfterSyncing() {
+    public String getNumberOfAllWareHousesAfterSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(wareHouseLabel, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
         waitUntilElementNotHaveSpecificText(listCount,"تحديث");
-     Allure.step("number of warehouse at list view after Syncing " + getWebElement(totalWareHouses).getText());
-        return getWebElement(totalWareHouses).getText();
+     Allure.step("number of warehouse at list view after Syncing " + getWebElement(totalWareHouses).getAttribute("textContent"));
+        return getWebElement(totalWareHouses).getAttribute("textContent");
     }
-    public String getNumberOfAllWareHouseBeforeCreatingNewWareHouse() {
+    public String getNumberOfAllWareHouseBeforeCreatingNewWareHouse() throws InterruptedException {
 
         waitUntilElementToBePresent(wareHouseLabel, GeneralConstants.minTimeOut);
         waitUntilElementNotHaveSpecificText(listCount, "تحديث");

@@ -65,11 +65,16 @@ public class GeneralLedgerReportPage extends MainPage {
     private By accountInputField_4 = By.xpath("//*[@data-fieldname='account']");
     private By voucherInputField_4 = By.xpath("//*[@data-fieldname='voucher_no']");
     private By creditValue = By.xpath("(//*[contains(@class,'slick-cell b6 f6')])[last()]/div/div/span");
-    private By creditValue_5 = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-4')])[2]");
+    private By creditValueF_5 = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-4')])[last()-1]");
+    private By creditValue_5 = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-4')])[last()-1]");
     private By debitValue = By.xpath("(//*[contains(@class,'slick-cell b5 f5')])[last()]/div/div/span");
+    private By balanceValue = By.xpath("(//*[contains(@class,'slick-cell b7 f7')])[last()]/div/div/span");
     private By debitValue_GL = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-3')])[7]");
     private By creditValue_GL = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-4')])[7]");
-    private By debitValue_5 = By.xpath(" (//*[contains(@class,'dt-cell__content dt-cell__content--col-3')])[2]");
+    private By debitValue_5 = By.xpath(" (//*[contains(@class,'dt-cell__content dt-cell__content--col-3')])[last()]");
+    private By debitValueF_5 = By.xpath(" (//*[contains(@class,'dt-cell__content dt-cell__content--col-3')])[last()-1]");
+    private By balanceValue_5 = By.xpath(" (//*[contains(@class,'dt-cell__content dt-cell__content--col-5')])[last()]");
+    private By balanceValueF_5 = By.xpath(" (//*[contains(@class,'dt-cell__content dt-cell__content--col-5')])[last()-1]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     By loadImage = By.xpath("(//*[contains(@alt,'Generic Empty State')])[3]");
     By accountField_5 = By.xpath("(//*[contains(@data-fieldname,'account')])[1]");
@@ -242,6 +247,7 @@ public class GeneralLedgerReportPage extends MainPage {
         waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
         String chosenCompanyName = getWebElement(chosenCompany).getText();
         getWebElement(chosenCompany).click();
+        System.out.println(" chosen company is " + chosenCompanyName);
         Allure.step(" chosen company is " + chosenCompanyName);
         return chosenCompanyName;
     }
@@ -340,9 +346,29 @@ public class GeneralLedgerReportPage extends MainPage {
     }
 
     public String getDebitValue() {
-        waitUntilElementToBePresent(debitValue, GeneralConstants.minTimeOut);
-        Allure.step(" debit value for selected account is " + getWebElement(debitValue).getText());
-        return getWebElement(debitValue).getText();
+        if (tryToGetWebElementV(debitValue) == GeneralConstants.SUCCESS) {
+            waitUntilElementToBePresent(debitValue, GeneralConstants.minTimeOut);
+            System.out.println(" debit value  is " + getWebElement(debitValue).getText());
+            Allure.step(" debit value  is " + getWebElement(debitValue).getText());
+            return getWebElement(debitValue).getText();
+        } else {
+          System.out.println(" no data exist at general ledger report ");
+            Allure.step(" no data exist at general ledger report ");
+            return "0.00";
+        }
+    }
+
+    public String getBalanceValue() {
+        if (tryToGetWebElementV(balanceValue) == GeneralConstants.SUCCESS) {
+            waitUntilElementToBePresent(balanceValue, GeneralConstants.minTimeOut);
+            System.out.println(" Balance value  at dafater 4  is " + getWebElement(balanceValue).getText());
+            Allure.step(" Balance value  at dafater 4 is " + getWebElement(balanceValue).getText());
+            return getWebElement(balanceValue).getText();
+        } else {
+            System.out.println(" no data exist at general ledger report so balance value is 0.00");
+            Allure.step("  no data exist at general ledger report so balance value is 0.00 ");
+            return "0.00";
+        }
     }
 
     public String getClosingDebitValueForInvoiceAtGL() {
@@ -366,22 +392,67 @@ public class GeneralLedgerReportPage extends MainPage {
 //        Thread.sleep(20000);
         waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(debitValue_5, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        System.out.println(" debit value for selected account is " + getWebElement(debitValue_5).getAttribute("title"));
         Allure.step(" debit value for selected account is " + getWebElement(debitValue_5).getAttribute("title"));
         return getWebElement(debitValue_5).getText();
     }
-
-    public String getCreditValue() {
-
-        waitUntilElementToBePresent(creditValue, GeneralConstants.minTimeOut);
-        Allure.step(" credit value for selected account is " + getWebElement(creditValue).getText());
-        return getWebElement(creditValue).getText();
+    public String getDebitValueF_5() throws InterruptedException {
+//        Thread.sleep(20000);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(debitValueF_5, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        System.out.println(" debit value for selected account is " + getWebElement(debitValueF_5).getAttribute("title"));
+        Allure.step(" debit value for selected account is " + getWebElement(debitValueF_5).getAttribute("title"));
+        return getWebElement(debitValueF_5).getText();
     }
+    public String getBalanceValue_5() throws InterruptedException {
+//        Thread.sleep(20000);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(debitValue_5, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        System.out.println("  balance value   at dafater 5 is " + getWebElement(balanceValue_5).getAttribute("title"));
+        Allure.step("  balance value at dafater 5 is " + getWebElement(balanceValue_5).getAttribute("title"));
+        return getWebElement(balanceValue_5).getText();
+    }
+    public String getBalanceValueF_5() throws InterruptedException {
+//        Thread.sleep(20000);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(balanceValueF_5, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        System.out.println("  balance value is " + getWebElement(balanceValueF_5).getAttribute("title"));
+        Allure.step("  balance value is " + getWebElement(balanceValueF_5).getAttribute("title"));
+        return getWebElement(balanceValueF_5).getText();
+    }
+    public String getCreditValue() {
+        if (tryToGetWebElementV(creditValue) == GeneralConstants.SUCCESS) {
+            waitUntilElementToBePresent(creditValue, GeneralConstants.minTimeOut);
+            System.out.println(" credit value for selected account is " + getWebElement(creditValue).getText());
+            Allure.step(" credit value for selected account is " + getWebElement(creditValue).getText());
+            return getWebElement(creditValue).getText();
+        } else {
+            System.out.println(" no data exist at general ledger report ");
+            Allure.step(" no data exist at general ledger report ");
+            return "0.00";
+        }
 
+
+    }
     public String getCreditValue_5() throws InterruptedException {
         waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(creditValue_5, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        System.out.println(" credit value for selected account is " + getWebElement(creditValue_5).getAttribute("title"));
         Allure.step(" credit value for selected account is " + getWebElement(creditValue_5).getAttribute("title"));
         return getWebElement(creditValue_5).getText();
+    }
+    public String getCreditValueF_5() throws InterruptedException {
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(creditValueF_5, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        System.out.println(" credit value for selected account is " + getWebElement(creditValueF_5).getAttribute("title"));
+        Allure.step(" credit value for selected account is " + getWebElement(creditValueF_5).getAttribute("title"));
+        return getWebElement(creditValueF_5).getText();
     }
 
     public void enterValidDataIntoItemPage(String itemCode) throws InterruptedException {

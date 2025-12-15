@@ -24,6 +24,7 @@ public class SuppliersListPage extends MainPage {
     private By closeFilterIcon = By.xpath("(//*[contains(@class,'filter-icon')])[2]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')] | //*[contains(@id,'freeze')]");
     By viewCompleteScreen = By.xpath("//*[@class='btn btn-secondary btn-sm ']");
+    By scroll = By.xpath("//*[contains(text(),'الصفوف لكل صفحة')]");
     By numberOfAllISuppliersField = By.xpath("//*[contains(@class,'total-rows')] " +
             "|//*[contains(@class,'list-count')]/span");
     By numberOfSuppliersDebitsField = By.xpath("//h3[contains(text(),'مديونيات المورّدين')]/following-sibling::div/span" +
@@ -78,8 +79,16 @@ public class SuppliersListPage extends MainPage {
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
 
         Thread.sleep(threadTimeOut);
-       Allure.step("number of all suppliers at list view before Syncing " + getWebElement(numberOfAllISuppliersField).getText());
-        return getWebElement(numberOfAllISuppliersField).getText();
+        if (tryToGetWebElementV(numberOfAllISuppliersField)==GeneralConstants.SUCCESS)
+        {
+            Allure.step("number of all suppliers at list view before Syncing " + getWebElement(numberOfAllISuppliersField).getText());
+            return getWebElement(numberOfAllISuppliersField).getText();
+        }
+        else
+        {
+            return "0";
+        }
+
     }
 
     public String getNumberOfAllSuppliersAfterSyncing() throws InterruptedException {
@@ -87,9 +96,12 @@ public class SuppliersListPage extends MainPage {
         waitUntilElementToBePresent(supplierLabel, GeneralConstants.minTimeOut);
         //   Thread.sleep(threadTimeOut);
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        scrollToSpeceficElement(scroll);
         waitUntilElementNotHaveSpecificText(numberOfAllISuppliersField,"تحديث");
-       Allure.step("number of all suppliers at list view after Syncing " + getWebElement(numberOfAllISuppliersField).getText());
-        return getWebElement(numberOfAllISuppliersField).getText();
+        waitUntilElementToBePresent(numberOfAllISuppliersField, GeneralConstants.minTimeOut);
+      System.out.println("number of all suppliers at list view after Syncing " + getWebElement(numberOfAllISuppliersField).getAttribute("textContent").trim());
+       Allure.step("number of all suppliers at list view after Syncing " + getWebElement(numberOfAllISuppliersField).getAttribute("textContent").trim());
+        return getWebElement(numberOfAllISuppliersField).getAttribute("textContent").trim();
     }
 
     public String getNumberOfSalesItemsBeforeCreatingNewItem() {
@@ -103,15 +115,28 @@ public class SuppliersListPage extends MainPage {
 
         waitUntilElementToBePresent(supplierLabel, GeneralConstants.minTimeOut);
 //        Thread.sleep(threadTimeOut);
-       Allure.step("value of suppliers debits at list view before Syncing " + getWebElement(numberOfSuppliersDebitsField).getText());
-        return getWebElement(numberOfSuppliersDebitsField).getText();
+        if (tryToGetWebElementV(numberOfSuppliersDebitsField)==GeneralConstants.SUCCESS)
+        {
+            Allure.step("value of suppliers debits at list view before Syncing" + getWebElement(numberOfSuppliersDebitsField).getText());
+            return getWebElement(numberOfSuppliersDebitsField).getText();
+        }
+        else
+        {
+            return "0";
+        }
+
     }
 
     public String getNumberOfSuppliersDebitsAfterSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(supplierLabel, GeneralConstants.minTimeOut);
+
 //        Thread.sleep(threadTimeOut);
+        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilElementNotHaveSpecificText(numberOfAllISuppliersField,"تحديث");
+        waitUntilElementToBePresent(numberOfSuppliersDebitsField, GeneralConstants.minTimeOut);
        Allure.step("value of Suppliers Debits at list view after Syncing " + getWebElement(numberOfSuppliersDebitsField).getText());
+      System.out.println("value of Suppliers Debits at list view after Syncing " + getWebElement(numberOfSuppliersDebitsField).getText());
         return getWebElement(numberOfSuppliersDebitsField).getText();
     }
 
@@ -126,14 +151,24 @@ public class SuppliersListPage extends MainPage {
 
         waitUntilElementToBePresent(supplierLabel, GeneralConstants.minTimeOut);
 //        Thread.sleep(threadTimeOut);
-       Allure.step("value of prepayment not used at list view before Syncing " + getWebElement(numberOfPrepaymentNotUserField).getText());
-        return getWebElement(numberOfPrepaymentNotUserField).getText();
+        if (tryToGetWebElementV(numberOfPrepaymentNotUserField)==GeneralConstants.SUCCESS)
+        {
+            Allure.step("value of prepayment not used at list view before Syncing " + getWebElement(numberOfPrepaymentNotUserField).getText());
+            return getWebElement(numberOfPrepaymentNotUserField).getText();
+        }
+        else
+        {
+            return "0";
+        }
     }
 
     public String getNumberOfPrepaymentNotUsedAfterSyncing() throws InterruptedException {
 
         waitUntilElementToBePresent(supplierLabel, GeneralConstants.minTimeOut);
 //        Thread.sleep(threadTimeOut);
+        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(numberOfPrepaymentNotUserField, GeneralConstants.minTimeOut);
+       System.out.println("value of prepayment Not Used at list view after Syncing " + getWebElement(numberOfPrepaymentNotUserField).getText());
        Allure.step("value of prepayment Not Used at list view after Syncing " + getWebElement(numberOfPrepaymentNotUserField).getText());
         return getWebElement(numberOfPrepaymentNotUserField).getText();
     }

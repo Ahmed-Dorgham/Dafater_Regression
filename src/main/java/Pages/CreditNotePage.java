@@ -19,7 +19,7 @@ public class CreditNotePage extends MainPage {
     private By reasonField = By.id("reason");
     private By statusMsg = By.id("msgprint");
     private By editIcon = By.className("icon-xs");
-    Select reason ;
+    Select reason;
     private By newSalesInvoiceTitle = By.xpath("//*[contains(@title,'فاتورة المبيعات جديد')]");
     private By customerFieldSalesInvoice = By.xpath("(//*[contains(@id,'customer')])[4]");
     private By itemCodeField = By.xpath("(//*[contains(@data-fieldname,'item_code')])[2]");
@@ -35,71 +35,156 @@ public class CreditNotePage extends MainPage {
     private By closeIcon = By.xpath("(//*[contains(@class,'btn btn-modal-close btn-link')])[3]");
     private By creditNoteStatus = By.xpath("(//*[contains(@class,'label label-success')])");
     private By createBtn = By.xpath("(//*[contains(@class,'btn btn-default toolbar-btn')])[3]");
+
     private By salesInvoiceNameInsideCreditNote = By.xpath("//label[contains(@for,'return_against')]//following-sibling::div/a");
+    private By IssueDateField = By.xpath("//*[contains(text(),'تاريخ إصدار الإرجاع')]/../following-sibling::div" +
+            "|//label[contains(@for,'posting_date')]/following-sibling::div " +
+            "| //*[contains(@for,'posting_date')]/following-sibling::div ");
+    private By successStatusField = By.xpath("//*[contains(@class,'ellipsis title-text')]/following-sibling::div/span" +
+            "|//*[contains(@class,'title-text pull-left')]/following-sibling::div//span[contains(@class,'label label-success')]");
+
     public void enterValidDataIntoSalesInvoicePage(String dueDate) throws InterruptedException {
         waitUntilElementVisibility(newSalesInvoiceTitle, GeneralConstants.minTimeOut);
-        Allure.step("select  customer ");
+        System.out.println("select  customer ");
         getWebElement(customerFieldSalesInvoice).click();
         waitUntilElementVisibility(customersListSalesInvoice, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(customerOptSalesInvoice, GeneralConstants.minTimeOut);
         getWebElement(customerOptSalesInvoice).click();
-        Allure.step("enter dues date  ");
+        System.out.println("enter dues date  ");
         waitUntilElementVisibility(dueDateField, GeneralConstants.minTimeOut);
         getWebElement(dueDateField).sendKeys(dueDate);
-        Allure.step("Scroll down to item field ");
+        System.out.println("Scroll down to item field ");
         scrollToSpeceficElement(itemCodeField);
-     //   Thread.sleep(6000);
-        Allure.step(" select item  ");
+        //   Thread.sleep(6000);
+        System.out.println(" select item  ");
         clickByActions(itemCodeField);
-        waitUntilElementVisibility(itemCodeInputField,GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(itemCodeInputField, GeneralConstants.minTimeOut);
         getWebElement(itemCodeInputField).sendKeys("item");
-        waitUntilElementToBeClickable(itemOpt,GeneralConstants.minTimeOut);
+        waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
         getWebElement(itemOpt).click();
-        Allure.step("unselect update stock opt");
+        System.out.println("unselect update stock opt");
         getWebElement(updateStockBtn).click();
         //Thread.sleep(6000);
-        Allure.step("scroll up to save and submit btn ");
+        System.out.println("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
 
-        Allure.step(" save and submit btn sales invoice ");
+        System.out.println(" save and submit btn sales invoice ");
         getWebElement(saveAndSubmitBtn).click();
-      //  Thread.sleep(10000);
-        Allure.step("click on yes btn ");
-         waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
+        //  Thread.sleep(10000);
+        System.out.println("click on yes btn ");
+        waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
         getWebElement(yesBtn).click();
 
     }
-    public String getCreditNoteStatus(String expected) {
-//        Allure.step("Verify the status of sales invoice  ");
-        waitUntilElementToBePresent(creditNoteStatus,GeneralConstants.minTimeOut);
-        Allure.step("actual text is " + getWebElement(creditNoteStatus).getText() + " and expected test is " + expected);
-        return getWebElement(creditNoteStatus).getText();
+
+    private By paidStatusField = By.xpath("//*[contains(@class,'progress-chart col-md-12')]//h5" +
+            "|//*[contains(@class,'progress-chart col-md-12')]//p");
+    private By customerNameField = By.xpath("//*[contains(text(),' اسم العميل')]/../following-sibling::div/a" +
+            "|//*[@data-fieldname='customer']//*[@data-doctype='Customer']");
+    private By netTotalField = By.xpath("(//*[contains(@title,'net_total_export')]//span)[3]" +
+            "| (//*[@data-fieldname='total']//span[@dir='rtl'])[1]");
+
+    private By grandTotalField = By.xpath("(//*[contains(@title,'grand_total_export')]//span)[3]" +
+            "| //*[contains(text(),'المجموع الإجمالي')]/following-sibling::div/div/span");
+
+    private By draftStatusField = By.xpath("(//*[contains(@class,'ellipsis title-text')]/following-sibling::span)[4]");
+    private By badgeBar = By.xpath("(//*[contains(@class,'badge-bar ')])//span");
+
+    public String getBadgeBar() {
+        waitUntilElementVisibility(badgeBar, GeneralConstants.minTimeOut);
+        System.out.println(" badg bar is " + getWebElement(badgeBar).getAttribute("textContent").replaceAll("[\\s\\u00A0\\u200B]+", ""));
+        Allure.step(" badg bar is " + getWebElement(badgeBar).getAttribute("textContent").replaceAll("[\\s\\u00A0\\u200B]+", ""));
+        return getWebElement(badgeBar).getAttribute("textContent").replaceAll("[\\s\\u00A0\\u200B]+", "");
     }
+
+    public String getCreditNoteStatusAtDafater_5() {
+        waitUntilElementToBePresent(IssueDateField, GeneralConstants.minTimeOut);
+        if (tryToGetWebElementV(successStatusField) == GeneralConstants.SUCCESS) {
+//           System.out.println("status of sales invoice  " + getWebElement(successStatusField).getText());
+            return getWebElement(successStatusField).getText();
+        } else {
+//           System.out.println("status of sales invoice  is  " + getWebElement(draftStatusField).getText());
+            return getWebElement(draftStatusField).getText();
+        }
+    }
+
+
+    public String getGrandTotalValueAtCreditNote() {
+        waitUntilElementToBePresent(IssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("grand total value of  credit note  " + getWebElement(grandTotalField).getText().replace("-", ""));
+        waitUntilElementToBePresent(grandTotalField, GeneralConstants.minTimeOut);
+        return getWebElement(grandTotalField).getText().replace("-", "");
+    }
+
+    public String getNetTotalValueAtCreditNote() {
+        waitUntilElementToBePresent(IssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("net total value of credit note  " + getWebElement(netTotalField).getText().replace("-", ""));
+        return getWebElement(netTotalField).getText().replace("-", "");
+    }
+
+    public String getCustomerNameAtCreditNote() {
+        waitUntilElementToBePresent(IssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("customer name at credit note  " + getWebElement(customerNameField).getText());
+        return getWebElement(customerNameField).getText();
+    }
+
+    public String getCreditNoteIssueDate() {
+        waitUntilElementToBePresent(IssueDateField, GeneralConstants.minTimeOut);
+        System.out.println("issue date of credit note  " + getWebElement(IssueDateField).getText());
+        return getWebElement(IssueDateField).getText();
+    }
+
+    public String getCreditNotePaidStatus() {
+        String paidStatus = "null";
+        waitUntilElementToBePresent(IssueDateField, GeneralConstants.minTimeOut);
+
+        if (tryToGetWebElementV(paidStatusField) == GeneralConstants.SUCCESS) {
+            System.out.println("paid status of credit note  " + getWebElement(paidStatusField).getText());
+            return getWebElement(paidStatusField).getText();
+        } else {
+            System.out.println("paid status of credit note  is  " + paidStatus + " and this meaning that this credit note  is draft and not have paid status ");
+            return paidStatus;
+        }
+
+    }
+
+    public String getCreditNoteStatus() {
+        String draftStatus = "مسودة";
+        waitUntilElementToBePresent(IssueDateField, GeneralConstants.minTimeOut);
+        if (tryToGetWebElementV(successStatusField) == GeneralConstants.SUCCESS) {
+
+            return getWebElement(successStatusField).getText();
+        } else {
+            return draftStatus;
+        }
+    }
+
     public void saveAndSubmitCreditNoteFromSalesInvoice() throws InterruptedException {
 
         waitUntilElementVisibility(saveAndSubmitBtnFromCreditNote, GeneralConstants.minTimeOut);
-        Allure.step("scroll down to reason field ");
+        System.out.println("scroll down to reason field ");
         scrollToSpeceficElement(reasonField);
 //        getWebElement(reasonField).click();
         clickByActions(reasonField);
-        Allure.step("choose reason for credit note ");
+        System.out.println("choose reason for credit note ");
         reason = new Select(getWebElement(reasonField));
         reason.selectByIndex(1);
         scrollToSpeceficElement(saveAndSubmitBtn);
-        Allure.step("save and submit creditNote ");
+        System.out.println("save and submit creditNote ");
         getWebElement(saveAndSubmitBtnFromCreditNote).click();
-        Allure.step("click on yes btn ");
+        System.out.println("click on yes btn ");
         waitUntilElementToBeClickable(yesBtn_SO, GeneralConstants.minTimeOut);
         getWebElement(yesBtn_SO).click();
-        Allure.step("click on close icon ");
+        System.out.println("click on close icon ");
         waitUntilElementToBeClickable(closeIcon, GeneralConstants.minTimeOut);
         getWebElement(closeIcon).click();
-        waitUntilElementToBePresent(createBtn,GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
     }
+
     public String getInvoiceNameInsideCreditNote(String expected) {
-//        Allure.step("Verify the name of sales invoice  ");
-        waitUntilElementToBePresent(createBtn,GeneralConstants.minTimeOut);
-        Allure.step("actual text is  " + getWebElement(salesInvoiceNameInsideCreditNote).getAttribute("data-value") + "  and expected text is  " + expected);
+//        System.out.println("Verify the name of sales invoice  ");
+        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+        System.out.println("actual text is  " + getWebElement(salesInvoiceNameInsideCreditNote).getAttribute("data-value") + "  and expected text is  " + expected);
         return getWebElement(salesInvoiceNameInsideCreditNote).getText();
     }
 }

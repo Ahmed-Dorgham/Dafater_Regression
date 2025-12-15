@@ -17,7 +17,7 @@ public class SetupVmTest extends BaseTest {
     public void TC01_setupVm() {
         homePageObj = new HomePage(driver);
         setupWizardPageObj = new SetupWizardPage(driver);
-        if (tryToGetWebElement(setupWizardPageObj.countryField) == GeneralConstants.SUCCESS) {
+        if (tryToGetWebElementV(setupWizardPageObj.countryField) == GeneralConstants.SUCCESS) {
             Allure.step(" setup Vm  ");
             setupWizardPageObj = new SetupWizardPage(driver);
             setupWizardPageObj.enterDefaultVMData();

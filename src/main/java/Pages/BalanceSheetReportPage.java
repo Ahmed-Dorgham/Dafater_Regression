@@ -131,7 +131,7 @@ public class BalanceSheetReportPage extends MainPage {
     By financialStatements = By.xpath("//span[contains(@class,'custom-btn-group-label')]");
     By balanceSheetOpt = By.xpath("//span[contains(text(),'المركز المالي')]");
     By profitOrLossField = By.xpath("(//td[contains(@class,'stmt_level')])[last()]//span" +
-            "| (//div[contains(@class,'dt-cell__content dt-cell__content--col-2')])[last()-1]//span/div/span");
+            "| (//div[contains(@class,'summary-value ')])[4]//span");
     By profitOrLossLabel= By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-1')])[last()-1]//span/div/span");
     By openingValue = By.xpath("(//*[contains(@class,'slick-cell b10 f10')]/div)[1]" +
             "| (//*[contains(@class,'dt-cell__content dt-cell__content--col-9')]/div/span)[1]");
@@ -339,10 +339,13 @@ public class BalanceSheetReportPage extends MainPage {
         getWebElement(balanceSheetOpt).click();
     }
 
-    public String getProfitOrLossValue() {
-        waitUntilElementToBePresent(profitOrLossField, GeneralConstants.minTimeOut);
-       Allure.step(" profit or loss value is " + getWebElement(profitOrLossField).getText());
-        return getWebElement(profitOrLossField).getText();
+    public String getProfitOrLossValue() throws InterruptedException {
+        waitUntilElementVisibility(profitOrLossField, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        System.out.println(" profit or loss value is " + getWebElement(profitOrLossField).getAttribute("textContent"));
+       Allure.step(" profit or loss value is " + getWebElement(profitOrLossField).getAttribute("textContent"));
+
+        return getWebElement(profitOrLossField).getAttribute("textContent");
     }
 
     public String getSelectedCompanyName() {
