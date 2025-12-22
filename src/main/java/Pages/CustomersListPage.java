@@ -95,8 +95,8 @@ public class CustomersListPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementNotHaveSpecificText(numberOfAllCustomersField, "تحديث");
         waitUntilElementToBePresent(numberOfAllCustomersField, GeneralConstants.minTimeOut);
-        System.out.println("number of all suppliers at list view after Syncing " + getWebElement(numberOfAllCustomersField).getAttribute("textContent"));
-        Allure.step("number of all suppliers at list view after Syncing " + getWebElement(numberOfAllCustomersField).getAttribute("textContent"));
+        System.out.println("number of all customers at list view after Syncing " + getWebElement(numberOfAllCustomersField).getAttribute("textContent"));
+        Allure.step("number of all customers at list view after Syncing " + getWebElement(numberOfAllCustomersField).getAttribute("textContent"));
         return getWebElement(numberOfAllCustomersField).getText();
     }
 

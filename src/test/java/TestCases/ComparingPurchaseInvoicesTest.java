@@ -63,6 +63,7 @@ public class ComparingPurchaseInvoicesTest extends BaseTest {
         double totalAmountOfPurchaseInvoicesBeforeSyncingAsNumber = purchaseInvoicesListPageObj.getTotalAmountOfPurchaseInvoicesBeforeSyncing();
         String totalAmountOfPurchaseInvoicesBeforeSyncing = purchaseInvoicesListPageObj.convertToStringFormat(totalAmountOfPurchaseInvoicesBeforeSyncingAsNumber);
         driver.navigate().refresh();
+
         if (tryToGetWebElementV(purchaseInvoicesListPageObj.emptyList)==GeneralConstants.FAILED)
         {
             purchaseInvoicesListPageObj.filterWithSubmittedStatus_2();

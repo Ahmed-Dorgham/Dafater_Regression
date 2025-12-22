@@ -263,9 +263,9 @@ public class CreditNotesListPage extends MainPage {
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-       System.out.println("value of total invoices at list view After syncing " + getWebElement(valueOfTotalInvoices).getAttribute("textContent").replaceAll("\\s+", ""));
-        Allure.step("value of total invoices at list view After syncing " + getWebElement(valueOfTotalInvoices).getAttribute("textContent").replaceAll("\\s+", ""));
-        return getWebElement(valueOfTotalInvoices).getAttribute("textContent").replaceAll("\\s+", "");
+       System.out.println("value of total invoices at list view After syncing " + getWebElement(valueOfTotalInvoices).getAttribute("textContent").replaceAll("\\s+", "") .replaceFirst("^-", ""));
+        Allure.step("value of total invoices at list view After syncing " + getWebElement(valueOfTotalInvoices).getAttribute("textContent").replaceAll("\\s+", "") .replaceFirst("^-", ""));
+        return getWebElement(valueOfTotalInvoices).getAttribute("textContent").replaceAll("\\s+", "") .replaceFirst("^-", "");
     }
 
     public double getValueOfOutstandingAmountBeforeSyncing() throws InterruptedException {
@@ -315,9 +315,9 @@ public class CreditNotesListPage extends MainPage {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-        System.out.println("total payment received amount of credit notes at list view after syncing " + getWebElement(totalPaymentReceivedAmountOfCreditNotesAtViewList).getAttribute("textContent").replaceAll("\\s+", ""));
-        Allure.step("total payment received  amount of credit notes at list view after syncing " + getWebElement(totalPaymentReceivedAmountOfCreditNotesAtViewList).getAttribute("textContent").replaceAll("\\s+", ""));
-        return getWebElement(totalPaymentReceivedAmountOfCreditNotesAtViewList).getAttribute("textContent").replaceAll("\\s+", "");
+        System.out.println("total payment received amount of credit notes at list view after syncing " + getWebElement(totalPaymentReceivedAmountOfCreditNotesAtViewList).getAttribute("textContent").replaceAll("\\s+", "") .replaceFirst("^-", ""));
+        Allure.step("total payment received  amount of credit notes at list view after syncing " + getWebElement(totalPaymentReceivedAmountOfCreditNotesAtViewList).getAttribute("textContent").replaceAll("\\s+", "") .replaceFirst("^-", ""));
+        return getWebElement(totalPaymentReceivedAmountOfCreditNotesAtViewList).getAttribute("textContent").replaceAll("\\s+", "") .replaceFirst("^-", "");
     }
     public String getTotalPaidAmountOfCreditNotesAfterSyncing() throws InterruptedException {
 
@@ -332,9 +332,9 @@ public class CreditNotesListPage extends MainPage {
         waitUntilElementToBePresent(creditNoteLabel, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
-       System.out.println("value of outstanding amount at list view after syncing " + getWebElement(valueOfOutstandingAmount).getAttribute("textContent").replaceAll("\\s+", ""));
-        Allure.step("value of outstanding amount at list view after syncing " + getWebElement(valueOfOutstandingAmount).getAttribute("textContent").replaceAll("\\s+", ""));
-        return getWebElement(valueOfOutstandingAmount).getAttribute("textContent").replaceAll("\\s+", "");
+       System.out.println("value of outstanding amount at list view after syncing " + getWebElement(valueOfOutstandingAmount).getAttribute("textContent").replaceAll("\\s+", "") .replaceFirst("^-", ""));
+        Allure.step("value of outstanding amount at list view after syncing " + getWebElement(valueOfOutstandingAmount).getAttribute("textContent").replaceAll("\\s+", "") .replaceFirst("^-", ""));
+        return getWebElement(valueOfOutstandingAmount).getAttribute("textContent").replaceAll("\\s+", "") .replaceFirst("^-", "");
     }
 
     public String getNumberOfPrepaymentNotUsedBeforeSyncing() throws InterruptedException {

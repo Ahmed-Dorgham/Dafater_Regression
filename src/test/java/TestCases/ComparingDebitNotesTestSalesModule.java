@@ -60,7 +60,7 @@ public class ComparingDebitNotesTestSalesModule extends BaseTest {
         loginPageObj.switchToDafater_5(websiteLink_5);
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
         debitNotesListPageObj = homePageObj.openDebitNotesListPage();
-        debitNotesListPageObj.filterDocTypesWithSecondFilter("حالة", "معتمد");
+        debitNotesListPageObj.filterDocTypesWithSecondFilterByVisibleText("حالة", "معتمد");
         String numberOfAllDebitNotesAfterSyncing = debitNotesListPageObj.getNumberOfAllDebitNotesAfterSyncing();
 //        String numberOfDraftDebitNotesAfterSyncing = debitNotesListPageObj.getNumberOfDraftInvoicesAfterSyncing();
         String totalAmountOfDebitNotesAfterSyncing = debitNotesListPageObj.getTotalAmountOfDebitNotesAfterSyncing();

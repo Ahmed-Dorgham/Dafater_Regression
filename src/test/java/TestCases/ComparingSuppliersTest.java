@@ -44,20 +44,8 @@ public class ComparingSuppliersTest extends BaseTest {
         double totalPrepaymentNotUsedValueBeforeSyncingAsNumber = purchaseInvoicesListPageObj.getTotalOutstandingAmountOfPurchaseInvoicesBeforeSyncing();
         String totalPrepaymentNotUsedValueBeforeSyncing = purchaseInvoicesListPageObj.convertToStringFormat(totalPrepaymentNotUsedValueBeforeSyncingAsNumber);
 
-
-
-
-
-
-
-
-
 //        String suppliersDebitsValueBeforeSyncing = suppliersListPageObj.getNumberOfSuppliersDebitsBeforeSyncing();
 //        String prepaymentNotUsedValueBeforeSyncing = suppliersListPageObj.getNumberOfPrepaymentNotUsedBeforeSyncing();
-
-
-
-
 
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
         loginPageObj.switchToDafater_5(websiteLink_5);

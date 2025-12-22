@@ -43,11 +43,25 @@ public class ComparingSalesInvoicesTest extends BaseTest {
 
         String numberOfDraftSalesInvoicesBeforeSyncing = salesInvoicesListPageObj.getNumberOfDraftInvoicesBeforeSyncing();
         String numberOfSalesInvoicesBeforeSyncing = salesInvoicesListPageObj.getListAccountBeforeSyncing();
-        salesInvoicesListPageObj.filterWithSubmittedStatus_2();
+
+
+        if (tryToGetWebElementV(salesInvoicesListPageObj.emptyList)==GeneralConstants.FAILED)
+        {
+            salesInvoicesListPageObj.filterWithSubmittedStatus();
+        }
+
+
+
         double totalAmountOfSalesInvoicesBeforeSyncingAsNumber = salesInvoicesListPageObj.getTotalAmountOfSalesInvoicesBeforeSyncing();
         String totalAmountOfSalesInvoicesBeforeSyncing = salesInvoicesListPageObj.convertToStringFormat(totalAmountOfSalesInvoicesBeforeSyncingAsNumber);
         driver.navigate().refresh();
-        salesInvoicesListPageObj.filterWithSubmittedStatus_2();
+        Thread.sleep(threadTimeOut);
+        if (tryToGetWebElementV(salesInvoicesListPageObj.emptyList)==GeneralConstants.FAILED)
+        {
+            salesInvoicesListPageObj.filterWithSubmittedStatus_2();
+        }
+
+
 
         double totalOutstandingAmountOfSalesInvoicesBeforeSyncingAsNumber = salesInvoicesListPageObj.getTotalOutstandingAmountOfSalesInvoicesBeforeSyncing();
         String totalOutstandingAmountOfSalesInvoicesBeforeSyncing = salesInvoicesListPageObj.convertToStringFormat(totalOutstandingAmountOfSalesInvoicesBeforeSyncingAsNumber);
@@ -75,14 +89,12 @@ public class ComparingSalesInvoicesTest extends BaseTest {
         Allure.step("verify that number of sales invoices at dafater 5 is equal to  number of sales invoices at dafater 4 ");
         softAssert.assertEquals(numberOfSalesInvoicesAfterSyncing, numberOfSalesInvoicesBeforeSyncing);
         Allure.step("verify that total of sales invoices value at dafater 5 is equal to total of sales invoices values at dafater 4 ");
-        softAssert.assertTrue(totalAmountOfSalesInvoicesAfterSyncing.contains(totalAmountOfSalesInvoicesBeforeSyncing));
+        softAssert.assertTrue(totalAmountOfSalesInvoicesAfterSyncing.trim().equalsIgnoreCase(totalAmountOfSalesInvoicesBeforeSyncing.trim()));
         Allure.step("verify that total outstanding of sales invoices value at dafater 5 is equal to total outstanding of sales invoices values at dafater 4 ");
         softAssert.assertTrue(totalOutstandingAmountOfSalesInvoicesAfterSyncing.contains(totalOutstandingAmountOfSalesInvoicesBeforeSyncing));
 
         Allure.step("verify that total payment received  of sales invoices value at dafater 5 is equal to total payment received of sales invoices values at dafater 4 ");
-        softAssert.assertEquals(Double.parseDouble(totalPaymentReceivedAmountOfSalesInvoicesAfterSyncing), totalPaymentReceivedOfSalesInvoicesBeforeSyncingAsNumber);
-
-
+        softAssert.assertTrue(totalPaymentReceivedAmountOfSalesInvoicesAfterSyncing.trim().equalsIgnoreCase(totalPaymentReceivedOfSalesInvoicesBeforeSyncing.trim()));
         softAssert.assertAll();
     }
 

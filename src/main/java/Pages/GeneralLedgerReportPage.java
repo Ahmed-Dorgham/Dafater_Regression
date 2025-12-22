@@ -361,9 +361,9 @@ public class GeneralLedgerReportPage extends MainPage {
     public String getBalanceValue() {
         if (tryToGetWebElementV(balanceValue) == GeneralConstants.SUCCESS) {
             waitUntilElementToBePresent(balanceValue, GeneralConstants.minTimeOut);
-            System.out.println(" Balance value  at dafater 4  is " + getWebElement(balanceValue).getText());
-            Allure.step(" Balance value  at dafater 4 is " + getWebElement(balanceValue).getText());
-            return getWebElement(balanceValue).getText();
+            System.out.println(" Balance value  at dafater 4  is " + getWebElement(balanceValue).getText().replace(",", ""));
+            Allure.step(" Balance value  at dafater 4 is " + getWebElement(balanceValue).getText().replace(",", ""));
+            return getWebElement(balanceValue).getText().replace(",", "");
         } else {
             System.out.println(" no data exist at general ledger report so balance value is 0.00");
             Allure.step("  no data exist at general ledger report so balance value is 0.00 ");

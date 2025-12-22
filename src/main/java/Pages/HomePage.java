@@ -24,10 +24,11 @@ public class HomePage extends MainPage {
 
     private By debitNotesOpt = By.xpath("(//*[contains(@id,'sidebar-selling-debit-note')]/span)[1]");
     private By createBtn = By.xpath("//button[contains(@id,'appframe-btn-إنشاء')]");
-    private By creditNotesOpt = By.xpath("(//*[contains(@id,'sidebar-selling-credit-notes')]/span)[1]" +
-            "| (//*[contains(@id,'sidebar-selling-return-note')]/span)[1]" +
-            "|(//*[contains(@id,'sidebar-buying-purchase-return-note')]/span)[1]" +
+    private By creditNotesOptPurchase = By.xpath("(//*[contains(@id,'sidebar-buying-purchase-return-note')]/span)[1]" +
             "| (//*[contains(@id,'sidebar-purchases-debit-notes')]/span)[1]");
+
+    private By creditNotesOptSales = By.xpath("(//*[contains(@id,'sidebar-selling-return-note')]/span)[1]" +
+            "|(//*[contains(@id,'sidebar-selling-credit-notes')]/span)[1]" );
     private By companiesOpt = By.xpath("//*[@id='sidebar-accounts-company-section-companies']/span" +
             "| //*[@id='sidebar-accounts-company']");
     private By companyTab = By.xpath("(//*[@id='sidebar-accounts-company-section']/span)[1]" +
@@ -326,13 +327,14 @@ public class HomePage extends MainPage {
         waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(salesInvoicesTab).click();
-        if (tryToGetWebElementV(creditNotesOpt) == GeneralConstants.FAILED) {
+        if (tryToGetWebElementV(creditNotesOptSales) == GeneralConstants.FAILED) {
             Allure.step("************************************");
+
             getWebElement(salesInvoicesTab).click();
         }
         Allure.step("click on credit notes option ");
-        waitUntilElementToBeClickable(creditNotesOpt, GeneralConstants.minTimeOut);
-        getWebElement(creditNotesOpt).click();
+        waitUntilElementToBeClickable(creditNotesOptSales, GeneralConstants.minTimeOut);
+        getWebElement(creditNotesOptSales).click();
         return new CreditNotesListPage(driver);
     }
     public CreditNotesListPage openCreditNotesPurchaseModuleListPage() throws InterruptedException {
@@ -340,13 +342,13 @@ public class HomePage extends MainPage {
         waitUntilElementToBeClickable(purchaseInvoicesTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(purchaseInvoicesTab).click();
-        if (tryToGetWebElementV(creditNotesOpt) == GeneralConstants.FAILED) {
+        if (tryToGetWebElementV(creditNotesOptPurchase) == GeneralConstants.FAILED) {
             Allure.step("************************************");
             getWebElement(purchaseInvoicesTab).click();
         }
         Allure.step("click on credit notes option ");
-        waitUntilElementToBeClickable(creditNotesOpt, GeneralConstants.minTimeOut);
-        getWebElement(creditNotesOpt).click();
+        waitUntilElementToBeClickable(creditNotesOptPurchase, GeneralConstants.minTimeOut);
+        getWebElement(creditNotesOptPurchase).click();
         return new CreditNotesListPage(driver);
     }
     public DeliveryNoteListPage openDeliveryNoteListPage() throws InterruptedException {

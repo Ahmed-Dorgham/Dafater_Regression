@@ -49,6 +49,7 @@ public class ComparingCreditNotesTestSalesModule extends BaseTest {
 
 
         double totalPaymentReceivedOfCreditNotesBeforeSyncingAsNumber = valueOfTotalInvoicesAtCreditNotesListViewBeforeSyncingAsNumber - valueOfOutstandingAmountAtCreditNotesListViewBeforeSyncingAsNumber;
+        String totalPaymentReceivedOfCreditNotesBeforeSyncing =  creditNotesListPageObj.convertToStringFormat(totalPaymentReceivedOfCreditNotesBeforeSyncingAsNumber);
 
 
         System.out.println("total PaymentReceived Of credit Notes Before Syncing is "+totalPaymentReceivedOfCreditNotesBeforeSyncingAsNumber);
@@ -59,7 +60,7 @@ public class ComparingCreditNotesTestSalesModule extends BaseTest {
         loginPageObj.switchToDafater_5(websiteLink_5);
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
         creditNotesListPageObj = homePageObj.openCreditNotesSalesModuleListPage();
-        creditNotesListPageObj.filterDocTypesWithSecondFilter("حالة", "معتمد");
+        creditNotesListPageObj.filterDocTypesWithSecondFilterByVisibleText("حالة", "معتمد");
 
         String numberOfAllCreditNotesAfterSyncing = creditNotesListPageObj.getNumberOfAllCreditNotesAfterSyncing();
         String numberOfDraftCreditNotesAfterSyncing = creditNotesListPageObj.getNumberOfDraftCreditNotesAfterSyncing();
@@ -70,26 +71,20 @@ public class ComparingCreditNotesTestSalesModule extends BaseTest {
 
         System.out.println("verify that number of all credit notes which appear at dafater 5 is equal to number of all credit notes at dafater 4");
         softAssert.assertEquals(numberOfAllCreditNotesBeforeSyncing, numberOfAllCreditNotesAfterSyncing);
-        System.out.println("kafldkkfj"+numberOfAllCreditNotesBeforeSyncing);
-        System.out.println("kafldkddddddddddkfj"+ numberOfAllCreditNotesAfterSyncing);
+
         System.out.println("verify that number of draft credit notes which appear at dafater 5 is equal to number of draft credit notes at dafater 4");
         softAssert.assertEquals(numberOfDraftCreditNotesBeforeSyncing, numberOfDraftCreditNotesAfterSyncing);
-        System.out.println("kafldkkfj"+ numberOfDraftCreditNotesBeforeSyncing);
-        System.out.println("kafldkddddddddddkfj"+ numberOfDraftCreditNotesAfterSyncing);
+
         System.out.println("verify that value Of Total Invoices At Credit Notes List View which appear at dafater 5 is equal to value Of Total Invoices At Credit Notes List View at dafater 4");
-        softAssert.assertEquals(valueOfTotalInvoicesAtCreditNotesListViewBeforeSyncing, valueOfTotalInvoicesAtCreditNotesListViewAfterSyncing);
-        System.out.println("kafldkkfj"+valueOfTotalInvoicesAtCreditNotesListViewBeforeSyncing);
-        System.out.println("kafldkddddddddddkfj"+ valueOfTotalInvoicesAtCreditNotesListViewAfterSyncing);
+        softAssert.assertTrue(valueOfTotalInvoicesAtCreditNotesListViewBeforeSyncing.equalsIgnoreCase(valueOfTotalInvoicesAtCreditNotesListViewAfterSyncing));
+
         System.out.println("verify that value Of outstanding amount At Credit Notes List View which appear at dafater 5 is equal to value Of outstanding amount At Credit Notes List View at dafater 4");
-        softAssert.assertEquals(valueOfOutstandingAmountAtCreditNotesListViewBeforeSyncing, valueOfOutstandingAmountAtCreditNotesListViewAfterSyncing);
-        System.out.println("kafldkkfj"+ valueOfOutstandingAmountAtCreditNotesListViewBeforeSyncing);
-        System.out.println("kafldkddddddddddkfj"+ valueOfOutstandingAmountAtCreditNotesListViewAfterSyncing);
+        softAssert.assertTrue(valueOfOutstandingAmountAtCreditNotesListViewBeforeSyncing.equalsIgnoreCase(valueOfOutstandingAmountAtCreditNotesListViewAfterSyncing));
+
         System.out.println("verify that value Of payment received At Credit Notes List View which appear at dafater 5 is equal to value Of payment received At Credit Notes List View at dafater 4");
 
-      System.out.println("kafldkkfj"+ Double.parseDouble(valueOfPaymentReceivedAtCreditNotesListViewAfterSyncing));
-      System.out.println("kafldkddddddddddkfj"+ totalPaymentReceivedOfCreditNotesBeforeSyncingAsNumber);
 
-        softAssert.assertEquals(Double.parseDouble(valueOfPaymentReceivedAtCreditNotesListViewAfterSyncing), totalPaymentReceivedOfCreditNotesBeforeSyncingAsNumber);
+        softAssert.assertTrue(valueOfPaymentReceivedAtCreditNotesListViewAfterSyncing.equalsIgnoreCase(totalPaymentReceivedOfCreditNotesBeforeSyncing));
 
         softAssert.assertAll();
     }
@@ -97,7 +92,7 @@ public class ComparingCreditNotesTestSalesModule extends BaseTest {
     //, dependsOnMethods = "TC01_comparingCreditNotesDataAtListView"
     //
     @Test(priority = 2, enabled = true)
-    public void TC02_comparingCreditNoteDataSalesModule() throws InterruptedException, IOException {
+    public void TC02_comparingSpeceficCreditNoteDataSalesModule() throws InterruptedException, IOException {
         homePageObj = new HomePage(driver);
         creditNotesListPageObj = homePageObj.openCreditNotesSalesModuleListPage();
 

@@ -22,7 +22,7 @@ public class SetupVmTest extends BaseTest {
             setupWizardPageObj = new SetupWizardPage(driver);
             setupWizardPageObj.enterDefaultVMData();
             setupWizardPageObj.setupAccount();
-            setupWizardPageObj.setupOrganization(companyName, companyIdValue, taxIdValue, cityName, addressName, phoneValue);
+            setupWizardPageObj.setupOrganization("testCompany", companyIdValue, taxIdValue, cityName, addressName, phoneValue);
         }
         waitUntilElementToBePresent(homePageObj.salesInvoicesTab, GeneralConstants.globalTimeOut);
     }

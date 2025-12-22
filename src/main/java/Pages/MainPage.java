@@ -139,6 +139,33 @@ public class MainPage extends GeneralConstants {
 //        waitUntilElementVisibility(filterValField_2,GeneralConstants.minTimeOut);
         select = new Select(getWebElement(filterValField_2));
 
+        select.selectByValue(value);
+        getWebElement(applyFilterBtn).click();
+        Thread.sleep(threadTimeOut);
+    }
+    public void filterDocTypesWithSecondFilterByVisibleText(String id, String value) throws InterruptedException {
+
+        Select select;
+        waitUntilElementVisibility(filterTab, GeneralConstants.minTimeOut);
+        getWebElement(filterTab).click();
+        waitUntilElementVisibility(addFilter,GeneralConstants.minTimeOut);
+        getWebElement(addFilter).click();
+//        Thread.sleep(threadTimeOut);
+        if (tryToGetWebElementV(filterLabelField_2)==GeneralConstants.FAILED)
+        {
+            getWebElement(addFilter).click();
+        }
+
+        getWebElement(filterLabelField_2).click();
+        getWebElement(filterLabelField_2).sendKeys(id);
+        waitUntilElementVisibility(selectedFilterLabel_2, GeneralConstants.minTimeOut);
+        getWebElement(selectedFilterLabel_2).click();
+
+        waitUntilElementVisibility(filterValField_2, GeneralConstants.minTimeOut);
+        getWebElement(filterValField_2).click();
+//        waitUntilElementVisibility(filterValField_2,GeneralConstants.minTimeOut);
+        select = new Select(getWebElement(filterValField_2));
+
         select.selectByVisibleText(value);
         getWebElement(applyFilterBtn).click();
         Thread.sleep(threadTimeOut);

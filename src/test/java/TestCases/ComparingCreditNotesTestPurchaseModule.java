@@ -59,7 +59,7 @@ public class ComparingCreditNotesTestPurchaseModule extends BaseTest {
         loginPageObj.switchToDafater_5(websiteLink_5);
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
         creditNotesListPageObj = homePageObj.openCreditNotesPurchaseModuleListPage();
-        creditNotesListPageObj.filterDocTypesWithSecondFilter("حالة", "معتمد");
+        creditNotesListPageObj.filterDocTypesWithSecondFilterByVisibleText("حالة", "معتمد");
 
         String numberOfAllCreditNotesAfterSyncing = creditNotesListPageObj.getNumberOfAllCreditNotesAfterSyncing();
         String numberOfDraftCreditNotesAfterSyncing = creditNotesListPageObj.getNumberOfDraftCreditNotesAfterSyncing();

@@ -1,5 +1,6 @@
 package TestCases;
 
+import GeneralConstants.GeneralConstants;
 import Pages.*;
 import io.qameta.allure.Allure;
 import org.testng.annotations.Test;
@@ -37,11 +38,15 @@ public class ComparingCustomersTest extends BaseTest {
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
 
         driver.navigate().refresh();
-        salesInvoicesListPageObj.filterWithSubmittedStatus_2();
+        waitUntilElementVisibility(salesInvoicesListPageObj.draftLabel, GeneralConstants.minTimeOut);
+        if (tryToGetWebElementV(salesInvoicesListPageObj.emptyList)==GeneralConstants.FAILED)
+        {
+            salesInvoicesListPageObj.filterWithSubmittedStatus_2();
+
+        }
 
         double totalPrepaymentNotUsedValueBeforeSyncingAsNumber = salesInvoicesListPageObj.getTotalOutstandingAmountOfSalesInvoicesBeforeSyncing();
         String totalPrepaymentNotUsedValueBeforeSyncing = salesInvoicesListPageObj.convertToStringFormat(totalPrepaymentNotUsedValueBeforeSyncingAsNumber);
-
 
 //        String customersDebitsValueBeforeSyncing = customersListPageObj.getNumberOfCustomersDebitsBeforeSyncing();
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
@@ -59,6 +64,7 @@ public class ComparingCustomersTest extends BaseTest {
 //        softAssert.assertEquals(customersDebitsValueBeforeSyncing, customersDebitsValueAfterSyncing);
         Allure.step("verify that prepayment Not Used value  which appear at dafater 5 is equal to prepayment Not Used value at dafater 4");
         softAssert.assertEquals(totalPrepaymentNotUsedValueBeforeSyncing, prepaymentNotUsedValueAfterSyncing);
+
         softAssert.assertAll();
     }
 

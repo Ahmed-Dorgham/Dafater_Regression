@@ -25,11 +25,20 @@ public class ChartOfAccountsPage extends MainPage {
     By closeFilter = By.xpath("//*[contains(@class,'btn btn-default btn-xs remove-filter')]");
     private By accountIndicatorLabel = By.xpath("//h5[contains(text(),'دليل حساب')]" +
             "| //h3[contains(text(),'دليل الحسابات')]");
-    By assetsAccount = By.xpath("//*[contains(text(),'الاصول')]/parent::*/following-sibling::*//span");
-    By obligationsAccount = By.xpath("//*[contains(text(),'الالتزامات')]/parent::*/following-sibling::*//span");
+    By assetsAccount = By.xpath("//*[contains(text(),'الاصول')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
+            "|//*[contains(text(),'الاصول')]/parent::*/following-sibling::*//span");
+    By obligationsAccount = By.xpath("//*[contains(text(),'الالتزامات')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
+            "|//*[contains(text(),'الالتزامات')]/parent::*/following-sibling::*//span" +
+            "|//*[contains(text(),'حقوق الملكية')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
+            "|//*[contains(text(),'حقوق الملكية')]/parent::*/following-sibling::*//span");
     By revenuesAccount = By.xpath("//*[contains(text(),'الايرادات')]/parent::*/following-sibling::*//span");
-    By expensesAccount = By.xpath("//*[contains(text(),'المصروفات')]/parent::*/following-sibling::*//span");
 
+    By revenuesAccount_4 = By.xpath("//*[contains(text(),'الايرادات')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']");
+
+    By expensesAccount = By.xpath("//*[contains(text(),'المصروفات')]/parent::*/following-sibling::*//span" +
+            "|//*[contains(text(),'المصروفات')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
+            "|//*[contains(text(),'المصاريف')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
+            "|//*[contains(text(),'المصاريف')]/parent::*/following-sibling::*//span");
 
     public PurchaseOrderPage clickOnNewPurchaseOrdersBtn() {
         Allure.step("click on new purchase order btn ");
@@ -70,6 +79,7 @@ public class ChartOfAccountsPage extends MainPage {
         Allure.step("value at assets account before Syncing " + getWebElement(assetsAccount).getAttribute("textContent"));
         return getWebElement(assetsAccount).getAttribute("textContent");
     }
+
     public String getValueOfAssetsAccountAfterSyncing() throws InterruptedException {
 
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -79,6 +89,7 @@ public class ChartOfAccountsPage extends MainPage {
         Allure.step("value at assets account after Syncing " + getWebElement(assetsAccount).getAttribute("textContent"));
         return getWebElement(assetsAccount).getAttribute("textContent");
     }
+
     public String getValueOfObligationsAccountBeforeSyncing() throws InterruptedException {
 
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -88,6 +99,7 @@ public class ChartOfAccountsPage extends MainPage {
         Allure.step("value at Obligations account before Syncing " + getWebElement(obligationsAccount).getAttribute("textContent"));
         return getWebElement(obligationsAccount).getAttribute("textContent");
     }
+
     public String getValueOfObligationsAccountAfterSyncing() throws InterruptedException {
 
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -97,14 +109,17 @@ public class ChartOfAccountsPage extends MainPage {
         Allure.step("value at Obligations account after Syncing " + getWebElement(obligationsAccount).getAttribute("textContent"));
         return getWebElement(obligationsAccount).getAttribute("textContent");
     }
+
     public String getValueOfRevenuesAccountBeforeSyncing() throws InterruptedException {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(accountIndicatorLabel, GeneralConstants.minTimeOut);
-        waitUntilElementVisibility(revenuesAccount, GeneralConstants.minTimeOut);
-        System.out.println("value at Revenues account before Syncing " + getWebElement(revenuesAccount).getAttribute("textContent"));
-        Allure.step("value at Revenues account before Syncing " + getWebElement(revenuesAccount).getAttribute("textContent"));
-        return getWebElement(revenuesAccount).getAttribute("textContent");
+        waitUntilElementVisibility(revenuesAccount_4, GeneralConstants.minTimeOut);
+        System.out.println("value at Revenues account before Syncing " + getWebElement(revenuesAccount_4).getAttribute("textContent"));
+        Allure.step("value at Revenues account before Syncing " + getWebElement(revenuesAccount_4).getAttribute("textContent"));
+        return getWebElement(revenuesAccount_4).getAttribute("textContent");
     }
+
+
     public String getValueOfRevenuesAccountAfterSyncing() throws InterruptedException {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(accountIndicatorLabel, GeneralConstants.minTimeOut);
@@ -113,6 +128,7 @@ public class ChartOfAccountsPage extends MainPage {
         Allure.step("value at Revenues account after Syncing " + getWebElement(revenuesAccount).getAttribute("textContent"));
         return getWebElement(revenuesAccount).getAttribute("textContent");
     }
+
     public String getValueOfExpensesAccountBeforeSyncing() throws InterruptedException {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(accountIndicatorLabel, GeneralConstants.minTimeOut);
@@ -121,6 +137,7 @@ public class ChartOfAccountsPage extends MainPage {
         Allure.step("value at Expenses account before Syncing " + getWebElement(expensesAccount).getAttribute("textContent"));
         return getWebElement(expensesAccount).getAttribute("textContent");
     }
+
     public String getValueOfExpensesAccountAfterSyncing() throws InterruptedException {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(accountIndicatorLabel, GeneralConstants.minTimeOut);
@@ -137,10 +154,10 @@ public class ChartOfAccountsPage extends MainPage {
         Thread.sleep(threadTimeOut);
         waitUntilElementNotHaveSpecificText(assetsAccount, "تحديث");
 
-        System.out.println("number of all journal entry at list view after Syncing " +getWebElement(assetsAccount).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(assetsAccount).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1]);
-        Allure.step("number of all journal entry at list view after Syncing " + getWebElement(assetsAccount).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(assetsAccount).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1]);
+        System.out.println("number of all journal entry at list view after Syncing " + getWebElement(assetsAccount).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim().split(" ")[getWebElement(assetsAccount).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim().split(" ").length - 1]);
+        Allure.step("number of all journal entry at list view after Syncing " + getWebElement(assetsAccount).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim().split(" ")[getWebElement(assetsAccount).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim().split(" ").length - 1]);
 
 
-        return getWebElement(assetsAccount).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ")[getWebElement(assetsAccount).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim() .split(" ").length - 1];
+        return getWebElement(assetsAccount).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim().split(" ")[getWebElement(assetsAccount).getAttribute("textContent").replaceAll("[^0-9 ]", "").trim().split(" ").length - 1];
     }
 }
