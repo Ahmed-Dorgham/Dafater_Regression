@@ -219,6 +219,7 @@ public class SalesInvoicesListPage extends MainPage {
             getWebElement(closeFilter).click();
         }
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        System.out.println("name of first sales invoice at list view at dafater 4  >> " + getWebElement(firstSalesInvoice).getText());
         Allure.step("name of first sales invoice at list view at dafater 4  >> " + getWebElement(firstSalesInvoice).getText());
         return getWebElement(firstSalesInvoice).getText();
     }

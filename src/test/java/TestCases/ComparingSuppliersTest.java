@@ -63,7 +63,9 @@ public class ComparingSuppliersTest extends BaseTest {
 //
 //        softAssert.assertEquals(suppliersDebitsValueBeforeSyncing, suppliersDebitsValueAfterSyncing);
       Allure.step("verify that prepayment Not Used value  which appear at dafater 5 is equal to prepayment Not Used value at dafater 4");
-        softAssert.assertEquals(totalPrepaymentNotUsedValueBeforeSyncing, prepaymentNotUsedValueAfterSyncing);
+
+        softAssert.assertTrue(prepaymentNotUsedValueAfterSyncing.trim().equalsIgnoreCase(totalPrepaymentNotUsedValueBeforeSyncing.trim()));
+
         softAssert.assertAll();
     }
 }

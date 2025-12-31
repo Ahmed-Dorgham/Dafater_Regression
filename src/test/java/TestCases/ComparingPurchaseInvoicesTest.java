@@ -100,9 +100,8 @@ public class ComparingPurchaseInvoicesTest extends BaseTest {
         Allure.step("verify that total outstanding amount of all purchase invoices at dafater 5 is equal to total outstanding amount of all purchase invoices at dafater 4 ");
         softAssert.assertEquals(totalOutstandingAmountOfPurchaseInvoicesAfterSyncing, totalOutstandingAmountOfPurchaseInvoicesBeforeSyncing);
 
-
         Allure.step("verify that total paid amount of purchase invoices value at dafater 5 is equal to total paid amount of purchase invoices values at dafater 4 ");
-        softAssert.assertEquals(Double.parseDouble(totalPaidAmountOfPurchaseInvoicesAfterSyncing), totalPaidAmountOfPurchaseInvoicesBeforeSyncingAsNumber);
+        softAssert.assertTrue(totalPaidAmountOfPurchaseInvoicesAfterSyncing.trim().equalsIgnoreCase(totalPaidAmountOfPurchaseInvoicesBeforeSyncing.trim()));
 
         softAssert.assertAll();
     }

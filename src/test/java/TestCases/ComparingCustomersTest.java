@@ -18,6 +18,7 @@ public class ComparingCustomersTest extends BaseTest {
     HomePage homePageObj;
     CustomersListPage customersListPageObj;
     SalesInvoicesListPage salesInvoicesListPageObj;
+    CreditNotesListPage creditNotesListPageObj;
     ItemListPage itemListPageObj;
 
     @Test(priority = 1, enabled = true)
@@ -39,15 +40,22 @@ public class ComparingCustomersTest extends BaseTest {
 
         driver.navigate().refresh();
         waitUntilElementVisibility(salesInvoicesListPageObj.draftLabel, GeneralConstants.minTimeOut);
-        if (tryToGetWebElementV(salesInvoicesListPageObj.emptyList)==GeneralConstants.FAILED)
-        {
+        if (tryToGetWebElementV(salesInvoicesListPageObj.emptyList) == GeneralConstants.FAILED) {
             salesInvoicesListPageObj.filterWithSubmittedStatus_2();
 
         }
 
-        double totalPrepaymentNotUsedValueBeforeSyncingAsNumber = salesInvoicesListPageObj.getTotalOutstandingAmountOfSalesInvoicesBeforeSyncing();
-        String totalPrepaymentNotUsedValueBeforeSyncing = salesInvoicesListPageObj.convertToStringFormat(totalPrepaymentNotUsedValueBeforeSyncingAsNumber);
+        double totalPrepaymentNotUsedValueSalesInvoicesBeforeSyncingAsNumber = salesInvoicesListPageObj.getTotalOutstandingAmountOfSalesInvoicesBeforeSyncing();
+        String totalPrepaymentNotUsedValueSalesInvoicesBeforeSyncing = salesInvoicesListPageObj.convertToStringFormat(totalPrepaymentNotUsedValueSalesInvoicesBeforeSyncingAsNumber);
 
+        creditNotesListPageObj = homePageObj.openCreditNotesSalesModuleListPage();
+        driver.navigate().refresh();
+        creditNotesListPageObj.filterWithSubmittedStatus_2();
+        double totalOutStandingAmountCreditNotesValueBeforeSyncingAsNumber = creditNotesListPageObj.getValueOfOutstandingAmountBeforeSyncing();
+        String totalOutStandingAmountCreditNotesValueBeforeSyncing = salesInvoicesListPageObj.convertToStringFormat(totalOutStandingAmountCreditNotesValueBeforeSyncingAsNumber);
+
+        double totalOutStandingAmountBeforeSyncingAsNumber = totalPrepaymentNotUsedValueSalesInvoicesBeforeSyncingAsNumber - totalOutStandingAmountCreditNotesValueBeforeSyncingAsNumber;
+        String totalOutStandingAmountBeforeSyncing = creditNotesListPageObj.convertToStringFormat(totalOutStandingAmountBeforeSyncingAsNumber);
 //        String customersDebitsValueBeforeSyncing = customersListPageObj.getNumberOfCustomersDebitsBeforeSyncing();
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
         loginPageObj.switchToDafater_5(websiteLink_5);
@@ -57,14 +65,12 @@ public class ComparingCustomersTest extends BaseTest {
 //        String customersDebitsValueAfterSyncing = customersListPageObj.getNumberOfCustomersDebitsAfterSyncing();
         String prepaymentNotUsedValueAfterSyncing = customersListPageObj.getNumberOfPrepaymentNotUsedAfterSyncing();
         Allure.step("verify that number of all customers which appear at dafater 5 is equal to number of all customers at dafater 4");
-
         softAssert.assertEquals(numberOfAllCustomersBeforeSyncing, numberOfAllCustomerssAfterSyncing);
 //
 //        Allure.step("verify that value of Customers Debits which appear at dafater 5 is equal to the value of customers Debits at dafater 4");
 //        softAssert.assertEquals(customersDebitsValueBeforeSyncing, customersDebitsValueAfterSyncing);
-        Allure.step("verify that prepayment Not Used value  which appear at dafater 5 is equal to prepayment Not Used value at dafater 4");
-        softAssert.assertEquals(totalPrepaymentNotUsedValueBeforeSyncing, prepaymentNotUsedValueAfterSyncing);
-
+        Allure.step("verify that prepayment Not Used value  which appear at dafater 5 is equal to total OutStanding Amount of sales invoices and credit notes BeforeSyncing at dafater 4");
+        softAssert.assertTrue(totalOutStandingAmountBeforeSyncing.equalsIgnoreCase(prepaymentNotUsedValueAfterSyncing));
         softAssert.assertAll();
     }
 

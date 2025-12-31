@@ -3,6 +3,7 @@ package Pages;
 import GeneralConstants.GeneralConstants;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -26,9 +27,32 @@ public class FiscalYearListPage extends MainPage {
     By numberOfAllDeliveryNotes = By.xpath("//div[contains(@id,'page-List/Delivery Note/List')]//span[contains(@class,'list-count')]");
     By numberOfAllFiscalYearsField = By.xpath("//*[contains(@class,'total-rows')] " +
             "|//*[contains(@class,'list-count')]/span");
+    By addFiscalYear = By.xpath("//*[contains(text(),'إضافة السنة المالية')]");
+    By saveBtn = By.xpath("//*[contains(@data-action_name,'Save')]");
+    By yearNameInputField = By.xpath("//input[@id='year']");
+    By startDateInputField = By.xpath("//input[@id='year_start_date']");
+
+    public void createNewFiscalYearToAvoidFiscalErrorMsg(String yearName, String date) throws InterruptedException {
+        js = (JavascriptExecutor) driver;
+        waitUntilElementVisibility(addFiscalYear, GeneralConstants.minTimeOut);
+        getWebElement(addFiscalYear).click();
+        waitUntilElementVisibility(saveBtn, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(yearNameInputField, GeneralConstants.minTimeOut);
+        getWebElement(yearNameInputField).sendKeys(yearName);
+        waitUntilElementVisibility(startDateInputField, GeneralConstants.minTimeOut);
+
+        js.executeScript(
+                "arguments[0].value='" + date + "'; arguments[0].dispatchEvent(new Event('change'));",
+                getWebElement(startDateInputField)
+        );
+        getWebElement(saveBtn).click();
+//        Thread.sleep(20000);
+
+    }
+
     public DeliveryNotePage clickOnNewDeliveryNoteBtn() {
-       Allure.step("click on new delivery note btn ");
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        Allure.step("click on new delivery note btn ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
 //        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         getWebElement(newBtn).click();
@@ -42,35 +66,38 @@ public class FiscalYearListPage extends MainPage {
 
     public String getNumberOfAllFiscalYearsBeforeSyncing() throws InterruptedException {
 
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(fiscalYearListLabel, GeneralConstants.minTimeOut);
         //   Thread.sleep(threadTimeOut);
-       Allure.step("number of all fiscal years at list view before syncing " + getWebElement(numberOfAllFiscalYearsField).getText());
+        Allure.step("number of all fiscal years at list view before syncing " + getWebElement(numberOfAllFiscalYearsField).getText());
         return getWebElement(numberOfAllFiscalYearsField).getText();
     }
+
     public String getNumberOfAllFiscalYearsAfterSyncing() throws InterruptedException {
 
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(fiscalYearListLabel, GeneralConstants.minTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
 //        waitUntilElementNotContainText(numberOfAllFiscalYearsField,"تحديث");
         Thread.sleep(threadTimeOut);
         //   Thread.sleep(threadTimeOut);
-       Allure.step("number of all fiscal years at list view after syncing " + getWebElement(numberOfAllFiscalYearsField).getText());
+        Allure.step("number of all fiscal years at list view after syncing " + getWebElement(numberOfAllFiscalYearsField).getText());
         return getWebElement(numberOfAllFiscalYearsField).getText();
     }
+
     public String getNumberOfAllDeliveryNotesAfterSyncing() throws InterruptedException {
 
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
         //   Thread.sleep(threadTimeOut);
-       Allure.step("number of all delivery notes at list view after Syncing " + getWebElement(numberOfAllDeliveryNotes).getText());
+        Allure.step("number of all delivery notes at list view after Syncing " + getWebElement(numberOfAllDeliveryNotes).getText());
         return getWebElement(numberOfAllDeliveryNotes).getText();
     }
+
     public WebElement checkVmConnectionMsg() {
 
         waitUntilElementVisibility(statusMsg, GeneralConstants.minTimeOut);
-       Allure.step(getWebElement(statusMsg).getText());
+        Allure.step(getWebElement(statusMsg).getText());
         return getWebElement(statusMsg);
     }
 //    public void enterValidDataIntoMainData (String vmUrl , String apiKey , String secretKey)

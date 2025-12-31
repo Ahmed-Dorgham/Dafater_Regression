@@ -64,6 +64,7 @@ public class GeneralLedgerReportPage extends MainPage {
 
     private By accountInputField_4 = By.xpath("//*[@data-fieldname='account']");
     private By voucherInputField_4 = By.xpath("//*[@data-fieldname='voucher_no']");
+    private By issueDateField_4 = By.xpath("//*[@data-fieldname='from_date']");
     private By creditValue = By.xpath("(//*[contains(@class,'slick-cell b6 f6')])[last()]/div/div/span");
     private By creditValueF_5 = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-4')])[last()-1]");
     private By creditValue_5 = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-4')])[last()-1]");
@@ -80,6 +81,7 @@ public class GeneralLedgerReportPage extends MainPage {
     By accountField_5 = By.xpath("(//*[contains(@data-fieldname,'account')])[1]");
     By deleteAllBtn = By.xpath("(//*[contains(@data-fieldname,'account')])[1]//button");
     By voucherInputField_5 = By.xpath("(//*[contains(@id,'voucher_no')])[1]");
+    By issueDateField_5 = By.xpath("//input[@data-fieldname='from_date']");
     By chosenCompany = By.xpath("(//*[contains(@data-target,'Company')])/following-sibling::ul/li" +
             "| ((//*[contains(@data-target,'Company')])/following-sibling::ul/div/p/strong)" +
             " | //*[@id='ui-id-1']/li/a/span" +
@@ -269,7 +271,7 @@ public class GeneralLedgerReportPage extends MainPage {
         return chosenAccountName;
     }
 
-    public void searchAboutSpecificVoucher(String voucherName) {
+    public void searchAboutSpecificVoucher(String voucherName,String issueDate) {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -277,6 +279,15 @@ public class GeneralLedgerReportPage extends MainPage {
         waitUntilElementToBePresent(voucherInputField_4, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(voucherInputField_4).sendKeys(voucherName);
+
+
+
+        Allure.step("enter issue date for selected sales invoice  ");
+        waitUntilElementToBePresent(issueDateField_4, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        getWebElement(issueDateField_4).clear();
+        getWebElement(issueDateField_4).sendKeys(issueDate);
+
     }
 
     public void clickOnLoadDataBtn() {
@@ -329,20 +340,29 @@ public class GeneralLedgerReportPage extends MainPage {
         Thread.sleep(threadTimeOut);
     }
 
-    public void applyFiltersWithCompanyAndVoucherName_5(String companyName, String voucherNameName) throws InterruptedException {
+    public void applyFiltersWithCompanyAndVoucherName_5(String companyName, String voucherNameName,String issueDate) throws InterruptedException {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(companyInputField, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Allure.step("enter issue date for selected sales invoice ");
+        waitUntilElementToBePresent(issueDateField_5, GeneralConstants.minTimeOut);
+        getWebElement(issueDateField_5).clear();
+        getWebElement(issueDateField_5).sendKeys(issueDate);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Allure.step("enter voucher  name ");
+        waitUntilElementToBePresent(voucherInputField_5, GeneralConstants.minTimeOut);
+        getWebElement(voucherInputField_5).click();
+        getWebElement(voucherInputField_5).sendKeys(voucherNameName);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         Allure.step("enter company name ");
         getWebElement(companyInputField).clear();
         getWebElement(companyInputField).sendKeys(companyName);
         waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
         getWebElement(chosenCompany).click();
-        Allure.step("enter voucher  name ");
-        waitUntilElementToBePresent(voucherInputField_5, GeneralConstants.minTimeOut);
-        getWebElement(voucherInputField_5).click();
-        getWebElement(voucherInputField_5).sendKeys(voucherNameName);
-        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Thread.sleep(threadTimeOut);
+
+
+
     }
 
     public String getDebitValue() {

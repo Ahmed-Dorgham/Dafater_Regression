@@ -47,8 +47,7 @@ public class HomePage extends MainPage {
     private By journalEntryOpt = By.xpath("(//*[contains(@id,'sidebar-accounts-journal-voucher')]/span)[1]" +
             " | (//*[contains(@id,'sidebar-accounts-journal-entry')]/span)[1]");
 
-    private By chartOfAccountsOpt = By.xpath("(//*[contains(@id,'sidebar-accounts-chart-of-accounts')]/span)[1]" +
-            " | (//*[contains(@id,'sidebar-accounts-chart-of-accounts')]/span)[1]");
+    private By chartOfAccountsOpt = By.xpath("(//*[contains(@id,'sidebar-accounts-chart-of-accounts')]/span)[1]");
 
     private By arrowIcon = By.xpath("(//*[contains(@class,'header-btn btn header__profile-btn need-work')])/i");
     private By logoutBtn = By.xpath("(//*[contains(@class,'pos-header__sign-out')])");
@@ -508,6 +507,7 @@ public class HomePage extends MainPage {
         waitUntilElementToBeClickable(accountsTab, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(accountsTab).click();
+        Thread.sleep(threadTimeOut);
         if (tryToGetWebElementV(chartOfAccountsOpt) == GeneralConstants.FAILED) {
             Allure.step("************************************");
             getWebElement(accountsTab).click();

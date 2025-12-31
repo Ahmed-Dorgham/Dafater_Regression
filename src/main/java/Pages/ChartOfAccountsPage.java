@@ -6,6 +6,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ChartOfAccountsPage extends MainPage {
     private String dataMigrationTitle = "data migration";
     // private WebDriver driver ;
@@ -32,13 +37,63 @@ public class ChartOfAccountsPage extends MainPage {
             "|//*[contains(text(),'حقوق الملكية')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
             "|//*[contains(text(),'حقوق الملكية')]/parent::*/following-sibling::*//span");
     By revenuesAccount = By.xpath("//*[contains(text(),'الايرادات')]/parent::*/following-sibling::*//span");
+    public By fiscalYearErrorMsg = By.xpath("//*[contains(text(),'ليس في أي سنة مالية')]");
 
     By revenuesAccount_4 = By.xpath("//*[contains(text(),'الايرادات')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']");
+    By toolsTab = By.xpath("//*[contains(@id,'sidebar-accounts-tools')]");
+    By periodClosingVoucherOpt = By.xpath("//*[contains(@id,'sidebar-accounts-period-closing-voucher')]");
 
     By expensesAccount = By.xpath("//*[contains(text(),'المصروفات')]/parent::*/following-sibling::*//span" +
             "|//*[contains(text(),'المصروفات')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
             "|//*[contains(text(),'المصاريف')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
             "|//*[contains(text(),'المصاريف')]/parent::*/following-sibling::*//span");
+
+
+
+    public PeriodClosingVoucherListPage openPeriodClosingVoucherListPage()
+    {
+        System.out.println("open period closing voucher page");
+        waitUntilElementVisibility(toolsTab,GeneralConstants.minTimeOut);
+        getWebElement(toolsTab).click();
+        waitUntilElementVisibility(periodClosingVoucherOpt,GeneralConstants.minTimeOut);
+        getWebElement(periodClosingVoucherOpt).click();
+        return new PeriodClosingVoucherListPage(driver);
+    }
+    public String extractDate() {
+
+        String fiscalYearMsg = getWebElement(fiscalYearErrorMsg).getText();
+        System.out.println(fiscalYearMsg);
+
+        Pattern pattern = Pattern.compile("\\d{1,2}-\\d{1,2}-\\d{4}");
+        Matcher matcher = pattern.matcher(fiscalYearMsg);
+
+        if (matcher.find()) {
+            System.out.println("date which exist at fiscal year error msg is " + matcher.group());
+            return matcher.group();
+        } else {
+            throw new RuntimeException("No date found in fiscal year error message");
+        }
+    }
+
+    public String extractYear() {
+
+        String fiscalYearMsg = getWebElement(fiscalYearErrorMsg).getText();
+
+        Pattern pattern = Pattern.compile("\\d{1,2}-\\d{1,2}-\\d{4}");
+        Matcher matcher = pattern.matcher(fiscalYearMsg);
+
+        if (matcher.find()) {
+            String dateStr = matcher.group();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-M-yyyy");
+            LocalDate date = LocalDate.parse(dateStr, formatter);
+            System.out.println("year which should added to Dafater 5  " + String.valueOf(date.getYear() + 1));
+
+            return String.valueOf(date.getYear() + 1);
+        } else {
+            throw new RuntimeException("No date found in fiscal year error message");
+        }
+    }
 
     public PurchaseOrderPage clickOnNewPurchaseOrdersBtn() {
         Allure.step("click on new purchase order btn ");

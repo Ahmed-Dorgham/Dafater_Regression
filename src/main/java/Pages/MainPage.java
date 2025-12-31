@@ -102,7 +102,8 @@ public class MainPage extends GeneralConstants {
         waitUntilOverlayDisappear(overlay, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
     }
-    public void filterDocTypes(String id,String value) throws InterruptedException {
+
+    public void filterDocTypes(String id, String value) throws InterruptedException {
 
         Select select;
         waitUntilElementVisibility(filterTab, GeneralConstants.minTimeOut);
@@ -120,12 +121,13 @@ public class MainPage extends GeneralConstants {
         getWebElement(applyFilterBtn).click();
         Thread.sleep(threadTimeOut);
     }
-    public void filterDocTypesWithSecondFilter(String id,String value) throws InterruptedException {
+
+    public void filterDocTypesWithSecondFilter(String id, String value) throws InterruptedException {
 
         Select select;
         waitUntilElementVisibility(filterTab, GeneralConstants.minTimeOut);
         getWebElement(filterTab).click();
-        waitUntilElementVisibility(addFilter,GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(addFilter, GeneralConstants.minTimeOut);
         getWebElement(addFilter).click();
 //        Thread.sleep(threadTimeOut);
         waitUntilElementVisibility(filterLabelField_2, GeneralConstants.minTimeOut);
@@ -143,16 +145,16 @@ public class MainPage extends GeneralConstants {
         getWebElement(applyFilterBtn).click();
         Thread.sleep(threadTimeOut);
     }
+
     public void filterDocTypesWithSecondFilterByVisibleText(String id, String value) throws InterruptedException {
 
         Select select;
         waitUntilElementVisibility(filterTab, GeneralConstants.minTimeOut);
         getWebElement(filterTab).click();
-        waitUntilElementVisibility(addFilter,GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(addFilter, GeneralConstants.minTimeOut);
         getWebElement(addFilter).click();
 //        Thread.sleep(threadTimeOut);
-        if (tryToGetWebElementV(filterLabelField_2)==GeneralConstants.FAILED)
-        {
+        if (tryToGetWebElementV(filterLabelField_2) == GeneralConstants.FAILED) {
             getWebElement(addFilter).click();
         }
 
@@ -170,12 +172,13 @@ public class MainPage extends GeneralConstants {
         getWebElement(applyFilterBtn).click();
         Thread.sleep(threadTimeOut);
     }
-    public void filterDocTypesWithThirdFilter(String id,String value) throws InterruptedException {
+
+    public void filterDocTypesWithThirdFilter(String id, String value) throws InterruptedException {
 
         Select select;
         waitUntilElementVisibility(filterTab, GeneralConstants.minTimeOut);
         getWebElement(filterTab).click();
-        waitUntilElementVisibility(addFilter,GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(addFilter, GeneralConstants.minTimeOut);
         getWebElement(addFilter).click();
 //        Thread.sleep(threadTimeOut);
         waitUntilElementVisibility(filterLabelField_3, GeneralConstants.minTimeOut);
@@ -186,14 +189,16 @@ public class MainPage extends GeneralConstants {
         waitUntilElementVisibility(filterValField_3, GeneralConstants.minTimeOut);
         getWebElement(filterValField_3).click();
         select = new Select(getWebElement(filterValField_3));
-        select.selectByValue(value);
+        select.selectByVisibleText(value);
         getWebElement(applyFilterBtn).click();
         Thread.sleep(threadTimeOut);
     }
+
     public void waitUntilElementVisibility(By by, int duration) {
         wait = new WebDriverWait(driver, Duration.ofSeconds(duration));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
+
     public String convertToStringFormat(double number) {
         String formatted;
         if (number == 0) {
@@ -208,6 +213,7 @@ public class MainPage extends GeneralConstants {
         System.out.println(formatted);
         return formatted;
     }
+
     public void waitTime(int duration) {
         this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(duration));
     }
@@ -216,11 +222,13 @@ public class MainPage extends GeneralConstants {
         wait = new WebDriverWait(driver, Duration.ofSeconds(duration));
         wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
-    public void waitUntilElementNotHaveSpecificText(By by,String text) throws InterruptedException {
+
+    public void waitUntilElementNotHaveSpecificText(By by, String text) throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(GeneralConstants.freezeTimeOut));
-        wait.until(ExpectedConditions.not(textToBePresentInElementLocated(by,text)));
+        wait.until(ExpectedConditions.not(textToBePresentInElementLocated(by, text)));
         Thread.sleep(2000);
     }
+
     public void waitUntilElementNotToBeVisible(By by, int duration) {
 
         wait = new WebDriverWait(driver, Duration.ofSeconds(duration));
@@ -236,12 +244,14 @@ public class MainPage extends GeneralConstants {
         // System.out.println(driver.findElement(by).getText() + " >>>> element is displayed");
         return driver.findElement(by);
     }
+
     public List<WebElement> getListOfWebElements(By by) {
         // System.out.println(driver.findElement(by).getText() + " >>>> element is displayed");
         return driver.findElements(by);
     }
+
     public String tryToGetWebElementV(By by) {
-        // System.out.println(driver.findElement(by).getText() + " >>>> element is displayed");
+
         try {
             waitUntilElementVisibility(by, GeneralConstants.tryTimeOut);
             return GeneralConstants.SUCCESS;
@@ -250,6 +260,7 @@ public class MainPage extends GeneralConstants {
         }
 
     }
+
     public String tryToGetWebElementC(By by) {
         // System.out.println(driver.findElement(by).getText() + " >>>> element is displayed");
         try {
@@ -260,6 +271,7 @@ public class MainPage extends GeneralConstants {
         }
 
     }
+
     public String tryToGetWebElementP(By by) {
         // System.out.println(driver.findElement(by).getText() + " >>>> element is displayed");
         try {
@@ -270,6 +282,7 @@ public class MainPage extends GeneralConstants {
         }
 
     }
+
     public String tryToGetWebElementVLongWait(By by) {
         // System.out.println(driver.findElement(by).getText() + " >>>> element is displayed");
         try {
@@ -280,6 +293,7 @@ public class MainPage extends GeneralConstants {
         }
 
     }
+
     public void clickByActions(By by) {
         actions = new Actions(driver);
         actions.click(getWebElement(by)).build().perform();
@@ -315,10 +329,12 @@ public class MainPage extends GeneralConstants {
         actions.moveToElement(getWebElement(by)).perform();
         waitUntilElementVisibility(by, GeneralConstants.minTimeOut);
     }
+
     public void scrollToBottom(WebDriver driver) {
-         actions = new Actions(driver);
+        actions = new Actions(driver);
         actions.sendKeys(Keys.END).perform();
     }
+
     public void scrollToBottom_2(WebDriver driver) {
         WebElement body = driver.findElement(By.tagName("body"));
         body.sendKeys(Keys.END);
@@ -326,7 +342,7 @@ public class MainPage extends GeneralConstants {
 
     public String verifyTextContains(By by, String expected) {
         if (getWebElement(by).getText().contains(expected)) {
-          Allure.step("actual text is " + getWebElement(by).getText() + "and expected test is " + expected);
+            Allure.step("actual text is " + getWebElement(by).getText() + "and expected test is " + expected);
             return GeneralConstants.SUCCESS;
         } else
             return GeneralConstants.FAILED;

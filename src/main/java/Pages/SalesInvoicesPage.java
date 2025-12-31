@@ -371,6 +371,7 @@ public class SalesInvoicesPage extends MainPage {
 
     public String getSalesInvoiceIssueDate() {
         waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
+       System.out.println("issue date of sales invoice  " + getWebElement(invoiceIssueDateField).getText());
         Allure.step("issue date of sales invoice  " + getWebElement(invoiceIssueDateField).getText());
         return getWebElement(invoiceIssueDateField).getText();
     }

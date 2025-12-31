@@ -72,7 +72,7 @@ public class SupplierAgingDetailsPage extends MainPage {
     private By yearField_4 = By.xpath("(//span[contains(text(),'إختر') and @class='filter-option pull-left'])[1]" +
             "| (//div[contains(@data-original-title,'stmt_fiscal_year')])");
     private By listField_4 = By.xpath("(//span[contains(text(),'إختر') and @class='filter-option pull-left'])[1]");
-    private By invoicedAmountVal = By.xpath("(//*[contains(@class,'ui-widget-content slick-row odd')]//*[contains(@class,'slick-cell b11 f11')]//span)[last()]" +
+    private By invoicedAmountVal = By.xpath("(//*[contains(@class,'ui-widget-content slick-row')]//*[contains(@class,'slick-cell b11 f11')]//span)[last()]" +
             "|(//*[contains(@class,'dt-cell dt-cell--col-11')]//span)[last()]");
     private By outstandingAmountVal = By.xpath("(//*[contains(@class,'ui-widget-content slick-row odd')]//*[contains(@class,'slick-cell b14 f14')]//span)[last()]" +
             "|(//*[contains(@class,'dt-cell dt-cell--col-14')]//span)[last()]");
@@ -103,6 +103,8 @@ public class SupplierAgingDetailsPage extends MainPage {
             "|(//*[contains(@class,'dt-cell__content dt-cell__content--col-5')])[last()]/span/div/span");
     private By chosenLevel_5 = By.xpath("//*[contains(@data-fieldname,'warehouse')]/div/ul/div/li/div/strong");
     private By filterationDependOnOptions = By.xpath("//select[contains(@data-fieldname,'ageing_based_on')]");
+    private By partTypeField = By.xpath("//input[contains(@data-fieldname,'party_type')]");
+    private By supplierTypeOpt = By.xpath("//strong[contains(text(),'المورد')]");
     private By periodsOptions = By.xpath("//select[contains(@data-fieldname,'periodicity')]");
     private By customerSearchField_4 = By.xpath("//*[contains(@data-original-title,'عميل')]//*[contains(@aria-label,'Search')]");
     private By enteredCustomer = By.xpath("//*[contains(@data-original-title,'عميل')]//*[contains(@class,'active')]");
@@ -369,11 +371,11 @@ public class SupplierAgingDetailsPage extends MainPage {
             waitUntilElementToBeClickable(invoicedAmountVal, GeneralConstants.minTimeOut);
             invoicedAmountValue = getWebElement(invoicedAmountVal).getText();
             System.out.println("invoiced amount value at dafater 5 is " + getWebElement(invoicedAmountVal).getText());
-            Allure.step("invoiced amount value at dafater 5 is " +  getWebElement(invoicedAmountVal).getText());
+            Allure.step("invoiced amount value at dafater 5 is " + getWebElement(invoicedAmountVal).getText());
             return invoicedAmountValue;
         } else {
-            System.out.println("there is no data appear at supplier aging details report at dafater 5");
-            Allure.step("there is no data appear at supplier aging details report at dafater 5 ");
+            System.out.println("there is no data appear at supplier aging details report at dafater 5 so invoiced Amount Val is 0");
+            Allure.step("there is no data appear at supplier aging details report at dafater 5 so invoiced Amount Val is 0");
             return "0.00";
         }
     }
@@ -388,8 +390,8 @@ public class SupplierAgingDetailsPage extends MainPage {
             Allure.step("invoiced amount value at dafater 4 is " + getWebElement(invoicedAmountVal).getText());
             return invoicedAmountValue;
         } else {
-            System.out.println("there is no data appear at supplier aging details report at dafater 4 ");
-            Allure.step("there is no data appear at supplier aging details report at dafater 4");
+            System.out.println("there is no data appear at supplier aging details report at dafater 4 so invoiced Amount Val is 0 ");
+            Allure.step("there is no data appear at supplier aging details report at dafater 4 so invoiced Amount Val is 0");
             return "0.00";
         }
     }
@@ -588,11 +590,20 @@ public class SupplierAgingDetailsPage extends MainPage {
         getWebElement(companyInputField).click();
         getWebElement(companyInputField).clear();
         getWebElement(companyInputField).sendKeys(companyName);
+        Allure.step(" choose supplier as a party type");
+
+        waitUntilElementVisibility(partTypeField, GeneralConstants.minTimeOut);
+        getWebElement(partTypeField).click();
+        waitUntilElementVisibility(supplierTypeOpt, GeneralConstants.minTimeOut);
+        getWebElement(supplierTypeOpt).click();
+        Allure.step(" choose Supplier Invoice Date opt  at ageing based on filter");
         Select filtrationDateDependOn = new Select(getWebElement(filterationDependOnOptions));
         getWebElement(filterationDependOnOptions).click();
         filtrationDateDependOn.selectByValue("Supplier Invoice Date");
         String filtrationBasedOnOption = filtrationDateDependOn.getFirstSelectedOption().getText();
         Allure.step(" chosen ageing based on  is  " + filtrationBasedOnOption);
+
+
 
     }
 

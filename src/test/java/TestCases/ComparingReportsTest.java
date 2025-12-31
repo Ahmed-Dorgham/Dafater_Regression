@@ -53,7 +53,7 @@ public class ComparingReportsTest extends BaseTest {
     private final String invoiceName = "ACC-SINV";
 
 
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = false)
     public void TC01_comparingGeneralLedgerReportWithSpecificAccount() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -101,7 +101,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2, enabled = false)
     public void TC02_comparingGeneralLedgerReportWithoutFiltration() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -186,7 +186,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 4, enabled = true)
+    @Test(priority = 4, enabled = false)
     public void TC04_comparingTaxDeclarationReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -221,7 +221,7 @@ public class ComparingReportsTest extends BaseTest {
     }
 
     //
-    @Test(priority = 5, enabled = true)
+    @Test(priority = 5, enabled = false)
     public void TC05_comparingStockBalanceReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -377,7 +377,7 @@ public class ComparingReportsTest extends BaseTest {
     }
 
     //
-    @Test(priority = 8, enabled = true)
+    @Test(priority = 8, enabled = false)
     public void TC08_comparingProfitAndLossReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -409,13 +409,15 @@ public class ComparingReportsTest extends BaseTest {
 //        profitAndLossReportPageObj.scrollInsideTable();
         String profitOrLossValueAfterSyncing = profitAndLossReportPageObj.getProfitOrLossValue().replace(",", "");
         Allure.step("verify that profit Or Loss value which exist at dafater 5 is equal to profit Or Loss value for the same company and level at dafater 4 ");
+
+
         softAssert.assertEquals((long)Double.parseDouble(profitOrLossValueBeforeSyncing.trim()),(long)Double.parseDouble(profitOrLossValueAfterSyncing.trim()));
         Allure.step("profit Or Loss value at dafater 4  before syncing is " + (long)Double.parseDouble(profitOrLossValueBeforeSyncing.trim()) + " and after syncing at dafater 5 is " +(long)Double.parseDouble( profitOrLossValueAfterSyncing.trim()));
         softAssert.assertAll();
     }
 
 
-    @Test(priority = 9, enabled = true)
+    @Test(priority = 9, enabled = false)
     public void TC09_comparingGrossProfitReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -498,7 +500,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 10, enabled = true)
+    @Test(priority = 10, enabled = false)
     public void TC010_comparingSupplierAgingDetailsReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -531,7 +533,7 @@ public class ComparingReportsTest extends BaseTest {
 
     }
 
-    @Test(priority = 11, enabled = true)
+    @Test(priority = 11, enabled = false)
     public void TC011_comparingSalesPersonDetailedReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");

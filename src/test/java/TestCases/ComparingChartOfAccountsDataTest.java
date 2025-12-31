@@ -1,9 +1,6 @@
 package TestCases;
 
-import Pages.ChartOfAccountsPage;
-import Pages.HomePage;
-import Pages.JournalEntrytListPage;
-import Pages.LoginPage;
+import Pages.*;
 import io.qameta.allure.Allure;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -20,7 +17,10 @@ public class ComparingChartOfAccountsDataTest extends BaseTest {
     LoginPage loginPageObj;
     HomePage homePageObj;
     JournalEntrytListPage journalEntryListPageObj;
-    ChartOfAccountsPage chartOfAccountsPage ;
+    ChartOfAccountsPage chartOfAccountsPage;
+    SetupPage setupPageObj;
+    PeriodClosingVoucherListPage periodClosingVoucherListPageObj;
+    PeriodClosingVoucherPage periodClosingVoucherPageObj;
 
     @Test(priority = 1, enabled = true)
     public void TC01_comparingChartOfAccountsDataTest() throws InterruptedException, IOException {
@@ -45,25 +45,40 @@ public class ComparingChartOfAccountsDataTest extends BaseTest {
 
         String assetsAccountValueAfterSyncing = chartOfAccountsPage.getValueOfAssetsAccountAfterSyncing().replace(",", "");
         String obligationsAccountValueAfterSyncing = chartOfAccountsPage.getValueOfObligationsAccountAfterSyncing().replace(",", "");
+
+        setupPageObj = homePageObj.openSetupPage();
+        fiscalYearListPageObj = setupPageObj.openFiscalYearListPage();
+        int numberOfFiscalYears = Integer.parseInt(fiscalYearListPageObj.getNumberOfAllFiscalYearsAfterSyncing());
+        periodClosingVoucherListPageObj = chartOfAccountsPage.openPeriodClosingVoucherListPage();
+
+        for (int counter = 1; counter < numberOfFiscalYears; counter++) {
+
+            if (periodClosingVoucherListPageObj.getPeriodClosingVoucherListCount() == numberOfFiscalYears-1) {
+                break;
+            }
+            periodClosingVoucherPageObj = periodClosingVoucherListPageObj.openPeriodClosingVoucherPage();
+            periodClosingVoucherPageObj.addPeriodClosingVoucher(counter);
+        }
+
+        chartOfAccountsPage = homePageObj.openChartOfAccountsPage();
         String revenuesِAccountValueAfterSyncing = chartOfAccountsPage.getValueOfRevenuesAccountAfterSyncing().replace(",", "");
         String expensesِAccountValueAfterSyncing = chartOfAccountsPage.getValueOfExpensesAccountAfterSyncing().replace(",", "");
         Allure.step("verify that value at assets account which appear at dafater 5 is equal to value at assets account at dafater 4 ");
-        softAssert.assertEquals((long)Double.parseDouble(assetsAccountValueBeforeSyncing.trim()), (long)Double.parseDouble(assetsAccountValueAfterSyncing.trim()));
-        Allure.step(" value at assets account which appear at dafater 5 is " + (long)Double.parseDouble(assetsAccountValueAfterSyncing)+ " and value at assets account at dafater 4 is " + (long)Double.parseDouble(assetsAccountValueBeforeSyncing) + " and this is correct ");
+        softAssert.assertEquals((long) Double.parseDouble(assetsAccountValueBeforeSyncing.trim()), (long) Double.parseDouble(assetsAccountValueAfterSyncing.trim()));
+        Allure.step(" value at assets account which appear at dafater 5 is " + (long) Double.parseDouble(assetsAccountValueAfterSyncing) + " and value at assets account at dafater 4 is " + (long) Double.parseDouble(assetsAccountValueBeforeSyncing) + " and this is correct ");
 
         Allure.step("verify that value at obligations account which appear at dafater 5 is equal to value at obligations account at dafater 4 ");
-        softAssert.assertEquals((long)Double.parseDouble(obligationsAccountValueBeforeSyncing.trim()), (long)Double.parseDouble(obligationsAccountValueAfterSyncing.trim()));
-        Allure.step(" value at obligations account which appear at dafater 5 is " +(long)Double.parseDouble(obligationsAccountValueAfterSyncing) + " and value at obligations account at dafater 4 is " + (long)Double.parseDouble(obligationsAccountValueBeforeSyncing) + " and this is correct ");
+        softAssert.assertEquals((long) Double.parseDouble(obligationsAccountValueBeforeSyncing.trim()), (long) Double.parseDouble(obligationsAccountValueAfterSyncing.trim()));
+        Allure.step(" value at obligations account which appear at dafater 5 is " + (long) Double.parseDouble(obligationsAccountValueAfterSyncing) + " and value at obligations account at dafater 4 is " + (long) Double.parseDouble(obligationsAccountValueBeforeSyncing) + " and this is correct ");
 
 
         Allure.step("verify that value at revenue account which appear at dafater 5 is equal to value at revenue account at dafater 4 ");
-        softAssert.assertEquals((long)Double.parseDouble(revenuesِAccountValueBeforeSyncing.trim()), (long)Double.parseDouble(revenuesِAccountValueAfterSyncing.trim()));
-        Allure.step(" value at revenue account which appear at dafater 5 is " + (long)Double.parseDouble(revenuesِAccountValueAfterSyncing) + " and value at revenue account at dafater 4 is " + (long)Double.parseDouble(revenuesِAccountValueBeforeSyncing) + " and this is correct ");
+        softAssert.assertEquals((long) Double.parseDouble(revenuesِAccountValueBeforeSyncing.trim()), (long) Double.parseDouble(revenuesِAccountValueAfterSyncing.trim()));
+        Allure.step(" value at revenue account which appear at dafater 5 is " + (long) Double.parseDouble(revenuesِAccountValueAfterSyncing) + " and value at revenue account at dafater 4 is " + (long) Double.parseDouble(revenuesِAccountValueBeforeSyncing) + " and this is correct ");
 
         Allure.step("verify that value at expense account which appear at dafater 5 is equal to value at expense account at dafater 4 ");
-        softAssert.assertEquals((long)Double.parseDouble(expensesِAccountValueBeforeSyncing.trim()), (long)Double.parseDouble(expensesِAccountValueAfterSyncing.trim()));
-        Allure.step(" value at expense account which appear at dafater 5 is " +(long)Double.parseDouble( expensesِAccountValueAfterSyncing) + " and value at expense account at dafater 4 is " + (long)Double.parseDouble(expensesِAccountValueBeforeSyncing) + " and this is correct ");
-
+        softAssert.assertEquals((long) Double.parseDouble(expensesِAccountValueBeforeSyncing.trim()), (long) Double.parseDouble(expensesِAccountValueAfterSyncing.trim()));
+        Allure.step(" value at expense account which appear at dafater 5 is " + (long) Double.parseDouble(expensesِAccountValueAfterSyncing) + " and value at expense account at dafater 4 is " + (long) Double.parseDouble(expensesِAccountValueBeforeSyncing) + " and this is correct ");
 
 
         softAssert.assertAll();

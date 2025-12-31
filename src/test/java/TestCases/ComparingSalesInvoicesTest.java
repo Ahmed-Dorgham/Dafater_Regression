@@ -45,42 +45,37 @@ public class ComparingSalesInvoicesTest extends BaseTest {
         String numberOfSalesInvoicesBeforeSyncing = salesInvoicesListPageObj.getListAccountBeforeSyncing();
 
 
-        if (tryToGetWebElementV(salesInvoicesListPageObj.emptyList)==GeneralConstants.FAILED)
-        {
+        if (tryToGetWebElementV(salesInvoicesListPageObj.emptyList) == GeneralConstants.FAILED) {
             salesInvoicesListPageObj.filterWithSubmittedStatus();
         }
-
-
-
         double totalAmountOfSalesInvoicesBeforeSyncingAsNumber = salesInvoicesListPageObj.getTotalAmountOfSalesInvoicesBeforeSyncing();
         String totalAmountOfSalesInvoicesBeforeSyncing = salesInvoicesListPageObj.convertToStringFormat(totalAmountOfSalesInvoicesBeforeSyncingAsNumber);
         driver.navigate().refresh();
         Thread.sleep(threadTimeOut);
-        if (tryToGetWebElementV(salesInvoicesListPageObj.emptyList)==GeneralConstants.FAILED)
-        {
+        if (tryToGetWebElementV(salesInvoicesListPageObj.emptyList) == GeneralConstants.FAILED) {
             salesInvoicesListPageObj.filterWithSubmittedStatus_2();
         }
-
-
-
         double totalOutstandingAmountOfSalesInvoicesBeforeSyncingAsNumber = salesInvoicesListPageObj.getTotalOutstandingAmountOfSalesInvoicesBeforeSyncing();
         String totalOutstandingAmountOfSalesInvoicesBeforeSyncing = salesInvoicesListPageObj.convertToStringFormat(totalOutstandingAmountOfSalesInvoicesBeforeSyncingAsNumber);
 
         double totalPaymentReceivedOfSalesInvoicesBeforeSyncingAsNumber = totalAmountOfSalesInvoicesBeforeSyncingAsNumber - totalOutstandingAmountOfSalesInvoicesBeforeSyncingAsNumber;
         String totalPaymentReceivedOfSalesInvoicesBeforeSyncing = salesInvoicesListPageObj.convertToStringFormat(totalPaymentReceivedOfSalesInvoicesBeforeSyncingAsNumber);
 
-        System.out.println("total Payment Received Of Sales Invoices Before Syncing is "+totalPaymentReceivedOfSalesInvoicesBeforeSyncingAsNumber);
+        System.out.println("total Payment Received Of Sales Invoices Before Syncing is " + totalPaymentReceivedOfSalesInvoicesBeforeSyncingAsNumber);
 
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
         loginPageObj.switchToDafater_5(websiteLink_5);
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
         Allure.step("filter with sales invoices only at view list without returns ");
-        salesInvoicesListPageObj.filterDocTypes("مرتجع","No");
+
+        salesInvoicesListPageObj.filterDocTypes("مرتجع", "No");
         salesInvoicesListPageObj.filterDocTypesWithSecondFilter("مدين", "No");
-//        salesInvoicesListPageObj.filterDocTypesWithThirdFilter("حالة", "معتمد");
+
         String numberOfDraftSalesInvoicesAfterSyncing = salesInvoicesListPageObj.getNumberOfDraftInvoicesAfterSyncing();
         String numberOfSalesInvoicesAfterSyncing = salesInvoicesListPageObj.getListAccountAfterSyncing();
+        salesInvoicesListPageObj.filterDocTypesWithThirdFilter("حالة المستند", "معتمد");
+
         String totalAmountOfSalesInvoicesAfterSyncing = salesInvoicesListPageObj.getTotalAmountOfSalesInvoicesAfterSyncing();
         String totalOutstandingAmountOfSalesInvoicesAfterSyncing = salesInvoicesListPageObj.getTotalOutstandingAmountOfSalesInvoicesAfterSyncing();
         String totalPaymentReceivedAmountOfSalesInvoicesAfterSyncing = salesInvoicesListPageObj.getTotalPaymentReceivedAmountOfSalesInvoicesAfterSyncing();
@@ -94,6 +89,8 @@ public class ComparingSalesInvoicesTest extends BaseTest {
         softAssert.assertTrue(totalOutstandingAmountOfSalesInvoicesAfterSyncing.contains(totalOutstandingAmountOfSalesInvoicesBeforeSyncing));
 
         Allure.step("verify that total payment received  of sales invoices value at dafater 5 is equal to total payment received of sales invoices values at dafater 4 ");
+
+
         softAssert.assertTrue(totalPaymentReceivedAmountOfSalesInvoicesAfterSyncing.trim().equalsIgnoreCase(totalPaymentReceivedOfSalesInvoicesBeforeSyncing.trim()));
         softAssert.assertAll();
     }
@@ -155,9 +152,9 @@ public class ComparingSalesInvoicesTest extends BaseTest {
             homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
             salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
             Allure.step("filter with sales invoices only at view list without returns ");
-            salesInvoicesListPageObj.filterDocTypes("مرتجع","No");
+            salesInvoicesListPageObj.filterDocTypes("مرتجع", "No");
 
-            salesInvoicesListPageObj.filterDocTypesWithSecondFilter("مدين","No");
+            salesInvoicesListPageObj.filterDocTypesWithSecondFilter("مدين", "No");
             Assert.assertTrue(salesInvoicesListPageObj.searchAboutSpecificSalesInvoice(nameOfSelectedSalesInvoiceAtDafater_4).equals(GeneralConstants.SUCCESS));
             if (salesInvoicesPageObj.getSalesInvoiceStatus().contains(submittedStatus)) {
                 Allure.step("status of sales invoice  is  " + submittedStatus);
@@ -241,49 +238,60 @@ public class ComparingSalesInvoicesTest extends BaseTest {
     @Test(priority = 3, enabled = true)
     public void TC03_comparingSalesInvoiceDataAtGL() throws InterruptedException, IOException {
 
+
         homePageObj = new HomePage(driver);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
-
         String numberOfSalesInvoicesBeforeSyncing = salesInvoicesListPageObj.getListAccountBeforeSyncing();
         if (numberOfSalesInvoicesBeforeSyncing.contains("0")) {
             System.out.println("there is no sales invoice to be viewed at GL  ");
             Allure.step("there is no sales invoice to be viewed at GL ");
         } else {
+            String salesInvoiceIssueDateAfterSyncing = null;
+            String salesInvoiceIssueDateBeforeSyncing = null;
 
-        homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
-        websiteLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "websiteLink_5");
-        homePageLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_5");
-        random = new Random();
-        randomNumber = random.nextInt(1000000000);
-        itemCode = "item " + randomNumber;
-        softAssert = new SoftAssert();
-        homePageObj = new HomePage(driver);
-        salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
-        String nameOfSelectedSalesInvoiceAtDafater_4 = salesInvoicesListPageObj.getNameOfFirstSalesInvoiceBeforeSyncing();
-        reportsListPageObj = salesInvoicesListPageObj.openReportsListPage();
-        generalLedgerReportPageObj = reportsListPageObj.openGeneralLedgerReport();
-        companyName = generalLedgerReportPageObj.chooseCompany();
-        generalLedgerReportPageObj.searchAboutSpecificVoucher(nameOfSelectedSalesInvoiceAtDafater_4);
-        generalLedgerReportPageObj.clickOnLoadDataBtn();
-        Allure.step("debit value for this sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + "  before syncing  ");
-        String debitValueOfSpecificVoucherBeforeSyncing = generalLedgerReportPageObj.getDebitValue();
-        Allure.step("credit  value for this sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + "  before syncing  ");
-        String creditValueOfSpecificVoucherBeforeSyncing = generalLedgerReportPageObj.getCreditValue();
-        loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
-        loginPageObj.switchToDafater_5(websiteLink_5);
-        homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
-        reportsListPageObj = homePageObj.openReportsListPage();
-        generalLedgerReportPageObj = reportsListPageObj.openGeneralLedgerReport();
-        generalLedgerReportPageObj.applyFiltersWithCompanyAndVoucherName_5(companyName, nameOfSelectedSalesInvoiceAtDafater_4);
-        String debitValueOfSpecificAccountAfterSyncing = generalLedgerReportPageObj.getDebitValue_5();
-        String creditValueOfSpecificAccountAfterSyncing = generalLedgerReportPageObj.getCreditValue_5();
-        Allure.step("verify that debit value of this voucher " + nameOfSelectedSalesInvoiceAtDafater_4 + " which exist at dafater 5 is equal to debit value for the same voucher at dafater 4 ");
-        softAssert.assertEquals(debitValueOfSpecificVoucherBeforeSyncing, debitValueOfSpecificAccountAfterSyncing);
-        Allure.step("debit value at dafater 4  before syncing is " + debitValueOfSpecificVoucherBeforeSyncing + " and after syncing at dafater 5 is " + debitValueOfSpecificAccountAfterSyncing);
-        Allure.step("verify that credit value of this voucher " + nameOfSelectedSalesInvoiceAtDafater_4 + " which exist at dafater 5 is equal to credit value for the same voucher at dafater 4 ");
-        softAssert.assertEquals(creditValueOfSpecificVoucherBeforeSyncing, creditValueOfSpecificAccountAfterSyncing);
-        Allure.step("credit value at dafater 4  before syncing is " + creditValueOfSpecificVoucherBeforeSyncing + " and after syncing at dafater 5 is " + creditValueOfSpecificAccountAfterSyncing);
-        softAssert.assertAll();
+            homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
+            websiteLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "websiteLink_5");
+            homePageLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_5");
+            random = new Random();
+            randomNumber = random.nextInt(1000000000);
+            itemCode = "item " + randomNumber;
+            softAssert = new SoftAssert();
+            homePageObj = new HomePage(driver);
+            salesInvoicesListPageObj.filterWithSubmittedStatus_2();
+            String nameOfSelectedSalesInvoiceAtDafater_4 = salesInvoicesListPageObj.getNameOfFirstSalesInvoiceBeforeSyncing();
+            salesInvoicesPageObj = salesInvoicesListPageObj.openFirstSalesInvoiceAtDafater_4();
+            if (salesInvoicesPageObj.getSalesInvoiceStatus().contains(submittedStatus)
+                    || salesInvoicesPageObj.getSalesInvoiceStatus().contains(zatcaStatus)) {
+                Allure.step("status of sales invoice  is  " + submittedStatus);
+                salesInvoiceIssueDateBeforeSyncing = salesInvoicesPageObj.getSalesInvoiceIssueDate();
+            }
+            reportsListPageObj = salesInvoicesListPageObj.openReportsListPage();
+            driver.navigate().refresh();
+            generalLedgerReportPageObj = reportsListPageObj.openGeneralLedgerReport();
+            companyName = generalLedgerReportPageObj.chooseCompany();
+            generalLedgerReportPageObj.searchAboutSpecificVoucher(nameOfSelectedSalesInvoiceAtDafater_4, salesInvoiceIssueDateBeforeSyncing);
 
-    }}
+            generalLedgerReportPageObj.clickOnLoadDataBtn();
+            Allure.step("debit value for this sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + "  before syncing  ");
+            String debitValueOfSpecificVoucherBeforeSyncing = generalLedgerReportPageObj.getDebitValue();
+            Allure.step("credit  value for this sales invoice " + nameOfSelectedSalesInvoiceAtDafater_4 + "  before syncing  ");
+            String creditValueOfSpecificVoucherBeforeSyncing = generalLedgerReportPageObj.getCreditValue();
+            loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
+            loginPageObj.switchToDafater_5(websiteLink_5);
+            homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
+            reportsListPageObj = homePageObj.openReportsListPage();
+            generalLedgerReportPageObj = reportsListPageObj.openGeneralLedgerReport();
+            generalLedgerReportPageObj.applyFiltersWithCompanyAndVoucherName_5(companyName, nameOfSelectedSalesInvoiceAtDafater_4, salesInvoiceIssueDateBeforeSyncing);
+            String debitValueOfSpecificAccountAfterSyncing = generalLedgerReportPageObj.getDebitValue_5();
+            String creditValueOfSpecificAccountAfterSyncing = generalLedgerReportPageObj.getCreditValue_5();
+            Allure.step("verify that debit value of this voucher " + nameOfSelectedSalesInvoiceAtDafater_4 + " which exist at dafater 5 is equal to debit value for the same voucher at dafater 4 ");
+            softAssert.assertEquals(debitValueOfSpecificVoucherBeforeSyncing, debitValueOfSpecificAccountAfterSyncing);
+            Allure.step("debit value at dafater 4  before syncing is " + debitValueOfSpecificVoucherBeforeSyncing + " and after syncing at dafater 5 is " + debitValueOfSpecificAccountAfterSyncing);
+            Allure.step("verify that credit value of this voucher " + nameOfSelectedSalesInvoiceAtDafater_4 + " which exist at dafater 5 is equal to credit value for the same voucher at dafater 4 ");
+            softAssert.assertEquals(creditValueOfSpecificVoucherBeforeSyncing, creditValueOfSpecificAccountAfterSyncing);
+            Allure.step("credit value at dafater 4  before syncing is " + creditValueOfSpecificVoucherBeforeSyncing + " and after syncing at dafater 5 is " + creditValueOfSpecificAccountAfterSyncing);
+            softAssert.assertAll();
+
+        }
+    }
 }
