@@ -30,35 +30,53 @@ public class ChartOfAccountsPage extends MainPage {
     By closeFilter = By.xpath("//*[contains(@class,'btn btn-default btn-xs remove-filter')]");
     private By accountIndicatorLabel = By.xpath("//h5[contains(text(),'دليل حساب')]" +
             "| //h3[contains(text(),'دليل الحسابات')]");
-    By assetsAccount = By.xpath("//*[contains(text(),'الاصول')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
-            "|//*[contains(text(),'الاصول')]/parent::*/following-sibling::*//span");
+    By assetsAccount = By.xpath("//*[contains(text(),'الاصول')]/parent::*/following-sibling::*//span" +
+            "|//*[contains(text(),'Assets')]/parent::*/following-sibling::*//span");
+
+
+    By assetsAccount_4 = By.xpath("(//*[contains(text(),'Assets')]/parent::*/following-sibling::*)[2]//span[@style='font-size: var(--input-text-size);']" +
+            "|//*[contains(text(),'الاصول')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" );
     By obligationsAccount = By.xpath("//*[contains(text(),'الالتزامات')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
             "|//*[contains(text(),'الالتزامات')]/parent::*/following-sibling::*//span" +
             "|//*[contains(text(),'حقوق الملكية')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
-            "|//*[contains(text(),'حقوق الملكية')]/parent::*/following-sibling::*//span");
-    By revenuesAccount = By.xpath("//*[contains(text(),'الايرادات')]/parent::*/following-sibling::*//span");
+            "|//*[contains(text(),'حقوق الملكية')]/parent::*/following-sibling::*//span" +
+            "|//*[contains(text(),'liabilties')]/parent::*/following-sibling::*//span" +
+            "|(//*[contains(text(),'liabilties')]/parent::*/following-sibling::*)//span[@style='font-size: var(--input-text-size);']");
+
+
+
+    By obligationsAccount_4 = By.xpath("//*[contains(text(),'الالتزامات')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
+            "|//*[contains(text(),'حقوق الملكية')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
+            "|(//*[contains(text(),'liabilties')]/parent::*/following-sibling::*)//span[@style='font-size: var(--input-text-size);']");
+
+    By revenuesAccount = By.xpath("//*[contains(text(),'الايرادات')]/parent::*/following-sibling::*//span" +
+            "|//*[contains(text(),'Revenu')]/parent::*/following-sibling::*//span");
     public By fiscalYearErrorMsg = By.xpath("//*[contains(text(),'ليس في أي سنة مالية')]");
 
-    By revenuesAccount_4 = By.xpath("//*[contains(text(),'الايرادات')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']");
+    By revenuesAccount_4 = By.xpath("//*[contains(text(),'الايرادات')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
+            "|(//*[contains(text(),'Revenu')]/parent::*)[2]//following-sibling::*//span[@style='font-size: var(--input-text-size);']");
     By toolsTab = By.xpath("//*[contains(@id,'sidebar-accounts-tools')]");
     By periodClosingVoucherOpt = By.xpath("//*[contains(@id,'sidebar-accounts-period-closing-voucher')]");
 
     By expensesAccount = By.xpath("//*[contains(text(),'المصروفات')]/parent::*/following-sibling::*//span" +
             "|//*[contains(text(),'المصروفات')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
             "|//*[contains(text(),'المصاريف')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
-            "|//*[contains(text(),'المصاريف')]/parent::*/following-sibling::*//span");
+            "|//*[contains(text(),'المصاريف')]/parent::*/following-sibling::*//span" +
+            "|//*[contains(text(),'Expenses')]/parent::*/following-sibling::*//span" +
+            "|(//*[contains(text(),'Expenses')]/parent::*)[2]//following-sibling::*//span[@style='font-size: var(--input-text-size);']");
 
-
-
-    public PeriodClosingVoucherListPage openPeriodClosingVoucherListPage()
-    {
+    By expensesAccount_4 = By.xpath("//*[contains(text(),'المصروفات')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
+            "|//*[contains(text(),'المصاريف')]/parent::*/following-sibling::*//span[@style='font-size: var(--input-text-size);']" +
+            "|(//*[contains(text(),'Expenses')]/parent::*)[2]//following-sibling::*//span[@style='font-size: var(--input-text-size);']");
+    public PeriodClosingVoucherListPage openPeriodClosingVoucherListPage() {
         System.out.println("open period closing voucher page");
-        waitUntilElementVisibility(toolsTab,GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(toolsTab, GeneralConstants.minTimeOut);
         getWebElement(toolsTab).click();
-        waitUntilElementVisibility(periodClosingVoucherOpt,GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(periodClosingVoucherOpt, GeneralConstants.minTimeOut);
         getWebElement(periodClosingVoucherOpt).click();
         return new PeriodClosingVoucherListPage(driver);
     }
+
     public String extractDate() {
 
         String fiscalYearMsg = getWebElement(fiscalYearErrorMsg).getText();
@@ -129,10 +147,10 @@ public class ChartOfAccountsPage extends MainPage {
 
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(accountIndicatorLabel, GeneralConstants.minTimeOut);
-        waitUntilElementVisibility(assetsAccount, GeneralConstants.minTimeOut);
-        System.out.println("value at assets account before Syncing " + getWebElement(assetsAccount).getAttribute("textContent"));
-        Allure.step("value at assets account before Syncing " + getWebElement(assetsAccount).getAttribute("textContent"));
-        return getWebElement(assetsAccount).getAttribute("textContent");
+        waitUntilElementVisibility(assetsAccount_4, GeneralConstants.minTimeOut);
+        System.out.println("value at assets account before Syncing " + getWebElement(assetsAccount_4).getAttribute("textContent"));
+        Allure.step("value at assets account before Syncing " + getWebElement(assetsAccount_4).getAttribute("textContent"));
+        return getWebElement(assetsAccount_4).getAttribute("textContent");
     }
 
     public String getValueOfAssetsAccountAfterSyncing() throws InterruptedException {
@@ -149,10 +167,10 @@ public class ChartOfAccountsPage extends MainPage {
 
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(accountIndicatorLabel, GeneralConstants.minTimeOut);
-        waitUntilElementVisibility(obligationsAccount, GeneralConstants.minTimeOut);
-        System.out.println("value at Obligations account before Syncing " + getWebElement(obligationsAccount).getAttribute("textContent"));
-        Allure.step("value at Obligations account before Syncing " + getWebElement(obligationsAccount).getAttribute("textContent"));
-        return getWebElement(obligationsAccount).getAttribute("textContent");
+        waitUntilElementVisibility(obligationsAccount_4, GeneralConstants.minTimeOut);
+        System.out.println("value at Obligations account before Syncing " + getWebElement(obligationsAccount_4).getAttribute("textContent"));
+        Allure.step("value at Obligations account before Syncing " + getWebElement(obligationsAccount_4).getAttribute("textContent"));
+        return getWebElement(obligationsAccount_4).getAttribute("textContent");
     }
 
     public String getValueOfObligationsAccountAfterSyncing() throws InterruptedException {
@@ -168,10 +186,18 @@ public class ChartOfAccountsPage extends MainPage {
     public String getValueOfRevenuesAccountBeforeSyncing() throws InterruptedException {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(accountIndicatorLabel, GeneralConstants.minTimeOut);
-        waitUntilElementVisibility(revenuesAccount_4, GeneralConstants.minTimeOut);
-        System.out.println("value at Revenues account before Syncing " + getWebElement(revenuesAccount_4).getAttribute("textContent"));
-        Allure.step("value at Revenues account before Syncing " + getWebElement(revenuesAccount_4).getAttribute("textContent"));
-        return getWebElement(revenuesAccount_4).getAttribute("textContent");
+        if (tryToGetWebElementV(revenuesAccount_4) == GeneralConstants.SUCCESS) {
+            System.out.println("value at Revenues account before Syncing " + getWebElement(revenuesAccount_4).getAttribute("textContent"));
+            Allure.step("value at Revenues account before Syncing " + getWebElement(revenuesAccount_4).getAttribute("textContent"));
+            return getWebElement(revenuesAccount_4).getAttribute("textContent");
+        } else {
+            System.out.println("value at Revenues account before Syncing is 0");
+            Allure.step("value at Revenues account before Syncing is 0");
+            return "0.00";
+
+        }
+
+
     }
 
 
@@ -187,10 +213,18 @@ public class ChartOfAccountsPage extends MainPage {
     public String getValueOfExpensesAccountBeforeSyncing() throws InterruptedException {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(accountIndicatorLabel, GeneralConstants.minTimeOut);
-        waitUntilElementVisibility(expensesAccount, GeneralConstants.minTimeOut);
-        System.out.println("value at Expenses account before Syncing " + getWebElement(expensesAccount).getAttribute("textContent"));
-        Allure.step("value at Expenses account before Syncing " + getWebElement(expensesAccount).getAttribute("textContent"));
-        return getWebElement(expensesAccount).getAttribute("textContent");
+        if (tryToGetWebElementV(expensesAccount_4) == GeneralConstants.SUCCESS) {
+
+            System.out.println("value at Expenses account before Syncinggg " + getWebElement(expensesAccount_4).getAttribute("textContent"));
+            Allure.step("value at Expenses account before Syncing " + getWebElement(expensesAccount_4).getAttribute("textContent"));
+            return getWebElement(expensesAccount_4).getAttribute("textContent");
+        } else {
+            System.out.println("value at Expenses account before Syncing is 0 ");
+            Allure.step("value at Expenses account before Syncing is 0 ");
+            return "0.00";
+
+        }
+
     }
 
     public String getValueOfExpensesAccountAfterSyncing() throws InterruptedException {

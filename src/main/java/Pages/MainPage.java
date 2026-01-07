@@ -32,7 +32,9 @@ public class MainPage extends GeneralConstants {
     By selectedFilterLabel_2 = By.xpath("(//*[contains(@class,'filter-field-select')]/p)[2]");
     By selectedFilterLabel_3 = By.xpath("(//*[contains(@class,'filter-field-select')]/p)[3]");
     By addFilter = By.xpath("//*[contains(text(),'إضافة فلتر')]");
-    public By totalAmountValue = By.xpath("//*[contains(@title,'الفاتورة')]//span//span");
+    public By totalAmountValue = By.xpath("//*[contains(@title,'الفاتورة')]//span//span" +
+            "| //*[contains(@title,'المجموع الإجمالي')]//span//span");
+
     By filterValField = By.xpath("//*[@class='filter-field']//select");
     By filterValField_2 = By.xpath("(//*[@class='filter-field']//select)[2]");
     By filterValField_3 = By.xpath("(//*[@class='filter-field']//select)[3]");

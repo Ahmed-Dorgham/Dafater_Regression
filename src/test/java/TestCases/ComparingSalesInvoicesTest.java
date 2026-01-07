@@ -80,13 +80,13 @@ public class ComparingSalesInvoicesTest extends BaseTest {
         String totalOutstandingAmountOfSalesInvoicesAfterSyncing = salesInvoicesListPageObj.getTotalOutstandingAmountOfSalesInvoicesAfterSyncing();
         String totalPaymentReceivedAmountOfSalesInvoicesAfterSyncing = salesInvoicesListPageObj.getTotalPaymentReceivedAmountOfSalesInvoicesAfterSyncing();
         Allure.step("verify that number of all draft sales invoices  which appear at dafater 5 is equal to number of all draft sales invoices at dafater 4 ");
-        softAssert.assertEquals(numberOfDraftSalesInvoicesAfterSyncing, numberOfDraftSalesInvoicesBeforeSyncing);
+        softAssert.assertTrue(numberOfDraftSalesInvoicesAfterSyncing.equalsIgnoreCase(numberOfDraftSalesInvoicesBeforeSyncing));
         Allure.step("verify that number of sales invoices at dafater 5 is equal to  number of sales invoices at dafater 4 ");
         softAssert.assertEquals(numberOfSalesInvoicesAfterSyncing, numberOfSalesInvoicesBeforeSyncing);
         Allure.step("verify that total of sales invoices value at dafater 5 is equal to total of sales invoices values at dafater 4 ");
         softAssert.assertTrue(totalAmountOfSalesInvoicesAfterSyncing.trim().equalsIgnoreCase(totalAmountOfSalesInvoicesBeforeSyncing.trim()));
         Allure.step("verify that total outstanding of sales invoices value at dafater 5 is equal to total outstanding of sales invoices values at dafater 4 ");
-        softAssert.assertTrue(totalOutstandingAmountOfSalesInvoicesAfterSyncing.contains(totalOutstandingAmountOfSalesInvoicesBeforeSyncing));
+        softAssert.assertTrue(totalOutstandingAmountOfSalesInvoicesAfterSyncing.equalsIgnoreCase(totalOutstandingAmountOfSalesInvoicesBeforeSyncing));
 
         Allure.step("verify that total payment received  of sales invoices value at dafater 5 is equal to total payment received of sales invoices values at dafater 4 ");
 
@@ -125,6 +125,10 @@ public class ComparingSalesInvoicesTest extends BaseTest {
             randomNumber = random.nextInt(1000000000);
             itemCode = "item " + randomNumber;
             softAssert = new SoftAssert();
+        if (tryToGetWebElementV(salesInvoicesListPageObj.closeFilter) == GeneralConstants.SUCCESS) {
+            Allure.step("close filter ");
+            getWebElement(salesInvoicesListPageObj.closeFilter).click();
+        }
 
             String nameOfSelectedSalesInvoiceAtDafater_4 = salesInvoicesListPageObj.getNameOfFirstSalesInvoiceBeforeSyncing();
             salesInvoicesPageObj = salesInvoicesListPageObj.openFirstSalesInvoiceAtDafater_4();
@@ -282,6 +286,10 @@ public class ComparingSalesInvoicesTest extends BaseTest {
             reportsListPageObj = homePageObj.openReportsListPage();
             generalLedgerReportPageObj = reportsListPageObj.openGeneralLedgerReport();
             generalLedgerReportPageObj.applyFiltersWithCompanyAndVoucherName_5(companyName, nameOfSelectedSalesInvoiceAtDafater_4, salesInvoiceIssueDateBeforeSyncing);
+
+            Allure.step("values after syncing  ");
+           System.out.println("values after syncing  ");
+
             String debitValueOfSpecificAccountAfterSyncing = generalLedgerReportPageObj.getDebitValue_5();
             String creditValueOfSpecificAccountAfterSyncing = generalLedgerReportPageObj.getCreditValue_5();
             Allure.step("verify that debit value of this voucher " + nameOfSelectedSalesInvoiceAtDafater_4 + " which exist at dafater 5 is equal to debit value for the same voucher at dafater 4 ");

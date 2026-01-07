@@ -78,13 +78,6 @@ public class CompaniesListPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementNotHaveSpecificText(listCount, "تحديث");
 
-//        if (getWebElement(totalCompanies).getAttribute("textContent").contains("من")) {
-//            System.out.println("number of all companies at list view after Syncing " + getWebElement(totalCompanies).getText());
-//            Allure.step("number of all companies at list view after Syncing " + getWebElement(totalCompanies).getText());
-//
-//            Allure.step("number of all companies at list view after Syncing 0 ");
-//            return "0";
-//        }
         return getWebElement(totalCompanies).getAttribute("textContent");
 
     }

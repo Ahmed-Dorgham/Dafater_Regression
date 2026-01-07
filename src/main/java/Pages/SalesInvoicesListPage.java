@@ -45,7 +45,7 @@ public class SalesInvoicesListPage extends MainPage {
             "|//*[@class='sales-invoice-lv-total-invoices ']");
     private By totalPaymentReceivedAmountOfSalesInvoicesAtViewList = By.xpath("//h3[contains(text(),'الدفعات المقدمة')]/following-sibling::div" +
             "|//*[@class='sales-invoice-lv-total-invoices ']");
-    By closeFilter = By.xpath("//*[contains(@class,'btn btn-default btn-xs remove-filter')]");
+    public By closeFilter = By.xpath("//*[contains(@class,'btn btn-default btn-xs remove-filter')]");
 
     private By reportsTab = By.xpath("//*[@id='module-anchor-reports']| //*[@id='module-icon-reports']/a/span");
     private By newReportBtn = By.xpath("//*[contains(@id,'appframe-btn-جديد')]" +
@@ -214,13 +214,10 @@ public class SalesInvoicesListPage extends MainPage {
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         Thread.sleep(threadTimeOut);
-        if (tryToGetWebElementV(closeFilter) == GeneralConstants.SUCCESS) {
-            Allure.step("close filter ");
-            getWebElement(closeFilter).click();
-        }
-        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+
         System.out.println("name of first sales invoice at list view at dafater 4  >> " + getWebElement(firstSalesInvoice).getText());
         Allure.step("name of first sales invoice at list view at dafater 4  >> " + getWebElement(firstSalesInvoice).getText());
+        Thread.sleep(threadTimeOut);
         return getWebElement(firstSalesInvoice).getText();
     }
 
@@ -243,7 +240,7 @@ public class SalesInvoicesListPage extends MainPage {
     }
 
     public SalesInvoicesPage openFirstSalesInvoiceAtDafater_4() throws InterruptedException {
-
+        Thread.sleep(threadTimeOut);
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
         Thread.sleep(threadTimeOut);
         Allure.step(" open First Sales Invoice At Dafater_4 ");

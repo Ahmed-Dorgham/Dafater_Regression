@@ -32,6 +32,10 @@ public class ReportsListPage extends MainPage {
             "|  //*[contains(@href,'/app/tax-declaration')]");
     private By stockBalanceReport = By.xpath("//*[@id='report-stock-balance']" +
             "|  //*[contains(@href,'/app/query-report/Stock Balance')]");
+
+    private By monthlySalaryRegisterReport = By.xpath("//*[@id='report-monthly-salary-register']" +
+            "|  //*[contains(@href,'/app/query-report/Monthly Salary Register')]");
+
     private By salesPersonDetailedReport = By.xpath("//*[@id='report-sales-person-detailed-report']" +
             "|  //*[contains(@href,'/app/query-report/Sales person Detailed Report')]");
     private By trialBalanceReport = By.xpath("//*[@id='report-trial-balance']" +
@@ -53,6 +57,7 @@ public class ReportsListPage extends MainPage {
             "| (//*[contains(@class,'progress progress-striped active')])");
     By arrowIcon = By.xpath("(//*[contains(@class,'tabs-scroll-arrow')])[1]");
     By stockTab = By.xpath("//*[@id='stock-tab']|//*[@id='reports__stock-tab']");
+    By HRTab = By.xpath("//*[@id='hr-tab']|//*[@id='reports__hr-tab']");
     By salesTab = By.xpath("//*[@id='selling-tab']|//*[@id='reports__selling-tab']");
     By accountInputField = By.xpath("//*[contains(@data-fieldname,'account')]");
 
@@ -109,7 +114,35 @@ public class ReportsListPage extends MainPage {
 
         return new StockBalanceReportPage(driver);
     }
+    public MonthlySalaryRegisterReportPage openMonthlySalaryRegisterReport_4() throws InterruptedException {
+        Allure.step("open HR report ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        waitUntilElementVisibility(HRTab, GeneralConstants.freezeTimeOut);
 
+        getWebElement(HRTab).click();
+        waitUntilElementToBePresent(monthlySalaryRegisterReport, GeneralConstants.minTimeOut);
+        getWebElement(monthlySalaryRegisterReport).click();
+
+        return new MonthlySalaryRegisterReportPage(driver);
+    }
+
+    public MonthlySalaryRegisterReportPage openMonthlySalaryRegisterReport_5() throws InterruptedException {
+        Allure.step("open Monthly Salary Register Report report ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(HRTab, GeneralConstants.freezeTimeOut);
+        getWebElement(HRTab).click();
+        waitUntilElementToBePresent(monthlySalaryRegisterReport, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        getWebElement(monthlySalaryRegisterReport).click();
+
+        return new MonthlySalaryRegisterReportPage(driver);
+    }
     public SalesPersonDetailedReport openSalesPersonDetailedReport_4() throws InterruptedException {
         Allure.step("open Sales Person Detailed Report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);

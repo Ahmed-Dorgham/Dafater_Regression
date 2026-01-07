@@ -54,7 +54,7 @@ public class ComparingDebitNotesTestSalesModule extends BaseTest {
         double totalPaidAmountOfDebitNotesBeforeSyncingAsNumber = totalAmountOfDebitNotesBeforeSyncingAsNumber - totalOutstandingAmountOfDebitNotesBeforeSyncingAsNumber;
         String totalPaidAmountOfDebitNotesBeforeSyncing = debitNotesListPageObj.convertToStringFormat(totalPaidAmountOfDebitNotesBeforeSyncingAsNumber);
 
-        System.out.println("total paid amount Of debit notes Before Syncing is "+totalPaidAmountOfDebitNotesBeforeSyncingAsNumber);
+        System.out.println("total paid amount of debit notes Before Syncing is "+totalPaidAmountOfDebitNotesBeforeSyncingAsNumber);
 
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
         loginPageObj.switchToDafater_5(websiteLink_5);
@@ -67,13 +67,13 @@ public class ComparingDebitNotesTestSalesModule extends BaseTest {
         String totalOutstandingAmountOfDebitNotesAfterSyncing = debitNotesListPageObj.getTotalOutstandingAmountOfDebitNotesAfterSyncing();
         String totalPaidAmountOfDebitNotesAfterSyncing = debitNotesListPageObj.getTotalPaidAmountOfDebitNotesAfterSyncing();
         Allure.step("verify that number of all debit notes which appear at dafater 5 is equal to number of all debit notes at dafater 4");
-        softAssert.assertEquals(numberOfAllDebitNotesBeforeSyncing, numberOfAllDebitNotesAfterSyncing);
+        softAssert.assertTrue(numberOfAllDebitNotesBeforeSyncing.equalsIgnoreCase(numberOfAllDebitNotesAfterSyncing));
 //        Allure.step("verify that number of all draft debit notes  which appear at dafater 5 is equal to number of all draft debit notes at dafater 4 ");
 //        softAssert.assertEquals(numberOfDraftDebitNotesAfterSyncing, numberOfDraftDebitNotesBeforeSyncing);
         Allure.step("verify that total amount of all debit notes at dafater 5 is equal to total amount of all debit notes at dafater 4 ");
-        softAssert.assertEquals(totalAmountOfDebitNotesAfterSyncing, totalAmountOfDebitNotesBeforeSyncing);
+        softAssert.assertTrue(totalAmountOfDebitNotesAfterSyncing.equalsIgnoreCase(totalAmountOfDebitNotesBeforeSyncing));
         Allure.step("verify that total outstanding amount of all debit notes at dafater 5 is equal to total outstanding amount of all debit notes at dafater 4 ");
-        softAssert.assertEquals(totalOutstandingAmountOfDebitNotesAfterSyncing, totalOutstandingAmountOfDebitNotesBeforeSyncing);
+        softAssert.assertTrue(totalOutstandingAmountOfDebitNotesAfterSyncing.equalsIgnoreCase(totalOutstandingAmountOfDebitNotesBeforeSyncing));
 
         Allure.step("verify that total paid amount of debit notes value at dafater 5 is equal to total paid amount of debit notes values at dafater 4 ");
         softAssert.assertEquals(Double.parseDouble(totalPaidAmountOfDebitNotesAfterSyncing), totalPaidAmountOfDebitNotesBeforeSyncingAsNumber);

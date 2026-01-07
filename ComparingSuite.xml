@@ -18,6 +18,7 @@
 
 <!--                                                                        <class name="TestCases.ComparingPaymentEntryTest"></class>-->
 <!--                                                                        <class name="TestCases.ComparingFiscalYearsTest"></class>-->
+<!--                                                                        <class name="TestCases.ComparingBanksTest"></class>-->
 
 
 <!--                                                                        <class name="TestCases.ComparingStockEntryTest"></class>-->
@@ -28,10 +29,11 @@
 <!--                                                                        <class name="TestCases.ComparingSalesTaxesAndChargesTemplatesTest"></class>-->
 <!--                                                                        <class name="TestCases.ComparingPurchaseTaxesAndChargesTemplatesTest"></class>-->
 
-<!--                                                            <class name="TestCases.ComparingChartOfAccountsDataTest"></class>-->
-            <class name="TestCases.ComparingSalesInvoicesTest"></class>
+<!--            <class name="TestCases.ComparingSalesInvoicesTest"></class>-->
 
                         <class name="TestCases.ComparingReportsTest"></class>
+<!--            <class name="TestCases.ComparingChartOfAccountsDataTest"></class>-->
+
 
 
         </classes>

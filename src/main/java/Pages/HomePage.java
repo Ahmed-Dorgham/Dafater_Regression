@@ -48,6 +48,10 @@ public class HomePage extends MainPage {
             " | (//*[contains(@id,'sidebar-accounts-journal-entry')]/span)[1]");
 
     private By chartOfAccountsOpt = By.xpath("(//*[contains(@id,'sidebar-accounts-chart-of-accounts')]/span)[1]");
+    private By banksOpt = By.xpath("(//*[contains(@id,'sidebar-accounts-Banks')]/span)[1]");
+    private By banksOpt_5 = By.xpath("//*[contains(@id,'sidebar-accounts-banks')]");
+    private By bankOpt = By.xpath("//*[@id='sidebar-accounts-bank']/span");
+    private By accountsSetup = By.xpath("(//*[contains(@id,'sidebar-accounts-initiate-accounts')]/span)[1]");
 
     private By arrowIcon = By.xpath("(//*[contains(@class,'header-btn btn header__profile-btn need-work')])/i");
     private By logoutBtn = By.xpath("(//*[contains(@class,'pos-header__sign-out')])");
@@ -160,15 +164,12 @@ public class HomePage extends MainPage {
 
     public ReportsListPage openReportsListPage() throws InterruptedException {
         Allure.step("click on  reports tab ");
-
+        Thread.sleep(threadTimeOut);
         waitUntilElementToBeClickable(arrowIcon, GeneralConstants.minTimeOut);
         Allure.step("wait until reports tab to be clickable  ");
+        Thread.sleep(threadTimeOut);
         waitUntilElementToBePresent(reportsTab, GeneralConstants.minTimeOut);
         Allure.step("reports tab is clickable now");
-        Thread.sleep(15000);
-        waitUntilElementToBePresent(reportsTab, GeneralConstants.minTimeOut);
-//        scrollToSpeceficElement(reportsTab);
-//        getWebElement(reportsTab).click();
         clickByActions(reportsTab);
         if (tryToGetWebElementV(newReportBtn) == GeneralConstants.FAILED) {
             Allure.step("************************************");
@@ -516,5 +517,55 @@ public class HomePage extends MainPage {
         waitUntilElementToBeClickable(chartOfAccountsOpt, GeneralConstants.minTimeOut);
         getWebElement(chartOfAccountsOpt).click();
         return new ChartOfAccountsPage(driver);
+    }
+
+    public BanksListPage openBanksListPage() throws InterruptedException {
+        Allure.step("click on Accounts tab ");
+        waitUntilElementToBeClickable(accountsTab, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        getWebElement(accountsTab).click();
+        Thread.sleep(threadTimeOut);
+        Allure.step("click on accounts setup tab ");
+        waitUntilElementToBeClickable(accountsSetup, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        getWebElement(accountsSetup).click();
+
+
+
+
+        if (tryToGetWebElementV(banksOpt) == GeneralConstants.FAILED) {
+            Allure.step("************************************");
+            getWebElement(accountsSetup).click();
+        }
+        Allure.step("click on banks option ");
+        waitUntilElementToBeClickable(banksOpt, GeneralConstants.minTimeOut);
+        getWebElement(banksOpt).click();
+        return new BanksListPage(driver);
+    }
+
+
+    public BanksListPage openBanksListPage_5() throws InterruptedException {
+        Allure.step("click on Accounts tab ");
+        waitUntilElementToBeClickable(accountsTab, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        getWebElement(accountsTab).click();
+        Thread.sleep(threadTimeOut);
+        Allure.step("click bank tab ");
+        waitUntilElementToBeClickable(bankOpt, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+
+        getWebElement(bankOpt).click();
+
+
+
+
+        if (tryToGetWebElementV(banksOpt_5) == GeneralConstants.FAILED) {
+            Allure.step("************************************");
+            getWebElement(bankOpt).click();
+        }
+        Allure.step("click on banks option ");
+        waitUntilElementToBeClickable(banksOpt_5, GeneralConstants.minTimeOut);
+        getWebElement(banksOpt_5).click();
+        return new BanksListPage(driver);
     }
 }

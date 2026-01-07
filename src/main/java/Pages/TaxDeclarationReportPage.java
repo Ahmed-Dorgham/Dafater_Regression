@@ -61,6 +61,7 @@ public class TaxDeclarationReportPage extends MainPage {
             "| //*[@id='appframe-btn-']");
     private By companyInputField = By.xpath("//*[@id='company']" +
             "|(//*[@data-fieldname='company'])[2]");
+    private By fiscalYearField = By.xpath("(//*[@data-fieldname='fiscal_year'])");
     private By generalLedgerReportTitle = By.xpath("//h3[@title='دفتر الأستاذ العام']");
 
     private By customerInputField_4 = By.xpath("//*[contains(@data-original-title,'عميل')]");
@@ -79,6 +80,7 @@ public class TaxDeclarationReportPage extends MainPage {
     By customerField_5 = By.xpath("(//div[@data-fieldname='customer'])");
     By chosenCompany = By.xpath("(//*[contains(@data-target,'Company')])/following-sibling::ul/div/p/strong" +
             "|(//*[contains(@style,'font-weight: bold;')])");
+    By chosenYear = By.xpath("(//*[contains(@style,'font-weight: bold;')])[2]");
     By chosenCustomer = By.xpath("(//div[@data-fieldname='customer']/div/div/ul/div/p/strong)[1]");
     By customerInputField_5 = By.xpath("//input[@data-fieldname='customer']");
     By accounts = By.xpath("//div[contains(@class,'dt-cell__content dt-cell__content--col-2')]");
@@ -227,6 +229,7 @@ public class TaxDeclarationReportPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(loadImage,GeneralConstants.freezeTimeOut);
+        getWebElement(loadDataBtn).click();
 
     }
 
@@ -275,6 +278,20 @@ public class TaxDeclarationReportPage extends MainPage {
         System.out.println(" chosen company is " + chosenCompanyName);
         Allure.step(" chosen company is " + chosenCompanyName);
         return chosenCompanyName;
+    }
+    public void chooseCurrentYear() throws InterruptedException {
+
+        Allure.step("choose current year ");
+        waitUntilElementToBePresent(fiscalYearField, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        getWebElement(fiscalYearField).click();
+        getWebElement(fiscalYearField).clear();
+        getWebElement(fiscalYearField).click();
+        waitUntilElementVisibility(chosenYear, GeneralConstants.minTimeOut);
+        System.out.println("current year is  " + getWebElement(chosenYear).getText());
+        Allure.step("current year is  " + getWebElement(chosenYear).getText());
+        getWebElement(chosenYear).click();
+
     }
     public String getTotalTaxAmount_5() throws InterruptedException {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);

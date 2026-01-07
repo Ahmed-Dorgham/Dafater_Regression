@@ -71,11 +71,17 @@ public class ComparingChartOfAccountsDataTest extends BaseTest {
         softAssert.assertEquals((long) Double.parseDouble(obligationsAccountValueBeforeSyncing.trim()), (long) Double.parseDouble(obligationsAccountValueAfterSyncing.trim()));
         Allure.step(" value at obligations account which appear at dafater 5 is " + (long) Double.parseDouble(obligationsAccountValueAfterSyncing) + " and value at obligations account at dafater 4 is " + (long) Double.parseDouble(obligationsAccountValueBeforeSyncing) + " and this is correct ");
 
-
+        System.out.println("tefedf"+(long) Double.parseDouble(revenuesِAccountValueBeforeSyncing.trim()));
+        System.out.println("teffffffffffffedf"+(long) Double.parseDouble(revenuesِAccountValueAfterSyncing.trim()));
         Allure.step("verify that value at revenue account which appear at dafater 5 is equal to value at revenue account at dafater 4 ");
         softAssert.assertEquals((long) Double.parseDouble(revenuesِAccountValueBeforeSyncing.trim()), (long) Double.parseDouble(revenuesِAccountValueAfterSyncing.trim()));
         Allure.step(" value at revenue account which appear at dafater 5 is " + (long) Double.parseDouble(revenuesِAccountValueAfterSyncing) + " and value at revenue account at dafater 4 is " + (long) Double.parseDouble(revenuesِAccountValueBeforeSyncing) + " and this is correct ");
 
+
+
+
+        System.out.println("tefedf"+(long) Double.parseDouble(expensesِAccountValueBeforeSyncing.trim()));
+        System.out.println("teffffffffffffedf"+(long) Double.parseDouble(expensesِAccountValueAfterSyncing.trim()));
         Allure.step("verify that value at expense account which appear at dafater 5 is equal to value at expense account at dafater 4 ");
         softAssert.assertEquals((long) Double.parseDouble(expensesِAccountValueBeforeSyncing.trim()), (long) Double.parseDouble(expensesِAccountValueAfterSyncing.trim()));
         Allure.step(" value at expense account which appear at dafater 5 is " + (long) Double.parseDouble(expensesِAccountValueAfterSyncing) + " and value at expense account at dafater 4 is " + (long) Double.parseDouble(expensesِAccountValueBeforeSyncing) + " and this is correct ");

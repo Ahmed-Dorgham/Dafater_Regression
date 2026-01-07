@@ -56,6 +56,9 @@ public class ComparingCustomersTest extends BaseTest {
 
         double totalOutStandingAmountBeforeSyncingAsNumber = totalPrepaymentNotUsedValueSalesInvoicesBeforeSyncingAsNumber - totalOutStandingAmountCreditNotesValueBeforeSyncingAsNumber;
         String totalOutStandingAmountBeforeSyncing = creditNotesListPageObj.convertToStringFormat(totalOutStandingAmountBeforeSyncingAsNumber);
+
+        System.out.println("value of prepayment Not Used at customers list view before Syncing " + totalOutStandingAmountBeforeSyncing);
+
 //        String customersDebitsValueBeforeSyncing = customersListPageObj.getNumberOfCustomersDebitsBeforeSyncing();
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
         loginPageObj.switchToDafater_5(websiteLink_5);

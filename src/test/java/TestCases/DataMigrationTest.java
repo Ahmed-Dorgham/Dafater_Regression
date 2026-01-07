@@ -28,8 +28,8 @@ public class DataMigrationTest extends BaseTest {
 //        private final String clientKey = "exact-standard-v4";
 //        private final String clientKey = "bluediamond-v4";
 //        private final String clientKey = "hmce-v4";
-        private final String clientKey = "ctoe-v4";
-//        private final String clientKey = "misaha-v4";
+//        private final String clientKey = "ctoe-v4";
+        private final String clientKey = "misaha-v4";
 //    private final String clientKey = "bawabatalshifa-v4";
 //    private final String clientKey = "mss-v4";
 //    private final String clientKey = "arrabtel-v4";

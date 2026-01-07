@@ -77,7 +77,7 @@ public class DebitNotesListPage extends MainPage {
             totalAmountValues = driver.findElements(totalAmountValue);
             for (int i = 0; i < totalAmountValues.size(); i++) {
                 sumOfTotalAmountValues += Double.parseDouble(totalAmountValues.get(i).getText().replace(",", ""));
-                System.out.println(sumOfTotalAmountValues);
+               // System.out.println(sumOfTotalAmountValues);
             }
             if (tryToGetWebElementV(emptyList) == GeneralConstants.SUCCESS) {
                 System.out.println("total amount of debit notes at list view before syncing  " + sumOfTotalAmountValues);
@@ -141,7 +141,7 @@ public class DebitNotesListPage extends MainPage {
             totalOutstandingAmountValues = driver.findElements(totalOutstandingAmountValue);
             for (int i = 0; i < totalOutstandingAmountValues.size(); i++) {
                 sumOfTotalOutstandingAmountValues += Double.parseDouble(totalOutstandingAmountValues.get(i).getText().replace(",", ""));
-                System.out.println(sumOfTotalOutstandingAmountValues);
+//                System.out.println(sumOfTotalOutstandingAmountValues);
             }
             System.out.println("click on next icon");
             getWebElement(nextIcon).click();
