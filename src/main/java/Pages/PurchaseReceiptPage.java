@@ -3,6 +3,7 @@ package Pages;
 import GeneralConstants.GeneralConstants;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 public class PurchaseReceiptPage extends MainPage {
@@ -23,6 +24,7 @@ public class PurchaseReceiptPage extends MainPage {
             "| (//*[contains(@title,'مورد')]//*[contains(@data-fieldname,'supplier')])[1]");
     private By itemCodeField = By.xpath("(//*[contains(@data-fieldname,'item_code')])[2]");
     private By itemCodeInputField = By.xpath("(//*[contains(@id,'item_code')])");
+    private By quantityInputField = By.id("qty");
     private By itemCodeInputField_4 = By.xpath("(//*[contains(@data-doctype,'Purchase Receipt Item')])[1]");
     private By suppliersListPurchaseOrder = By.xpath("(//*[contains(@data-target,'Supplier')and @placeholder=' ']/following-sibling::ul)");
     private By supplierOptPurchaseReceipt = By.xpath("((//*[contains(@data-target,'Supplier')and @placeholder=' ']/following-sibling::ul)/li)[1]" +
@@ -51,7 +53,6 @@ public class PurchaseReceiptPage extends MainPage {
     private By purchaseReceiptCompletedStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap green')])");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
     private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
-    private By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)//div//p[@title='item 1'])");
     By loadImage = By.xpath("(//*[contains(@alt,'Generic Empty State')])[3]" +
             "| (//*[contains(@class,'progress progress-striped active')])" +
             "|(//*[contains(@id,'freeze')])");
@@ -59,6 +60,7 @@ public class PurchaseReceiptPage extends MainPage {
     private By namingOpt = By.xpath("(//*[contains(@title,'تسمية السلسلة')]//ul//li//a)[2]");
     private By addBtn = By.xpath("//*[contains(@title,'purchase_receipt_details')]//*[contains(text(),' إضافة صف جديد')]");
     private By barcodeField = By.xpath("(//*[contains(@title,'الباركود')]//*[contains(@data-fieldname,'barcode')])[1]");
+    private By filterIcon = By.xpath("//*[contains(@class,'filter-x-button')]");
 
     public void enterValidDataIntoPurchaseReceiptPage_4(String itemName) throws InterruptedException {
         By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)/div/p[@title='" + itemName + "']/strong)");
@@ -133,7 +135,10 @@ public class PurchaseReceiptPage extends MainPage {
 
     }
 
-    public void enterValidDataIntoPurchaseReceiptPage() throws InterruptedException {
+    public void enterValidDataIntoPurchaseReceiptPage(String itemName) throws InterruptedException {
+        By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)//div//p[@title='" + itemName + "'])");
+
+
         waitUntilElementVisibility(newPurchaseReceiptTitle, GeneralConstants.minTimeOut);
         Allure.step("select  supplier ");
         getWebElement(supplierFieldPurchaseReceipt).click();
@@ -147,14 +152,58 @@ public class PurchaseReceiptPage extends MainPage {
 //        clickByActions(itemCodeField);
         getWebElement(itemCodeField).click();
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
         getWebElement(itemCodeInputField).clear();
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
 //        getWebElement(itemCodeInputField).sendKeys("item 1");
 
         waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
         clickByActions(selectedItem);
+        Allure.step("scroll up to save and submit btn ");
+        scrollToSpeceficElement(saveAndSubmitBtn);
+        Allure.step("save and submit purchase receipt ");
+        getWebElement(saveAndSubmitBtn).click();
+        //Thread.sleep(10000);
+        Allure.step("click on yes btn ");
+        waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
+        getWebElement(yesBtn).click();
+
+    }
+
+    public void enterValidDataIntoPurchaseReceiptPageWithSpeceficQuantity(String itemName) throws InterruptedException {
+        By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)//div//p[@title='" + itemName + "'])");
+
+        waitUntilElementVisibility(newPurchaseReceiptTitle, GeneralConstants.minTimeOut);
+        Allure.step("select  supplier ");
+        getWebElement(supplierFieldPurchaseReceipt).click();
+        waitUntilElementVisibility(suppliersListPurchaseOrder, GeneralConstants.minTimeOut);
+        waitUntilElementToBeClickable(supplierOptPurchaseReceipt, GeneralConstants.minTimeOut);
+        getWebElement(supplierOptPurchaseReceipt).click();
+        Allure.step("Scroll down to item field ");
+        scrollToSpeceficElement(itemCodeField);
+        Allure.step(" select item  ");
+        waitUntilElementToBePresent(itemCodeField, GeneralConstants.minTimeOut);
+        getWebElement(itemCodeField).click();
+        waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
+        getWebElement(itemCodeInputField).sendKeys(itemName);
+        waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
+        getWebElement(itemCodeInputField).clear();
+        getWebElement(itemCodeInputField).sendKeys(itemName);
+        waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
+        clickByActions(selectedItem);
+        Allure.step("enter quantity  ");
+        getWebElement(quantityInputField).click();
+        getWebElement(quantityInputField).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        getWebElement(quantityInputField).sendKeys(Keys.DELETE);
+        getWebElement(quantityInputField).sendKeys("2");
+        Thread.sleep(threadTimeOut);
+
+        getWebElement(quantityInputField).click(); // important: focus the field
+        getWebElement(quantityInputField).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        getWebElement(quantityInputField).sendKeys(Keys.DELETE);
+        getWebElement(quantityInputField).sendKeys("2");
+
         Allure.step("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
         Allure.step("save and submit purchase receipt ");
@@ -225,6 +274,12 @@ public class PurchaseReceiptPage extends MainPage {
         waitUntilElementToBePresent(newBtn, GeneralConstants.minTimeOut);
         driver.navigate().refresh();
         Allure.step("open last created purchase receipt ");
+        waitUntilElementVisibility(newBtn, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(filterIcon, GeneralConstants.minTimeOut);
+        waitUntilElementToBeClickable(filterIcon, GeneralConstants.minTimeOut);
+        getWebElement(filterIcon).click();
+        Thread.sleep(threadTimeOut);
+        waitUntilElementVisibility(purchaseReceiptNameAtViewList, GeneralConstants.minTimeOut);
         getWebElement(purchaseReceiptNameAtViewList).click();
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
         Allure.step("status of purchase receipt after creating related purchase invoices " + getWebElement(purchaseReceiptCompletedStatus).getText());

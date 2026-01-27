@@ -40,7 +40,7 @@ public class WareHousePage extends MainPage {
     private By submittedStatus = By.xpath("(//*[contains(@class,'label label-success')])");
     private By draftStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap red')])/span");
     private By itemName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
-    private By wareHouseName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
+    private By wareHouseName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By ItemCode = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
     private By DraftInvoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By invoiceNameForCreditNote = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[1]");
@@ -245,6 +245,8 @@ public class WareHousePage extends MainPage {
     public String getWareHouseName(String expected) {
         Allure.step("Verify the name of warehouse  ");
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(enablingLabel, GeneralConstants.minTimeOut);
+      System.out.println("actual text is  " + getWebElement(wareHouseName).getText() + "  and expected text is  " + expected);
         Allure.step("actual text is  " + getWebElement(wareHouseName).getText() + "  and expected text is  " + expected);
         return getWebElement(wareHouseName).getText();
     }

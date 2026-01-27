@@ -54,9 +54,9 @@ public class ItemPage extends MainPage {
     private By yesBtn = By.xpath("(//*[contains(@class,'btn btn-primary btn-sm btn-modal-primary')])");
     private By submittedStatus = By.xpath("(//*[contains(@class,'label label-success')])");
     private By draftStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap red')])/span");
-    private By itemName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]" +
-            "| (//h3[contains(@class,'ellipsis title-text')])[3]" +
+    private By itemName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]"+
             "| (//h5[contains(@class,'title-text pull-left')])[2]");
+
     private By itemName_4 = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By ItemCode = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
     private By DraftInvoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
@@ -130,7 +130,9 @@ public class ItemPage extends MainPage {
         clickByActions(itemGroupField);
         waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(itemGroupOpt, GeneralConstants.minTimeOut);
         getWebElement(itemGroupOpt).click();
+//        clickByActions(itemGroupOpt);
         Allure.step("click on save btn ");
         getWebElement(saveBtn).click();
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
@@ -290,13 +292,15 @@ public class ItemPage extends MainPage {
 //        return getWebElement(submittedStatus).getText();
 //    }
 
-    public String getItemName(String expected) {
+    public String getItemName(String expected) throws InterruptedException {
         Allure.step("Verify the name of item  ");
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(itemName, GeneralConstants.minTimeOut);
-        Allure.step("actual text is  " + getWebElement(itemName).getText() + "  and expected text is  " + expected);
-        return getWebElement(itemName).getText();
+//        Thread.sleep(threadTimeOut);
+       System.out.println("actual text is  " + getWebElement(itemName).getAttribute("textContent") + "  and expected text is  " + expected);
+        Allure.step("actual text is  " + getWebElement(itemName).getAttribute("textContent") + "  and expected text is  " + expected);
+        return getWebElement(itemName).getAttribute("textContent");
     }
 
     public String getItemName_3(String expected) {

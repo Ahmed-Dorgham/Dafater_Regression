@@ -37,12 +37,16 @@ public class PurchaseOrderPage extends MainPage {
     private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
     private By purchaseOrderNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Purchase Order')])[1]");
     private By purchaseOrderCompletedStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap green')])");
-    private By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)//div//p[@title='item 1'])");
-
-    public void enterValidDataIntoPurchaseOrderPage() throws InterruptedException {
+    private By closeIcon = By.xpath("(//*[contains(@class,'btn btn-modal-close btn-link')])[2]");
+    private By filterIcon = By.xpath("//*[contains(@class,'filter-x-button')]");
+    public void enterValidDataIntoPurchaseOrderPage(String itemName) throws InterruptedException {
+        By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)//div//p[@title='" + itemName + "'])");
         waitUntilElementVisibility(newPurchaseOrderTitle, GeneralConstants.minTimeOut);
         Allure.step("select  supplier ");
         getWebElement(supplierFieldPurchaseOrder).click();
+        if (tryToGetWebElementV(suppliersListPurchaseOrder) == GeneralConstants.FAILED) {
+            getWebElement(supplierFieldPurchaseOrder).click();
+        }
         waitUntilElementVisibility(suppliersListPurchaseOrder, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(supplierOptPurchaseOrder, GeneralConstants.minTimeOut);
         getWebElement(supplierOptPurchaseOrder).click();
@@ -53,15 +57,14 @@ public class PurchaseOrderPage extends MainPage {
 //        clickByActions(itemCodeField);
         getWebElement(itemCodeField).click();
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
+        waitUntilElementVisibility(itemOpt, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
         getWebElement(itemCodeInputField).clear();
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
 //        getWebElement(itemCodeInputField).sendKeys("item 1");
-
         waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
         clickByActions(selectedItem);
-
         Allure.step("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
         Allure.step("save and submit purchase order ");
@@ -78,13 +81,20 @@ public class PurchaseOrderPage extends MainPage {
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
         Allure.step("status of purchase order before creating related purchase invoices " + getWebElement(purchaseOrderStatus).getText());
         return getWebElement(purchaseOrderStatus).getText();
-
     }
 
-    public PurchaseInvoicesPage createNewPurchaseInvoiceFromSalesOrder() {
+    public PurchaseInvoicesPage createNewPurchaseInvoiceFromPurchaseOrder() {
         Allure.step("click on create btn");
+        if (tryToGetWebElementV(closeIcon) == GeneralConstants.SUCCESS) {
+            getWebElement(closeIcon).click();
+        }
         waitUntilElementVisibility(createBtn, GeneralConstants.minTimeOut);
         getWebElement(createBtn).click();
+//        clickByActions(createBtn);
+
+        if (tryToGetWebElementV(purchaseInvoiceChoice) == GeneralConstants.FAILED) {
+            getWebElement(createBtn).click();
+        }
         Allure.step("click on purchase invoice");
         waitUntilElementVisibility(purchaseInvoiceChoice, GeneralConstants.minTimeOut);
         getWebElement(purchaseInvoiceChoice).click();
@@ -96,18 +106,21 @@ public class PurchaseOrderPage extends MainPage {
         waitUntilElementToBeClickable(purchaseInvoicesTab, GeneralConstants.minTimeOut);
 //        getWebElement(salesInvoicesTab).click();
         Allure.step("click on purchase orders option");
-        waitUntilElementToBePresent(purchaseOrdersOpt, GeneralConstants.minTimeOut);
-        if (tryToGetWebElementV(purchaseOrdersOpt) == GeneralConstants.SUCCESS)
-        {
-//            getWebElement(purchaseOrdersOpt).click();
-            clickByActions(purchaseOrdersOpt);
+        waitUntilElementVisibility(purchaseOrdersOpt, GeneralConstants.minTimeOut);
+        getWebElement(purchaseOrdersOpt).click();
+        if (tryToGetWebElementV(purchaseOrdersOpt) == GeneralConstants.SUCCESS) {
+            getWebElement(purchaseOrdersOpt).click();
         }
-        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(draftLabel, GeneralConstants.minTimeOut);
         driver.navigate().refresh();
+        waitUntilElementVisibility(filterIcon, GeneralConstants.minTimeOut);
+        waitUntilElementToBeClickable(filterIcon, GeneralConstants.minTimeOut);
+        getWebElement(filterIcon).click();
+        Thread.sleep(threadTimeOut);
         Allure.step("open last created purchase order ");
-        waitUntilElementToBePresent(purchaseOrderNameAtViewList, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(purchaseOrderNameAtViewList, GeneralConstants.minTimeOut);
         getWebElement(purchaseOrderNameAtViewList).click();
-        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(purchaseOrderCompletedStatus, GeneralConstants.minTimeOut);
         Allure.step("status of purchase order after creating related purchase invoices " + getWebElement(purchaseOrderCompletedStatus).getText());
         return getWebElement(purchaseOrderCompletedStatus).getText();
     }

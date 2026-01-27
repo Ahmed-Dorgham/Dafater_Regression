@@ -70,8 +70,8 @@ public class GeneralLedgerReportPage extends MainPage {
     private By creditValue_5 = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-4')])[last()-1]");
     private By debitValue = By.xpath("(//*[contains(@class,'slick-cell b5 f5')])[last()]/div/div/span");
     private By balanceValue = By.xpath("(//*[contains(@class,'slick-cell b7 f7')])[last()]/div/div/span");
-    private By debitValue_GL = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-3')])[7]");
-    private By creditValue_GL = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-4')])[7]");
+    private By debitValue_GL = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-3')])[last()]");
+    private By creditValue_GL = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-4')])[last()]");
     private By debitValue_5 = By.xpath(" (//*[contains(@class,'dt-cell__content dt-cell__content--col-3')])[last()]");
     private By debitValueF_5 = By.xpath(" (//*[contains(@class,'dt-cell__content dt-cell__content--col-3')])[last()-1]");
     private By balanceValue_5 = By.xpath(" (//*[contains(@class,'dt-cell__content dt-cell__content--col-5')])[last()]");
@@ -173,7 +173,7 @@ public class GeneralLedgerReportPage extends MainPage {
         return j + 1;
     }
 
-    public int getDefaultExpenseAccountFromGL(String defaultIncomeAccount) throws InterruptedException {
+    public int getDefaultExpenseAccountOrDefaultStockNotBilledAccountFromGL(String defaultIncomeAccount) throws InterruptedException {
         int i;
         int j = 0;
         waitUntilElementToBePresent(generalLedgerReportTitle, GeneralConstants.minTimeOut);
@@ -183,7 +183,7 @@ public class GeneralLedgerReportPage extends MainPage {
         getListOfWebElements(accounts);
         for (i = 0; i < getListOfWebElements(accounts).size(); i++) {
             if (getListOfWebElements(accounts).get(i).getAttribute("title").contains(defaultIncomeAccount)) {
-                Allure.step(" default Expense account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
+                Allure.step(" default Expense account or default Stock Not Billed Account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
                 j = i;
             }
         }
@@ -201,6 +201,7 @@ public class GeneralLedgerReportPage extends MainPage {
         for (i = 0; i < getListOfWebElements(accounts).size(); i++) {
             if (getListOfWebElements(accounts).get(i).getAttribute("title").contains(defaultCreditAccount)) {
                 Allure.step(" default credit account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
+               System.out.println(" default credit account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
                 j = i;
             }
         }
@@ -216,6 +217,7 @@ public class GeneralLedgerReportPage extends MainPage {
 
     public String getValueAtDefaultIncomeAccountFromGL(int i) {
         valueAtDefaultIncomeAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-4')])[" + i + "]");
+        System.out.println("value which exist at default income account " + getWebElement(valueAtDefaultIncomeAccount).getText());
         Allure.step("value which exist at default income account " + getWebElement(valueAtDefaultIncomeAccount).getText());
 
         return getWebElement(valueAtDefaultIncomeAccount).getText();
@@ -224,6 +226,7 @@ public class GeneralLedgerReportPage extends MainPage {
     public String getValueAtDefaultCreditAccountFromGL(int i) {
         valueAtDefaultCreditAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-4')])[" + i + "]");
         Allure.step("value which exist at default credit account " + getWebElement(valueAtDefaultCreditAccount).getText());
+        System.out.println("value which exist at default credit account " + getWebElement(valueAtDefaultCreditAccount).getText());
 
         return getWebElement(valueAtDefaultCreditAccount).getText();
     }
@@ -231,6 +234,7 @@ public class GeneralLedgerReportPage extends MainPage {
     public String getValueAtDefaultExpenseAccountFromGL(int i) {
         valueAtDefaultExpenseAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-3')])[" + i + "]");
         Allure.step("value which exist at default expense  account " + getWebElement(valueAtDefaultExpenseAccount).getText());
+        System.out.println("value which exist at default expense  account " + getWebElement(valueAtDefaultExpenseAccount).getText());
 
         return getWebElement(valueAtDefaultExpenseAccount).getText();
     }
@@ -395,6 +399,7 @@ public class GeneralLedgerReportPage extends MainPage {
         waitUntilElementToBePresent(generalLedgerReportTitle, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
         scrollToSpeceficElement(debitValue_GL);
+        System.out.println(" closing debit value at general ledger report is " + getWebElement(debitValue_GL).getText());
         Allure.step(" closing debit value at general ledger report is " + getWebElement(debitValue_GL).getText());
         return getWebElement(debitValue_GL).getText();
     }
@@ -404,6 +409,7 @@ public class GeneralLedgerReportPage extends MainPage {
         waitUntilElementToBePresent(generalLedgerReportTitle, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
         scrollToSpeceficElement(creditValue_GL);
+        System.out.println(" closing credit value at general ledger report is " + getWebElement(creditValue_GL).getText());
         Allure.step(" closing credit value at general ledger report is " + getWebElement(creditValue_GL).getText());
         return getWebElement(creditValue_GL).getText();
     }

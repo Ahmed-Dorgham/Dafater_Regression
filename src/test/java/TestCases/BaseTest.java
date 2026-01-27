@@ -181,37 +181,37 @@ public class BaseTest extends MainPage {
             System.out.println(" there is an error happen");
         }
     }
-
-
-//    @AfterMethod
-//    @Parameters({"Scope"})
-//    public void tearDownTestCase(String Scope) throws InterruptedException {
-//        driver.navigate().to(homePageLink_5);
-//        WebDriverManager.chromedriver().clearDriverCache().setup();
-//        if (tryToGetWebElementV(homePageObj.loginBtn) == GeneralConstants.SUCCESS) {
-//            Allure.step("go to login page");
-//            getWebElement(homePageObj.loginBtn).click();
-//            waitUntilElementVisibility(loginPageObj.userNameField, GeneralConstants.minTimeOut);
-//        } else {
-//            homePageObj.logOutFromDafater_5();
-//        }
 //
-//        driver.manage().deleteAllCookies();
-//        if (Scope.equals("Regression")) {
-//            driver.navigate().to(websiteLink_5);
-//        } else if (Scope.equals("Comparing")) {
-//            driver.navigate().to(websiteLink_4);
-//        }
-//    }
 //
-//    @AfterClass
-//    public void tearDown() {
-//        Allure.step("Running tearDown...");
-//        if (driver != null) {
-//            driver.quit();
-//            Allure.step("Driver quit executed");
-//        }
-//    }
+    @AfterMethod
+    @Parameters({"Scope"})
+    public void tearDownTestCase(String Scope) throws InterruptedException {
+        driver.navigate().to(homePageLink_5);
+        WebDriverManager.chromedriver().clearDriverCache().setup();
+        if (tryToGetWebElementV(homePageObj.loginBtn) == GeneralConstants.SUCCESS) {
+            Allure.step("go to login page");
+            getWebElement(homePageObj.loginBtn).click();
+            waitUntilElementVisibility(loginPageObj.userNameField, GeneralConstants.minTimeOut);
+        } else {
+            homePageObj.logOutFromDafater_5();
+        }
+
+        driver.manage().deleteAllCookies();
+        if (Scope.equals("Regression")) {
+            driver.navigate().to(websiteLink_5);
+        } else if (Scope.equals("Comparing")) {
+            driver.navigate().to(websiteLink_4);
+        }
+    }
+
+    @AfterClass
+    public void tearDown() {
+        Allure.step("Running tearDown...");
+        if (driver != null) {
+            driver.quit();
+            Allure.step("Driver quit executed");
+        }
+    }
 
     public static File takeScreenshot(WebDriver driver, String testName) throws IOException {
         Allure.step("capture ScreenShot...........");

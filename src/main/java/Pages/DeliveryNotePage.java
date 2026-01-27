@@ -183,6 +183,7 @@ public class DeliveryNotePage extends MainPage {
 //       Allure.step("Verify the status of sales invoice  ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(createBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         Allure.step("status of delivery note before creating related sales invoices " + getWebElement(deliveryNoteStatus).getText());
         return getWebElement(deliveryNoteStatus).getText();

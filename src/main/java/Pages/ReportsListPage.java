@@ -35,7 +35,8 @@ public class ReportsListPage extends MainPage {
 
     private By monthlySalaryRegisterReport = By.xpath("//*[@id='report-monthly-salary-register']" +
             "|  //*[contains(@href,'/app/query-report/Monthly Salary Register')]");
-
+    private By employeeLeaveBalanceReport = By.xpath("//*[@id='report-employee-leave-balance']" +
+            "|  //*[contains(@href,'/app/query-report/Employee Leave Balance Summary')]");
     private By salesPersonDetailedReport = By.xpath("//*[@id='report-sales-person-detailed-report']" +
             "|  //*[contains(@href,'/app/query-report/Sales person Detailed Report')]");
     private By trialBalanceReport = By.xpath("//*[@id='report-trial-balance']" +
@@ -43,6 +44,7 @@ public class ReportsListPage extends MainPage {
     private By grossProfitReport = By.xpath("//*[@id='report-customers-aging']" +
             "| //*[contains(@href,'/app/query-report/Gross Profit')]");
     private By grossProfitReport_4 = By.xpath(" //*[contains(@id,'report-gross-profit')]");
+    private By accountsTab = By.xpath("//*[contains(@href,'#reports__accounts')]");
     private By profitAndLossLabel = By.xpath("//h3[contains(@title,'الأرباح والخسائر')]");
     private By balanceSheetLabel = By.xpath(" //h3[contains(@title,'المركز المالي')]");
     private By financialStatementsReport = By.xpath("//*[@id='page-report-financial-statements']" +
@@ -53,6 +55,7 @@ public class ReportsListPage extends MainPage {
     private By profitAndLossReport = By.xpath("//*[contains(@href,'/app/query-report/Profit and Loss Statement')]");
 
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
+
     By loadImage = By.xpath("(//*[contains(@alt,'Generic Empty State')])[3]" +
             "| (//*[contains(@class,'progress progress-striped active')])");
     By arrowIcon = By.xpath("(//*[contains(@class,'tabs-scroll-arrow')])[1]");
@@ -129,8 +132,24 @@ public class ReportsListPage extends MainPage {
         return new MonthlySalaryRegisterReportPage(driver);
     }
 
+
+    public EmployeeLeaveBalanceReportPage openEmployeeLeaveBalanceReport_4() throws InterruptedException {
+        Allure.step("open HR report ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        waitUntilElementVisibility(HRTab, GeneralConstants.freezeTimeOut);
+
+        getWebElement(HRTab).click();
+        waitUntilElementToBePresent(monthlySalaryRegisterReport, GeneralConstants.minTimeOut);
+        getWebElement(monthlySalaryRegisterReport).click();
+
+        return new EmployeeLeaveBalanceReportPage(driver);
+    }
+
     public MonthlySalaryRegisterReportPage openMonthlySalaryRegisterReport_5() throws InterruptedException {
-        Allure.step("open Monthly Salary Register Report report ");
+        Allure.step("open Monthly Salary Register report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -143,6 +162,22 @@ public class ReportsListPage extends MainPage {
 
         return new MonthlySalaryRegisterReportPage(driver);
     }
+
+    public EmployeeLeaveBalanceReportPage openEmployeeLeaveBalanceReportPage_5() throws InterruptedException {
+        Allure.step("open Employee Leave Balance Report ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(HRTab, GeneralConstants.freezeTimeOut);
+        getWebElement(HRTab).click();
+        waitUntilElementToBePresent(employeeLeaveBalanceReport, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        getWebElement(employeeLeaveBalanceReport).click();
+
+        return new EmployeeLeaveBalanceReportPage(driver);
+    }
+
     public SalesPersonDetailedReport openSalesPersonDetailedReport_4() throws InterruptedException {
         Allure.step("open Sales Person Detailed Report ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
@@ -265,7 +300,13 @@ public class ReportsListPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(newReportBtn, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        waitUntilElementToBePresent(grossProfitReport, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(accountsTab, GeneralConstants.minTimeOut);
+        if (tryToGetWebElementV(grossProfitReport)==GeneralConstants.FAILED)
+        {
+            getWebElement(accountsTab).click();
+
+        }
+        waitUntilElementVisibility(grossProfitReport, GeneralConstants.minTimeOut);
         getWebElement(grossProfitReport).click();
 
         return new GrossProfitReportPage(driver);

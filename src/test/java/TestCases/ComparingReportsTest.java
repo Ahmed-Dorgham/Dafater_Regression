@@ -32,6 +32,7 @@ public class ComparingReportsTest extends BaseTest {
     TaxDeclarationReportPage taxDeclarationReportPageObj;
     StockBalanceReportPage stockBalanceReportPageObj;
     MonthlySalaryRegisterReportPage monthlySalaryRegisterReportPageObj;
+    EmployeeLeaveBalanceReportPage employeeLeaveBalanceReportPageObj;
     TrialBalanceReportPage trialBalanceReportPageObj;
     FinancialStatementsReportPage financialStatementsReportPageObj;
     SupplierAgingDetailsPage supplierAgingDetailsPageObj;
@@ -507,7 +508,7 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 10, enabled = false)
+    @Test(priority = 10, enabled = true)
     public void TC010_comparingSupplierAgingDetailsReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
@@ -523,7 +524,7 @@ public class ComparingReportsTest extends BaseTest {
         String companyName = supplierAgingDetailsPageObj.getSelectedCompanyName();
         supplierAgingDetailsPageObj.loadReportData_4();
         String invoicedAmountValue_4 = supplierAgingDetailsPageObj.getInvoicedAmountValue_4().replace(",", "");
-//        String outstandingAmountValue_4 = supplierAgingDetailsPageObj.getOutstandingAmountValue_4();
+        String outstandingAmountValue_4 = supplierAgingDetailsPageObj.getOutstandingAmountValue_4().replace(",", "");
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
         loginPageObj.switchToDafater_5(websiteLink_5);
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
@@ -531,10 +532,10 @@ public class ComparingReportsTest extends BaseTest {
         supplierAgingDetailsPageObj = reportsListPageObj.openSupplierAgingDetailsReport();
         supplierAgingDetailsPageObj.applyFilters_5(companyName);
         String invoicedAmountValue_5 = supplierAgingDetailsPageObj.getInvoicedAmountValue().replace(",", "");
-//        String outstandingAmountValue_5 = supplierAgingDetailsPageObj.getOutstandingAmountValue();
+        String outstandingAmountValue_5 = supplierAgingDetailsPageObj.getTotalOutstandingAmountAfterSyncing().replace(",", "");
 
         softAssert.assertEquals((long) Double.parseDouble(invoicedAmountValue_4.trim()), (long) Double.parseDouble(invoicedAmountValue_5.trim()));
-//        softAssert.assertTrue(outstandingAmountValue_4.contains(outstandingAmountValue_5));
+        softAssert.assertEquals((long) Double.parseDouble(outstandingAmountValue_4.trim()), (long) Double.parseDouble(outstandingAmountValue_5.trim()));
         softAssert.assertAll();
 
 
@@ -578,8 +579,8 @@ public class ComparingReportsTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 12, enabled = true)
-    public void TC05_comparingMonthlySalaryRegisterReport() throws InterruptedException, IOException {
+    @Test(priority = 12, enabled = false)
+    public void TC012_comparingMonthlySalaryRegisterReport() throws InterruptedException, IOException {
 
         homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
         websiteLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "websiteLink_5");
@@ -593,6 +594,11 @@ public class ComparingReportsTest extends BaseTest {
         reportsListPageObj = homePageObj.openReportsListPage();
         monthlySalaryRegisterReportPageObj = reportsListPageObj.openMonthlySalaryRegisterReport_4();
        String currentYear =  monthlySalaryRegisterReportPageObj.chooseYear();
+
+
+        // wait data to complete my implemntation for this report ************************************************
+
+
         String openingValueBeforeSyncing = monthlySalaryRegisterReportPageObj.getOpeningValueFromStockBalance_4();
 
         loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
@@ -600,6 +606,48 @@ public class ComparingReportsTest extends BaseTest {
         homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
         reportsListPageObj = homePageObj.openReportsListPage();
         monthlySalaryRegisterReportPageObj = reportsListPageObj.openMonthlySalaryRegisterReport_5();
+
+        monthlySalaryRegisterReportPageObj.applyFilters_5(currentYear);
+//        String openingValueAfterSyncing = stockBalanceReportPageObj.getOpeningValueFromStockBalance_5();
+//        String openingQuantityAfterSyncing = stockBalanceReportPageObj.getOpeningQuantityFromStockBalance_5();
+//        Allure.step("verify that opening value for this warehouse " + wareHouseName + "  which exist at dafater 5 is equal to opening value for the same warehouse at dafater 4 ");
+//        softAssert.assertTrue(openingValueBeforeSyncing.contains(openingValueAfterSyncing));
+//        Allure.step("opening value at dafater 4  before syncing is " + openingValueBeforeSyncing + " and after syncing at dafater 5 is " + openingValueAfterSyncing);
+//        Allure.step("verify that opening quantity for this warehouse " + wareHouseName + "  which exist at dafater 5 is equal to opening quantity for the same warehouse at dafater 4 ");
+//        softAssert.assertTrue(openingQuantityBeforeSyncing.contains(openingQuantityAfterSyncing));
+//        Allure.step("opening quantity at dafater 4  before syncing is " + openingQuantityBeforeSyncing + " and after syncing at dafater 5 is " + openingQuantityAfterSyncing);
+//        softAssert.assertAll();
+    }
+
+
+    @Test(priority = 13, enabled = false)
+    public void TC013_comparingEmployeeLeaveBalanceReport() throws InterruptedException, IOException {
+
+        homePageLink_4 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_4");
+        websiteLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "websiteLink_5");
+        homePageLink_5 = mainPageObj.readDataFromPropertiesFile(configurationFilePath, "homePageLink_5");
+        random = new Random();
+        randomNumber = random.nextInt(1000000000);
+        itemCode = "item " + randomNumber;
+        softAssert = new SoftAssert();
+        homePageObj = new HomePage(driver);
+
+        reportsListPageObj = homePageObj.openReportsListPage();
+        employeeLeaveBalanceReportPageObj = reportsListPageObj.openEmployeeLeaveBalanceReport_4();
+        String currentYear =  employeeLeaveBalanceReportPageObj.chooseYear();
+
+
+
+        // wait data to complete my implemntation for this report ******************************************************
+
+
+//        String openingValueBeforeSyncing = employeeLeaveBalanceReportPageObj.getOpeningValueFromStockBalance_4();
+
+        loginPageObj = homePageObj.logOutFromDafater_4(homePageLink_4);
+        loginPageObj.switchToDafater_5(websiteLink_5);
+        homePageObj = loginPageObj.loginWithValidData(userName_5, password_5);
+        reportsListPageObj = homePageObj.openReportsListPage();
+        employeeLeaveBalanceReportPageObj = reportsListPageObj.openEmployeeLeaveBalanceReportPage_5();
 
         monthlySalaryRegisterReportPageObj.applyFilters_5(currentYear);
 //        String openingValueAfterSyncing = stockBalanceReportPageObj.getOpeningValueFromStockBalance_5();

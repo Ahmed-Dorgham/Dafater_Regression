@@ -15,6 +15,7 @@
 <!--                                                <class name="TestCases.ComparingDebitNotesTestSalesModule"></class>-->
 <!--                                                <class name="TestCases.ComparingCreditNotesTestSalesModule"></class>-->
 <!--                                                <class name="TestCases.ComparingCreditNotesTestPurchaseModule"></class>-->
+<!--                                                <class name="TestCases.ComparingSalesOrdersTestSalesModule"></class>-->
 
 <!--                                                                        <class name="TestCases.ComparingPaymentEntryTest"></class>-->
 <!--                                                                        <class name="TestCases.ComparingFiscalYearsTest"></class>-->
@@ -25,13 +26,13 @@
 <!--                                                                        <class name="TestCases.ComparingDeliveryNotesTest"></class>-->
 
 <!--                                                                        <class name="TestCases.ComparingPurchaseReceiptsTest"></class>-->
-<!--                                                                        <class name="TestCases.ComparingJournalEntriesTest"></class>-->
+                                                                        <class name="TestCases.ComparingJournalEntriesTest"></class>
 <!--                                                                        <class name="TestCases.ComparingSalesTaxesAndChargesTemplatesTest"></class>-->
 <!--                                                                        <class name="TestCases.ComparingPurchaseTaxesAndChargesTemplatesTest"></class>-->
 
 <!--            <class name="TestCases.ComparingSalesInvoicesTest"></class>-->
 
-                        <class name="TestCases.ComparingReportsTest"></class>
+<!--                        <class name="TestCases.ComparingReportsTest"></class>-->
 <!--            <class name="TestCases.ComparingChartOfAccountsDataTest"></class>-->
 
 

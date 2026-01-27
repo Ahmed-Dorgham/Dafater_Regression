@@ -4,11 +4,11 @@ public class GeneralConstants {
 
     /************************************************* Constants ************************************************/
 
-    public final static int globalTimeOut = 60;
-    public final static int minTimeOut = 40;
-    public final static int freezeTimeOut = 30;
-    public final static int threadTimeOut = 8000;
-    public final static int tryTimeOut = 25;
+    public final static int globalTimeOut = 40;
+    public final static int minTimeOut = 20;
+    public final static int freezeTimeOut = 20;
+    public final static int threadTimeOut = 6000;
+    public final static int tryTimeOut = 15;
     public final static int randomNum = (int) (Math.random() * 10000);
     public final static int registerSheetColumnsNum = 14;
 
@@ -20,12 +20,13 @@ public class GeneralConstants {
 
     public final static String userName_4 = "Administrator";
     public final static String userName_5 = "Administrator";
-    public final static String password_5 = "Admin123456";
+//    public final static String password_5 = "Admin123456";
+    public final static String password_5 = "012345MM@@";
     //    public final static String password_5 = "123456";
-    public final static String password_4 = "Asc7yhXewfA5";
+//    public final static String password_4 = "Asc7yhXewfA5";
 //    public final static String password_4 = "sdWeds9xdEd";
 //    public final static String password_4 = "cdWeewshgcfd";
-//    public final static String password_4 = "cAAscAAxhv7N";
+    public final static String password_4 = "cAAscAAxhv7N";
 
 
     /************************************************* Variables  ************************************************/

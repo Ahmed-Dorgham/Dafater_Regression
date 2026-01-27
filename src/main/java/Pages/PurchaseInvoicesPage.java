@@ -42,7 +42,7 @@ public class PurchaseInvoicesPage extends MainPage {
     private By yesBtn_PO = By.xpath("(//*[contains(@class,'btn btn-primary btn-sm btn-modal-primary')])[2]");
     private By totalAmountLabel = By.xpath("(//*[contains(text(),'الكمية الإجمالية')])");
     private By invoiceStatus = By.xpath("(//*[contains(@class,'label label-success')])");
-    private By invoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By invoiceName_3 = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
     private By invoiceNamePayment = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
     private By purchaseInvoicesOpt = By.xpath("//*[contains(@id,'sidebar-purchases-invoice')]");
     private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
@@ -116,6 +116,7 @@ public class PurchaseInvoicesPage extends MainPage {
         waitUntilElementVisibility(supplierListPurchaseInvoice, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(supplierOptPurchaseInvoice, GeneralConstants.minTimeOut);
         getWebElement(supplierOptPurchaseInvoice).click();
+        Thread.sleep(threadTimeOut);
        Allure.step("Scroll down to item field ");
         scrollToSpeceficElement(totalAmountLabel);
        Allure.step(" select item  ");
@@ -123,13 +124,14 @@ public class PurchaseInvoicesPage extends MainPage {
 //        clickByActions(itemCodeField);
         getWebElement(itemCodeField).click();
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
-        getWebElement(itemCodeInputField).sendKeys(itemName);
-        waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
-        getWebElement(itemCodeInputField).clear();
-        getWebElement(itemCodeInputField).sendKeys(itemName);
-
-        waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
-        clickByActions(selectedItem);
+        Thread.sleep(threadTimeOut);
+//        getWebElement(itemCodeInputField).sendKeys(itemName);
+//        waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
+//        getWebElement(itemCodeInputField).clear();
+//        getWebElement(itemCodeInputField).sendKeys(itemName);
+//
+//        waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
+//        clickByActions(selectedItem);
 
        Allure.step("unselect update stock opt");
         waitUntilElementToBeClickable(updateStockBtn, GeneralConstants.minTimeOut);
@@ -184,6 +186,7 @@ public class PurchaseInvoicesPage extends MainPage {
         scrollToSpeceficElement(grandTotalAmountValue);
         waitUntilElementToBePresent(grandTotalAmountValue, GeneralConstants.minTimeOut);
        Allure.step("grand total amount of purchase invoice is " + getWebElement(grandTotalAmountValue).getText());
+       System.out.println("grand total amount of purchase invoice is " + getWebElement(grandTotalAmountValue).getText());
 //       Allure.step("actual text is " + getWebElement(totalAmountValue).getText() + " and expected text is " + expected);
         return getWebElement(grandTotalAmountValue).getText();
     }
@@ -194,6 +197,7 @@ public class PurchaseInvoicesPage extends MainPage {
         scrollToSpeceficElement(totalAmountValue);
         waitUntilElementToBePresent(totalAmountValue, GeneralConstants.minTimeOut);
        Allure.step("total amount of purchase invoice is " + getWebElement(totalAmountValue).getText());
+      System.out.println("total amount of purchase invoice is " + getWebElement(totalAmountValue).getText());
 //       Allure.step("actual text is " + getWebElement(totalAmountValue).getText() + " and expected text is " + expected);
         return getWebElement(totalAmountValue).getText();
     }
@@ -245,8 +249,8 @@ public class PurchaseInvoicesPage extends MainPage {
         if (tryToGetWebElementV(closeIcon) == GeneralConstants.SUCCESS) {
             getWebElement(closeIcon).click();
         }
-       Allure.step("actual text is  " + getWebElement(invoiceName).getAttribute("title") + "  and expected text is  " + expected);
-        return getWebElement(invoiceName).getText();
+       Allure.step("actual text is  " + getWebElement(invoiceName_3).getAttribute("title") + "  and expected text is  " + expected);
+        return getWebElement(invoiceName_3).getText();
     }
 
     public String getInvoiceNameForPayment(String expected) {

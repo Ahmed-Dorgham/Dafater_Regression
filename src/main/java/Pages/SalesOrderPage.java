@@ -18,7 +18,8 @@ public class SalesOrderPage extends MainPage {
     private By updateStockBtn = By.id("update_stock");
     private By statusMsg = By.className("msgprint");
     private By editIcon = By.className("icon-xs");
-    private By newSalesOrderTitle = By.xpath("//*[contains(@title,'أمر بيع جديد')]");
+    private By newSalesOrderTitle = By.xpath("//*[contains(@title,'أمر بيع جديد')]" +
+            "| //*[contains(@title,'أمر مبيعات جديد')]");
     private By customerFieldSalesOrder = By.xpath("(//*[contains(@id,'customer')])[4]");
     private By itemCodeField = By.xpath("(//*[contains(@data-fieldname,'item_code')])[2]");
     private By itemsLabel = By.xpath("(//*[contains(text(),'الاصناف')])[2]");
@@ -46,29 +47,31 @@ public class SalesOrderPage extends MainPage {
           By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='رمز الصنف']/following-sibling::ul)//div//p[@title='"+itemName+"']/strong)");
 
         waitUntilElementToBePresent(newSalesOrderTitle, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(newSalesOrderTitle, GeneralConstants.minTimeOut);
       Allure.step("select  customer ");
         getWebElement(customerFieldSalesOrder).click();
         waitUntilElementVisibility(customersListSalesOrder, GeneralConstants.minTimeOut);
         waitUntilElementToBeClickable(customerOptSalesOrder, GeneralConstants.minTimeOut);
         getWebElement(customerOptSalesOrder).click();
       Allure.step("Scroll down to item field ");
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         scrollToSpeceficElement(totalAmountLabel);
+        Allure.step(" select item  ");
         clickByActions(itemCodeField);
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
         getWebElement(itemCodeInputField).sendKeys(itemName);
-        getWebElement(itemCodeInputField).clear();
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
-        getWebElement(itemCodeInputField).sendKeys(itemName);
-//        getWebElement(itemCodeInputField).sendKeys("item 1");
-        waitUntilElementToBePresent(selectedItem, GeneralConstants.minTimeOut);
-//        Thread.sleep(threadTimeOut);
-        clickByActions(selectedItem);
 
+
+        getWebElement(itemCodeInputField).clear();
+        getWebElement(itemCodeInputField).sendKeys(itemName);
+        waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
+        clickByActions(selectedItem);
       Allure.step("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
       Allure.step(" save and submit sales order ");
         getWebElement(saveAndSubmitBtn).click();
-      //  Thread.sleep(10000);
+
       Allure.step("click on yes btn ");
          waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
         getWebElement(yesBtn).click();

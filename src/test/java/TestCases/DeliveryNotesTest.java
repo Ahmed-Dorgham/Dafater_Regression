@@ -51,7 +51,6 @@ public class DeliveryNotesTest extends BaseTest {
         Allure.step("Verify the name of current created delivery note is existed at delivery notes list view ");
         Assert.assertTrue(deliveryNotePageObj.getDeliveryNoteNameAtViewList(deliveryNoteName).contains(deliveryNoteName));
 
-
     }
 
 }

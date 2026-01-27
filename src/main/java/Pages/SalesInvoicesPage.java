@@ -3,6 +3,7 @@ package Pages;
 import GeneralConstants.GeneralConstants;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 public class SalesInvoicesPage extends MainPage {
@@ -15,8 +16,8 @@ public class SalesInvoicesPage extends MainPage {
 
     private By checkVmConnectionBtn = By.id("check_vm_connection");
     private By updateStockBtn = By.xpath("//*[contains(@id,'update_stock ')] " +
-            " | //*[contains(@data-fieldname,'update_stock')]");
-    private By statusMsg = By.className("msgprint");
+            " | //input[contains(@data-fieldname,'update_stock')]");
+    private By validationMsg = By.className("msgprint");
     private By editIcon = By.className("icon-xs");
     private By newSalesInvoiceTitle = By.xpath("//*[contains(@title,'فاتورة المبيعات جديد')]");
     private By customerFieldSalesInvoice = By.xpath("(//*[contains(@id,'customer')])[4]");
@@ -57,9 +58,9 @@ public class SalesInvoicesPage extends MainPage {
             "|(//*[contains(@class,'btn  btn-yes')])");
     private By submittedStatus = By.xpath("(//*[contains(@class,'label label-success')])");
     private By draftStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap red')])/span");
-    private By invoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
-    private By invoiceLabel = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
-    private By DraftInvoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By invoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By invoiceLabel = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By DraftInvoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
     private By invoiceNameForCreditNote = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
     private By invoiceNameForPaymentReq = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
     private By invoiceNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Sales Invoice')])[1]");
@@ -90,6 +91,129 @@ public class SalesInvoicesPage extends MainPage {
 
     private By namingField = By.xpath("(//*[contains(@title,'تسمية السلسلة')]//*[contains(@title,'إختر')])[3]");
     private By namingOpt = By.xpath("(//*[contains(@title,'تسمية السلسلة')]//ul//li//a)[4]");
+    private By paymentsTab = By.id("sales-invoice-payments_tab-tab");
+    private By taxesTab = By.id("sales-invoice-custom_taxes_and_charges-tab");
+    private By discountTab = By.xpath("(//*[contains(@data-fieldname,'totals')]/following-sibling::div)[1]");
+    private By writeOffAmountField = By.xpath("(//*[@id='write_off_amount'])");
+    private By discountAmountField = By.xpath("(//*[@id='discount_amount'])");
+    private By firstAdvancesTab = By.xpath("(//*[contains(@data-name,'new-sales-invoice-advance')])[1]");
+    private By allocatedAmountInputField = By.xpath("((//*[contains(@data-name,'new-sales-invoice-advance')])[1]//div[contains(@data-fieldname,'allocated_amount')]//span)");
+    private By allocatedAmountInputField_2 = By.xpath("(//*[contains(@data-name,'new-sales-invoice-advance')])[1]//div[contains(@data-fieldname,'allocated_amount')]//input");
+    private By getAdvancesBtn = By.xpath("(//*[@id='get_advances'])");
+    private By writeOffAccountField = By.xpath("(//*[@id='write_off_account'])");
+    private By writeOffSection = By.xpath("//*[@data-fieldname='write_off_section']");
+    private By taxesCheckBox = By.xpath("//*[@data-fieldname='taxes']//*[contains(@data-name,'new-sales-taxes-and-charges')]//input[@type='checkbox']");
+    private By removeBtn = By.xpath("//*[@data-fieldname='taxes']//*[@data-action='delete_rows']");
+    private By emptyMsg = By.xpath("//*[@data-fieldname='taxes']//*[contains(@class,'grid-empty text-center')]");
+    private By writeOffSectionIndicator = By.xpath("//*[@data-fieldname='loyalty_points_redemption']");
+    private By advancesSection = By.xpath("//*[@data-fieldname='advances_section']");
+    private By chosenWriteOffAccount = By.xpath("((//*[@id='write_off_account']//following-sibling::*)//div//p)[1]");
+
+    public By totalOutstandingAmountValue = By.xpath("(//*[contains(@for,'outstanding_amount')]//following-sibling::*//div//span)[1]");
+    private By filterIcon = By.xpath("//*[contains(@class,'filter-x-button')]");
+    public void applyWriteOff(double amount) throws InterruptedException {
+        scrollToSpeceficElement(paymentsTab);
+        System.out.println(" open payments section");
+        waitUntilElementVisibility(paymentsTab, GeneralConstants.minTimeOut);
+        getWebElement(paymentsTab).click();
+        System.out.println(" enter write off amount");
+        waitUntilElementVisibility(writeOffSection, GeneralConstants.minTimeOut);
+
+        clickByActions(writeOffSection);
+        waitUntilElementVisibility(writeOffAmountField, GeneralConstants.minTimeOut);
+        clickByActions(writeOffAmountField);
+        getWebElement(writeOffAmountField).click();
+        getWebElement(writeOffAmountField).sendKeys(Keys.CONTROL, "a");
+        getWebElement(writeOffAmountField).sendKeys(Keys.DELETE);
+        getWebElement(writeOffAmountField).sendKeys(String.valueOf(amount));
+        System.out.println("entered write off amount is  " + amount);
+        waitUntilElementVisibility(writeOffAccountField, GeneralConstants.minTimeOut);
+        getWebElement(writeOffAccountField).click();
+
+        if (tryToGetWebElementV(chosenWriteOffAccount) == GeneralConstants.SUCCESS) {
+            waitUntilElementVisibility(chosenWriteOffAccount, GeneralConstants.minTimeOut);
+            getWebElement(chosenWriteOffAccount).click();
+        }
+    }
+
+    public void removeTaxes() throws InterruptedException {
+
+        System.out.println(" open Taxes section");
+        waitUntilElementVisibility(taxesTab, GeneralConstants.minTimeOut);
+        getWebElement(taxesTab).click();
+        System.out.println("remove taxes");
+        waitUntilElementVisibility(taxesCheckBox, GeneralConstants.minTimeOut);
+//        getWebElement(writeOffSection).click();
+        clickByActions(taxesCheckBox);
+        waitUntilElementVisibility(removeBtn, GeneralConstants.minTimeOut);
+        clickByActions(removeBtn);
+        System.out.println(" taxes removed ");
+        waitUntilElementVisibility(emptyMsg, GeneralConstants.minTimeOut);
+    }
+    public void applyDiscount(double amount) throws InterruptedException {
+        scrollToSpeceficElement(discountTab);
+        System.out.println(" open discount section");
+        waitUntilElementVisibility(discountTab, GeneralConstants.minTimeOut);
+
+        clickByActions(discountTab);
+        System.out.println(" enter discount amount");
+        waitUntilElementToBePresent(discountAmountField, GeneralConstants.minTimeOut);
+        scrollToSpeceficElement(discountAmountField);
+        waitUntilElementVisibility(discountAmountField, GeneralConstants.minTimeOut);
+        clickByActions(discountAmountField);
+        getWebElement(discountAmountField).click();
+        getWebElement(discountAmountField).sendKeys(String.valueOf(amount));
+        System.out.println("entered discount amount is  " + amount);
+
+
+    }
+
+    public void clickOnWriteOffSection() throws InterruptedException {
+//    waitUntilElementVisibility(settingIcon, GeneralConstants.minTimeOut);
+        Thread.sleep(threadTimeOut);
+        scrollToSpeceficElement(writeOffSectionIndicator);
+        clickByActions(writeOffSectionIndicator);
+    }
+
+    public void payWithAdvances(double amount) throws InterruptedException {
+        scrollToSpeceficElement(paymentsTab);
+        System.out.println(" open payments section");
+        waitUntilElementVisibility(paymentsTab, GeneralConstants.minTimeOut);
+        getWebElement(paymentsTab).click();
+        System.out.println(" use advances section ");
+        waitUntilElementVisibility(advancesSection, GeneralConstants.minTimeOut);
+        clickByActions(advancesSection);
+        waitUntilElementVisibility(getAdvancesBtn, GeneralConstants.minTimeOut);
+        clickByActions(getAdvancesBtn);
+        waitUntilElementVisibility(firstAdvancesTab, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(allocatedAmountInputField, GeneralConstants.minTimeOut);
+        System.out.println(" enter allocated amount ");
+        clickByActions(allocatedAmountInputField);
+//        Thread.sleep(threadTimeOut);
+//        clickByActions(allocatedAmountInputField);
+
+//        getWebElement(writeOffAmountField).sendKeys(Keys.CONTROL, "a");
+        waitUntilElementVisibility(allocatedAmountInputField_2, GeneralConstants.minTimeOut);
+        getWebElement(allocatedAmountInputField_2).sendKeys(Keys.DELETE);
+        getWebElement(allocatedAmountInputField_2).sendKeys(String.valueOf(amount));
+        System.out.println("entered allocated amount is  " + amount);
+
+    }
+
+    public String getTotalAmountValue() throws InterruptedException {
+        waitUntilElementNotHaveSpecificText(totalAmountValue, "0.00");
+
+        System.out.println("total amount value is " + getWebElement(totalAmountValue).getAttribute("textContent"));
+        return getWebElement(totalAmountValue).getAttribute("textContent");
+    }
+
+    public String getTotalOutstandingAmountValue() throws InterruptedException {
+        waitUntilElementVisibility(draftStatus, GeneralConstants.minTimeOut);
+
+        System.out.println("total outstanding amount value  after apply write off is " + getWebElement(totalOutstandingAmountValue).getAttribute("textContent"));
+        Allure.step("total outstanding amount value  after apply write off is " + getWebElement(totalOutstandingAmountValue).getAttribute("textContent"));
+        return getWebElement(totalOutstandingAmountValue).getAttribute("textContent");
+    }
 
     public void enterValidDataIntoSalesInvoicePageAndSumbit(String dueDate, String itemName) throws InterruptedException {
         By selectedItem = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)//div//p[@title='" + itemName + "'])");
@@ -111,22 +235,33 @@ public class SalesInvoicesPage extends MainPage {
         Allure.step("Scroll down to item field ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         scrollToSpeceficElement(totalAmountLabel);
-        //   Thread.sleep(6000);
         Allure.step(" select item  ");
         clickByActions(itemCodeField);
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
         getWebElement(itemCodeInputField).sendKeys(itemName);
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
-
         getWebElement(itemCodeInputField).clear();
         getWebElement(itemCodeInputField).sendKeys(itemName);
-//        getWebElement(itemCodeInputField).sendKeys("item 1");
         waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
         clickByActions(selectedItem);
         Allure.step("unselect update stock opt");
         getWebElement(updateStockBtn).click();
 
         Allure.step("scroll up to save and submit btn ");
+        scrollToSpeceficElement(saveAndSubmitBtn);
+
+        Allure.step(" save and submit sales invoice ");
+        getWebElement(saveAndSubmitBtn).click();
+        Allure.step("click on yes btn ");
+        waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
+        getWebElement(yesBtn).click();
+        waitUntilOverlayDisappear(overlay,GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
+
+    }
+
+    public void clickOnSaveAndSubmitBtn()
+    {      Allure.step("scroll up to save and submit btn ");
         scrollToSpeceficElement(saveAndSubmitBtn);
 
         Allure.step(" save and submit sales invoice ");
@@ -194,8 +329,14 @@ public class SalesInvoicesPage extends MainPage {
         clickByActions(selectedItem);
 
         Allure.step("unselect update stock opt");
-        getWebElement(updateStockBtn).click();
+//        getWebElement(updateStockBtn).click();
+        waitUntilElementToBeClickable(updateStockBtn, GeneralConstants.minTimeOut);
+        clickByActions(updateStockBtn);
 
+
+    }
+
+    public void clickOnSaveBtn() {
         Allure.step("scroll up to save btn ");
         scrollToSpeceficElement(saveBtn);
 
@@ -203,7 +344,22 @@ public class SalesInvoicesPage extends MainPage {
         getWebElement(saveBtn).click();
 
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+    }
 
+    public void clickOnSaveBtnForValidation() {
+        Allure.step("scroll up to save btn ");
+        scrollToSpeceficElement(saveBtn);
+
+        Allure.step(" save sales invoice ");
+        getWebElement(saveBtn).click();
+
+
+    }
+
+    public String getValidationMsg() {
+        waitUntilElementVisibility(validationMsg, GeneralConstants.minTimeOut);
+//        System.out.println(" validation msg is " + getWebElement(validationMsg).getText());
+        return getWebElement(validationMsg).getText();
     }
 
     public PosViewPage openPosView() throws InterruptedException {
@@ -326,6 +482,7 @@ public class SalesInvoicesPage extends MainPage {
     public String getInvoiceName(String expected) {
         Allure.step("Verify the name of sales invoice  ");
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
+      System.out.println("actual text is  " + getWebElement(invoiceName).getAttribute("title") + "  and expected text is  " + expected);
         Allure.step("actual text is  " + getWebElement(invoiceName).getAttribute("title") + "  and expected text is  " + expected);
         return getWebElement(invoiceName).getText();
     }
@@ -371,7 +528,7 @@ public class SalesInvoicesPage extends MainPage {
 
     public String getSalesInvoiceIssueDate() {
         waitUntilElementToBePresent(invoiceIssueDateField, GeneralConstants.minTimeOut);
-       System.out.println("issue date of sales invoice  " + getWebElement(invoiceIssueDateField).getText());
+        System.out.println("issue date of sales invoice  " + getWebElement(invoiceIssueDateField).getText());
         Allure.step("issue date of sales invoice  " + getWebElement(invoiceIssueDateField).getText());
         return getWebElement(invoiceIssueDateField).getText();
     }
@@ -411,15 +568,17 @@ public class SalesInvoicesPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(invoiceLabel, GeneralConstants.minTimeOut);
 
-        Allure.step("sales invoice name is   " + getWebElement(invoiceLabel).getAttribute("title"));
-        return getWebElement(invoiceLabel).getText();
+       System.out.println("sales invoice name is   " + getWebElement(invoiceLabel).getAttribute("textContent"));
+        Allure.step("sales invoice name is   " + getWebElement(invoiceLabel).getAttribute("textContent"));
+        return getWebElement(invoiceLabel).getAttribute("textContent");
     }
 
     public String getDraftInvoiceName(String expected) {
         Allure.step("Verify the name of sales invoice  ");
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
-        Allure.step("actual text is  " + getWebElement(DraftInvoiceName).getAttribute("title") + "  and expected text is  " + expected);
-        return getWebElement(DraftInvoiceName).getText();
+       System.out.println("actual text is  " + getWebElement(DraftInvoiceName).getAttribute("textContent") + "  and expected text is  " + expected);
+        Allure.step("actual text is  " + getWebElement(DraftInvoiceName).getAttribute("textContent") + "  and expected text is  " + expected);
+        return getWebElement(DraftInvoiceName).getAttribute("textContent");
     }
 
 
@@ -448,14 +607,20 @@ public class SalesInvoicesPage extends MainPage {
     }
 
 
-    public String getInvoiceNameAtViewList(String expected) {
+    public String getInvoiceNameAtViewList(String expected) throws InterruptedException {
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
-        Allure.step("navigate to sales invoices list  ");
-        getWebElement(salesInvoicesOpt).click();
-        driver.navigate().refresh();
-        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        Allure.step("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("title") + " and expected text is " + expected);
-        return getWebElement(invoiceNameAtViewList).getText();
+//        Allure.step("navigate to sales invoices list  ");
+//        getWebElement(salesInvoicesOpt).click();
+//        driver.navigate().refresh();
+//
+//        waitUntilElementVisibility(draftLabel, GeneralConstants.minTimeOut);
+//        waitUntilElementVisibility(filterIcon, GeneralConstants.minTimeOut);
+//        waitUntilElementToBeClickable(filterIcon, GeneralConstants.minTimeOut);
+//        getWebElement(filterIcon).click();
+//        Thread.sleep(threadTimeOut);
+        System.out.println("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("textContent") + " and expected text is " + expected);
+        Allure.step("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("textContent") + " and expected text is " + expected);
+        return getWebElement(invoiceNameAtViewList).getAttribute("textContent");
     }
 
 
@@ -474,9 +639,10 @@ public class SalesInvoicesPage extends MainPage {
 
         scrollToSpeceficElement(totalAmountValueWithOutTax);
         waitUntilElementToBePresent(totalAmountValueWithOutTax, GeneralConstants.minTimeOut);
-        Allure.step("total amount of sales invoice is " + getWebElement(totalAmountValueWithOutTax).getText());
+        System.out.println("total amount of sales invoice is " + getWebElement(totalAmountValueWithOutTax).getAttribute("textContent"));
+        Allure.step("total amount of sales invoice is " + getWebElement(totalAmountValueWithOutTax).getAttribute("textContent"));
 //       Allure.step("actual text is " + getWebElement(totalAmountValue).getText() + " and expected text is " + expected);
-        return getWebElement(totalAmountValueWithOutTax).getText();
+        return getWebElement(totalAmountValueWithOutTax).getAttribute("textContent");
     }
 
 

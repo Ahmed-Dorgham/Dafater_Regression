@@ -22,6 +22,33 @@ public class SalesOrderListPage extends MainPage {
     private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
     private By newBtn = By.xpath("(//button[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')])");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
+
+    private By salesOrderLabel = By.xpath("(//h3[contains(text(),'أمر بيع')])" +
+            "| (//h5[contains(text(),'قائمة أمر بيع')])");
+
+    By numberOfAllSalesOrdersField = By.xpath("//*[contains(@class,'total-rows')] " +
+            "|//*[contains(@class,'list-count')]/span");
+    public String getNumberOfAllSalesOrdersBeforeSyncing() throws InterruptedException {
+        waitUntilElementToBePresent(salesOrderLabel, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+
+        Thread.sleep(threadTimeOut);
+        System.out.println("number of all Sales Orders at list view before Syncing " + getWebElement(numberOfAllSalesOrdersField).getText());
+        Allure.step("number of all Sales Orders at list view before Syncing " + getWebElement(numberOfAllSalesOrdersField).getText());
+        return getWebElement(numberOfAllSalesOrdersField).getText();
+    }
+
+    public String getNumberOfAllSalesOrdersAfterSyncing() throws InterruptedException {
+
+        waitUntilElementToBePresent(salesOrderLabel, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementNotHaveSpecificText(numberOfAllSalesOrdersField, "تحديث");
+        System.out.println("number of Sales Orders at list view after Syncing " +getWebElement(numberOfAllSalesOrdersField).getAttribute("textContent"));
+        Allure.step("number of Sales Orders at list view after Syncing " + getWebElement(numberOfAllSalesOrdersField).getAttribute("textContent"));
+        return getWebElement(numberOfAllSalesOrdersField).getAttribute("textContent");
+
+    }
+
     public SalesOrderPage clickOnNewSalesOrdersBtn() {
        Allure.step("click on new sales order btn ");
         waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);

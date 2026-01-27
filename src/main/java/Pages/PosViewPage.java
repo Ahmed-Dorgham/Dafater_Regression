@@ -4,6 +4,7 @@ import GeneralConstants.GeneralConstants;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 public class PosViewPage extends MainPage {
@@ -25,8 +26,11 @@ public class PosViewPage extends MainPage {
     private By itemCodeInputField = By.xpath("(//input[contains(@class,'input-with-feedback form-control') and contains(@data-fieldtype,'Data')])[1]");
     private By customersListSalesInvoice = By.xpath("(//*[contains(@data-target,'Customer')and @placeholder=' ']/following-sibling::ul)");
     private By customerOptSalesInvoice = By.xpath("((//*[contains(@data-target,'Customer')and @placeholder=' ']/following-sibling::ul)/li)[1]");
-    private By itemOpt = By.xpath("(//div[contains(text(),'item 1')])[2]");
-    private By closeIcon = By.xpath("(//a[@class='btn-open no-decoration'])");
+    //    private By itemOpt = By.xpath("(//div[contains(text(),'item 1')])[2]");
+    private By itemOpt = By.xpath("(//div[contains(text(),'item 25666838')])[2]");
+    private By closeIcon_1 = By.xpath("(//button[contains(@class,'btn btn-modal-close')])[1]");
+
+    private By closeIcon_2 = By.xpath("(//button[contains(@class,'btn btn-modal-close')])[2]");
     private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
     private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
     private By payBtn = By.xpath("(//div[@class='checkout-btn'])");
@@ -61,34 +65,45 @@ public class PosViewPage extends MainPage {
     By totalAmountBeforeDiscountLabel = By.xpath("(//*[contains(@class,'total-before-discount-container')]/div)[1]");
     By netAmountAfterDiscountField = By.xpath("//*[contains(@class,'net-total-container')]//span");
 
-    public void createNewSalesInvoiceFromPosView() throws InterruptedException {
+    public void createNewSalesInvoiceFromPosView(String itemName) throws InterruptedException {
+
+        By itemOpt = By.xpath("(//div[contains(text(),'" + itemName + "')])[2]");
+
+
         waitUntilElementToBePresent(backToSystemBtn, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
 
-       Allure.step(" select item  ");
+        Allure.step(" select item  ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+//        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(itemOpt).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         if (tryToGetWebElementV(noItemsLabel) == GeneralConstants.SUCCESS) {
-           Allure.step("***************************");
+            Allure.step("***************************");
             waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
             getWebElement(itemOpt).click();
         }
         waitUntilOverlayDisappear(overlay, GeneralConstants.minTimeOut);
         waitUntilElementNotToBeVisible(noItemsLabel, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.minTimeOut);
+        if (tryToGetWebElementV(closeIcon_1) == GeneralConstants.SUCCESS) {
+            getWebElement(closeIcon_1).click();
+        }
         scrollToSpeceficElement(payBtn);
-       Allure.step(" click on pay btn  ");
+        waitUntilElementVisibility(payBtn, GeneralConstants.minTimeOut);
+        waitUntilElementToBeClickable(payBtn, GeneralConstants.minTimeOut);
+        Allure.step(" click on pay btn  ");
         getWebElement(payBtn).click();
-       Allure.step("click on complete order btn ");
+        Allure.step("click on complete order btn ");
         waitUntilElementToBeClickable(completeOrder, GeneralConstants.minTimeOut);
         scrollToSpeceficElement(completeOrder);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(completeOrder).click();
-       Allure.step("click on yes btn ");
+        Allure.step("click on yes btn ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(yesBtn, GeneralConstants.minTimeOut);
         getWebElement(yesBtn).click();
@@ -99,14 +114,23 @@ public class PosViewPage extends MainPage {
     public void completePaymentProcess() throws InterruptedException {
 
         scrollToSpeceficElement(payBtn);
-       Allure.step(" click on pay btn  ");
+        Allure.step(" click on pay btn  ");
         getWebElement(payBtn).click();
-       Allure.step("click on complete order btn ");
+        if (tryToGetWebElementV(closeIcon_1) == GeneralConstants.SUCCESS) {
+            getWebElement(closeIcon_1).click();
+        }
+        if ( tryToGetWebElementV(closeIcon_2) == GeneralConstants.SUCCESS) {
+            System.out.println("close msg ");
+            getWebElement(closeIcon_2).click();
+        }
+
+
+        Allure.step("click on complete order btn ");
         waitUntilElementToBeClickable(completeOrder, GeneralConstants.minTimeOut);
         scrollToSpeceficElement(completeOrder);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(completeOrder).click();
-       Allure.step("click on yes btn ");
+        Allure.step("click on yes btn ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(yesBtn, GeneralConstants.minTimeOut);
         getWebElement(yesBtn).click();
@@ -115,10 +139,10 @@ public class PosViewPage extends MainPage {
     }
 
     public void openPosView() throws InterruptedException {
-       Allure.step("click on is pos view btn");
+        Allure.step("click on is pos view btn");
         waitUntilElementToBePresent(posViewBtn, GeneralConstants.minTimeOut);
         getWebElement(posViewBtn).click();
-       Allure.step("click on accept btn ");
+        Allure.step("click on accept btn ");
 //        Thread.sleep(9000);
         waitUntilElementNotToBeVisible(posViewBtn, GeneralConstants.minTimeOut);
         Alert alert = driver.switchTo().alert();
@@ -132,50 +156,63 @@ public class PosViewPage extends MainPage {
     public void saveAndSubmitSalesInvoiceFromSalesOrder() throws InterruptedException {
 
         waitUntilElementVisibility(saveAndSubmitBtnFromSalesOrder, GeneralConstants.minTimeOut);
-       Allure.step("save and submit sales invoice  ");
+        Allure.step("save and submit sales invoice  ");
         getWebElement(saveAndSubmitBtnFromSalesOrder).click();
-       Allure.step("click on yes btn ");
+        Allure.step("click on yes btn ");
         waitUntilElementToBeClickable(yesBtn_SO, GeneralConstants.minTimeOut);
         getWebElement(yesBtn_SO).click();
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
     }
 
     public CreditNotePage createCreditNoteFromSalesInvoice() {
-       Allure.step("click on create btn");
+        Allure.step("click on create btn");
         waitUntilElementVisibility(createBtn, GeneralConstants.minTimeOut);
         getWebElement(createBtn).click();
-       Allure.step("click on credit note");
+        Allure.step("click on credit note");
         waitUntilElementVisibility(creditNoteChoice, GeneralConstants.minTimeOut);
         getWebElement(creditNoteChoice).click();
         return new CreditNotePage(driver);
     }
 
-    public void applyDiscountForOneItem(double discountValue) {
+    public void applyDiscountForOneItem(double discountValue, String itemName) throws InterruptedException {
+        By itemOpt = By.xpath("(//div[contains(text(),'" + itemName + "')])[2]");
 
         waitUntilElementToBePresent(backToSystemBtn, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
 
-       Allure.step(" select item  ");
+        Allure.step(" select item  ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-        getWebElement(itemCodeInputField).sendKeys("item 1");
+        getWebElement(itemCodeInputField).sendKeys(itemName);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(itemOpt).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Thread.sleep(threadTimeOut);
         if (tryToGetWebElementV(noItemsLabel) == GeneralConstants.SUCCESS) {
-           Allure.step("***************************");
+            Allure.step("***************************");
             waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
             getWebElement(itemOpt).click();
         }
         waitUntilOverlayDisappear(overlay, GeneralConstants.minTimeOut);
         waitUntilElementNotToBeVisible(noItemsLabel, GeneralConstants.minTimeOut);
+        if (tryToGetWebElementV(closeIcon_1) == GeneralConstants.SUCCESS) {
+            System.out.println("close msg ");
+            getWebElement(closeIcon_1).click();
+        }
         scrollToSpeceficElement(payBtn);
-
-       Allure.step("click on apply discount btn ");
+        if (tryToGetWebElementV(closeIcon_1) == GeneralConstants.SUCCESS) {
+            System.out.println("close msg ");
+            getWebElement(closeIcon_1).click();
+        }
+        Allure.step("click on apply discount btn ");
         getWebElement(applyDiscountBtn).click();
-        waitUntilElementToBePresent(discountField, GeneralConstants.minTimeOut);
-       Allure.step("enter discount value  ");
+        waitUntilElementVisibility(discountField, GeneralConstants.minTimeOut);
+        Allure.step("enter discount value  ");
+
+        getWebElement(discountField).click();
+        getWebElement(discountField).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        getWebElement(discountField).sendKeys(Keys.DELETE);
         getWebElement(discountField).sendKeys(String.valueOf(discountValue));
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(totalAmountLabel).click();
@@ -184,17 +221,19 @@ public class PosViewPage extends MainPage {
     }
 
     public double getTotalAmountBeforeApplyingDiscount() {
+
         waitUntilElementToBePresent(totalAmountBeforeDiscountLabel, GeneralConstants.minTimeOut);
         double totalAmountBeforeDiscount = Double.parseDouble(getWebElement(totalAmountBeforeDiscountField).getText());
 
         return totalAmountBeforeDiscount;
     }
-public void increaseQuantity ()
-{
-   Allure.step("click on increase quantity icon ");
-    getWebElement(increaseQuantityIcon).click();
-    waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
-}
+
+    public void increaseQuantity() {
+        Allure.step("click on increase quantity icon ");
+        getWebElement(increaseQuantityIcon).click();
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+    }
+
     public double getTotalAmountAfterApplyingDiscount() {
 
         double netAmountAfterDiscount = Double.parseDouble(getWebElement(netAmountAfterDiscountField).getText());
@@ -203,45 +242,62 @@ public void increaseQuantity ()
     }
 
     public String getInvoiceStatus(String expected) {
-       Allure.step("Verify the status of sales invoice  ");
+        Allure.step("Verify the status of sales invoice  ");
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
-       Allure.step("actual text is " + getWebElement(invoiceStatus).getText() + " and expected test is " + expected);
+        Allure.step("actual text is " + getWebElement(invoiceStatus).getText() + " and expected test is " + expected);
         return getWebElement(invoiceStatus).getText();
     }
 
     public String getInvoiceName(String expected) {
 //       Allure.step("Verify the name of sales invoice  ");
+        if (tryToGetWebElementV(closeIcon_1) == GeneralConstants.SUCCESS) {
+            System.out.println("close msg ");
+            getWebElement(closeIcon_1).click();
+        }
+
+        if ( tryToGetWebElementV(closeIcon_2) == GeneralConstants.SUCCESS) {
+            System.out.println("close msg ");
+            getWebElement(closeIcon_2).click();
+        }
         waitUntilElementToBePresent(invoiceName, GeneralConstants.minTimeOut);
-       Allure.step("actual text is  " + getWebElement(invoiceName).getText() + "  and expected text is  " + expected);
+        waitUntilElementVisibility(invoiceName, GeneralConstants.minTimeOut);
+        System.out.println("actual text is  " + getWebElement(invoiceName).getText() + "  and expected text is  " + expected);
+        Allure.step("actual text is  " + getWebElement(invoiceName).getText() + "  and expected text is  " + expected);
         return getWebElement(invoiceName).getText();
     }
 
     public String getInvoiceNameForCreditNote(String expected) {
 //       Allure.step("Verify the name of sales invoice  ");
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
-       Allure.step("actual text is  " + getWebElement(invoiceNameForCreditNote).getAttribute("title") + "  and expected text is  " + expected);
+        Allure.step("actual text is  " + getWebElement(invoiceNameForCreditNote).getAttribute("title") + "  and expected text is  " + expected);
         return getWebElement(invoiceNameForCreditNote).getText();
     }
 
     public SalesInvoicesListPage backToSystem() {
-       Allure.step("click on back to system btn  ");
+        Allure.step("click on back to system btn  ");
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        if (tryToGetWebElementV(closeIcon_1) == GeneralConstants.SUCCESS) {
+            getWebElement(closeIcon_1).click();
+        }
+        if ( tryToGetWebElementV(closeIcon_2) == GeneralConstants.SUCCESS) {
+            System.out.println("close msg ");
+            getWebElement(closeIcon_2).click();
+        }
         scrollToSpeceficElement(backToSystemBtn);
-
         waitUntilElementToBePresent(backToSystemBtn, GeneralConstants.minTimeOut);
-        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         getWebElement(backToSystemBtn).click();
         return new SalesInvoicesListPage(driver);
     }
 
     public String getInvoiceNameAtViewList(String expected) {
-       Allure.step("Verify the name of current created sales invoice is existed at sales invoice list view ");
+        Allure.step("Verify the name of current created sales invoice is existed at sales invoice list view ");
         waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
-       Allure.step("navigate to sales invoices list  ");
+        Allure.step("navigate to sales invoices list  ");
         getWebElement(salesInvoicesOpt).click();
         driver.navigate().refresh();
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-       Allure.step("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("title") + " and expected text is " + expected);
+        Allure.step("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("title") + " and expected text is " + expected);
         return getWebElement(invoiceNameAtViewList).getText();
     }
 }

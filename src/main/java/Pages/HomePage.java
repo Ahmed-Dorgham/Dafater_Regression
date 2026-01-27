@@ -17,6 +17,7 @@ public class HomePage extends MainPage {
     private By searchField = By.className("search__input");
     private By dataMigrationToolOpt = By.xpath("//*[contains(@href,'data-migration-from-dafater4-tool')]");
     private By salesInvoicesOpt = By.xpath("(//*[contains(@id,'sidebar-selling-invoice')]/span)[1]");
+    private By receiptVoucherOpt = By.xpath("(//*[contains(@id,'sidebar-selling-receipt-vouchers')]/span)[1]");
     private By suppliersOpt = By.xpath("(//*[contains(@id,'sidebar-purchases-suppliers')]/span)[1]" +
             "| (//*[contains(@href,'#List/Supplier')]/span)[1]");
     private By customersOpt = By.xpath("(//*[contains(@id,'sidebar-selling-customers')]/span)[1]" +
@@ -33,11 +34,13 @@ public class HomePage extends MainPage {
             "| //*[@id='sidebar-accounts-company']");
     private By companyTab = By.xpath("(//*[@id='sidebar-accounts-company-section']/span)[1]" +
             "|(//*[@id='sidebar-accounts-company']/span)[1]");
-
+    private By viewInListTitle = By.xpath("(//*[contains(@class,'custom-btn-group-label')])");
+    private By companiesTab = By.xpath("(//*[contains(@data-name,'Company Section Companies')])[1]");
     private By wareHousesOpt = By.xpath("(//*[contains(@id,'sidebar-stock-warehouse')]/span)[1]");
     private By purchaseInvoicesOpt = By.xpath("//*[contains(@id,'sidebar-purchases-invoice')] | //*[contains(@id,'sidebar-buying-invoice')]");
     private By paymentEntryOpt = By.xpath("//*[contains(@id,'sidebar-buying-payment-voucher')]");
-    private By salesOrdersOpt = By.xpath("(//*[contains(@id,'sidebar-selling-sales-orders')]/span)[1]");
+    private By salesOrdersOpt = By.xpath("(//*[contains(@id,'sidebar-selling-sales-orders')]/span)[1]" +
+            "| //*[contains(@id,'sidebar-selling-sales-order')]");
     private By sellingPriceListsOpt = By.xpath("(//*[contains(@id,'sidebar-selling-price-lists')]/span)[1]");
     private By purchaseOrdersOpt = By.xpath("//*[contains(@id,'sidebar-purchases-purchase-orders')]");
     private By itemOpt = By.xpath("(//*[contains(@id,'sidebar-stock-item')]/span)[1]");
@@ -83,6 +86,7 @@ public class HomePage extends MainPage {
 
     public  By notPermittedLabel= By.xpath("//*[contains(@class,'indicator red')]");
     public  By loginBtn= By.xpath("//*[contains(text(),'Login')]");
+    private By newBtn = By.xpath("//*[contains(@class,'btn btn-default btn-sm primary-action toolbar-btn')]");
     public void closeBankBalanceErrorMsg() {
         Allure.step("close error msg ");
         // waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.minTimeOut);
@@ -113,6 +117,23 @@ public class HomePage extends MainPage {
     public SalesInvoicesListPage openSalesInvoicesListPage() throws InterruptedException {
         Allure.step("click on sales invoice tab ");
 
+        waitUntilElementVisibility(salesInvoicesTab, GeneralConstants.globalTimeOut);
+
+        getWebElement(salesInvoicesTab).click();
+        Thread.sleep(threadTimeOut);
+        if (tryToGetWebElementV(salesInvoicesOpt) == GeneralConstants.FAILED) {
+            Allure.step("************************************");
+            getWebElement(salesInvoicesTab).click();
+//            clickByActions(salesInvoicesTab);
+        }
+        Allure.step("click on sales invoice option ");
+        waitUntilElementToBeClickable(salesInvoicesOpt, GeneralConstants.minTimeOut);
+        getWebElement(salesInvoicesOpt).click();
+        return new SalesInvoicesListPage(driver);
+    }
+    public ReceiptVouchersListPage openReceiptVouchersListPage() throws InterruptedException {
+        Allure.step("click on sales invoice tab ");
+
         waitUntilElementToBeClickable(salesInvoicesTab, GeneralConstants.globalTimeOut);
         Thread.sleep(threadTimeOut);
         getWebElement(salesInvoicesTab).click();
@@ -120,10 +141,10 @@ public class HomePage extends MainPage {
             Allure.step("************************************");
             getWebElement(salesInvoicesTab).click();
         }
-        Allure.step("click on sales invoice option ");
-        waitUntilElementToBeClickable(salesInvoicesOpt, GeneralConstants.minTimeOut);
-        getWebElement(salesInvoicesOpt).click();
-        return new SalesInvoicesListPage(driver);
+        Allure.step("click on receipt voucher option ");
+        waitUntilElementToBeClickable(receiptVoucherOpt, GeneralConstants.minTimeOut);
+        getWebElement(receiptVoucherOpt).click();
+        return new ReceiptVouchersListPage(driver);
     }
 
     public SalesTaxesAndChargesTemplatesListPage openSalesTaxesAndChargesTemplatesListPage() throws InterruptedException {
@@ -216,6 +237,12 @@ public class HomePage extends MainPage {
       System.out.println("open companies list ");
         Allure.step("open companies list ");
             getWebElement(companyTab).click();
+
+        if (tryToGetWebElementV(companiesTab) == GeneralConstants.SUCCESS) {
+            Allure.step("************************************");
+            getWebElement(companiesTab).click();
+        }
+
         return new CompaniesListPage(driver);
     }
 
@@ -337,6 +364,9 @@ public class HomePage extends MainPage {
         getWebElement(creditNotesOptSales).click();
         return new CreditNotesListPage(driver);
     }
+
+
+
     public CreditNotesListPage openCreditNotesPurchaseModuleListPage() throws InterruptedException {
         Allure.step("click on purchase tab ");
         waitUntilElementToBeClickable(purchaseInvoicesTab, GeneralConstants.minTimeOut);
@@ -468,7 +498,12 @@ public class HomePage extends MainPage {
         getWebElement(purchaseInvoicesTab).click();
         Allure.step("click on purchase order option");
         waitUntilElementToBeClickable(purchaseOrdersOpt, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(purchaseOrdersOpt, GeneralConstants.minTimeOut);
         getWebElement(purchaseOrdersOpt).click();
+//        clickByActions(purchaseOrdersOpt);
+        if (tryToGetWebElementV(newBtn) == GeneralConstants.FAILED) {
+            getWebElement(purchaseOrdersOpt).click();
+        }
         return new PurchaseOrderListPage(driver);
     }
 

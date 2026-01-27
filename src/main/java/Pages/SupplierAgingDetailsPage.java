@@ -2,10 +2,14 @@ package Pages;
 
 import GeneralConstants.GeneralConstants;
 import io.qameta.allure.Allure;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+
+import java.util.List;
 
 public class SupplierAgingDetailsPage extends MainPage {
     private String dataMigrationTitle = "data migration";
@@ -74,7 +78,7 @@ public class SupplierAgingDetailsPage extends MainPage {
     private By listField_4 = By.xpath("(//span[contains(text(),'إختر') and @class='filter-option pull-left'])[1]");
     private By invoicedAmountVal = By.xpath("(//*[contains(@class,'ui-widget-content slick-row')]//*[contains(@class,'slick-cell b11 f11')]//span)[last()]" +
             "|(//*[contains(@class,'dt-cell dt-cell--col-11')]//span)[last()]");
-    private By outstandingAmountVal = By.xpath("(//*[contains(@class,'ui-widget-content slick-row odd')]//*[contains(@class,'slick-cell b14 f14')]//span)[last()]" +
+    private By outstandingAmountVal = By.xpath("(//*[contains(@class,'ui-widget-content slick-row')]//*[contains(@class,'slick-cell b14 f14')]//span)[last()]" +
             "|(//*[contains(@class,'dt-cell dt-cell--col-14')]//span)[last()]");
     private By periodField_4 = By.xpath("(//span[contains(text(),'إختر') and @class='filter-option pull-left'])[1]");
     private By levelField_4 = By.xpath("(//*[contains(@title,'إختر')])[1]");
@@ -142,6 +146,48 @@ public class SupplierAgingDetailsPage extends MainPage {
     By openingValue = By.xpath("(//*[contains(@class,'slick-cell b10 f10')]/div)[1]" +
             "| (//*[contains(@class,'dt-cell__content dt-cell__content--col-9')]/div/span)[1]");
     By closingValue = By.xpath("(//*[contains(@class,'slick-cell b13 f13')]/div/div/span)[1]");
+    public By totalOutstandingAmountValue = By.xpath("//*[contains(@class,'dt-cell__content dt-cell__content--col-14')]//span");
+
+    public List<WebElement> totalOutstandingAmountValues;
+
+    public String getTotalOutstandingAmountAfterSyncing() throws InterruptedException {
+        double sumOfTotalOutstandingAmountValues = 0;
+        if (tryToGetWebElementV(invoicedAmountVal) == GeneralConstants.SUCCESS) {
+
+            totalOutstandingAmountValues = driver.findElements(totalOutstandingAmountValue);
+
+
+            for (int i = 0; i < totalOutstandingAmountValues.size()-1; i++) {
+
+
+                if (totalOutstandingAmountValues.get(i).getAttribute("textContent").contains("-"))
+                {
+                    sumOfTotalOutstandingAmountValues += 0;
+//                    System.out.println("minus value " + Double.parseDouble(totalOutstandingAmountValues.get(i).getAttribute("textContent").replace(",", "")));
+//                    System.out.println(sumOfTotalOutstandingAmountValues);
+                }
+                else
+                {
+                    sumOfTotalOutstandingAmountValues += Double.parseDouble(totalOutstandingAmountValues.get(i).getAttribute("textContent").replace(",", ""));
+//                    System.out.println("test "+sumOfTotalOutstandingAmountValues);
+
+                }
+
+            }
+        }
+        else {
+            System.out.println("there is no data appear at supplier aging details report at dafater 4 so outstanding amount is 0 ");
+            Allure.step("there is no data appear at supplier aging details report at dafater 4 so outstanding amount is 0");
+
+        }
+        System.out.println(" outstanding amount at supplier aging details report is  "+sumOfTotalOutstandingAmountValues);
+       Allure.step(" outstanding amount at supplier aging details report is  "+sumOfTotalOutstandingAmountValues);
+
+        return String.valueOf(sumOfTotalOutstandingAmountValues);
+    }
+
+
+
 
     public void enterValidDataIntoSalesInvoicePageAndSubmit(String dueDate) throws InterruptedException {
 //        waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
@@ -380,6 +426,11 @@ public class SupplierAgingDetailsPage extends MainPage {
         }
     }
 
+
+
+
+
+
     public String getInvoicedAmountValue_4() throws InterruptedException {
         String invoicedAmountValue = null;
         waitUntilOverlayDisappear(loadImage, GeneralConstants.minTimeOut);
@@ -395,6 +446,12 @@ public class SupplierAgingDetailsPage extends MainPage {
             return "0.00";
         }
     }
+
+
+
+
+
+
 
     public String getOutstandingAmountValue() throws InterruptedException {
         String outstandingAmountValue = null;

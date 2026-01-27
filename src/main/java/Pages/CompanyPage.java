@@ -47,6 +47,7 @@ public class CompanyPage extends MainPage {
     private By yesBtn_SO = By.xpath("(//*[contains(@class,'btn btn-primary btn-sm btn-modal-primary')])[2]");
     private By viewBtn = By.xpath("(//*[contains(@class,'btn btn-default toolbar-btn')])[1]");
     private By accountsTab = By.xpath("//*[contains(@id,'company-accounts_tab-tab')]");
+    private By stockTab = By.xpath("//*[contains(@id,'company-stock_tab-tab')]");
     private By creditNoteChoice = By.xpath("//*[contains(text(),'مرتجع / اشعار دائن') and @class = 'dropdown-item']");
     private By itemsLabel = By.xpath("(//*[contains(text(),'الاصناف')])[2]");
     private By totalAmountLabel = By.xpath("(//*[contains(text(),'الكمية الإجمالية')])");
@@ -62,12 +63,17 @@ public class CompanyPage extends MainPage {
     private By creditAccountInputField = By.xpath("//div[contains(@data-fieldname,'default_payable_account')]//a[@title='Open Link']");
     private By incomeAccountInputField = By.xpath("//div[contains(@data-fieldname,'default_income_account')]//a[@title='Open Link']");
     private By expenseAccountInputField = By.xpath("//div[contains(@data-fieldname,'default_expense_account')]//a[@title='Open Link']");
-    private By defaultDebitAccountInputField = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
-    private By defaultCreditAccountInputField = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
-    private By defaultExpenseAccountInputField = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By stockNotBilledInputField = By.xpath("//div[contains(@data-fieldname,'stock_received_but_not_billed')]//a[@title='Open Link']");
+    private By defaultDebitAccountInputField = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[5]");
+    private By defaultCreditAccountInputField_4 = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By defaultCreditAccountInputField_5 = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[5]");
+    private By defaultExpenseAccountInputField_4 = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By defaultExpenseAccountInputField_5 = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[5]");
+    private By defaultStockNotBilledAccount_5 = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[5]");
     private By defaultIncomeAccountInputField = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[5]");
     private By closeTab = By.xpath("(//i[contains(@class,'fal fa-times')])[4]");
     By overlay = By.xpath("//*[contains(@class,'freeze-message-container')] | //*[contains(@id,'freeze')]");
+    By enablingTab = By.xpath("//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap blue')]");
 
     public void enterValidDataIntoSalesInvoicePageAndSubmit(String dueDate) throws InterruptedException {
 
@@ -231,6 +237,7 @@ public class CompanyPage extends MainPage {
         getWebElement(debitAccountInputField).click();
         waitUntilElementToBePresent(defaultDebitAccountInputField, GeneralConstants.minTimeOut);
 
+      System.out.println("default debit account name is  " + getWebElement(defaultDebitAccountInputField).getText());
        Allure.step("default debit account name is  " + getWebElement(defaultDebitAccountInputField).getText());
         return getWebElement(defaultDebitAccountInputField).getText();
 
@@ -250,10 +257,11 @@ public class CompanyPage extends MainPage {
         scrollToSpeceficElement(creditAccountInputField);
 //        Thread.sleep(threadTimeOut);
         getWebElement(creditAccountInputField).click();
-        waitUntilElementToBePresent(defaultCreditAccountInputField, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(enablingLabel, GeneralConstants.minTimeOut);
 
-       Allure.step("default credit account name is  " + getWebElement(defaultCreditAccountInputField).getText());
-        return getWebElement(defaultCreditAccountInputField).getText();
+       System.out.println("default credit account name is  " + getWebElement(defaultCreditAccountInputField_5).getText());
+       Allure.step("default credit account name is  " + getWebElement(defaultCreditAccountInputField_5).getText());
+        return getWebElement(defaultCreditAccountInputField_5).getText();
 
     }
 
@@ -279,6 +287,7 @@ public class CompanyPage extends MainPage {
         Thread.sleep(threadTimeOut);
         scrollToSpeceficElement(defaultIncomeAccountInputField);
         waitUntilElementToBePresent(defaultIncomeAccountInputField, GeneralConstants.minTimeOut);
+       System.out.println("default income account name is  " + getWebElement(defaultIncomeAccountInputField).getText());
        Allure.step("default income account name is  " + getWebElement(defaultIncomeAccountInputField).getText());
         return getWebElement(defaultIncomeAccountInputField).getText();
 
@@ -289,6 +298,7 @@ public class CompanyPage extends MainPage {
 //        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
         waitUntilElementToBePresent(closeTab, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(closeTab, GeneralConstants.minTimeOut);
         getWebElement(closeTab).click();
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
        Allure.step("open accounts tab ");
@@ -302,13 +312,39 @@ public class CompanyPage extends MainPage {
 
         getWebElement(expenseAccountInputField).click();
         Thread.sleep(threadTimeOut);
-        scrollToSpeceficElement(defaultExpenseAccountInputField);
-        waitUntilElementToBePresent(defaultExpenseAccountInputField, GeneralConstants.minTimeOut);
-       Allure.step("default expense account name is  " + getWebElement(defaultExpenseAccountInputField).getText());
-        return getWebElement(defaultExpenseAccountInputField).getText();
+        scrollToSpeceficElement(defaultExpenseAccountInputField_5);
+        waitUntilElementToBePresent(defaultExpenseAccountInputField_5, GeneralConstants.minTimeOut);
+       System.out.println("default expense account name is  " + getWebElement(defaultExpenseAccountInputField_5).getText());
+       Allure.step("default expense account name is  " + getWebElement(defaultExpenseAccountInputField_5).getText());
+        return getWebElement(defaultExpenseAccountInputField_5).getText();
 
     }
+    public String getDefaultStockNotBilledAccount() throws InterruptedException {
+        Allure.step("click on close tab ");
+//        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(closeTab, GeneralConstants.minTimeOut);
+        waitUntilElementVisibility(closeTab, GeneralConstants.minTimeOut);
+        getWebElement(closeTab).click();
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Allure.step("open stock tab ");
+        waitUntilElementToBePresent(stockTab, GeneralConstants.minTimeOut);
+        getWebElement(stockTab).click();
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(accountsIndicatorTitle, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
 
+        scrollToSpeceficElement(stockNotBilledInputField);
+
+        getWebElement(stockNotBilledInputField).click();
+        Thread.sleep(threadTimeOut);
+        scrollToSpeceficElement(defaultStockNotBilledAccount_5);
+        waitUntilElementToBePresent(defaultStockNotBilledAccount_5, GeneralConstants.minTimeOut);
+        System.out.println("default Stock Not Billed Account name is  " + getWebElement(defaultStockNotBilledAccount_5).getText());
+        Allure.step("default Stock Not Billed Account name is  " + getWebElement(defaultStockNotBilledAccount_5).getText());
+        return getWebElement(defaultStockNotBilledAccount_5).getText();
+
+    }
     public String getItemName(String expected) {
        Allure.step("Verify the name of item  ");
         waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);

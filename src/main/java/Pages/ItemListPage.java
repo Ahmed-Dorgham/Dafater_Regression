@@ -39,7 +39,11 @@ public class ItemListPage extends MainPage {
     private By invoiceTotalAmountValueAtListView = By.xpath("(((((//*[contains(@class,'level list-row-head font-weight-bold')])/following-sibling::div)[2])/div/div/div))[6]/span/a/div/span");
     private By totalInvoicesAmountAtViewList = By.xpath("//h3[contains(text(),'اجمالي الفواتير')]/following-sibling::div");
     private By salesInvoicesTab = By.id("module-anchor-Selling");
+    private By purchasesInvoicesTab = By.id("module-icon-purchases");
     private By sellingPriceListsOpt = By.xpath("//*[contains(@id,'sidebar-selling-price-lists')]" +
+            "|//*[contains(@href,'#List/Price List')]");
+
+    private By buyingPriceListsOpt = By.xpath("//*[contains(@id,'sidebar-selling-price-lists')]" +
             "|//*[contains(@href,'#List/Price List')]");
 
     public ItemPage clickOnNewItemBtn() {

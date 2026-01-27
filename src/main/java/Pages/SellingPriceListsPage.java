@@ -26,6 +26,7 @@ public class SellingPriceListsPage extends MainPage {
     By viewCompleteScreen = By.xpath("//*[@class='btn btn-secondary btn-sm']");
     By numberOfAllItemsField = By.xpath("//h3[contains(text(),'جميع العناصر')]/following-sibling::div");
     By standardSellingList = By.xpath("//*[contains(@title,'Standard Selling')]");
+    By standardBuyingList = By.xpath("//*[contains(@title,'Standard Buying')]");
     By numberOfPurchaseItemsField = By.xpath("//h3[contains(text(),'عناصر الشراء')]/following-sibling::div");
     private By itemNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Item')])[1]");
     private By invoiceStatusAtListView = By.xpath("(((((//*[contains(@class,'level list-row-head font-weight-bold')])/following-sibling::div)[2])/div/div/div)[3])/span/span");
@@ -103,6 +104,16 @@ public class SellingPriceListsPage extends MainPage {
         scrollToSpeceficElement(standardSellingList);
         getWebElement(standardSellingList).click();
         return new StandardSellingListPage(driver);
+    }
+    public StandardBuyingListPage openStandardBuyingList() {
+
+        waitUntilElementToBePresent(sellingPriceListsTitle, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay,GeneralConstants.freezeTimeOut);
+        Allure.step("open standard buying list");
+        waitUntilElementToBePresent(standardBuyingList, GeneralConstants.minTimeOut);
+        scrollToSpeceficElement(standardBuyingList);
+        getWebElement(standardBuyingList).click();
+        return new StandardBuyingListPage(driver);
     }
 
     public String getNumberOfAllItemsBeforeCreatingNewItem() {

@@ -163,11 +163,14 @@ public class SalesInvoicesListPage extends MainPage {
         return getWebElement(invoiceNameAtViewList).getText();
     }
 
-    public String getListAccountBeforeCreatingNewSalesInvoices() {
+    public String getListAccountBeforeCreatingNewSalesInvoices() throws InterruptedException {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        Allure.step("number of sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getText());
-        return getWebElement(listCount).getText();
+        getWebElement(listCount).click();
+        waitUntilElementNotHaveSpecificText(listCount,"تحديث");
+        System.out.println("number of All sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getAttribute("textContent"));
+        Allure.step("number of All sales invoices at list view before creating new sales invoices " + getWebElement(listCount).getAttribute("textContent"));
+        return getWebElement(listCount).getAttribute("textContent");
     }
 
     public String getListAccountBeforeSyncing() {
@@ -181,6 +184,7 @@ public class SalesInvoicesListPage extends MainPage {
     public String getNumberOfAllDraftSalesInvoicesBeforeSyncing() {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+       System.out.println("number of draft sales invoices at list view before creating new sales invoices " + getWebElement(numberOfDraftInvoices).getText());
         Allure.step("number of draft sales invoices at list view before creating new sales invoices " + getWebElement(numberOfDraftInvoices).getText());
         return getWebElement(numberOfDraftInvoices).getText();
     }
@@ -319,11 +323,14 @@ public class SalesInvoicesListPage extends MainPage {
 
     }
 
-    public String getListAccountAfterCreatingNewSalesInvoices() {
+    public String getListAccountAfterCreatingNewSalesInvoices() throws InterruptedException {
 
         waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
-        Allure.step("number of sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getText());
-        return getWebElement(listCount).getText();
+        getWebElement(listCount).click();
+        waitUntilElementNotHaveSpecificText(listCount,"تحديث");
+       System.out.println("number of All sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getAttribute("textContent"));
+        Allure.step("number of All sales invoices at list view After creating new sales invoices " + getWebElement(listCount).getAttribute("textContent"));
+        return getWebElement(listCount).getAttribute("textContent");
     }
 
     public String getListAccountAfterSyncing() {

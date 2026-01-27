@@ -33,7 +33,8 @@ public class MainPage extends GeneralConstants {
     By selectedFilterLabel_3 = By.xpath("(//*[contains(@class,'filter-field-select')]/p)[3]");
     By addFilter = By.xpath("//*[contains(text(),'إضافة فلتر')]");
     public By totalAmountValue = By.xpath("//*[contains(@title,'الفاتورة')]//span//span" +
-            "| //*[contains(@title,'المجموع الإجمالي')]//span//span");
+            "| //*[contains(@title,'المجموع الإجمالي')]//span//span" +
+            "|//*[contains(@for,'grand_total')]//following-sibling::*//div//span");
 
     By filterValField = By.xpath("//*[@class='filter-field']//select");
     By filterValField_2 = By.xpath("(//*[@class='filter-field']//select)[2]");
@@ -110,7 +111,9 @@ public class MainPage extends GeneralConstants {
         Select select;
         waitUntilElementVisibility(filterTab, GeneralConstants.minTimeOut);
         getWebElement(filterTab).click();
-
+        if (tryToGetWebElementV(filterLabelField) == GeneralConstants.FAILED) {
+            getWebElement(filterTab).click();
+        }
         waitUntilElementVisibility(filterLabelField, GeneralConstants.minTimeOut);
         getWebElement(filterLabelField).click();
         getWebElement(filterLabelField).sendKeys(id);
@@ -228,7 +231,7 @@ public class MainPage extends GeneralConstants {
     public void waitUntilElementNotHaveSpecificText(By by, String text) throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(GeneralConstants.freezeTimeOut));
         wait.until(ExpectedConditions.not(textToBePresentInElementLocated(by, text)));
-        Thread.sleep(2000);
+        Thread.sleep(3000);
     }
 
     public void waitUntilElementNotToBeVisible(By by, int duration) {

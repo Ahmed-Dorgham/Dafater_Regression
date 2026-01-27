@@ -453,8 +453,9 @@ public class GrossProfitReportPage extends MainPage {
 
         waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
         waitUntilElementToBePresent(sellingAmountValue, GeneralConstants.minTimeOut);
-        Allure.step(" selling amount value for selected invoice is " + getWebElement(sellingAmountValue).getAttribute("title"));
-        return getWebElement(sellingAmountValue).getAttribute("title");
+       System.out.println(" selling amount value for selected invoice is " + getWebElement(sellingAmountValue).getAttribute("textContent"));
+        Allure.step(" selling amount value for selected invoice is " + getWebElement(sellingAmountValue).getAttribute("textContent"));
+        return getWebElement(sellingAmountValue).getAttribute("textContent");
     }
 
     public void enterValidDataIntoItemPage(String itemCode) throws InterruptedException {

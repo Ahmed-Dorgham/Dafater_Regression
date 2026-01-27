@@ -105,6 +105,9 @@ public class ItemPricePage extends MainPage {
         scrollToSpeceficElement(saveBtn);
         Allure.step("click on save btn");
         getWebElement(saveBtn).click();
+        if (tryToGetWebElementV(saveMsg) == GeneralConstants.FAILED) {
+            getWebElement(saveBtn).click();
+        }
         waitUntilElementToBePresent(saveMsg, GeneralConstants.minTimeOut);
     }
 

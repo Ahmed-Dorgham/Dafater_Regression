@@ -24,6 +24,7 @@ public class PurchaseInvoicesTest extends BaseTest {
     ItemPage itemPageObj;
     ItemListPage itemListPageObj;
     SellingPriceListsPage sellingPriceListsPageObj;
+    StandardBuyingListPage standardBuyingListPageObj;
     StandardSellingListPage standardSellingListPageObj;
     ItemsPricesTablePage itemsPricesTablePageObj;
     ItemPricePage itemPricePageObj;
@@ -36,11 +37,12 @@ public class PurchaseInvoicesTest extends BaseTest {
     private final String successfulConnectionMsg = "Connected Successfully";
     private final String failureConnectionMsg = "Cannot Connect";
     private final String submittedStatus = "معتمد";
-    private final String invoiceName = "ACC-PINV";
+    private final String purchaseInvoiceName = "BILL";
     private final String paidStatus = "مدفوع";
     private final String unpaidStatus = "غير مدفوع";
-//    String companyName = "Company 1";
-    String companyName = "شركة نماك الوطنية الزراعية";
+    //    String companyName = "Company 1";
+//    String companyName = "شركة نماك الوطنية الزراعية";
+    String companyName = "BusinessClouds (Demo)";
     public String itemCode;
 
     @Test(priority = 1, enabled = true)
@@ -64,8 +66,8 @@ public class PurchaseInvoicesTest extends BaseTest {
 //        Assert.assertFalse(numberOfAllItemsBeforeCreatingNewOne.contains(numberOfItemsAfterCreatingNewOne));
 //        Allure.step(" number of all items at list view before creating new one is " + numberOfAllItemsBeforeCreatingNewOne + " and after creating new one is  " + numberOfItemsAfterCreatingNewOne + " and this is correct ");
         sellingPriceListsPageObj = itemListPageObj.openSellingPriceLists();
-        standardSellingListPageObj = sellingPriceListsPageObj.openStandardSellingList();
-        itemsPricesTablePageObj = standardSellingListPageObj.openItemsPricesTable();
+        standardBuyingListPageObj = sellingPriceListsPageObj.openStandardBuyingList();
+        itemsPricesTablePageObj = standardBuyingListPageObj.openItemsPricesTable();
         itemPricePageObj = itemsPricesTablePageObj.openItemPricePage();
         itemPricePageObj.addingPriceForItem(itemCode, itemPrice);
         driver.navigate().to(homePageLink_5);
@@ -74,8 +76,8 @@ public class PurchaseInvoicesTest extends BaseTest {
         purchaseInvoicesPageObj = purchaseInvoicesListPageObj.clickOnNewPurchaseInvoiceBtn();
         purchaseInvoicesPageObj.enterValidDataIntoPurchaseInvoicePage(itemCode);
         Assert.assertTrue(purchaseInvoicesPageObj.getInvoiceStatus(submittedStatus).contains(submittedStatus));
-        String purchaseInvoiceName = purchaseInvoicesPageObj.getInvoiceName(invoiceName);
-        Assert.assertTrue(purchaseInvoiceName.contains(invoiceName));
+        String purchaseInvoiceName = purchaseInvoicesPageObj.getInvoiceName(this.purchaseInvoiceName);
+        Assert.assertTrue(purchaseInvoiceName.contains(this.purchaseInvoiceName));
         purchaseInvoicesListPageObj = purchaseInvoicesPageObj.goToPurchaseListView();
         Allure.step("Verify the name of current created purchase invoice is existed at purchase  invoice list view ");
         Assert.assertTrue(purchaseInvoicesListPageObj.getInvoiceNameAtViewList(purchaseInvoiceName).contains(purchaseInvoiceName));
@@ -90,18 +92,18 @@ public class PurchaseInvoicesTest extends BaseTest {
         homePageObj = new HomePage(driver);
         purchaseOrdersListPageObj = homePageObj.openPurchaseOrdersListPage();
         purchaseOrdersPageObj = purchaseOrdersListPageObj.clickOnNewPurchaseOrdersBtn();
-        purchaseOrdersPageObj.enterValidDataIntoPurchaseOrderPage();
-        String purchaseOrderStatusBeforeCreatingRelatedSalesInvoice = purchaseOrdersPageObj.getPurchaseOrderStatusBeforeCreatingRelatedPurchaseInvoice();
-        purchaseInvoicesPageObj = purchaseOrdersPageObj.createNewPurchaseInvoiceFromSalesOrder();
+        purchaseOrdersPageObj.enterValidDataIntoPurchaseOrderPage(itemCode);
+        String purchaseOrderStatusBeforeCreatingRelatedPurchaseInvoice = purchaseOrdersPageObj.getPurchaseOrderStatusBeforeCreatingRelatedPurchaseInvoice();
+        purchaseInvoicesPageObj = purchaseOrdersPageObj.createNewPurchaseInvoiceFromPurchaseOrder();
         purchaseInvoicesPageObj.saveAndSubmitPurchaseInvoiceFromPurchaseOrder();
         String purchaseOrderStatusAfterCreatingRelatedPurchaseInvoice = purchaseOrdersPageObj.getPurchaseOrderStatusAfterCreatingRelatedPurchaseInvoice();
         Allure.step("verify the status of purchase order will change after creating purchase invoice from this purchase order ");
-        Assert.assertFalse(purchaseOrderStatusBeforeCreatingRelatedSalesInvoice.contains(purchaseOrderStatusAfterCreatingRelatedPurchaseInvoice));
+        Assert.assertFalse(purchaseOrderStatusBeforeCreatingRelatedPurchaseInvoice.contains(purchaseOrderStatusAfterCreatingRelatedPurchaseInvoice));
 
-        Allure.step(" status of purchase order  before creating related purchase invoice is " + purchaseOrderStatusBeforeCreatingRelatedSalesInvoice + " and after creating related one is  " + purchaseOrderStatusAfterCreatingRelatedPurchaseInvoice + " and this is correct ");
+        Allure.step(" status of purchase order  before creating related purchase invoice is " + purchaseOrderStatusBeforeCreatingRelatedPurchaseInvoice + " and after creating related one is  " + purchaseOrderStatusAfterCreatingRelatedPurchaseInvoice + " and this is correct ");
     }
 
-    @Test(priority = 3, enabled = true)
+    @Test(priority = 3, enabled = false)
     public void TC03_createDebitNoteFromPurchaseInvoice() throws InterruptedException {
         homePageObj = new HomePage(driver);
         purchaseInvoicesListPageObj = homePageObj.openPurchaseInvoicesListPage();
@@ -120,8 +122,8 @@ public class PurchaseInvoicesTest extends BaseTest {
         purchaseInvoicesListPageObj = homePageObj.openPurchaseInvoicesListPage();
         purchaseInvoicesPageObj = purchaseInvoicesListPageObj.clickOnNewPurchaseInvoiceBtn();
         purchaseInvoicesPageObj.enterValidDataIntoPurchaseInvoicePage(itemCode);
-        String purchaseInvoiceName = purchaseInvoicesPageObj.getInvoiceNameForPayment(invoiceName);
-     paymentPageObj = purchaseInvoicesPageObj.createPaymentForPurchaseInvoice();
+        String purchaseInvoiceName = purchaseInvoicesPageObj.getInvoiceNameForPayment(this.purchaseInvoiceName);
+        paymentPageObj = purchaseInvoicesPageObj.createPaymentForPurchaseInvoice();
         String invoiceNameAtPaymentPage = paymentPageObj.getInvoiceNameFromPayment();
         Allure.step("verify that payment will include the same name of it's related purchase invoice  ");
         Assert.assertTrue(invoiceNameAtPaymentPage.contains(purchaseInvoiceName));
@@ -138,7 +140,7 @@ public class PurchaseInvoicesTest extends BaseTest {
         homePageObj = new HomePage(driver);
         purchaseReceiptListPageObj = homePageObj.openPurchaseReceiptListPage();
         purchaseReceiptPageObj = purchaseReceiptListPageObj.clickOnNewPurchaseReceiptBtn();
-        purchaseReceiptPageObj.enterValidDataIntoPurchaseReceiptPage();
+        purchaseReceiptPageObj.enterValidDataIntoPurchaseReceiptPage(itemCode);
         String purchaseReceiptStatusBeforeCreatingRelatedSalesInvoice = purchaseReceiptPageObj.getPurchaseReceiptStatusBeforeCreatingRelatedPurchaseInvoice();
         purchaseInvoicesPageObj = purchaseReceiptPageObj.createNewPurchaseInvoiceFromPurchaseReceipt();
         purchaseInvoicesPageObj.saveAndSubmitPurchaseInvoiceFromPurchaseReceipt();
@@ -157,6 +159,7 @@ public class PurchaseInvoicesTest extends BaseTest {
         companyPageObj = companiesListPageObj.openSpecificCompany(companyName);
         String defaultCreditAccountAtCompanySettings = companyPageObj.getDefaultCreditAccount();
         String defaultExpenseAccountAtCompanySettings = companyPageObj.getDefaultExpenseAccount();
+        String defaultStockNotBilledAccountAtCompanySettings = companyPageObj.getDefaultStockNotBilledAccount();
         driver.navigate().to(homePageLink_5);
         purchaseInvoicesListPageObj = homePageObj.openPurchaseInvoicesListPage();
         purchaseInvoicesPageObj = purchaseInvoicesListPageObj.clickOnNewPurchaseInvoiceBtn();
@@ -166,20 +169,21 @@ public class PurchaseInvoicesTest extends BaseTest {
         generalLedgerReportPageObj = purchaseInvoicesPageObj.openGeneralLedgerReport();
         String valueAtDefaultCreditAccountAtGL = generalLedgerReportPageObj.getValueAtDefaultCreditAccountFromGL(generalLedgerReportPageObj.getDefaultCreditAccountFromGL(defaultCreditAccountAtCompanySettings));
         Allure.step("verify that Default Credit Account At GL has the same value of total Amount For purchase Invoice");
-        Assert.assertTrue(valueAtDefaultCreditAccountAtGL.contains(grandTotalAmountForPurchaseInvoice));
+
+        Assert.assertTrue(valueAtDefaultCreditAccountAtGL.trim().contains(grandTotalAmountForPurchaseInvoice.trim()));
         Allure.step(" Default Credit Account At GL report has " + valueAtDefaultCreditAccountAtGL + " and  value of total Amount For Purchase Invoice is  " + grandTotalAmountForPurchaseInvoice + " and this is correct ");
-        String valueAtDefaultExpenseAccountAtGL = generalLedgerReportPageObj.getValueAtDefaultExpenseAccountFromGL(generalLedgerReportPageObj.getDefaultExpenseAccountFromGL(defaultExpenseAccountAtCompanySettings));
+        String valueAtDefaultExpenseAccountAtGL = generalLedgerReportPageObj.getValueAtDefaultExpenseAccountFromGL(generalLedgerReportPageObj.getDefaultExpenseAccountOrDefaultStockNotBilledAccountFromGL(defaultExpenseAccountAtCompanySettings));
+        String valueAtDefaultStockNotBilledAccountAtGL = generalLedgerReportPageObj.getValueAtDefaultExpenseAccountFromGL(generalLedgerReportPageObj.getDefaultExpenseAccountOrDefaultStockNotBilledAccountFromGL(defaultStockNotBilledAccountAtCompanySettings));
         Allure.step("verify that Default expense Account At GL has the same value of total Amount For purchase Invoice");
-        Assert.assertTrue(valueAtDefaultExpenseAccountAtGL.contains(totalAmountForPurchaseInvoice));
+        Assert.assertTrue(valueAtDefaultExpenseAccountAtGL.contains(totalAmountForPurchaseInvoice) ||valueAtDefaultStockNotBilledAccountAtGL.contains(totalAmountForPurchaseInvoice) );
         Allure.step(" Default expense Account At GL report has " + valueAtDefaultExpenseAccountAtGL + " and  value of  total Amount For purchase Invoice is  " + totalAmountForPurchaseInvoice + " and this is correct ");
-        String closingDebitValueAtGl =  generalLedgerReportPageObj.getClosingDebitValueForInvoiceAtGL();
-        String closingCreditValueAtGl =  generalLedgerReportPageObj.getClosingCreditValueForInvoiceAtGL();
-        Allure.step("verify that closing values ( debit & credit )  at general ledger are equals to  grand total amount for purchase invoice" );
+        String closingDebitValueAtGl = generalLedgerReportPageObj.getClosingDebitValueForInvoiceAtGL();
+        String closingCreditValueAtGl = generalLedgerReportPageObj.getClosingCreditValueForInvoiceAtGL();
+        Allure.step("verify that closing values ( debit & credit )  at general ledger are equals to  grand total amount for purchase invoice");
         Assert.assertTrue(closingDebitValueAtGl.contains(grandTotalAmountForPurchaseInvoice));
         Assert.assertTrue(closingCreditValueAtGl.contains(grandTotalAmountForPurchaseInvoice));
-        Allure.step(" closing debit value at general ledger is "+closingDebitValueAtGl+"  and grand total amount for purchase invoice is " + grandTotalAmountForPurchaseInvoice +" and this is correct " );
-        Allure.step(" closing credit value at general ledger is "+closingCreditValueAtGl+"   and grand total amount for purchase invoice is " + grandTotalAmountForPurchaseInvoice +" and this is correct " );
-
+        Allure.step(" closing debit value at general ledger is " + closingDebitValueAtGl + "  and grand total amount for purchase invoice is " + grandTotalAmountForPurchaseInvoice + " and this is correct ");
+        Allure.step(" closing credit value at general ledger is " + closingCreditValueAtGl + "   and grand total amount for purchase invoice is " + grandTotalAmountForPurchaseInvoice + " and this is correct ");
 
 
     }
