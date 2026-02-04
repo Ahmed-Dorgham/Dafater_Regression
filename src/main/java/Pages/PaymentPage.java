@@ -126,15 +126,8 @@ public class PaymentPage extends MainPage {
         waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
        Allure.step("scroll down to reference num field ");
         scrollToSpeceficElement(referenceNumField);
-////        getWebElement(reasonField).click();
-//        clickByActions(reasonField);
-//
         waitUntilElementToBePresent(referenceNumField, GeneralConstants.minTimeOut);
         getWebElement(referenceNumField).sendKeys(String.valueOf(referenceNum));
-//
-//       Allure.step("choose reason for credit note ");
-//        reason = new Select(getWebElement(reasonField));
-//        reason.selectByIndex(1);
         scrollToSpeceficElement(saveAndSubmitBtnForPayment);
        Allure.step("save and submit creditNote ");
         getWebElement(saveAndSubmitBtnForPayment).click();

@@ -62,11 +62,12 @@ public class SalesInvoicesTest extends BaseTest {
         Allure.step("Verify the name of current created item is existed at item list view ");
         itemListPageObj = itemPageObj.openItemListPage();
         Assert.assertTrue(itemListPageObj.getItemNameAtViewList(itemCode).contains(itemCode));
-
         sellingPriceListsPageObj = itemListPageObj.openSellingPriceLists();
         standardSellingListPageObj = sellingPriceListsPageObj.openStandardSellingList();
         itemsPricesTablePageObj = standardSellingListPageObj.openItemsPricesTable();
         itemPricePageObj = itemsPricesTablePageObj.openItemPricePage();
+
+
         itemPricePageObj.addingPriceForItem(itemCode, itemPrice);
         driver.navigate().to(homePageLink_5);
         salesInvoicesListPageObj = homePageObj.openSalesInvoicesListPage();
