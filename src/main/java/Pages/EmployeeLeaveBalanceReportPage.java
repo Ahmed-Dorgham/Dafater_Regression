@@ -1,0 +1,674 @@
+package Pages;
+
+import GeneralConstants.GeneralConstants;
+import io.qameta.allure.Allure;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class EmployeeLeaveBalanceReportPage extends MainPage {
+    private String dataMigrationTitle = "data migration";
+    // private WebDriver driver ;
+
+    public EmployeeLeaveBalanceReportPage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    private By checkVmConnectionBtn = By.id("check_vm_connection");
+    private By updateStockBtn = By.id("update_stock");
+    private By statusMsg = By.className("msgprint");
+    private By editIcon = By.className("icon-xs");
+    private By newItemTitle = By.xpath("//*[contains(@title,'صنف جديد')]");
+    private By itemCodeField = By.xpath("(//*[contains(@id,'item_code')])[1]");
+    private By itemGroupField = By.xpath("(//*[contains(@id,'item_group')])[2]");
+    private By itemPriceField = By.xpath("(//*[contains(@data-fieldtype,'Currency')])[3]");
+    private By itemCodeInputField = By.xpath("(//*[contains(@id,'item_code')])");
+    private By itemGroupsList = By.xpath("(//*[contains(@data-target,'Item Group')and @placeholder=' ']/following-sibling::ul)");
+    private By itemGroupOpt = By.xpath("((//*[contains(@data-target,'Item Group')and @placeholder=' ']/following-sibling::ul/li))[1]");
+    //    private By itemOpt = By.xpath("((//*[contains(@data-target,'Item')and @placeholder='صنف']/following-sibling::ul)/li)[1]");
+    private By dueDateField = By.xpath("//*[contains(@id,'due_date')]");
+    private By salesTab = By.xpath("//*[contains(@id,'item-sales_details-tab')]");
+    private By purchaseTab = By.xpath("//*[contains(@id,'item-purchasing_tab-tab')]");
+    private By isPurchaseItemCheckBox = By.xpath("//*[contains(@id,'is_purchase_item')]");
+    private By isSalesItemCheckBox = By.xpath("//*[contains(@id,'is_sales_item')]");
+    private By listCount = By.xpath("(//*[contains(@class,'list-count')])");
+    private By draftLabel = By.xpath("(//h3[contains(text(),'مسودة')])");
+    private By saveAndSubmitBtn = By.xpath("//*[contains(@class,'btn btn-inverse btn-sm save-submit-action toolbar-btn')]");
+    private By saveBtn = By.xpath("//*[contains(@data-action_name,'Save')]");
+    private By enablingLabel = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap blue')])");
+    private By saveAndSubmitBtnFromSalesOrder = By.xpath("(//*[contains(@class,'btn btn-inverse btn-sm save-submit-action toolbar-btn')])[2]");
+    private By yesBtn = By.xpath("(//*[contains(@class,'btn btn-primary btn-sm btn-modal-primary')])");
+    private By submittedStatus = By.xpath("(//*[contains(@class,'label label-success')])");
+    private By draftStatus = By.xpath("(//*[contains(@class,'indicator-pill no-indicator-dot whitespace-nowrap red')])/span");
+    private By itemName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By ItemCode = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[3]");
+    private By DraftInvoiceName = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[4]");
+    private By invoiceNameForCreditNote = By.xpath("(//h3[contains(@class,'ellipsis title-text')])[1]");
+    private By invoiceNameAtViewList = By.xpath("(//a[contains(@data-doctype,'Sales Invoice')])[1]");
+    private By yesBtn_SO = By.xpath("(//*[contains(@class,'btn btn-primary btn-sm btn-modal-primary')])[2]");
+    private By viewBtn = By.xpath("(//*[contains(@class,'btn btn-default toolbar-btn')])[2]");
+    private By salesInvoicesOpt = By.xpath("//*[contains(@id,'sidebar-selling-invoice')]");
+    private By creditNoteChoice = By.xpath("//*[contains(text(),'مرتجع / اشعار دائن') and @class = 'dropdown-item']");
+    private By itemsLabel = By.xpath("(//*[contains(text(),'الاصناف')])[2]");
+    private By totalAmountLabel = By.xpath("(//*[contains(text(),'الكمية الإجمالية')])");
+    private By posProfileUInputField = By.xpath("//input[contains(@data-fieldname,'pos_profile')]");
+    private By posProfileChoice = By.xpath("(//input[contains(@data-fieldname,'pos_profile')]/following-sibling::ul/li)[1]");
+    //    private By viewBtn = By.xpath("(//button[contains(text(),'واجهة')])[2]");
+    private By posViewBtn = By.xpath("(//button[contains(text(),'واجهة نقاط البيع')])[1]");
+    private By isPosCheckBox = By.id("is_pos");
+    private By itemOpt = By.xpath("(//*[contains(@id,'sidebar-stock-item')]/span)[1]");
+    private By closeFilterIcon = By.xpath("(//*[contains(@class,'filter-icon')])[2]");
+    private By loadDataBtn = By.xpath("//*[contains(@id,'appframe-btn-تحميل البيانات')]" +
+            "| //*[@id='appframe-btn-']");
+    private By companyInputField = By.xpath("//*[@id='company']" +
+            "|(//*[@data-fieldname='company'])[2]");
+    private By yearInputField = By.xpath("//*(//*[@data-fieldname='fiscal_year'])[2]");
+
+    private By generalLedgerReportTitle = By.xpath("//h3[@title='دفتر الأستاذ العام']");
+
+    private By wareHouseField_4 = By.xpath("//*[contains(@data-fieldname,'warehouse')]");
+    private By wareHouseField_5 = By.xpath("//*[contains(@data-fieldname,'warehouse')]");
+    private By wareHouseInputField_5 = By.xpath("//*[contains(@data-fieldname,'warehouse')]/div/ul/li/input");
+    private By chosenWarehouse = By.xpath("(//*[contains(@class,'ui-autocomplete ui-front scroll-styler ui-menu ui-widget ui-widget-content ui-corner-all')]/li/a/span)[1]");
+    private By chosenWarehouse_5 = By.xpath("//*[contains(@data-fieldname,'warehouse')]/div/ul/div/li/div/strong");
+    private By customerSearchField_4 = By.xpath("//*[contains(@data-original-title,'عميل')]//*[contains(@aria-label,'Search')]");
+    private By enteredCustomer = By.xpath("//*[contains(@data-original-title,'عميل')]//*[contains(@class,'active')]");
+    private By creditValue = By.xpath("(//*[contains(@class,'slick-cell b6 f6')])[3]/div/div/span");
+    private By creditValue_5 = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-4')])[4]");
+    private By totalTaxAmountValue = By.xpath("(//*[contains(@id,'tax-declaration-taxes-totals')])/tr/td/div/div/span" +
+            "| (//*[contains(@class,'total-taxes flex')])/div/span");
+    private By debitValue_GL = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-3')])[7]");
+    private By creditValue_GL = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-4')])[7]");
+    private By outstandingAmounValue_5 = By.xpath("(//*[contains(@class,'dt-cell__content dt-cell__content--col-3')])[3]/div/span");
+    By overlay = By.xpath("//*[contains(@class,'freeze-message-container')]");
+    By loadImage = By.xpath("(//*[contains(@alt,'Generic Empty State')])[3]" +
+            "| (//*[contains(@class,'progress progress-striped active')])");
+    By generateNewReportBtn = By.xpath("(//button[contains(text(),'توليد تقرير جديد')])");
+    By chosenCompany = By.xpath("(//*[contains(@data-target,'Company')])/following-sibling::ul/div/p/strong" +
+            "|(//*[contains(@style,'font-weight: bold;')])");
+    By chosenCustomer = By.xpath("(//div[@data-fieldname='customer']/div/div/ul/div/p/strong)[1]");
+    By customerInputField_5 = By.xpath("//input[@data-fieldname='customer']");
+    By accounts = By.xpath("//div[contains(@class,'dt-cell__content dt-cell__content--col-2')]");
+    By footer = By.xpath("//div[contains(@class,'report-footer text-muted')]");
+    By valueAtDefaultDebitAccount;
+    By valueAtDefaultIncomeAccount;
+    By valueAtDefaultExpenseAccount;
+    By valueAtDefaultCreditAccount;
+    By openingQuantity = By.xpath("(//*[contains(@class,'slick-cell b6 f6')]/div)[1]" +
+            "| (//*[contains(@class,'dt-cell__content dt-cell__content--col-8')])[2]");
+
+    By closingQuantity = By.xpath("(//*[contains(@class,'slick-cell b9 f9')]/div)[1]");
+    By openingValue = By.xpath("(//*[contains(@class,'slick-cell b10 f10')]/div)[1]" +
+            "| (//*[contains(@class,'dt-cell__content dt-cell__content--col-9')]/div/span)[1]");
+    By closingValue = By.xpath("(//*[contains(@class,'slick-cell b13 f13')]/div/div/span)[1]");
+    private By fiscalYearField = By.xpath("(//*[@data-fieldname='fiscal_year'])");
+    By chosenYear = By.xpath("(//*[contains(@style,'font-weight: bold;')])[last()]");
+
+
+
+
+    public String chooseYear() throws InterruptedException {
+
+        Allure.step("choose current year ");
+        waitUntilElementToBePresent(fiscalYearField, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        getWebElement(fiscalYearField).click();
+        getWebElement(fiscalYearField).clear();
+        getWebElement(fiscalYearField).click();
+        waitUntilElementVisibility(chosenYear, GeneralConstants.minTimeOut);
+        System.out.println("chosen year is  " + getWebElement(chosenYear).getText());
+        Allure.step("chosen year is  " + getWebElement(chosenYear).getText());
+        String chosenYearName = getWebElement(chosenYear).getText();
+        getWebElement(chosenYear).click();
+        waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
+        getWebElement(loadDataBtn).click();
+        return chosenYearName;
+
+    }
+
+    public void enterValidDataIntoSalesInvoicePageAndSubmit(String dueDate) throws InterruptedException {
+//        waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
+//        Allure.step("select  customer ");
+//        getWebElement(customerFieldSalesInvoice).click();
+//        if (tryToGetWebElement(customersListSalesInvoice) == GeneralConstants.FAILED) {
+//            getWebElement(customerFieldSalesInvoice).click();
+//        }
+////        clickByJs(getWebElement(customerFieldSalesInvoice));
+//        waitUntilElementToBePresent(customersListSalesInvoice, GeneralConstants.minTimeOut);
+//        waitUntilElementToBeClickable(customerOptSalesInvoice, GeneralConstants.minTimeOut);
+//        getWebElement(customerOptSalesInvoice).click();
+        Allure.step("enter dues date  ");
+        waitUntilElementVisibility(dueDateField, GeneralConstants.minTimeOut);
+        getWebElement(dueDateField).sendKeys(dueDate);
+        Allure.step("Scroll down to item field ");
+        scrollToSpeceficElement(totalAmountLabel);
+        //   Thread.sleep(6000);
+        Allure.step(" select item  ");
+        clickByActions(itemCodeField);
+        waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
+        getWebElement(itemCodeInputField).sendKeys("item");
+        waitUntilElementToBeClickable(itemGroupOpt, GeneralConstants.minTimeOut);
+        clickByActions(itemGroupOpt);
+
+        Allure.step("unselect update stock opt");
+        getWebElement(updateStockBtn).click();
+
+        Allure.step("scroll up to save and submit btn ");
+        scrollToSpeceficElement(saveAndSubmitBtn);
+
+        Allure.step(" save and submit sales invoice ");
+        getWebElement(saveAndSubmitBtn).click();
+        Allure.step("click on yes btn ");
+        waitUntilElementToBeClickable(yesBtn, GeneralConstants.minTimeOut);
+        getWebElement(yesBtn).click();
+        waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
+
+    }
+
+    public String chooseCompany() {
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Allure.step("enter specific company ");
+        waitUntilElementToBePresent(companyInputField, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        getWebElement(companyInputField).click();
+        getWebElement(companyInputField).clear();
+        getWebElement(companyInputField).click();
+        waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
+        String chosenCompanyName = getWebElement(chosenCompany).getText();
+        getWebElement(chosenCompany).click();
+        System.out.println(" chosen company is " + chosenCompanyName);
+        Allure.step(" chosen company is " + chosenCompanyName);
+        return chosenCompanyName;
+    }
+
+    public int getDefaultDebitAccountFromGL(String defaultDebitAccount) throws InterruptedException {
+        int i;
+        int j = 0;
+        waitUntilElementToBePresent(generalLedgerReportTitle, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Thread.sleep(threadTimeOut);
+        scrollToSpeceficElement(footer);
+        getListOfWebElements(accounts);
+        for (i = 0; i < getListOfWebElements(accounts).size(); i++) {
+            if (getListOfWebElements(accounts).get(i).getAttribute("title").contains(defaultDebitAccount)) {
+                Allure.step(" default debit account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
+                j = i;
+            }
+        }
+        return j + 1;
+    }
+
+    public int getDefaultIncomeAccountFromGL(String defaultIncomeAccount) {
+        int i;
+        int j = 0;
+        waitUntilElementToBePresent(generalLedgerReportTitle, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        scrollToSpeceficElement(footer);
+        getListOfWebElements(accounts);
+        for (i = 0; i < getListOfWebElements(accounts).size(); i++) {
+            if (getListOfWebElements(accounts).get(i).getAttribute("title").contains(defaultIncomeAccount)) {
+                Allure.step(" default income account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
+                j = i;
+            }
+        }
+        return j + 1;
+    }
+
+    public int getDefaultExpenseAccountFromGL(String defaultIncomeAccount) throws InterruptedException {
+        int i;
+        int j = 0;
+        waitUntilElementToBePresent(generalLedgerReportTitle, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+
+        scrollToSpeceficElement(footer);
+        getListOfWebElements(accounts);
+        for (i = 0; i < getListOfWebElements(accounts).size(); i++) {
+            if (getListOfWebElements(accounts).get(i).getAttribute("title").contains(defaultIncomeAccount)) {
+                Allure.step(" default Expense account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
+                j = i;
+            }
+        }
+        return j + 1;
+    }
+
+    public int getDefaultCreditAccountFromGL(String defaultCreditAccount) throws InterruptedException {
+        int i;
+        int j = 0;
+        waitUntilElementToBePresent(generalLedgerReportTitle, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        Thread.sleep(threadTimeOut);
+        scrollToSpeceficElement(footer);
+        getListOfWebElements(accounts);
+        for (i = 0; i < getListOfWebElements(accounts).size(); i++) {
+            if (getListOfWebElements(accounts).get(i).getAttribute("title").contains(defaultCreditAccount)) {
+                Allure.step(" default credit account name is " + getListOfWebElements(accounts).get(i).getAttribute("title"));
+                j = i;
+            }
+        }
+        return j + 1;
+    }
+
+    public String getOpeningValueFromStockBalance_4() {
+
+        waitUntilOverlayDisappear(loadImage, freezeTimeOut);
+
+        if (tryToGetWebElementV(openingValue) == GeneralConstants.SUCCESS) {
+            waitUntilElementToBePresent(openingValue, GeneralConstants.minTimeOut);
+            System.out.println(" opening value at Monthly Salary Register Report related to chosen year at dafater 4 is " + getWebElement(openingValue).getText());
+            Allure.step(" opening value at Monthly Salary Register Report related to chosen year at dafater 4 is " + getWebElement(openingValue).getText());
+            return getWebElement(openingValue).getText();
+        } else {
+            System.out.println(" no data appear at  Monthly Salary Register Report related to chosen year ");
+            Allure.step(" no data appear at  Monthly Salary Register Report related to chosen year ");
+            return "0.00";
+        }
+    }
+
+    public String getOpeningValueFromStockBalance_5() {
+        if (tryToGetWebElementV(openingValue) == GeneralConstants.SUCCESS) {
+            waitUntilElementToBePresent(openingValue, GeneralConstants.minTimeOut);
+            System.out.println(" opening value at stock balance at dafater 4 is " + getWebElement(openingValue).getText());
+            Allure.step(" opening value at stock balance at dafater 4 is " + getWebElement(openingValue).getText());
+            return getWebElement(openingValue).getText();
+        } else {
+            System.out.println(" no data appear at  stock balance report related to chosen warehouse ");
+            Allure.step(" no data appear at  stock balance report related to chosen warehouse ");
+            return "0.00";
+        }
+
+    }
+
+    //    public String getClosingValueFromStockBalance_4() {
+//        waitUntilOverlayDisappear(loadImage,freezeTimeOut);
+//        Allure.step("closing value at stock balance at dafater 4 is  " + getWebElement(closingValue).getText());
+//
+//        return getWebElement(closingValue).getText();
+//    }
+    public String getOpeningQuantityFromStockBalance_4() {
+        if (tryToGetWebElementV(openingQuantity) == GeneralConstants.SUCCESS) {
+            waitUntilElementToBePresent(openingQuantity, GeneralConstants.minTimeOut);
+            System.out.println(" opening quantity at stock balance at dafater 4 is " + getWebElement(openingQuantity).getText());
+            Allure.step(" opening quantity at stock balance at dafater 4 is " + getWebElement(openingQuantity).getText());
+            return getWebElement(openingQuantity).getText();
+        } else {
+            System.out.println(" no data exist at stock balance  report so opening quantity value is 0.00");
+            Allure.step(" no data exist at stock balance  report so opening quantity value is 0.00");
+            return "0.00";
+        }
+
+    }
+
+    public String getOpeningQuantityFromStockBalance_5() {
+        if (tryToGetWebElementV(openingQuantity) == GeneralConstants.SUCCESS) {
+            waitUntilElementToBePresent(openingQuantity, GeneralConstants.minTimeOut);
+            System.out.println(" opening quantity at stock balance at dafater 4 is " + getWebElement(openingQuantity).getText());
+            Allure.step(" opening quantity at stock balance at dafater 4 is " + getWebElement(openingQuantity).getText());
+            return getWebElement(openingQuantity).getText();
+        } else {
+            System.out.println(" no data exist at stock balance  report ");
+            Allure.step(" no data exist at stock balance  report ");
+            return "0.00";
+        }
+    }
+
+    public String getClosingQuantityFromStockBalance_4() {
+        if (tryToGetWebElementV(closingQuantity) == GeneralConstants.SUCCESS) {
+            waitUntilElementToBePresent(closingQuantity, GeneralConstants.minTimeOut);
+            System.out.println(" closing quantity at stock balance at dafater 4 is" + getWebElement(closingQuantity).getText());
+            Allure.step("closing quantity at stock balance at dafater 4 is " + getWebElement(closingQuantity).getText());
+            return getWebElement(closingQuantity).getText();
+        } else {
+            System.out.println(" no data exist at stock balance  report so closing quantity value is 0.00 ");
+            Allure.step(" no data exist at stock balance  report so closing quantity value is 0.00 ");
+            return "0.00";
+        }
+    }
+
+    public String getValueAtDefaultIncomeAccountFromGL(int i) {
+        valueAtDefaultIncomeAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-4')])[" + i + "]");
+        Allure.step("value which exist at default income account " + getWebElement(valueAtDefaultIncomeAccount).getText());
+
+        return getWebElement(valueAtDefaultIncomeAccount).getText();
+    }
+
+    public String getValueAtDefaultCreditAccountFromGL(int i) {
+        valueAtDefaultCreditAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-4')])[" + i + "]");
+        Allure.step("value which exist at default debit account " + getWebElement(valueAtDefaultCreditAccount).getText());
+
+        return getWebElement(valueAtDefaultCreditAccount).getText();
+    }
+
+    public String getValueAtDefaultExpenseAccountFromGL(int i) {
+        valueAtDefaultExpenseAccount = By.xpath("(//div[contains(@class,'dt-cell__content dt-cell__content--col-3')])[" + i + "]");
+        Allure.step("value which exist at default expense  account " + getWebElement(valueAtDefaultExpenseAccount).getText());
+
+        return getWebElement(valueAtDefaultExpenseAccount).getText();
+    }
+
+    public void openWareHouseList() {
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(wareHouseField_4, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Allure.step("select warehouse  ");
+
+        getWebElement(wareHouseField_4).click();
+    }
+
+    public void chooseSpecificWareHouse() {
+
+        waitUntilElementToBePresent(chosenWarehouse, GeneralConstants.minTimeOut);
+
+        getWebElement(chosenWarehouse).click();
+        waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
+        getWebElement(loadDataBtn).click();
+    }
+
+//    public void applyFilters() {
+//
+//
+//    }
+
+    public String getSelectedWarehouseName() {
+        waitUntilElementToBePresent(chosenWarehouse, GeneralConstants.minTimeOut);
+        System.out.println(" warehouse name is " + getWebElement(chosenWarehouse).getText().split("-")[0].trim());
+        Allure.step(" warehouse name is " + getWebElement(chosenWarehouse).getText().split("-")[0].trim());
+        return getWebElement(chosenWarehouse).getText().split("-")[0].trim();
+    }
+
+//    public String chooseCompany() {
+//        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+//        waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
+//        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+//        Allure.step("enter specific company ");
+//        waitUntilElementToBePresent(companyInputField, GeneralConstants.minTimeOut);
+//        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+//        getWebElement(companyInputField).click();
+//        getWebElement(companyInputField).clear();
+//        getWebElement(companyInputField).click();
+//        waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
+//        String chosenCompanyName = getWebElement(chosenCompany).getText();
+//        getWebElement(chosenCompany).click();
+//        System.out.println(" chosen company is " + chosenCompanyName);
+//        Allure.step(" chosen company is " + chosenCompanyName);
+//        return chosenCompanyName;
+//    }
+
+    public String getTotalTaxAmount() throws InterruptedException {
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(loadDataBtn, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        scrollToSpeceficElement(totalTaxAmountValue);
+        waitUntilElementToBePresent(totalTaxAmountValue, GeneralConstants.minTimeOut);
+        Allure.step(" total tax amount value for specific duration  is " + getWebElement(totalTaxAmountValue).getText());
+        return getWebElement(totalTaxAmountValue).getText();
+    }
+
+    public String getTotalTaxAmount_5() throws InterruptedException {
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        Thread.sleep(threadTimeOut);
+        scrollToSpeceficElement(totalTaxAmountValue);
+        waitUntilElementToBePresent(totalTaxAmountValue, GeneralConstants.minTimeOut);
+        Allure.step(" total tax amount value for specific duration  is " + getWebElement(totalTaxAmountValue).getText());
+        return getWebElement(totalTaxAmountValue).getText();
+    }
+
+    public void applyFilters_5(String yearName) throws InterruptedException {
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(yearInputField, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+        Allure.step("enter year ");
+        getWebElement(yearInputField).clear();
+        getWebElement(yearInputField).sendKeys(yearName);
+//        waitUntilElementToBePresent(chosenCompany, GeneralConstants.minTimeOut);
+//        getWebElement(chosenCompany).click();
+//        Allure.step("enter warehouse name ");
+//        getWebElement(wareHouseField_5).click();
+//        waitUntilElementToBePresent(wareHouseInputField_5, GeneralConstants.minTimeOut);
+//        getWebElement(wareHouseInputField_5).sendKeys(wareHouseName);
+//        waitUntilElementToBePresent(chosenWarehouse_5, GeneralConstants.minTimeOut);
+//        Thread.sleep(threadTimeOut);
+//        getWebElement(chosenWarehouse_5).click();
+////
+////        Allure.step("click on generate new report ");
+////        getWebElement(generateNewReportBtn).click();
+//        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
+//        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+    }
+
+    public String getClosingDebitValueForInvoiceAtGL() {
+        waitUntilElementToBePresent(generalLedgerReportTitle, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        scrollToSpeceficElement(debitValue_GL);
+        Allure.step(" closing debit value at general ledger report is " + getWebElement(debitValue_GL).getText());
+        return getWebElement(debitValue_GL).getText();
+    }
+
+
+    public String getClosingCreditValueForInvoiceAtGL() {
+        waitUntilElementToBePresent(generalLedgerReportTitle, GeneralConstants.minTimeOut);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        scrollToSpeceficElement(creditValue_GL);
+        Allure.step(" closing credit value at general ledger report is " + getWebElement(creditValue_GL).getText());
+        return getWebElement(creditValue_GL).getText();
+    }
+
+    public String getOutstandingAmounValue_5() throws InterruptedException {
+//        Thread.sleep(20000);
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(outstandingAmounValue_5, GeneralConstants.minTimeOut);
+        Allure.step(" outstanding Amoun value for selected customer is " + getWebElement(outstandingAmounValue_5).getText());
+        return getWebElement(outstandingAmounValue_5).getText();
+    }
+
+    public String getCreditValue() {
+
+        waitUntilElementToBePresent(creditValue, GeneralConstants.minTimeOut);
+        Allure.step(" credit value for selected account is " + getWebElement(creditValue).getText());
+        return getWebElement(creditValue).getText();
+    }
+
+    public String getCreditValue_5() throws InterruptedException {
+        waitUntilOverlayDisappear(loadImage, GeneralConstants.freezeTimeOut);
+        waitUntilElementToBePresent(creditValue_5, GeneralConstants.minTimeOut);
+        Allure.step(" credit value for selected account is " + getWebElement(creditValue_5).getAttribute("title"));
+        return getWebElement(creditValue_5).getText();
+    }
+
+    public void enterValidDataIntoItemPage(String itemCode) throws InterruptedException {
+
+        waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
+
+        Allure.step("enter item code");
+        getWebElement(itemCodeInputField).sendKeys(itemCode);
+        Allure.step("select item group ");
+        getWebElement(itemGroupField).click();
+        waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
+        getWebElement(itemGroupOpt).click();
+        Allure.step("click on save btn ");
+        getWebElement(saveBtn).click();
+        waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
+    }
+
+    public void enterValidDataForSalesItem(String itemCode) throws InterruptedException {
+
+        waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
+        Allure.step("enter item code");
+        getWebElement(itemCodeInputField).sendKeys(itemCode);
+        Allure.step("select item group ");
+        getWebElement(itemGroupField).click();
+        waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
+        getWebElement(itemGroupOpt).click();
+        Allure.step("click on purchase tab ");
+        getWebElement(purchaseTab).click();
+        getWebElement(purchaseTab).click();
+        Allure.step("unselect is purchase item checkbox ");
+        waitUntilElementToBePresent(isPurchaseItemCheckBox, GeneralConstants.minTimeOut);
+        getWebElement(isPurchaseItemCheckBox).click();
+
+        Allure.step("click on save btn ");
+        getWebElement(saveBtn).click();
+        waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
+    }
+
+    public void enterValidDataForPurchaseItem(String itemCode) throws InterruptedException {
+
+        waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
+        Allure.step("enter item code");
+        getWebElement(itemCodeInputField).sendKeys(itemCode);
+        Allure.step("select item group ");
+        getWebElement(itemGroupField).click();
+        waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
+        getWebElement(itemGroupOpt).click();
+        Allure.step("click on sales tab ");
+        getWebElement(salesTab).click();
+        getWebElement(salesTab).click();
+        Allure.step("unselect is sales item checkbox ");
+        waitUntilElementToBePresent(isSalesItemCheckBox, GeneralConstants.minTimeOut);
+        getWebElement(isSalesItemCheckBox).click();
+
+        Allure.step("click on save btn ");
+        getWebElement(saveBtn).click();
+        waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
+    }
+
+    public void createNewSalesItem(String itemCode) throws InterruptedException {
+
+        waitUntilElementToBePresent(newItemTitle, GeneralConstants.minTimeOut);
+
+        Allure.step("enter item code");
+        getWebElement(itemCodeInputField).sendKeys(itemCode);
+        Allure.step("select item group ");
+        getWebElement(itemGroupField).click();
+        waitUntilElementToBePresent(itemGroupsList, GeneralConstants.minTimeOut);
+        waitUntilElementToBePresent(itemGroupOpt, GeneralConstants.minTimeOut);
+        getWebElement(itemGroupOpt).click();
+
+
+        Allure.step("click on save btn ");
+        getWebElement(saveBtn).click();
+        waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
+
+
+    }
+
+    public PosViewPage openPosView() throws InterruptedException {
+        Allure.step("click on is pos view btn");
+        waitUntilElementToBePresent(posViewBtn, GeneralConstants.minTimeOut);
+        getWebElement(posViewBtn).click();
+        Allure.step("click on accept btn ");
+//        Thread.sleep(9000);
+        waitUntilElementNotToBeVisible(posViewBtn, GeneralConstants.minTimeOut);
+//        Alert alert = driver.switchTo().alert();
+//        alert.accept();
+//        Allure.step("choose POS profile ");
+//        waitUntilElementToBePresent(posProfileUInputField, GeneralConstants.minTimeOut);
+//        getWebElement(posProfileUInputField).click();
+        return new PosViewPage(driver);
+    }
+
+//    public void saveAndSubmitSalesInvoiceFromSalesOrder() throws InterruptedException {
+//
+//        waitUntilElementVisibility(saveAndSubmitBtnFromSalesOrder, GeneralConstants.minTimeOut);
+//        Allure.step("save and submit sales invoice  ");
+//        getWebElement(saveAndSubmitBtnFromSalesOrder).click();
+//        Allure.step("click on yes btn ");
+//        waitUntilElementToBeClickable(yesBtn_SO, GeneralConstants.minTimeOut);
+//        getWebElement(yesBtn_SO).click();
+//        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+//    }
+
+//    public CreditNotePage createCreditNoteFromSalesInvoice() {
+//        Allure.step("click on create btn");
+//        waitUntilElementVisibility(createBtn, GeneralConstants.minTimeOut);
+//        getWebElement(createBtn).click();
+//        Allure.step("click on credit note");
+//        waitUntilElementVisibility(creditNoteChoice, GeneralConstants.minTimeOut);
+//        getWebElement(creditNoteChoice).click();
+//        return new CreditNotePage(driver);
+//    }
+
+//    public String getInvoiceStatus(String expected) {
+//        Allure.step("Verify the status of sales invoice  ");
+//        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+//        if (tryToGetWebElement(submittedStatus) == GeneralConstants.SUCCESS) {
+//            Allure.step("actual text is " + getWebElement(submittedStatus).getText() + " and expected test is " + expected);
+//            return getWebElement(submittedStatus).getText();
+//        } else if (tryToGetWebElement(draftStatus) == GeneralConstants.SUCCESS) {
+//            Allure.step("actual text is " + getWebElement(draftStatus).getText() + " and expected test is " + expected);
+//            return getWebElement(draftStatus).getText();
+//        } else
+//            return "unexpected status";
+//    }
+
+//    public String getPosInvoiceStatus(String expected) {
+//        Allure.step("open sales invoice which created using pos view ");
+//        getWebElement(invoiceNameAtViewList).click();
+//        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+//        Allure.step("actual text is " + getWebElement(submittedStatus).getText() + " and expected test is " + expected);
+//        return getWebElement(submittedStatus).getText();
+//    }
+
+    public String getItemName(String expected) {
+        Allure.step("Verify the name of item  ");
+        waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
+        Allure.step("actual text is  " + getWebElement(itemName).getText() + "  and expected text is  " + expected);
+        return getWebElement(itemName).getText();
+    }
+
+    public String getItemCode(String expected) {
+        Allure.step("Verify the name of item  ");
+        waitUntilElementToBePresent(enablingLabel, GeneralConstants.minTimeOut);
+        Allure.step("actual text is  " + getWebElement(ItemCode).getText() + "  and expected text is  " + expected);
+        return getWebElement(ItemCode).getText();
+    }
+//
+//    public String getDraftInvoiceName(String expected) {
+//        Allure.step("Verify the name of sales invoice  ");
+//        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+//        Allure.step("actual text is  " + getWebElement(DraftInvoiceName).getAttribute("title") + "  and expected text is  " + expected);
+//        return getWebElement(DraftInvoiceName).getText();
+//    }
+
+
+    public String getInvoiceNameForCreditNote(String expected) {
+//        Allure.step("Verify the name of sales invoice  ");
+        waitUntilElementToBePresent(viewBtn, GeneralConstants.minTimeOut);
+        Allure.step("actual text is  " + getWebElement(invoiceNameForCreditNote).getAttribute("title") + "  and expected text is  " + expected);
+        return getWebElement(invoiceNameForCreditNote).getText();
+    }
+//
+//    public PurchaseInvoicesListPage goToPurchaseListView() {
+//        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+//        Allure.step("navigate to sales invoices list  ");
+//        getWebElement(salesInvoicesOpt).click();
+//        driver.navigate().refresh();
+//        return new PurchaseInvoicesListPage(driver);
+//    }
+
+    //
+//    public String getInvoiceNameAtViewList(String expected) {
+//        waitUntilElementToBePresent(createBtn, GeneralConstants.minTimeOut);
+//        Allure.step("navigate to sales invoices list  ");
+//        getWebElement(salesInvoicesOpt).click();
+//        driver.navigate().refresh();
+//        waitUntilElementToBePresent(draftLabel, GeneralConstants.minTimeOut);
+//        Allure.step("actual text is " + getWebElement(invoiceNameAtViewList).getAttribute("title") + " and expected text is " + expected);
+//        return getWebElement(invoiceNameAtViewList).getText();
+//    }
+    public ItemListPage openItemListPage() {
+
+        Allure.step("navigate to item list ");
+        waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
+        getWebElement(itemOpt).click();
+        driver.navigate().refresh();
+        waitUntilElementToBePresent(closeFilterIcon, GeneralConstants.minTimeOut);
+        getWebElement(closeFilterIcon).click();
+        return new ItemListPage(driver);
+    }
+}

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Command line suite]" verbose="0">
+  <test thread-count="5" name="Command line test(failed)" verbose="0">
+    <classes>
+      <class name="TestCases.ComparingItemsTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+          <include name="TC01_comparingNumberOfItems"/>
+        </methods>
+      </class> <!-- TestCases.ComparingItemsTest -->
+      <class name="TestCases.ComparingFiscalYearsTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="TC01_comparingNumberOfFiscalYears"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingFiscalYearsTest -->
+      <class name="TestCases.ComparingStockEntryTest">
+        <methods>
+          <include name="TC01_comparingNumberOfStockEntries"/>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingStockEntryTest -->
+      <class name="TestCases.SalesInvoicesTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="TC01_createNewSalesInvoiceAndSaveOnly"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.SalesInvoicesTest -->
+      <class name="TestCases.ComparingCompaniesTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="TC01_comparingNumberOfCompanies"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingCompaniesTest -->
+      <class name="TestCases.DeliveryNotesTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="TC01_createNewDeliveryNote"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.DeliveryNotesTest -->
+      <class name="TestCases.ComparingPurchaseInvoicesTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="TC02_comparingPurchaseInvoiceDates"/>
+          <include name="TC01_comparingNumberOfPurchaseInvoices"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingPurchaseInvoicesTest -->
+      <class name="TestCases.ComparingJournalEntriesTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="TC01_comparingNumberOfJournalEntries"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingJournalEntriesTest -->
+      <class name="TestCases.ComparingSalesInvoicesTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="TC03_comparingSalesInvoiceDataAtGL"/>
+          <include name="TC01_comparingSalesInvoicesAtViewList"/>
+          <include name="TC02_comparingSalesInvoiceData"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingSalesInvoicesTest -->
+      <class name="TestCases.ComparingReportsTest">
+        <methods>
+          <include name="TC07_comparingBalanceSheetReport"/>
+          <include name="TC04_comparingTaxDeclarationReport"/>
+          <include name="loginWithValidData"/>
+          <include name="TC08_comparingProfitAndLossReport"/>
+          <include name="TC010_comparingSupplierAgingDetailsReport"/>
+          <include name="TC01_comparingGeneralLedgerReportWithSpecificAccount"/>
+          <include name="onTestFailure"/>
+          <include name="TC05_comparingStockBalanceReport"/>
+          <include name="launch_website"/>
+          <include name="TC09_comparingGrossProfitReport"/>
+          <include name="setup_driver"/>
+          <include name="tearDownTestCase"/>
+          <include name="TC02_comparingGeneralLedgerReportWithoutFiltration"/>
+          <include name="TC011_comparingSalesPersonDetailedReport"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingReportsTest -->
+      <class name="TestCases.PurchaseInvoicesTest">
+        <methods>
+          <include name="TC01_createNewPurchaseInvoiceAndSubmit"/>
+          <include name="launch_website"/>
+          <include name="TC02_createNewPurchaseInvoiceFromPurchaseOrder"/>
+          <include name="TC05_createNewPurchaseInvoiceFromPurchaseReceipt"/>
+          <include name="loginWithValidData"/>
+          <include name="TC03_createDebitNoteFromPurchaseInvoice"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="TC04_createPaymentForPurchaseInvoice"/>
+          <include name="tearDown"/>
+          <include name="TC06_createNewPurchaseInvoiceAndCheckInGeneralLedgerReport"/>
+        </methods>
+      </class> <!-- TestCases.PurchaseInvoicesTest -->
+      <class name="TestCases.DataMigrationTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="TC03_syncDocTypesData"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.DataMigrationTest -->
+      <class name="TestCases.ComparingSuppliersTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="TC01_comparingSuppliersDataAtListView"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingSuppliersTest -->
+      <class name="TestCases.ComparingDeliveryNotesTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="TC01_comparingNumberOfDeliveryNotes"/>
+          <include name="loginWithValidData"/>
+          <include name="TC02_comparingDeliveryNotesData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingDeliveryNotesTest -->
+      <class name="TestCases.ComparingWareHousesTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="TC01_comparingNumberOfWareHouses"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingWareHousesTest -->
+      <class name="TestCases.AddingWareHouseTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="TC01_createNewWareHouse"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.AddingWareHouseTest -->
+      <class name="TestCases.ComparingCustomersTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="TC01_comparingCustomersDataAtListView"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingCustomersTest -->
+      <class name="TestCases.AddingItemsTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="TC02_createNewSalesItem"/>
+          <include name="TC03_createNewPurchaseItem"/>
+          <include name="loginWithValidData"/>
+          <include name="TC01_createNewSalesAndPurchaseItemAndAddingIntoPriceList"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.AddingItemsTest -->
+      <class name="TestCases.ComparingPurchaseTaxesAndChargesTemplatesTest">
+        <methods>
+          <include name="TC01_comparingNumberOfPurchaseTaxesAndChargesTemplatesTet"/>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingPurchaseTaxesAndChargesTemplatesTest -->
+      <class name="TestCases.ComparingSalesTaxesAndChargesTemplatesTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="TC01_comparingNumberOfSalesTaxesAndChargesTemplatesTet"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingSalesTaxesAndChargesTemplatesTest -->
+      <class name="TestCases.ComparingPaymentEntryTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="TC01_comparingNumberOfPaymentEntry"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingPaymentEntryTest -->
+      <class name="TestCases.PosViewTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="TC01_createNewSalesInvoiceUsingPosView"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="TC02_applyDiscountOnSalesInvoiceUsingPosView"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.PosViewTest -->
+      <class name="TestCases.ComparingChartOfAccountsDataTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+          <include name="TC01_comparingChartOfAccountsDataTest"/>
+        </methods>
+      </class> <!-- TestCases.ComparingChartOfAccountsDataTest -->
+      <class name="TestCases.ComparingPurchaseReceiptsTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="TC01_comparingNumberOfPurchaseReceipt"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.ComparingPurchaseReceiptsTest -->
+      <class name="TestCases.SetupVmTest">
+        <methods>
+          <include name="launch_website"/>
+          <include name="TC01_setupVm"/>
+          <include name="loginWithValidData"/>
+          <include name="setup_driver"/>
+          <include name="onTestFailure"/>
+          <include name="tearDownTestCase"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- TestCases.SetupVmTest -->
+    </classes>
+  </test> <!-- Command line test(failed) -->
+</suite> <!-- Failed suite [Command line suite] -->
