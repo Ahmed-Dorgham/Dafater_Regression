@@ -11,7 +11,7 @@ public class AddingItemsTest extends BaseTest {
     Random random;
     int randomNumber;
     String itemCode;
-
+//test
     ItemPage itemPageObj;
     ItemListPage itemListPageObj;
     SellingPriceListsPage sellingPriceListsPageObj;
