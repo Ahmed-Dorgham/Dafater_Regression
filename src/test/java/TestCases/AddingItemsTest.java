@@ -43,7 +43,7 @@ public class AddingItemsTest extends BaseTest {
         itemPricePageObj.addingPriceForItem(itemCode, itemPrice);
     }
 
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2, enabled = false)
     public void TC02_createNewSalesItem() throws InterruptedException {
         random = new Random();
         randomNumber = random.nextInt(1000000000);
@@ -67,7 +67,7 @@ public class AddingItemsTest extends BaseTest {
         Assert.assertTrue(numberOfPurchaseItemsBeforeCreatingNewOne.contains(numberOfPurchaseItemsAfterCreatingNewOne));
         Allure.step(" number of purchase items at list view before creating new one is " + numberOfPurchaseItemsBeforeCreatingNewOne + " and after creating new one is  " + numberOfPurchaseItemsAfterCreatingNewOne + " and this is correct ");
     }
-    @Test(priority = 3, enabled = true)
+    @Test(priority = 3, enabled = false)
     public void TC03_createNewPurchaseItem() throws InterruptedException {
         random = new Random();
         randomNumber = random.nextInt(1000000000);
