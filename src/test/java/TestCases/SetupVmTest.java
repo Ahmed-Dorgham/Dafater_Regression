@@ -11,7 +11,7 @@ public class SetupVmTest extends BaseTest {
     LoginPage loginPageObj;
     HomePage homePageObj;
     SetupWizardPage setupWizardPageObj;
-
+//test
 
     @Test(priority = 1, enabled = true)
     public void TC01_setupVm() {
