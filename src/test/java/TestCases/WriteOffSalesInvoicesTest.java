@@ -106,7 +106,6 @@ public class WriteOffSalesInvoicesTest extends BaseTest {
         Assert.assertFalse(totalOutstandingAmountValueAfterApplyWriteOff.trim().contains(totalOutstandingAmountValueBeforeApplyWriteOff.trim()));
 
     }
-
     @Test(priority = 3, enabled = false) // not completed
     public void TC03_verifyValidationWhenPayAdvanceAmountFirstAndApplyWriteOffWithValueGreaterThanGrandTotalAmount() throws InterruptedException {
         homePageObj = new HomePage(driver);
@@ -130,7 +129,6 @@ public class WriteOffSalesInvoicesTest extends BaseTest {
         System.out.println(" Validation Msg after Pay Advance Amount First And Apply Write Off Greater Than Grand Total Amount is " + salesInvoicesPageObj.getValidationMsg());
     }
 
-
 //    @Test(priority = 4, enabled = true)
 //    public void TC04_verifyValidationWhenApplyWriteOffFirstAndPayAdvanceAmountWithValueGreaterThanGrandTotalAmount() throws InterruptedException {
 //        homePageObj = new HomePage(driver);
@@ -153,7 +151,6 @@ public class WriteOffSalesInvoicesTest extends BaseTest {
 //        Assert.assertTrue(salesInvoicesPageObj.getValidationMsg().contains("مبلغ الشطب "));
 //        System.out.println(" Validation Msg after Apply Write Off First And Pay Advance Amount With Value Greater Than Grand Total Amount is " + salesInvoicesPageObj.getValidationMsg());
 //    }
-
 
     @Test(priority = 5, enabled = false) //done
     public void TC05_verifyValidationWhenApplyDiscountAndApplyWriteOffWithValueGreaterThanGrandTotalAmount() throws InterruptedException {
@@ -187,7 +184,6 @@ public class WriteOffSalesInvoicesTest extends BaseTest {
 //
     }
 
-
     @Test(priority = 7, enabled = false) // done
     public void TC07_verifyValidationWhenApplyCompleteWriteOffThenRemoveTaxes() throws InterruptedException {
         homePageObj = new HomePage(driver);
@@ -208,7 +204,6 @@ public class WriteOffSalesInvoicesTest extends BaseTest {
 //
     }
 
-
     @Test(priority = 8, enabled = false) //done
     public void TC08_verifyValidationWhenApplyCompleteWriteOffAndDiscountThenRemoveTaxes() throws InterruptedException {
         homePageObj = new HomePage(driver);
@@ -227,8 +222,6 @@ public class WriteOffSalesInvoicesTest extends BaseTest {
         Assert.assertTrue(salesInvoicesPageObj.getValidationMsg().contains("لا يمكن أن يكون المبلغ المستحق سالبًا."));
         System.out.println(" Validation Msg after Apply complete  Write then remove taxes is " + salesInvoicesPageObj.getValidationMsg());
     }
-
-
     @Test(priority = 9, enabled = false)
     public void TC09_verifyWhenCreateCreditNoteAfterApplyWriteOffAndRemoveTaxesOnSalesInvoice() throws InterruptedException {
         homePageObj = new HomePage(driver);

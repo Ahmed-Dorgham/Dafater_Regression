@@ -9,15 +9,11 @@
         <classes>
             <!--            <class name="TestCases.SetupVmTest"></class>-->
             <!--                                    <class name="TestCases.DataMigrationTest"></class>-->
+
                                                             <class name="TestCases.AddingItemsTest"></class>
             <!--                        <class name="TestCases.SalesInvoicesTest"></class>-->
             <!--                                    <class name="TestCases.PurchaseInvoicesTest"></class>-->
             <!--            <class name="TestCases.AddingWareHouseTest"></class>-->
-
-
-
-
-
 
 <!--                        <class name="TestCases.PurchaseReceiptsTest"></class>-->
 <!--            <class name="TestCases.WriteOffSalesInvoicesTest"></class>-->

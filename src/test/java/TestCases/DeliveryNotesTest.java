@@ -23,7 +23,7 @@ public class DeliveryNotesTest extends BaseTest {
     SalesInvoicesPage salesInvoicesPageObj;
     private final String submittedStatus = "معتمد";
     @Test(priority = 1, enabled = true)
-    public void  TC01_createNewDeliveryNote() throws InterruptedException {
+    public void TC01_createNewDeliveryNoteAndSubmit() throws InterruptedException {
         random = new Random();
         randomNumber = random.nextInt(10000000);
         itemCode = "item 2" + randomNumber;
@@ -35,7 +35,6 @@ public class DeliveryNotesTest extends BaseTest {
         Allure.step("Verify the name of current created item is existed at item list view ");
         itemListPageObj = itemPageObj.openItemListPage();
         Assert.assertTrue(itemListPageObj.getItemNameAtViewList(itemCode).contains(itemCode));
-
         sellingPriceListsPageObj = itemListPageObj.openSellingPriceLists();
         standardSellingListPageObj = sellingPriceListsPageObj.openStandardSellingList();
         itemsPricesTablePageObj = standardSellingListPageObj.openItemsPricesTable();

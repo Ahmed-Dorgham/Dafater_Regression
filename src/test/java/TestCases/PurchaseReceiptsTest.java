@@ -25,7 +25,7 @@ public class PurchaseReceiptsTest extends BaseTest {
     SalesInvoicesPage salesInvoicesPageObj;
     private final String submittedStatus = "معتمد";
     @Test(priority = 1, enabled = true)
-    public void  TC01_createNewPurchaseReceipt() throws InterruptedException {
+    public void TC01_createNewPurchaseReceiptAndSubmit() throws InterruptedException {
         random = new Random();
         randomNumber = random.nextInt(10000000);
         itemCode = "item 2" + randomNumber;
