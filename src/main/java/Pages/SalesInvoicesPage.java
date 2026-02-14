@@ -19,7 +19,7 @@ public class SalesInvoicesPage extends MainPage {
             " | //input[contains(@data-fieldname,'update_stock')]");
     private By validationMsg = By.className("msgprint");
     private By editIcon = By.className("icon-xs");
-    // test 5
+    // test 6
 
 
     private By newSalesInvoiceTitle = By.xpath("//*[contains(@title,'فاتورة المبيعات جديد')]");
