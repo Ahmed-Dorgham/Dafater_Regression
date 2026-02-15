@@ -21,7 +21,7 @@ public class SalesInvoicesPage extends MainPage {
     private By editIcon = By.className("icon-xs");
     // test 6
 
-
+// test 7
     private By newSalesInvoiceTitle = By.xpath("//*[contains(@title,'فاتورة المبيعات جديد')]");
     private By customerFieldSalesInvoice = By.xpath("(//*[contains(@id,'customer')])[4]");
     private By itemCodeField = By.xpath("(//*[contains(@data-fieldname,'item_code')])[2]");
