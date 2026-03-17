@@ -192,10 +192,6 @@ public class SalesInvoicesPage extends MainPage {
         waitUntilElementVisibility(allocatedAmountInputField, GeneralConstants.minTimeOut);
         System.out.println(" enter allocated amount ");
         clickByActions(allocatedAmountInputField);
-//        Thread.sleep(threadTimeOut);
-//        clickByActions(allocatedAmountInputField);
-
-//        getWebElement(writeOffAmountField).sendKeys(Keys.CONTROL, "a");
         waitUntilElementVisibility(allocatedAmountInputField_2, GeneralConstants.minTimeOut);
         getWebElement(allocatedAmountInputField_2).sendKeys(Keys.DELETE);
         getWebElement(allocatedAmountInputField_2).sendKeys(String.valueOf(amount));

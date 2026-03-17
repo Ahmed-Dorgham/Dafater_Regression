@@ -155,6 +155,7 @@ public class SalesInvoicesTest extends BaseTest {
         creditNotePageObj.saveAndSubmitCreditNoteFromSalesInvoice();
         Allure.step("verify that credit note will include the same name of it's related sales invoice  ");
         Assert.assertTrue(creditNotePageObj.getInvoiceNameInsideCreditNote(salesInvoiceName).contains(salesInvoiceName));
+        Assert.assertTrue(creditNotePageObj.getInvoiceNameInsideCreditNote(salesInvoiceName).contains(salesInvoiceName));
 
     }
 // test// test

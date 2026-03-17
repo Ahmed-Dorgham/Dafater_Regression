@@ -167,6 +167,8 @@ public class PurchaseInvoicesTest extends BaseTest {
         String grandTotalAmountForPurchaseInvoice = purchaseInvoicesPageObj.getGrandTotalAmountOfPurchaseInvoice();
         String totalAmountForPurchaseInvoice = purchaseInvoicesPageObj.getTotalAmountOfPurchaseInvoice();
         generalLedgerReportPageObj = purchaseInvoicesPageObj.openGeneralLedgerReport();
+
+
         String valueAtDefaultCreditAccountAtGL = generalLedgerReportPageObj.getValueAtDefaultCreditAccountFromGL(generalLedgerReportPageObj.getDefaultCreditAccountFromGL(defaultCreditAccountAtCompanySettings));
         Allure.step("verify that Default Credit Account At GL has the same value of total Amount For purchase Invoice");
 

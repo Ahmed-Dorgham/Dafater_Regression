@@ -82,6 +82,8 @@ public class WriteOffSalesInvoicesTest extends BaseTest {
         String totalOutstandingAmountValueAfterApplyWriteOff = salesInvoicesPageObj.getTotalOutstandingAmountValue();
         System.out.println("total outstanding amount value  after apply complete write off is " + totalOutstandingAmountValueAfterApplyWriteOff);
         Assert.assertFalse(totalOutstandingAmountValueAfterApplyWriteOff.trim().contains(totalOutstandingAmountValueBeforeApplyWriteOff.trim()));
+
+
     }
 
     @Test(priority = 2, enabled = false)// done
@@ -106,7 +108,7 @@ public class WriteOffSalesInvoicesTest extends BaseTest {
         Assert.assertFalse(totalOutstandingAmountValueAfterApplyWriteOff.trim().contains(totalOutstandingAmountValueBeforeApplyWriteOff.trim()));
 
     }
-    @Test(priority = 3, enabled = false) // not completed
+    @Test(priority = 3, enabled = true) // not completed
     public void TC03_verifyValidationWhenPayAdvanceAmountFirstAndApplyWriteOffWithValueGreaterThanGrandTotalAmount() throws InterruptedException {
         homePageObj = new HomePage(driver);
         receiptVouchersListPageObj = homePageObj.openReceiptVouchersListPage();
@@ -168,6 +170,7 @@ public class WriteOffSalesInvoicesTest extends BaseTest {
         Assert.assertTrue(salesInvoicesPageObj.getValidationMsg().contains("مبلغ الشطب "));
         System.out.println(" Validation Msg after Apply discount And Apply Write off With Value Greater Than Grand Total Amount is " + salesInvoicesPageObj.getValidationMsg());
     }
+//    test Ai_Cypress_1
 
     @Test(priority = 6, enabled = false)//done
     public void TC06_verifyValidationWhenApplyWriteOffWithNegative() throws InterruptedException {

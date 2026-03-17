@@ -171,29 +171,7 @@ public class ReceiptVoucherPage extends MainPage {
 //        Thread.sleep(threadTimeOut);
         scrollToSpeceficElement(amountInputFieldReceiptVoucher);
         getWebElement(amountInputFieldReceiptVoucher).sendKeys("1000");
-//        Allure.step("Scroll down to item field ");
-//        waitUntilOverlayDisappear(overlay, GeneralConstants.freezeTimeOut);
-//        scrollToSpeceficElement(totalAmountLabel);
-//        //   Thread.sleep(6000);
-//        Allure.step(" select item  ");
-//        clickByActions(itemCodeField);
-//        waitUntilElementToBePresent(itemCodeInputField, GeneralConstants.minTimeOut);
-//        getWebElement(itemCodeInputField).sendKeys(itemName);
-//        waitUntilElementToBeClickable(itemOpt, GeneralConstants.minTimeOut);
-//
-//        getWebElement(itemCodeInputField).clear();
-//        getWebElement(itemCodeInputField).sendKeys(itemName);
-////        getWebElement(itemCodeInputField).sendKeys("item 1");
-//        waitUntilElementToBeClickable(selectedItem, GeneralConstants.minTimeOut);
-//        clickByActions(selectedItem);
-//        Allure.step("unselect update stock opt");
-//        getWebElement(updateStockBtn).click();
-//
-//        Allure.step("scroll up to save and submit btn ");
-//        scrollToSpeceficElement(saveAndSubmitBtn);
-//
-//        Allure.step(" save and submit sales invoice ");
-//        getWebElement(saveAndSubmitBtn).click();
+
 
 
     }
