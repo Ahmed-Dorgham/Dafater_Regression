@@ -170,7 +170,7 @@ public class WriteOffSalesInvoicesTest extends BaseTest {
         Assert.assertTrue(salesInvoicesPageObj.getValidationMsg().contains("مبلغ الشطب "));
         System.out.println(" Validation Msg after Apply discount And Apply Write off With Value Greater Than Grand Total Amount is " + salesInvoicesPageObj.getValidationMsg());
     }
-//    test Ai_Cypress_28
+//    test Ai_Cypress_29
 
     @Test(priority = 6, enabled = false)//done
     public void TC06_verifyValidationWhenApplyWriteOffWithNegative() throws InterruptedException {
