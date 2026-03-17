@@ -1,0 +1,12 @@
+# Node / Cypress artifacts
+node_modules/
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+
+# IDE
+.idea/
+
+# Maven/Java build
+target/
+test-output/
