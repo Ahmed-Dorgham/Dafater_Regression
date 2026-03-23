@@ -13,7 +13,7 @@ public class ComparingBanksTest extends BaseTest {
     int randomNumber;
     String itemCode;
     SoftAssert softAssert;
-//test PC 2
+//test PC 3
     LoginPage loginPageObj;
     HomePage homePageObj;
     JournalEntrytListPage journalEntryListPageObj;
